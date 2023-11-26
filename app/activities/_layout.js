@@ -1,5 +1,10 @@
 import { Stack } from "expo-router";
+import { ActivitiesProvider } from "../../contexts/ActivitiesContext";
 
 export default function Layout() {
-  return <Stack />;
+  return (
+    <ActivitiesProvider>
+      <Stack />
+    </ActivitiesProvider>
+  );
 }

@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View, Button, SectionList } from "react-native";
 import { router, Link, Stack, useLocalSearchParams } from "expo-router";
 import { Themes } from "../../assets/Themes";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Activity from "../../components/Activity";
+import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 
 export default function Page() {
-  const params = useLocalSearchParams();
-  console.log(params.name);
   const [DATA, setDATA] = useState([
     {
       title: "Current Activities",
@@ -58,6 +57,8 @@ export default function Page() {
     }
   };
 
+  const { activities } = useContext(ActivitiesContext);
+
   return (
     <View style={styles.container}>
       <Stack.Screen
@@ -67,7 +68,7 @@ export default function Page() {
         }}
       />
       <SectionList
-        sections={DATA}
+        sections={activities}
         keyExtractor={(item, index) => item + index}
         renderItem={({ item, index, section }) => (
           <Activity

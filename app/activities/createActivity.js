@@ -1,7 +1,15 @@
+import React, { useContext } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import { router, Link, useLocalSearchParams, Stack } from "expo-router";
+import { ActivitiesContext } from "../../contexts/ActivitiesContext";
+
 export default function Page() {
   const params = useLocalSearchParams();
+  const { addPendingActivity } = useContext(ActivitiesContext);
+
+  const handleAddActivity = () => {
+    addPendingActivity("Testing123");
+  };
 
   return (
     <View>
@@ -18,9 +26,9 @@ export default function Page() {
             name: "Alan",
           },
         }}
+        onPress={handleAddActivity} // Add the click handler here
       >
-        {" "}
-        Test{" "}
+        Test
       </Link>
     </View>
   );
