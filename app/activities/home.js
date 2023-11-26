@@ -14,7 +14,9 @@ export default function Page() {
     },
     {
       title: "Pending Activities",
-      data: [ "Pending", "Pending", "Pending", "Pending", "Pending" ],
+      data: [ 
+        "Pending", "Pending", "Pending", "Pending", "Pending", "Pending", "Pending", "Pending", "Pending"
+      ],
     },
   ];
 
@@ -41,6 +43,9 @@ export default function Page() {
             {title}
           </Text>
         )}
+        // ItemSeparatorComponent={() => (
+        //   <View style={{ height: 0 }} />
+        // )}
         style={styles.sectionList}
       />
       <Link
@@ -63,12 +68,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 24,
     backgroundColor: "white",
+     marginVertical: 5
   },
   sectionList: {
     width: "100%",
   },
   header: {
     fontSize: 20,
+    backgroundColor: 'white',
   },
   main: {
     flex: 1,
