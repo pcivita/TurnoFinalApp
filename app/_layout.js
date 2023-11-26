@@ -47,23 +47,7 @@ export default function AppLayout() {
         }}
       />
       <Tabs.Screen
-        name="roll/index"
-        // options={{
-        //   tabBarLabel: "Roll",
-        //   tabBarIcon: ({ size, color }) => (
-        //     <FontAwesome5 name="dice-five" size={size + 30} color={color} />
-        //   ),
-          
-        //   tabBarItemStyle: {
-        //     top: -20,
-        //     alignItems: 'center',
-        //     height: 70,
-        //     borderRadius: 50,
-        //     backgroundColor: Themes.colors.salmon,
-        //     transform: [{rotate: '45deg'}] 
-        //   }
-        // }}
-        
+        name="roll/index"      
         options={{
           tabBarIcon: ({ size, color }) => (
             <View

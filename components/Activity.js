@@ -1,33 +1,37 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Themes } from "../assets/Themes";
 import { AntDesign } from '@expo/vector-icons';
 
-export default function Activity({ activityName, index, status }) {
+export default function Activity({ activityName, index, section, changeSection }) {
   const sectionColor =
-    (status === "Current Activities") ? styles.currentActivity : styles.pendingActivity;
+    (section === "Current Activities") ? styles.currentActivity : styles.pendingActivity;
   const textColor =
-    (status === "Current Activities") ? styles.currentText : styles.pendingText;
+    (section === "Current Activities") ? styles.currentText : styles.pendingText;
   const diceContainerColor =
-    (status === "Current Activities") ? styles.currentDiceContainer : styles.pendingDiceContainer;
+    (section === "Current Activities") ? styles.currentDiceContainer : styles.pendingDiceContainer;
   const diceNumberColor = 
-    (status === "Current Activities") ? styles.currentDiceNumber : styles.pendingDiceNumber;
+    (section === "Current Activities") ? styles.currentDiceNumber : styles.pendingDiceNumber;
   const plusMinus = 
-    (status === "Current Activities") ? {name: "downcircle", color: "white" } : {name: "upcircle", color: "black" };
+    (section === "Current Activities") ? {name: "downcircle", color: "white" } : {name: "upcircle", color: "black" };
+
+  const handleChangeSection = () => {
+    changeSection(activityName, section);
+  }
   
   return (
     <View>
       <View style={[styles.container, sectionColor]}>
         <View style={styles.leftOfContainer}>
-          {status === "Current Activities" &&
+          {section === "Current Activities" &&
             <View style={[styles.diceContainer, diceContainerColor]}>
               <Text style={diceNumberColor}> {index} </Text>
             </View>
           }
           <Text style={[styles.text, textColor]}> {activityName} </Text>
         </View>
-        <View style={styles.rightOfContainer}>
+        <TouchableOpacity style={styles.rightOfContainer} onPress={handleChangeSection}>
           <AntDesign name={plusMinus.name} size={24} color={plusMinus.color} />
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
