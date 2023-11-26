@@ -2,26 +2,19 @@ import { StyleSheet, Text, View, Button, SectionList } from "react-native";
 
 import { router, Link, Stack } from "expo-router";
 import Activity from "../../components/Activity";
+// import { title } from "process";
 
 export default function Page() {
   const DATA = [
     {
       title: "Current Activities",
-      data: ["Read", "Write", "Have Fun", "Read", "Read", "Read"],
+      data: [
+        "Read", "Write", "Have Fun", "Soccer", "Meditate", "Yoga"
+      ],
     },
     {
-      title: "Upcoming Activities",
-      data: [
-        "147 sux",
-        "Read",
-        "Read",
-        "Read",
-        "Read",
-        "Read",
-        "Read",
-        "Read",
-        "Read",
-      ],
+      title: "Pending Activities",
+      data: [ "Pending", "Pending", "Pending", "Pending", "Pending" ],
     },
   ];
 
@@ -29,20 +22,27 @@ export default function Page() {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          title: " ",
+          title: "My Activities",
           headerShown: true,
         }}
       />
       <SectionList
         sections={DATA}
         keyExtractor={(item, index) => item + index}
-        renderItem={({ item }) => <Activity activityName={item} />}
+        renderItem={({ item, index, section }) => (
+          <Activity 
+            activityName={item} 
+            index={index + 1} 
+            status={section.title}
+          />
+        )}
         renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles.header}>{title}</Text>
+          <Text style={styles.header}>
+            {title}
+          </Text>
         )}
         style={styles.sectionList}
       />
-
       <Link
         href={{
           pathname: "/activities/createActivity",
@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 20,
-    backgroundColor: "#fff",
   },
   main: {
     flex: 1,
