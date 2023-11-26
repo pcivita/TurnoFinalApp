@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, Button } from "react-native";
 import { router, Link, useLocalSearchParams, Stack } from "expo-router";
-import Activity from "../../components/Activity";
 export default function Page() {
   const params = useLocalSearchParams();
 
@@ -12,6 +11,17 @@ export default function Page() {
         }}
       />
       <Text> Hello </Text>
+      <Link
+        href={{
+          pathname: "/activities/home",
+          params: {
+            name: "Alan",
+          },
+        }}
+      >
+        {" "}
+        Test{" "}
+      </Link>
     </View>
   );
 }
