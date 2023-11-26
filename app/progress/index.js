@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-
+import { Themes } from "../../assets/Themes";
 import { Link } from "expo-router";
 
 export default function Page() {
@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 24,
+    backgroundColor: Themes.colors.background,
   },
   main: {
     flex: 1,
