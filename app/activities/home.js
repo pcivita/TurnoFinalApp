@@ -64,6 +64,9 @@ export default function Page() {
       <Stack.Screen
         options={{
           title: "My Activities",
+          headerStyle: {
+            backgroundColor: Themes.colors.lightGray, // Set the header background color
+          },
           headerShown: true,
         }}
       />
