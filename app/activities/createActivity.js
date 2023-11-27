@@ -1,5 +1,12 @@
 import { useContext, useState } from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+} from "react-native";
 import { router, Link, useLocalSearchParams, Stack } from "expo-router";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { Themes } from "../../assets/Themes";
@@ -43,10 +50,13 @@ export default function Page() {
           onChangeText={setActivityName} // Update the state variable with the input
         />
       </View>
-      <View style={styles.activityNameContainer}>
+      <View style={styles.descriptionContainer}>
         <Text style={styles.activityName}> Description </Text>
         <TextInput
-          style={styles.activityNameInput}
+          editable
+          multiline
+          numberOfLines={4}
+          style={styles.descriptionInput}
           placeholder="Ex. Go on a Run!"
           value={description}
           onChangeText={setDescription} // Update the state variable with the input
@@ -89,7 +99,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   titleContainer: {
-    height: "20%",
+    height: "10%",
     backgroundColor: Themes.colors.salmon,
     borderColor: "black",
     justifyContent: "center",
@@ -120,11 +130,28 @@ const styles = StyleSheet.create({
     borderRadius: 5, // Optional: for rounded corners
     padding: 10,
   },
+  descriptionContainer: {
+    paddingTop: "5%",
+    height: "25%",
+    // borderWidth: 2,
+    // borderColor: "black",
+    gap: "10%",
+  },
+  descriptionInput: {
+    flex: 1,
+    fontSize: 20,
+    marginHorizontal: 12,
+    backgroundColor: "#DCDCDC",
+    borderRadius: 5, // Optional: for rounded corners
+    padding: 10,
+  },
   categoriesContainer: {
-    width: "100%",
+    gap: 10,
+    margin: 12,
+    flex: 1,
     height: "32%",
-    borderWidth: 2,
-    borderColor: "black",
+    //borderWidth: 2,
+    //borderColor: "black",
     flexDirection: "row", // Align children in a row
     flexWrap: "wrap", // Allow items to wrap to the next line
     justifyContent: "space-between", // Optional, for spacing between items

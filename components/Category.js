@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     justifyContent: "center",
     alignContent: "center",
-    borderRadius: 3,
-    borderWidth: 2,
+    borderRadius: 10,
+    borderWidth: 3,
     borderColor: "black",
   },
   icon: {
@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
   component: {
     padding: 20,
     margin: 10,
-    borderWidth: 1,
     borderColor: "gray",
   },
   selected: {
