@@ -35,7 +35,7 @@ export const ActivitiesProvider = ({ children }) => {
       if (pendingIndex !== -1) {
         updatedActivities[pendingIndex] = {
           ...updatedActivities[pendingIndex],
-          data: [...updatedActivities[pendingIndex].data, newActivity],
+          data: [newActivity, ...updatedActivities[pendingIndex].data],
         };
       }
 
