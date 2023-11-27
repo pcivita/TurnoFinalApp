@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   createActivityText: {
     paddingHorizontal: 10,
     color: "white",
-    fontSize: "24",
+    fontSize: 24,
   },
   header: {
     backgroundColor: "white",
