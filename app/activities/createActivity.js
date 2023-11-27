@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -6,6 +6,7 @@ import {
   View,
   Button,
   TextInput,
+  Keyboard,
 } from "react-native";
 import { router, Link, useLocalSearchParams, Stack } from "expo-router";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
@@ -17,15 +18,24 @@ export default function Page() {
   const [description, setDescription] = useState("");
   const { addPendingActivity } = useContext(ActivitiesContext);
 
-  const handleAddActivity = () => {
-    addPendingActivity("Testing123");
-  };
-
   const [selectedId, setSelectedId] = useState(null);
+
+  const handleAddActivity = () => {
+    if (isFormFilled) {
+      console.log(selectedId);
+      addPendingActivity(activityName);
+    }
+  };
 
   const handleSelect = (id) => {
     setSelectedId(id);
   };
+
+  const [isFormFilled, setIsFormFilled] = useState(false);
+
+  useEffect(() => {
+    setIsFormFilled(activityName.trim().length > 0 && selectedId !== null);
+  }, [activityName, selectedId]);
 
   return (
     <View style={styles.container}>
@@ -55,6 +65,10 @@ export default function Page() {
         <TextInput
           editable
           multiline
+          blurOnSubmit={true}
+          onSubmitEditing={() => {
+            Keyboard.dismiss();
+          }}
           numberOfLines={4}
           style={styles.descriptionInput}
           placeholder="Ex. Go on a Run!"
@@ -75,6 +89,7 @@ export default function Page() {
 
       <View style={styles.addToDiceContainer}>
         <Link
+          disabled={!isFormFilled}
           href={{
             pathname: "/activities/home",
             params: {
@@ -83,7 +98,9 @@ export default function Page() {
           }}
           onPress={handleAddActivity} // Add the click handler here
         >
-          <View style={styles.addToDiceButton}>
+          <View
+            style={isFormFilled ? styles.buttonEnabled : styles.buttonDisabled}
+          >
             <Text style={styles.addToDice}> Add to Dice </Text>
           </View>
         </Link>
@@ -164,8 +181,19 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end", // Align children vertically to the end
     alignItems: "flex-end", // Align children horizontally to the end
   },
-  addToDiceButton: {
+  buttonEnabled: {
     backgroundColor: Themes.colors.salmon,
+    padding: 10,
+    width: "100%",
+    flex: 1,
+    alignContent: "center",
+    justifyContent: "center",
+    borderRadius: 20,
+    // borderWidth: 2,
+    // borderColor: "black",
+  },
+  buttonDisabled: {
+    backgroundColor: Themes.colors.lightGray,
     padding: 10,
     width: "100%",
     flex: 1,

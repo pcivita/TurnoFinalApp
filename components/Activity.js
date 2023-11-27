@@ -1,35 +1,56 @@
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { Themes } from "../assets/Themes";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
+import Images from "../assets/Themes/Images";
 
-export default function Activity({ activityName, index, section, changeSection }) {
+export default function Activity({
+  activityName,
+  index,
+  section,
+  changeSection,
+}) {
   const sectionColor =
-    (section === "Current Activities") ? styles.currentActivity : styles.pendingActivity;
+    section === "Current Activities"
+      ? styles.currentActivity
+      : styles.pendingActivity;
   const textColor =
-    (section === "Current Activities") ? styles.currentText : styles.pendingText;
+    section === "Current Activities" ? styles.currentText : styles.pendingText;
   const diceContainerColor =
-    (section === "Current Activities") ? styles.currentDiceContainer : styles.pendingDiceContainer;
-  const diceNumberColor = 
-    (section === "Current Activities") ? styles.currentDiceNumber : styles.pendingDiceNumber;
-  const plusMinus = 
-    (section === "Current Activities") ? {name: "downcircle", color: "white" } : {name: "upcircle", color: "black" };
+    section === "Current Activities"
+      ? styles.currentDiceContainer
+      : styles.pendingDiceContainer;
+  const diceNumberColor =
+    section === "Current Activities"
+      ? styles.currentDiceNumber
+      : styles.pendingDiceNumber;
+  const plusMinus =
+    section === "Current Activities"
+      ? { name: "downcircle", color: "white" }
+      : { name: "upcircle", color: "black" };
 
   const handleChangeSection = () => {
     changeSection(activityName, section);
-  }
-  
+  };
+
   return (
     <View>
       <View style={[styles.container, sectionColor]}>
         <View style={styles.leftOfContainer}>
-          {section === "Current Activities" &&
+          {section === "Current Activities" && (
             <View style={[styles.diceContainer, diceContainerColor]}>
-              <Text style={diceNumberColor}> {index} </Text>
+              {/* <Text style={diceNumberColor}> {index} </Text> */}
+              <Image
+                source={Images.diceIcons.three}
+                style={styles.diceNumberIcon}
+              />
             </View>
-          }
+          )}
           <Text style={[styles.text, textColor]}> {activityName} </Text>
         </View>
-        <TouchableOpacity style={styles.rightOfContainer} onPress={handleChangeSection}>
+        <TouchableOpacity
+          style={styles.rightOfContainer}
+          onPress={handleChangeSection}
+        >
           <AntDesign name={plusMinus.name} size={24} color={plusMinus.color} />
         </TouchableOpacity>
       </View>
@@ -50,10 +71,10 @@ const styles = StyleSheet.create({
   leftOfContainer: {
     flexDirection: "row",
     alignItems: "center",
-    left: 10
+    left: 10,
   },
   rightOfContainer: {
-    right: 10
+    right: 10,
   },
   currentActivity: {
     backgroundColor: Themes.colors.salmon,
@@ -65,33 +86,39 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   currentText: {
-    color: 'white',
+    color: "white",
   },
   pendingText: {
-    color: 'black',
+    color: "black",
   },
   diceContainer: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     width: 40,
     height: 40,
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
     marginRight: 15,
-    backgroundColor: 'white',
+    backgroundColor: "white",
+  },
+  diceNumberIcon: {
+    flex: 1,
+    width: "100%",
+    height: undefined,
+    aspectRatio: 1,
   },
   currentDiceContainer: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   pendingDiceContainer: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
   currentDiceNumber: {
     color: Themes.colors.salmon,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 20,
   },
   pendingDiceNumber: {
     color: Themes.colors.salmonLight,
-  }
+  },
 });

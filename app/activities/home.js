@@ -93,6 +93,7 @@ export default function Page() {
             )}
           </View>
         )}
+        showsVerticalScrollIndicator={false}
         style={styles.sectionList}
       />
       <Link
