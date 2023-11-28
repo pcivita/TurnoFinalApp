@@ -4,4 +4,5 @@ export const colors = {
   salmon: "#FF7474",
   salmonLight: "#FFC1C1",
   lightGray: "#EEEEEE",
+  darkGray: "#A9A9A9",
 };
