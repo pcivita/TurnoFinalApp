@@ -1,37 +1,53 @@
 import React from 'react';
-import { Modal, View, Text, Button, StyleSheet } from 'react-native';
+import { Modal, View, Text, Button, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
-export default function ActivityModal({ isVisible, closeModal }) {
+export default function ActivityModal({ isVisible, closeModal,  }) {
+  const handlePressOutside = () => {
+    closeModal();
+  };
+
   return (
     <Modal
-      animationType="slide"
+      animationType="fade"
       transparent={true}
       visible={isVisible}
+      //presentationStyle="fullScreen"
       onRequestClose={() => {
         closeModal();
       }}
     >
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          <Text>Hello, I'm a modal!</Text>
-          <Button title="Close" onPress={closeModal} />
+      <TouchableWithoutFeedback onPress={handlePressOutside}>
+        <View style={styles.container}>
+          <View style={styles.modal}>
+            <Text>Hello, I'm a modal!</Text>
+            <Button title="Close" onPress={closeModal} />
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  modalContainer: {
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
   },
-  modalContent: {
+  modal: {
+    height: 320,
+    width: 320,
     backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    elevation: 5,
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
   },
 });
