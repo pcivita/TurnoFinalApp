@@ -12,7 +12,7 @@ export default function ActivityModal({ isVisible, closeModal }) {
       }}
     >
       <View style={styles.modalContainer}>
-        <View style={styles.modalCovntent}>
+        <View style={styles.modalContent}>
           <Text>Hello, I'm a modal!</Text>
           <Button title="Close" onPress={closeModal} />
         </View>
