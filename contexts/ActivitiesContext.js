@@ -8,13 +8,23 @@ export const ActivitiesProvider = ({ children }) => {
   const [activities, setActivities] = useState([
     {
       title: "Current Activities",
-      data: ["Read", "Write", "Have Fun", "Soccer", "Meditate", "Yoga"],
+      data: [
+        ["Soccer", "Exercise"], 
+        ["Write", "Work"], 
+        ["Read", "Academic"], 
+        ["Meditate", "Relax"], 
+        ["Have fun", "Social"], 
+        ["Clean house", "Chore"]
+      ],
       noActivitiesMessage:
         "You have no Current Activities. Add activities from the Pending Activities section to use your dice!",
     },
     {
       title: "Pending Activities",
-      data: ["Pending", "Pending"],
+      data: [
+        ["Paint", "Relax"], 
+        ["Dishes", "Chore"],
+      ],
       noActivitiesMessage:
         "You have no Pending Activities. If you ever have ideas for future activities you want to do, use the Create Activity button to create them!",
     },

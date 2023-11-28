@@ -3,21 +3,10 @@ import { router, Link, Stack, useLocalSearchParams } from "expo-router";
 import { Themes } from "../../assets/Themes";
 import { useState, useEffect, useContext } from "react";
 import Activity from "../../components/Activity";
-import ActivityModal from "../../components/ActivityModal";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 
 export default function Page() {
   const { activities } = useContext(ActivitiesContext);
-
-  const [isModalVisible, setModalVisible] = useState(false);
-
-  const openModal = (activityName, currentSection) => {
-    setModalVisible(true);
-  };
-  const closeModal = () => {
-    setModalVisible(false);
-  };
-
 
   return (
     <View style={styles.container}>
@@ -35,10 +24,9 @@ export default function Page() {
         keyExtractor={(item, index) => item + index}
         renderItem={({ item, index, section }) => (
           <Activity
-            activityName={item}
+            activityObject={item}
             index={index + 1}
             section={section.title}
-            viewInfo={openModal}
           />
         )}
         renderSectionHeader={({ section }) => (
@@ -69,7 +57,6 @@ export default function Page() {
           <Text style={styles.createActivityText}> Create Activity</Text>
         </View>
       </Link>
-      <ActivityModal isVisible={isModalVisible} closeModal={closeModal} />
     </View>
   );
 }

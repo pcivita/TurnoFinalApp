@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, View, Text, Button, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
-export default function ActivityModal({ isVisible, closeModal,  }) {
+export default function ActivityModal({ isVisible, closeModal, activity }) {
   const handlePressOutside = () => {
     closeModal();
   };
@@ -11,7 +11,6 @@ export default function ActivityModal({ isVisible, closeModal,  }) {
       animationType="fade"
       transparent={true}
       visible={isVisible}
-      //presentationStyle="fullScreen"
       onRequestClose={() => {
         closeModal();
       }}
@@ -19,7 +18,7 @@ export default function ActivityModal({ isVisible, closeModal,  }) {
       <TouchableWithoutFeedback onPress={handlePressOutside}>
         <View style={styles.container}>
           <View style={styles.modal}>
-            <Text>Hello, I'm a modal!</Text>
+            <Text>Activity: {activity[0]} </Text>
             <Button title="Close" onPress={closeModal} />
           </View>
         </View>
