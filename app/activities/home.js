@@ -6,55 +6,8 @@ import Activity from "../../components/Activity";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 
 export default function Page() {
-  const [DATA, setDATA] = useState([
-    {
-      title: "Current Activities",
-      data: ["Read", "Write", "Have Fun", "Soccer", "Meditate", "Yoga"],
-      noActivitiesMessage:
-        "You have no Current Activities. Add activities from the Pending Activities section to use your dice!",
-    },
-    {
-      title: "Pending Activities",
-      data: [
-        "Pending",
-        "Pending",
-        "Pending",
-        "Pending",
-        "Pending",
-        "Pending",
-        "Pending",
-      ],
-      noActivitiesMessage:
-        "You have no Pending Activities. If you ever have ideas for future activities you want to do, use the Create Activity button to create them!",
-    },
-  ]);
-
   const handleChangeSection = (activityName, currentSection) => {
-    let sectionIndex = currentSection === "Current Activities" ? 0 : 1;
-    let targetSectionIndex = currentSection === "Current Activities" ? 1 : 0;
-
-    const activityIndex = DATA[sectionIndex].data.indexOf(activityName);
-    if (activityIndex != -1) {
-      // Checks for case when there are already 6 activities, so pending activity can't move
-      let canChangeSection =
-        targetSectionIndex !== 0 || DATA[0].data.length < 6;
-      if (canChangeSection) {
-        // Remove activity from current section
-        let updatedData = [...DATA];
-        updatedData[sectionIndex].data.splice(activityIndex, 1);
-
-        // Add activity to other section
-        if (targetSectionIndex == 0) {
-          updatedData[targetSectionIndex].data.push(activityName); // Add to bottom of current
-        } else {
-          updatedData[targetSectionIndex].data.unshift(activityName); // Add to top of pending
-        }
-        setDATA(updatedData);
-      }
-    } else {
-      // Error message
-      console.log("error");
-    }
+    console.log("clicked");
   };
 
   const { activities } = useContext(ActivitiesContext);

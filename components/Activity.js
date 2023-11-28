@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { Themes } from "../assets/Themes";
 import { AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Images from "../assets/Themes/Images";
 
 export default function Activity({
@@ -51,7 +52,8 @@ export default function Activity({
           style={styles.rightOfContainer}
           onPress={handleChangeSection}
         >
-          <AntDesign name={plusMinus.name} size={24} color={plusMinus.color} />
+          {/* <AntDesign name={plusMinus.name} size={24} color={plusMinus.color} /> */}
+          <MaterialCommunityIcons name="dots-vertical" size={30} color={plusMinus.color} />
         </TouchableOpacity>
       </View>
     </View>
