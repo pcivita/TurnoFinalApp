@@ -9,12 +9,12 @@ export const ActivitiesProvider = ({ children }) => {
     {
       title: "Current Activities",
       data: [
-        ["Soccer", "Exercise"], 
-        ["Write", "Work"], 
-        ["Read", "Academic"], 
-        ["Meditate", "Relax"], 
-        ["Have fun", "Social"], 
-        ["Clean house", "Chore"]
+        ["Soccer", "Soccer description", "Exercise"], 
+        ["Write", "Write description", "Work"], 
+        ["Read", "Read description", "Academic"], 
+        ["Meditate", "Meditate description", "Relax"], 
+        ["Have fun", "Have fun description", "Social"], 
+        ["Clean house", "Clean house description", "Chore"]
       ],
       noActivitiesMessage:
         "You have no Current Activities.\n\nCreate an activity or add one from the Pending Activities section to use your dice!",
@@ -22,8 +22,8 @@ export const ActivitiesProvider = ({ children }) => {
     {
       title: "Pending Activities",
       data: [
-        ["Paint", "Relax"], 
-        ["Dishes", "Chore"],
+        ["Paint", "Paint description", "Relax"], 
+        ["Dishes", "Dishes description", "Chore"],
       ],
       noActivitiesMessage:
         "You have no Pending Activities.\n\nUse the Create Activity button to create new activities for later as you think of them!",
@@ -34,7 +34,7 @@ export const ActivitiesProvider = ({ children }) => {
   const addPendingActivity = (name, description, category ) => {
     setActivities((prevActivities) => {
       let updatedActivities = [...prevActivities];
-      let newActivity = [name, category];
+      let newActivity = [name, description, category];
 
       const currentIndex = 0;
       const pendingIndex = 1;

@@ -56,6 +56,7 @@ export default function Activity({ activityObject, index, section }) {
             isVisible={isModalVisible} 
             closeModal={closeModal} 
             activity={activityObject}
+            section={section}
           />
         </TouchableOpacity>
       </View>
