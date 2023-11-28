@@ -22,8 +22,7 @@ export default function Page() {
 
   const handleAddActivity = () => {
     if (isFormFilled) {
-      console.log(selectedId);
-      addPendingActivity(activityName);
+      addPendingActivity(activityName, description, selectedId);
     }
   };
 

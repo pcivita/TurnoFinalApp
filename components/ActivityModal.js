@@ -1,10 +1,14 @@
 import React from 'react';
 import { Modal, View, Text, Button, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function ActivityModal({ isVisible, closeModal, activity }) {
+export default function ActivityModal({ isVisible, closeModal, activity, section }) {
   const handlePressOutside = () => {
     closeModal();
   };
+
+  const otherSection = 
+    (section === "Current Activities") ? "Pending Activities" : "Current Activities";
 
   return (
     <Modal
@@ -19,6 +23,11 @@ export default function ActivityModal({ isVisible, closeModal, activity }) {
         <View style={styles.container}>
           <View style={styles.modal}>
             <Text>Activity: {activity[0]} </Text>
+            <Text>Description: {activity[1]} </Text>
+            <Text>Category: {activity[2]} </Text>
+            <MaterialCommunityIcons name="trash-can-outline" size={40} color="black" />
+            <MaterialCommunityIcons name="pencil-outline" size={40} color="black" />
+            <Text>Move to: {otherSection} </Text>
             <Button title="Close" onPress={closeModal} />
           </View>
         </View>
@@ -32,7 +41,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modal: {
     height: 320,

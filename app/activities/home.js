@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   createActivityContainer: {
-    flex: 0.1,
+    flex: 0.09,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 15,
     padding: 10,
-    height: 90,
+    height: 110,
   },
   modalContainer: {
     flex: 1,
