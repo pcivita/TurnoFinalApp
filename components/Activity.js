@@ -1,15 +1,9 @@
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { Themes } from "../assets/Themes";
-import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Images from "../assets/Themes/Images";
 
-export default function Activity({
-  activityName,
-  index,
-  section,
-  changeSection,
-}) {
+export default function Activity({ activityName, index, section, viewInfo }) {
   const sectionColor =
     section === "Current Activities"
       ? styles.currentActivity
@@ -29,8 +23,8 @@ export default function Activity({
       ? { name: "downcircle", color: "white" }
       : { name: "upcircle", color: "black" };
 
-  const handleChangeSection = () => {
-    changeSection(activityName, section);
+  const openModal = () => {
+    viewInfo(activityName, section);
   };
 
   return (
@@ -50,9 +44,8 @@ export default function Activity({
         </View>
         <TouchableOpacity
           style={styles.rightOfContainer}
-          onPress={handleChangeSection}
+          onPress={openModal}
         >
-          {/* <AntDesign name={plusMinus.name} size={24} color={plusMinus.color} /> */}
           <MaterialCommunityIcons name="dots-vertical" size={30} color={plusMinus.color} />
         </TouchableOpacity>
       </View>

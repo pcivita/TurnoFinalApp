@@ -1,16 +1,23 @@
-import { StyleSheet, Text, View, Button, SectionList } from "react-native";
+import { StyleSheet, Text, View, Button, SectionList, Modal } from "react-native";
 import { router, Link, Stack, useLocalSearchParams } from "expo-router";
 import { Themes } from "../../assets/Themes";
 import { useState, useEffect, useContext } from "react";
 import Activity from "../../components/Activity";
+import ActivityModal from "../../components/ActivityModal";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 
 export default function Page() {
-  const handleChangeSection = (activityName, currentSection) => {
-    console.log("clicked");
+  const { activities } = useContext(ActivitiesContext);
+
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const openModal = (activityName, currentSection) => {
+    setModalVisible(true);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
-  const { activities } = useContext(ActivitiesContext);
 
   return (
     <View style={styles.container}>
@@ -31,7 +38,7 @@ export default function Page() {
             activityName={item}
             index={index + 1}
             section={section.title}
-            changeSection={handleChangeSection}
+            viewInfo={openModal}
           />
         )}
         renderSectionHeader={({ section }) => (
@@ -62,6 +69,7 @@ export default function Page() {
           <Text style={styles.createActivityText}> Create Activity</Text>
         </View>
       </Link>
+      <ActivityModal isVisible={isModalVisible} closeModal={closeModal} />
     </View>
   );
 }
@@ -130,5 +138,17 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     padding: 10,
     height: 90,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    elevation: 5, // Android shadow
   },
 });
