@@ -17,7 +17,7 @@ export const ActivitiesProvider = ({ children }) => {
         ["Clean house", "Chore"]
       ],
       noActivitiesMessage:
-        "You have no Current Activities. Add activities from the Pending Activities section to use your dice!",
+        "You have no Current Activities.\n\nCreate an activity or add one from the Pending Activities section to use your dice!",
     },
     {
       title: "Pending Activities",
@@ -26,29 +26,30 @@ export const ActivitiesProvider = ({ children }) => {
         ["Dishes", "Chore"],
       ],
       noActivitiesMessage:
-        "You have no Pending Activities. If you ever have ideas for future activities you want to do, use the Create Activity button to create them!",
+        "You have no Pending Activities.\n\nUse the Create Activity button to create new activities for later as you think of them!",
     },
   ]);
 
   // Function to add a new activity to Pending Activities
-  const addPendingActivity = (newActivity) => {
+  const addPendingActivity = (name, description, category ) => {
     setActivities((prevActivities) => {
-      // Clone the previous state
       let updatedActivities = [...prevActivities];
+      let newActivity = [name, category];
 
-      // Find the index of "Pending Activities"
-      const pendingIndex = updatedActivities.findIndex(
-        (activity) => activity.title === "Pending Activities"
-      );
-
-      // Safely check if "Pending Activities" exists and update its data array
-      if (pendingIndex !== -1) {
+      const currentIndex = 0;
+      const pendingIndex = 1;
+      // Add to current activities if there is room. Otherwise add to pending
+      if (!prevActivities[currentIndex].data || prevActivities[currentIndex].data.length < 6) {
+        updatedActivities[currentIndex] = {
+          ...updatedActivities[currentIndex],
+          data: [...updatedActivities[currentIndex].data, newActivity],
+        };
+      } else {
         updatedActivities[pendingIndex] = {
           ...updatedActivities[pendingIndex],
           data: [newActivity, ...updatedActivities[pendingIndex].data],
         };
       }
-
       return updatedActivities;
     });
   };
