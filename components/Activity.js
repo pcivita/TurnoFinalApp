@@ -37,15 +37,23 @@ export default function Activity({ activityObject, index, section }) {
     setModalVisible(false);
   };
 
+  const diceImages = {
+    1: Images.diceIcons.one,
+    2: Images.diceIcons.two,
+    3: Images.diceIcons.three,
+    4: Images.diceIcons.four,
+    5: Images.diceIcons.five,
+    6: Images.diceIcons.six,
+  };
+
   return (
     <View>
       <View style={[styles.container, sectionColor]}>
         <View style={styles.leftOfContainer}>
           {section === "Current Activities" && (
             <View style={[styles.diceContainer, diceContainerColor]}>
-              {/* <Text style={diceNumberColor}> {index} </Text> */}
               <Image
-                source={Images.diceIcons.three}
+                source={diceImages[index]}
                 style={styles.diceNumberIcon}
               />
             </View>
