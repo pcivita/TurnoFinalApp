@@ -12,22 +12,9 @@ export default function Activity({ activityObject, index, section }) {
       : styles.pendingActivity;
   const textColor =
     section === "Current Activities" ? styles.currentText : styles.pendingText;
-  const diceContainerColor =
-    section === "Current Activities"
-      ? styles.currentDiceContainer
-      : styles.pendingDiceContainer;
-  const diceNumberColor =
-    section === "Current Activities"
-      ? styles.currentDiceNumber
-      : styles.pendingDiceNumber;
-  const plusMinus =
-    section === "Current Activities"
-      ? { name: "downcircle", color: "white" }
-      : { name: "upcircle", color: "black" };
-
-  // const openModal = () => {
-  //   viewInfo(activityName, section);
-  // };
+  const iconColor = 
+    section === "Current Activities" ? "white": "black";
+    
 
   const [isModalVisible, setModalVisible] = useState(false);
   const openModal = () => {
@@ -51,7 +38,7 @@ export default function Activity({ activityObject, index, section }) {
       <View style={[styles.container, sectionColor]}>
         <View style={styles.leftOfContainer}>
           {section === "Current Activities" && (
-            <View style={[styles.diceContainer, diceContainerColor]}>
+            <View style={styles.diceContainer}>
               <Image
                 source={diceImages[index]}
                 style={styles.diceNumberIcon}
@@ -64,7 +51,7 @@ export default function Activity({ activityObject, index, section }) {
           style={styles.rightOfContainer}
           onPress={openModal}
         >
-          <MaterialCommunityIcons name="dots-vertical" size={30} color={plusMinus.color} />
+          <MaterialCommunityIcons name="dots-vertical" size={30} color={iconColor} />
           <ActivityModal 
             isVisible={isModalVisible} 
             closeModal={closeModal} 
