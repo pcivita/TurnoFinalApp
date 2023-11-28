@@ -1,9 +1,11 @@
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { Themes } from "../assets/Themes";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useState } from "react";
 import Images from "../assets/Themes/Images";
+import ActivityModal from "./ActivityModal";
 
-export default function Activity({ activityName, index, section, viewInfo }) {
+export default function Activity({ activityObject, index, section }) {
   const sectionColor =
     section === "Current Activities"
       ? styles.currentActivity
@@ -23,8 +25,16 @@ export default function Activity({ activityName, index, section, viewInfo }) {
       ? { name: "downcircle", color: "white" }
       : { name: "upcircle", color: "black" };
 
+  // const openModal = () => {
+  //   viewInfo(activityName, section);
+  // };
+
+  const [isModalVisible, setModalVisible] = useState(false);
   const openModal = () => {
-    viewInfo(activityName, section);
+    setModalVisible(true);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
   return (
@@ -40,13 +50,18 @@ export default function Activity({ activityName, index, section, viewInfo }) {
               />
             </View>
           )}
-          <Text style={[styles.text, textColor]}> {activityName} </Text>
+          <Text style={[styles.text, textColor]}> {activityObject[0]} </Text>
         </View>
         <TouchableOpacity
           style={styles.rightOfContainer}
           onPress={openModal}
         >
           <MaterialCommunityIcons name="dots-vertical" size={30} color={plusMinus.color} />
+          <ActivityModal 
+            isVisible={isModalVisible} 
+            closeModal={closeModal} 
+            activity={activityObject}
+          />
         </TouchableOpacity>
       </View>
     </View>
