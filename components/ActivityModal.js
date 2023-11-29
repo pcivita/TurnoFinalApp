@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  Touchable,
 } from "react-native";
 import { Link } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -34,8 +35,11 @@ export default function ActivityModal({
 
   const otherSection =
     section === "Current Activities"
-      ? "Pending Activities"
-      : "Current Activities";
+      ? "Pending"
+      : "Dice";
+
+  const title = 
+    section === "Current Activities" ? "Current Activity" : "Pending Activity";
 
   const name = activity[0];
   const description = activity[1];
@@ -59,7 +63,7 @@ export default function ActivityModal({
               <MaterialCommunityIcons name="close" size={30} color="black" />
             </TouchableOpacity>
             <View style={styles.titleContainer}>
-              <Text style={styles.title}>My Activity </Text>
+              <Text style={styles.title}>{title}</Text>
             </View>
             <View style={styles.activityNameContainer}>
               <Text style={styles.subtitle}> Activity Name </Text>
@@ -105,33 +109,29 @@ export default function ActivityModal({
               color="black"
             />
             <View style={styles.buttonsContainer}>
-              <View style={styles.leftButtonContainer}>
-                <Text> in this section </Text>
-                <Text> move to other </Text>
+              
+              <View style={styles.leftSide}>
+                {/* <Text> in this section </Text> */}
+                <TouchableOpacity style={styles.button}>
+                  <Text style={styles.buttonText}>{"Move to " + otherSection}</Text>
+                </TouchableOpacity>
               </View>
-              <View style={styles.leftButtonContainer}>
-                <Button title={"Move to" + otherSection}></Button>
-                <Text> in this section </Text>
-                <Text> move to other </Text>
+
+              <View style={styles.leftSide}>
+                {/* <Text> in this section </Text> */}
+                <TouchableOpacity style={styles.button}>
+                  <Text style={styles.buttonText}>
+                    Edit Activity
+                  </Text>
+                  <MaterialCommunityIcons
+                    name="pencil-outline"
+                    size={20}
+                    color="white"
+                  />
+                </TouchableOpacity>
               </View>
+
             </View>
-              {/* <View style={styles.buttonsContainer}>
-              <View style={styles.leftButtonContainer}></View>
-                <Text>In: {section}</Text>
-                <Button title={"Move to " + otherSection}>
-                  <Text>Move to {otherSection}</Text>
-                </Button>
-              </View>
-              <View style={styles.cancelContainer}>
-                  <View style={styles.buttonEnabled} >
-                    <Text style={styles.addToDice}>Cancel</Text>
-                  </View>
-              </View>
-              <View style={styles.cancelContainer}>
-                  <View style={styles.buttonEnabled} >
-                    <Text style={styles.addToDice}>Cancel</Text>
-                  </View>
-            </View> */}
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -277,13 +277,32 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "90%",
+    width: "95%",
   },
-  leftButtonContainer: {
+
+  leftSide: {
     flexDirection: "column",
     // justifyContent: "space-between",
     // alignItems: "center",
   },
+  rightSide: {
+    flexDirection: "column"
+  },
+  button: {
+    backgroundColor: Themes.colors.salmon,
+    padding: 10,
+    borderRadius: 20,
+    width: 170,
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 20,
+  }
   // cancelContainer: {
   //   height: "90%",
   //   //margin: 12,
