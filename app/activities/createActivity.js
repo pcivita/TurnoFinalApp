@@ -37,12 +37,12 @@ export default function Page() {
   }, [activityName, selectedId]);
 
   const categories = [
-    "Exercise",
-    "Work",
-    "Academic",
-    "Relax",
-    "Social",
-    "Chore",
+    ["Exercise", "running"],
+    ["Work", "briefcase"],
+    ["Academic", "graduation-cap"],
+    ["Relax", "cat"],
+    ["Social", "user-friends"],
+    ["Chore", "broom"],
   ];
 
   return (
@@ -51,7 +51,7 @@ export default function Page() {
         options={{
           title: "",
           headerStyle: {
-            backgroundColor: Themes.colors.salmon, // Set the header background color
+            backgroundColor: Themes.colors.salmon,
           },
           headerTintColor: "white",
         }}
@@ -91,7 +91,8 @@ export default function Page() {
             id={id}
             isSelected={id === selectedId}
             onSelect={handleSelect}
-            categoryName={categories[id - 1]}
+            categoryName={categories[id - 1][0]}
+            iconName={categories[id - 1][1]}
           />
         ))}
       </View>
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
   },
   activityNameInput: {
     marginHorizontal: 12,
-    backgroundColor: "#DCDCDC",
+    backgroundColor: Themes.colors.mediumGray,
     borderRadius: 5, // Optional: for rounded corners
     padding: 10,
   },
@@ -176,8 +177,6 @@ const styles = StyleSheet.create({
     margin: 12,
     flex: 1,
     height: "32%",
-    //borderWidth: 2,
-    //borderColor: "black",
     flexDirection: "row", // Align children in a row
     flexWrap: "wrap", // Allow items to wrap to the next line
     justifyContent: "space-between", // Optional, for spacing between items

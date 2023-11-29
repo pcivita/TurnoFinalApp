@@ -2,19 +2,15 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { Themes } from "../assets/Themes";
+import { FontAwesome5 } from '@expo/vector-icons';
 
-export default function Category({ id, isSelected, onSelect, categoryName }) {
+export default function Category({ id, isSelected, onSelect, categoryName, iconName }) {
   return (
     <TouchableOpacity
       style={[styles.container, isSelected ? styles.selected : null]}
       onPress={() => onSelect(id)}
     >
-      <Ionicons
-        name="home-outline"
-        size={70}
-        color={"black"}
-        style={styles.icon}
-      />
+      <FontAwesome5 style={styles.icon} name={iconName} size={40} color={Themes.colors.salmon}/>
       <Text style={styles.categoryText}> {categoryName} </Text>
     </TouchableOpacity>
   );
@@ -25,17 +21,19 @@ const styles = StyleSheet.create({
     width: "30%",
     height: undefined,
     aspectRatio: 1,
-    justifyContent: "center",
-    alignContent: "center",
-    borderRadius: 10,
+    // flexDirection: "column",
+    // justifyContent: "center",
+    // alignItems: "center",
+
+    borderColor: Themes.colors.mediumGray,
+    borderRadius: 20,
     borderWidth: 3,
-    borderColor: "black",
   },
   icon: {
-    alignSelf: "center",
+    // alignSelf: "center",
   },
   categoryText: {
-    alignSelf: "center",
+    // alignSelf: "center",
   },
   component: {
     padding: 20,
