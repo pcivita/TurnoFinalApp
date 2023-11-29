@@ -1,13 +1,27 @@
-import React from 'react';
-import { Modal, View, Text, TextInput, Button, StyleSheet, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import React, { useState } from "react";
+import {
+  Modal,
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+} from "react-native";
 import { Link } from "expo-router";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Themes } from "../assets/Themes";
 import Category from "./Category";
 import ViewActivity from "../app/activities/viewActivity";
 import EditActivity from "../app/activities/editActivity";
 
-export default function ActivityModal({ isVisible, closeModal, activity, section }) {
+export default function ActivityModal({
+  isVisible,
+  closeModal,
+  activity,
+  section,
+}) {
   const handlePressOutside = (e) => {
     // Check if the click is outside the modal
     if (e.target === e.currentTarget) {
@@ -15,15 +29,19 @@ export default function ActivityModal({ isVisible, closeModal, activity, section
     }
   };
 
-  const otherSection = 
-    (section === "Current Activities") ? "Pending Activities" : "Current Activities";
+  const [editMode, setEditMode] = useState(false);
+
+  const otherSection =
+    section === "Current Activities"
+      ? "Pending Activities"
+      : "Current Activities";
 
   const name = activity[0];
   const description = activity[1];
   const category = activity[2].toLowerCase();
-  
+
   const categoryIcon = Themes.categoryIcons[category];
-  
+
   return (
     <Modal
       animationType="fade"
@@ -46,16 +64,16 @@ export default function ActivityModal({ isVisible, closeModal, activity, section
               <Text style={styles.subtitle}> Activity Name </Text>
               <TextInput
                 style={styles.input}
-                //placeholder="E. Go on a Run!"
                 value={name}
+                editable={false}
                 //onChangeText={setActivityName} // Update the state variable with the input
               />
             </View>
             <View style={styles.descriptionContainer}>
               <Text style={styles.subtitle}> Description </Text>
               <TextInput
-                editable
                 multiline
+                editable={false}
                 blurOnSubmit={true}
                 onSubmitEditing={() => {
                   Keyboard.dismiss();
@@ -76,14 +94,49 @@ export default function ActivityModal({ isVisible, closeModal, activity, section
                 iconName={categoryIcon}
               />
             </View>
-            <MaterialCommunityIcons name="trash-can-outline" size={40} color="black" />
-            <MaterialCommunityIcons name="pencil-outline" size={40} color="black" />
+            <MaterialCommunityIcons
+              name="trash-can-outline"
+              size={40}
+              color="black"
+            />
+            <MaterialCommunityIcons
+              name="pencil-outline"
+              size={40}
+              color="black"
+            />
+            <View style={styles.buttonsContainer}>
+              <View style={styles.leftButtonContainer}>
+                <Text> in this section </Text>
+                <Text> move to other </Text>
+              </View>
+              <View style={styles.leftButtonContainer}>
+                <Text> in this section </Text>
+                <Text> move to other </Text>
+              </View>
+            </View>
+              {/* <View style={styles.buttonsContainer}>
+              <View style={styles.leftButtonContainer}></View>
+                <Text>In: {section}</Text>
+                <Button title={"Move to " + otherSection}>
+                  <Text>Move to {otherSection}</Text>
+                </Button>
+              </View>
+              <View style={styles.cancelContainer}>
+                  <View style={styles.buttonEnabled} >
+                    <Text style={styles.addToDice}>Cancel</Text>
+                  </View>
+              </View>
+              <View style={styles.cancelContainer}>
+                  <View style={styles.buttonEnabled} >
+                    <Text style={styles.addToDice}>Cancel</Text>
+                  </View>
+            </View> */}
           </View>
         </View>
       </TouchableWithoutFeedback>
     </Modal>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -92,27 +145,27 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // backgroundColor: 'rgba(0, 0, 0, 0.7)',
     flex: 1,
-    justifyContent: 'flex-end', // Align the content at the bottom
-    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Slightly transparent background
+    justifyContent: "flex-end", // Align the content at the bottom
+    backgroundColor: "rgba(0, 0, 0, 0.4)", // Slightly transparent background
   },
   modal: {
     height: "90%",
     width: "100%",
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     paddingTop: 10,
-    alignItems: 'center',
-    shadowColor: 'black',
+    alignItems: "center",
+    shadowColor: "black",
     shadowOffset: {
       width: 0,
       height: 0,
     },
     shadowOpacity: 0.5,
     shadowRadius: 5,
-    position: 'absolute',
-    top: 'auto', // Reset the top position
-    bottom: 0,    // Position at the bottom
-    overflow: "hidden"
+    position: "absolute",
+    top: "auto", // Reset the top position
+    bottom: 0, // Position at the bottom
+    overflow: "hidden",
   },
   titleContainer: {
     height: "10%",
@@ -172,19 +225,7 @@ const styles = StyleSheet.create({
   },
   categoriesContainer: {
     margin: 15,
-    // flex: 1,
-    //height: "40%", 
-    // flexDirection: "row",
-    // justifyContent: "space-between",
-
-    // flexDirection: "column",
-    // alignItems: "flex-start",
-    // justifyContent: "flex-start",
-    // width: "100%"
   },
-
-
-
   topSection: {
     width: "100%",
     paddingHorizontal: 15,
@@ -199,23 +240,15 @@ const styles = StyleSheet.create({
   },
   horizontalLine: {
     height: 1,
-    width: '90%',
+    width: "90%",
     backgroundColor: Themes.colors.darkGray,
     marginVertical: 10,
-  },
-  middleSection: {
-    backgroundColor: Themes.colors.salmon,
-    width: "95%",
-    height: "30%",
-    //borderRadius: 10,
-    //paddingHorizontal: 15,
-    flexDirection: "row",
   },
   categoryContainer: {
     backgroundColor: Themes.colors.salmon,
     borderRadius: 10,
     paddingHorizontal: 15,
-    width: "20%"
+    width: "20%",
   },
   editActivityContainer: {
     flex: 0.09,
@@ -239,4 +272,53 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 17,
   },
+  buttonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "90%",
+  },
+  leftButtonContainer: {
+    flexDirection: "column",
+    // justifyContent: "space-between",
+    // alignItems: "center",
+  },
+  // cancelContainer: {
+  //   height: "90%",
+  //   //margin: 12,
+  //   //justifyContent: "flex-end", // Align children vertically to the end
+  //   //alignSelf: "flex-start", // Align children horizontally to the end
+  // },
+  // addToDiceContainer: {
+  //   height: "8%",
+  //   //margin: 12,
+  //   //justifyContent: "flex-end", // Align children vertically to the end
+  //   //alignSelf: "flex-end", // Align children horizontally to the end
+  // },
+  // buttonEnabled: {
+  //   backgroundColor: Themes.colors.salmon,
+  //   padding: 10,
+  //   width: "100%",
+  //   flex: 1,
+  //   alignContent: "center",
+  //   justifyContent: "center",
+  //   borderRadius: 20,
+  // },
+  // buttonDisabled: {
+  //   backgroundColor: Themes.colors.salmonTransparent,
+  //   padding: 10,
+  //   width: "100%",
+  //   flex: 1,
+  //   alignContent: "center",
+  //   justifyContent: "center",
+  //   borderRadius: 20,
+  //   // borderWidth: 2,
+  //   // borderColor: "black",
+  // },
+  // addToDice: {
+  //   alignSelf: "center",
+  //   fontSize: 20,
+  //   fontWeight: "bold",
+  //   color: "white",
+  // },
 });
