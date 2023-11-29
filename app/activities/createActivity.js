@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   buttonDisabled: {
-    backgroundColor: Themes.colors.lightGray,
+    backgroundColor: Themes.colors.salmonTransparent,
     padding: 10,
     width: "100%",
     flex: 1,
