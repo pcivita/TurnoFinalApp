@@ -13,6 +13,7 @@ import { Link } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Themes } from "../assets/Themes";
 import Category from "./Category";
+import CategoryDisabled from "./CategoryDisabled";
 import ViewActivity from "../app/activities/viewActivity";
 import EditActivity from "../app/activities/editActivity";
 
@@ -86,9 +87,8 @@ export default function ActivityModal({
               />
             </View>
             <View style={styles.categoriesContainer}>
-              <Category
+              <CategoryDisabled
                 key={1}
-                id={1}
                 isSelected="true"
                 categoryName={category}
                 iconName={categoryIcon}
@@ -110,6 +110,7 @@ export default function ActivityModal({
                 <Text> move to other </Text>
               </View>
               <View style={styles.leftButtonContainer}>
+                <Button title={"Move to" + otherSection}></Button>
                 <Text> in this section </Text>
                 <Text> move to other </Text>
               </View>
