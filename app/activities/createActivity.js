@@ -176,10 +176,10 @@ const styles = StyleSheet.create({
     gap: 10,
     margin: 12,
     flex: 1,
-    height: "32%",
-    flexDirection: "row", // Align children in a row
-    flexWrap: "wrap", // Allow items to wrap to the next line
-    justifyContent: "space-between", // Optional, for spacing between items
+    height: "40%", 
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
   },
   addToDiceContainer: {
     height: "8%",
