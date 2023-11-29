@@ -124,7 +124,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
   },
-  pendingDiceNumber: {
-    color: Themes.colors.salmonLight,
-  },
 });
