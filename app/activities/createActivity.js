@@ -20,7 +20,8 @@ export default function Page() {
 
   const handleAddActivity = () => {
     if (isFormFilled) {
-      addPendingActivity(activityName, description, selectedId);
+      let category = categories[selectedId - 1][0];
+      addPendingActivity(activityName, description, category);
     }
   };
 

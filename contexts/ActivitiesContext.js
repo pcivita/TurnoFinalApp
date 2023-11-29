@@ -31,7 +31,7 @@ export const ActivitiesProvider = ({ children }) => {
   ]);
 
   // Function to add a new activity to Pending Activities
-  const addPendingActivity = (name, description, category ) => {
+  const addPendingActivity = (name, description, category) => {
     setActivities((prevActivities) => {
       let updatedActivities = [...prevActivities];
       let newActivity = [name, description, category];
