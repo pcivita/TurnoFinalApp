@@ -36,10 +36,10 @@ export default function Page() {
 
   const categories = [
     ["Exercise", "running"],
-    ["Work", "briefcase"],
-    ["Academic", "graduation-cap"],
     ["Relax", "cat"],
     ["Social", "user-friends"],
+    ["Work", "briefcase"],
+    ["Academic", "graduation-cap"],
     ["Chore", "broom"],
   ];
 
@@ -61,7 +61,7 @@ export default function Page() {
         <Text style={styles.subtitle}> Activity Name </Text>
         <TextInput
           style={styles.input}
-          placeholder="Ex. Go on a Run!"
+          placeholder="E. Go on a Run!"
           value={activityName}
           onChangeText={setActivityName} // Update the state variable with the input
         />
@@ -77,7 +77,7 @@ export default function Page() {
           }}
           numberOfLines={4}
           style={styles.input}
-          placeholder="Ex. Go on a Run!"
+          placeholder="Ex. Go on a run around Lake Lagunita"
           value={description}
           onChangeText={setDescription} // Update the state variable with the input
         />
