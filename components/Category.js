@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { Themes } from "../assets/Themes";
 
-export default function Category({ id, isSelected, onSelect }) {
+export default function Category({ id, isSelected, onSelect, categoryName }) {
   return (
     <TouchableOpacity
       style={[styles.container, isSelected ? styles.selected : null]}
@@ -15,7 +15,7 @@ export default function Category({ id, isSelected, onSelect }) {
         color={"black"}
         style={styles.icon}
       />
-      <Text style={styles.categoryText}> Category </Text>
+      <Text style={styles.categoryText}> {categoryName} </Text>
     </TouchableOpacity>
   );
 }
