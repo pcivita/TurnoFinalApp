@@ -1,10 +1,8 @@
 import { useContext, useState, useEffect } from "react";
 import {
-  ScrollView,
   StyleSheet,
   Text,
   View,
-  Button,
   TextInput,
   Keyboard,
 } from "react-native";
@@ -60,16 +58,16 @@ export default function Page() {
         <Text style={styles.title}> Create Activity </Text>
       </View>
       <View style={styles.activityNameContainer}>
-        <Text style={styles.activityName}> Activity Name </Text>
+        <Text style={styles.subtitle}> Activity Name </Text>
         <TextInput
-          style={styles.activityNameInput}
+          style={styles.input}
           placeholder="Ex. Go on a Run!"
           value={activityName}
           onChangeText={setActivityName} // Update the state variable with the input
         />
       </View>
       <View style={styles.descriptionContainer}>
-        <Text style={styles.activityName}> Description </Text>
+        <Text style={styles.subtitle}> Description </Text>
         <TextInput
           editable
           multiline
@@ -78,7 +76,7 @@ export default function Page() {
             Keyboard.dismiss();
           }}
           numberOfLines={4}
-          style={styles.descriptionInput}
+          style={styles.input}
           placeholder="Ex. Go on a Run!"
           value={description}
           onChangeText={setDescription} // Update the state variable with the input
@@ -137,40 +135,28 @@ const styles = StyleSheet.create({
     color: "white",
     alignSelf: "center",
   },
-  activityNameContainer: {
-    paddingTop: "5%",
-    height: "15%",
-    // borderWidth: 2,
-    // borderColor: "black",
-    gap: "10%",
-  },
-  activityName: {
+  subtitle: {
     marginHorizontal: 12,
     fontSize: 24,
     fontWeight: "bold",
-    // borderWidth: 2,
-    // borderColor: "black",
   },
-  activityNameInput: {
+  input: {
+    flex: 1,
     marginHorizontal: 12,
+    fontSize: 15,
     backgroundColor: Themes.colors.mediumGray,
-    borderRadius: 5, // Optional: for rounded corners
+    borderRadius: 5,
     padding: 10,
+  },
+  activityNameContainer: {
+    paddingTop: "5%",
+    height: "15%",
+    gap: "10%",
   },
   descriptionContainer: {
     paddingTop: "5%",
     height: "25%",
-    // borderWidth: 2,
-    // borderColor: "black",
     gap: "10%",
-  },
-  descriptionInput: {
-    flex: 1,
-    fontSize: 20,
-    marginHorizontal: 12,
-    backgroundColor: "#DCDCDC",
-    borderRadius: 5, // Optional: for rounded corners
-    padding: 10,
   },
   categoriesContainer: {
     gap: 10,
@@ -183,8 +169,6 @@ const styles = StyleSheet.create({
   },
   addToDiceContainer: {
     height: "8%",
-    // borderWidth: 2,
-    // borderColor: "black",
     margin: 12,
     justifyContent: "flex-end", // Align children vertically to the end
     alignItems: "flex-end", // Align children horizontally to the end
@@ -197,8 +181,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     borderRadius: 20,
-    // borderWidth: 2,
-    // borderColor: "black",
   },
   buttonDisabled: {
     backgroundColor: Themes.colors.lightGray,
