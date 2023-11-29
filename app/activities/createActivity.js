@@ -36,6 +36,15 @@ export default function Page() {
     setIsFormFilled(activityName.trim().length > 0 && selectedId !== null);
   }, [activityName, selectedId]);
 
+  const categories = [
+    "Exercise",
+    "Work",
+    "Academic",
+    "Relax",
+    "Social",
+    "Chore",
+  ];
+
   return (
     <View style={styles.container}>
       <Stack.Screen
@@ -82,6 +91,7 @@ export default function Page() {
             id={id}
             isSelected={id === selectedId}
             onSelect={handleSelect}
+            categoryName={categories[id - 1]}
           />
         ))}
       </View>
