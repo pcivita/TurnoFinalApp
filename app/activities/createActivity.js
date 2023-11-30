@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     gap: 5,
+    backgroundColor: "white"
   },
   titleContainer: {
     height: "10%",
@@ -194,8 +195,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     borderRadius: 20,
-    // borderWidth: 2,
-    // borderColor: "black",
   },
   addToDice: {
     alignSelf: "center",
