@@ -20,7 +20,8 @@ export default function Page() {
 
   const handleAddActivity = () => {
     if (isFormFilled) {
-      addPendingActivity(activityName, description, selectedId);
+      let category = categories[selectedId - 1][0];
+      addPendingActivity(activityName, description, category);
     }
   };
 
@@ -36,10 +37,10 @@ export default function Page() {
 
   const categories = [
     ["Exercise", "running"],
-    ["Work", "briefcase"],
-    ["Academic", "graduation-cap"],
     ["Relax", "cat"],
     ["Social", "user-friends"],
+    ["Work", "briefcase"],
+    ["Academic", "graduation-cap"],
     ["Chore", "broom"],
   ];
 
@@ -61,7 +62,7 @@ export default function Page() {
         <Text style={styles.subtitle}> Activity Name </Text>
         <TextInput
           style={styles.input}
-          placeholder="Ex. Go on a Run!"
+          placeholder="E. Go on a Run!"
           value={activityName}
           onChangeText={setActivityName} // Update the state variable with the input
         />
@@ -77,7 +78,7 @@ export default function Page() {
           }}
           numberOfLines={4}
           style={styles.input}
-          placeholder="Ex. Go on a Run!"
+          placeholder="Ex. Go on a run around Lake Lagunita"
           value={description}
           onChangeText={setDescription} // Update the state variable with the input
         />
@@ -122,6 +123,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     gap: 5,
+    backgroundColor: "white"
   },
   titleContainer: {
     height: "10%",
@@ -143,10 +145,13 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     marginHorizontal: 12,
-    fontSize: 15,
-    backgroundColor: Themes.colors.mediumGray,
-    borderRadius: 5,
     padding: 10,
+    fontSize: 15,
+    borderRadius: 5,
+    borderWidth: 3,
+    padding: 10,
+    borderWidth: 3,
+    borderColor: Themes.colors.mediumGray,
   },
   activityNameContainer: {
     paddingTop: "5%",
@@ -190,8 +195,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     borderRadius: 20,
-    // borderWidth: 2,
-    // borderColor: "black",
   },
   addToDice: {
     alignSelf: "center",
