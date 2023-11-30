@@ -21,7 +21,6 @@ export default function ActivityModal({
   closeModal,
   activity,
   section,
-
 }) {
   const categories = [
     ["Exercise", "running"],
@@ -39,38 +38,70 @@ export default function ActivityModal({
     }
   };
 
-  const otherSection =
-    section === "Current Activities"
-      ? "Pending"
-      : "Dice";
-
   const title = 
     section === "Current Activities" ? "Current Activity" : "Pending Activity";
 
-  const name = activity[0];
-  const description = activity[1];
-  const category = activity[2].toLowerCase();
-  const categoryIcon = Themes.categoryIcons[category];
+  const [name, setName] = useState(activity[0]);
+  const [description, setDescription] = useState(activity[1]);
+  const [category, setCategory] = useState(activity[2].toLowerCase());
+  const [categoryIcon, setCategoryIcon] = useState(Themes.categoryIcons[category]);
+  const [selectedId, setSelectedId] = useState(categories.findIndex(
+    (currentCategory) => currentCategory[0] === activity[2]) + 1
+  );
 
-  const [editMode, setEditMode] = useState(false);
+  const [currentSection, setCurrectSection] = useState(
+    section === "Current Activities" ? "Dice" : "Pending"
+  );
+  const otherSection = currentSection === "Dice" ? "Pending" : "Dice";
 
   const [newName, setNewName] = useState(name);
   const [newDescription, setNewDescription] = useState(description);
+  const [newSelectedId, setNewSelectedId] = useState(selectedId);
 
-
-  const initialSelectedId = categories.findIndex(
-    (currentCategory) => currentCategory[0] === activity[2]
-  );
-  const [selectedId, setSelectedId] = useState(initialSelectedId + 1);
   const handleSelect = (id) => {
-    setSelectedId(id);
+    setNewSelectedId(id);
   };
 
+  const [editMode, setEditMode] = useState(false);
+  const [isFormChanged, setIsFormChanged] = useState(false);
+
+  useEffect(() => {
+    if (editMode) {
+      // Check if any of the values are different from the original
+      const formChanged =
+        newName !== name ||
+        newDescription !== description ||
+        newSelectedId !== selectedId;
+      setIsFormChanged(formChanged);
+    } else {
+      // Reset formChanged state when exiting edit mode
+      setIsFormChanged(false);
+    }
+  }, [editMode, newName, newDescription, newSelectedId]);
+ 
   useEffect(() => {
     if (!isVisible) {
       setEditMode(false);
     }
   }, [isVisible]);
+
+  const handleSave = () => {
+    // Update name, description, selectedId
+    setName(newName);
+    setDescription(newDescription);
+    setSelectedId(newSelectedId);
+
+    setEditMode(false);
+  }
+
+  const handleCancel = () => {
+    // Revert name, description, selectedId
+    setNewName(name);
+    setNewDescription(description);
+    setNewSelectedId(selectedId);
+
+    setEditMode(false)
+  }
 
   return (
     <Modal
@@ -141,10 +172,12 @@ export default function ActivityModal({
             {!editMode &&
               <View style={styles.oneCategoryContainer}>
                 <CategoryDisabled
-                  key={1}
+                  //key={1}
                   isSelected="true"
-                  categoryName={category}
-                  iconName={categoryIcon}
+                  // categoryName={category}
+                  // iconName={categoryIcon}
+                  id={newSelectedId}
+                  categories={categories}
                 />
               </View>
             }
@@ -154,7 +187,7 @@ export default function ActivityModal({
                 <Category
                   key={id}
                   id={id}
-                  isSelected={id === selectedId}
+                  isSelected={id === newSelectedId}
                   onSelect={handleSelect}
                   categoryName={categories[id - 1][0]} 
                   iconName={categories[id - 1][1]}
@@ -172,40 +205,46 @@ export default function ActivityModal({
             <View style={styles.buttonsContainer}>
               <View style={styles.leftSide}>
                 {!editMode && 
-                  <TouchableOpacity style={styles.button}>
+                  <TouchableOpacity 
+                    style={styles.button} onPress={() => setCurrectSection(otherSection)}>
                     <Text style={styles.buttonText}>{"Move to " + otherSection}</Text>
                   </TouchableOpacity>
                 }
                 {editMode && 
-                  <TouchableOpacity style={styles.buttonSecondary} onPress={() => setEditMode(!editMode)}>
+                  <TouchableOpacity 
+                    style={styles.buttonSecondary} 
+                    onPress={handleCancel}
+                  >
                     <Text style={styles.buttonTextSecondary}>Cancel</Text>
                   </TouchableOpacity>
                 }
               </View>
 
               <View style={styles.leftSide}>
-                <TouchableOpacity onPress={() => setEditMode(!editMode)}>
-                  {!editMode &&
+                {!editMode &&
+                  <TouchableOpacity
+                    //disabled={editMode && !isFormChanged}
+                    onPress={() => {
+                      setEditMode(true);
+                    }}
+                  >
                     <View style={styles.button}>
-                      <Text style={styles.buttonText}>
-                        Edit Activity
-                      </Text>
-                      <MaterialCommunityIcons
-                        name="pencil-outline"
-                        size={20}
-                        color="white"
-                      />
+                      <Text style={styles.buttonText}>Edit Activity</Text>
+                      <MaterialCommunityIcons name="pencil" size={20} color="white"/>
                     </View>
-                  }
-                  {editMode &&
-                    <View style={styles.button}>
-                      <Text style={styles.buttonText}>
-                        Save Activity
-                      </Text>
+                  </TouchableOpacity>
+                }
+                {editMode &&
+                  <TouchableOpacity
+                    disabled={editMode && !isFormChanged}
+                    onPress={handleSave}
+                  >
+                    <View style={[styles.button, isFormChanged ? null : styles.buttonDisabled ]}>
+                      <Text style={styles.buttonText}>Save Activity</Text>
                       <MaterialCommunityIcons name="content-save" size={20} color="white" />
                     </View>
-                  }
-                </TouchableOpacity>
+                  </TouchableOpacity>
+                }
               </View>
             </View>
           </View>
@@ -217,13 +256,9 @@ export default function ActivityModal({
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // backgroundColor: 'rgba(0, 0, 0, 0.7)',
     flex: 1,
-    justifyContent: "flex-end", // Align the content at the bottom
-    backgroundColor: "rgba(0, 0, 0, 0.4)", // Slightly transparent background
+    justifyContent: "flex-end",
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
   },
   modal: {
     height: "90%",
@@ -414,6 +449,10 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: Themes.colors.salmon,
   },
+  buttonDisabled: {
+    backgroundColor: Themes.colors.salmonTransparent,
+    borderColor: "transparent",
+  },
   buttonText: {
     color: "white",
     fontSize: 17,
@@ -424,42 +463,4 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "bold",
   }
-  // cancelContainer: {
-  //   height: "90%",
-  //   //margin: 12,
-  //   //justifyContent: "flex-end", // Align children vertically to the end
-  //   //alignSelf: "flex-start", // Align children horizontally to the end
-  // },
-  // addToDiceContainer: {
-  //   height: "8%",
-  //   //margin: 12,
-  //   //justifyContent: "flex-end", // Align children vertically to the end
-  //   //alignSelf: "flex-end", // Align children horizontally to the end
-  // },
-  // buttonEnabled: {
-  //   backgroundColor: Themes.colors.salmon,
-  //   padding: 10,
-  //   width: "100%",
-  //   flex: 1,
-  //   alignContent: "center",
-  //   justifyContent: "center",
-  //   borderRadius: 20,
-  // },
-  // buttonDisabled: {
-  //   backgroundColor: Themes.colors.salmonTransparent,
-  //   padding: 10,
-  //   width: "100%",
-  //   flex: 1,
-  //   alignContent: "center",
-  //   justifyContent: "center",
-  //   borderRadius: 20,
-  //   // borderWidth: 2,
-  //   // borderColor: "black",
-  // },
-  // addToDice: {
-  //   alignSelf: "center",
-  //   fontSize: 20,
-  //   fontWeight: "bold",
-  //   color: "white",
-  // },
 });

@@ -4,7 +4,10 @@ import React from "react";
 import { Themes } from "../assets/Themes";
 import { FontAwesome5 } from '@expo/vector-icons';
 
-export default function CategoryDisabled({ categoryName, iconName }) {
+export default function CategoryDisabled({ id, categories }) {
+  const categoryName = categories[id - 1][0];
+  const iconName = categories[id - 1][1]; 
+
   return (
     <View
       style={styles.container}
@@ -22,10 +25,11 @@ export default function CategoryDisabled({ categoryName, iconName }) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "30%",
+    width: "35%",
     height: undefined,
     aspectRatio: 1,
     alignItems: "center",
+    justifyContent: "center",
     backgroundColor: Themes.colors.lightGray,
     borderColor: Themes.colors.mediumGray,
     borderRadius: 20,
