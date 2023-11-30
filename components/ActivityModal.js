@@ -24,15 +24,6 @@ export default function ActivityModal({
   const { editActivity } = useContext(ActivitiesContext);
   const { changeSection } = useContext(ActivitiesContext);
 
-  const categories = [
-    ["Exercise", "running"],
-    ["Relax", "cat"],
-    ["Social", "user-friends"],
-    ["Work", "briefcase"],
-    ["Academic", "graduation-cap"],
-    ["Chore", "broom"],
-  ];
-
   const handlePressOutside = (e) => {
     // Check if the click is outside the modal
     if (e.target === e.currentTarget) {
@@ -45,7 +36,7 @@ export default function ActivityModal({
 
   const [name, setName] = useState(activity[0]);
   const [description, setDescription] = useState(activity[1]);
-  const [selectedId, setSelectedId] = useState(categories.findIndex(
+  const [selectedId, setSelectedId] = useState(Themes.categories.findIndex(
     (currentCategory) => currentCategory[0] === activity[2]) + 1
   );
 
@@ -93,9 +84,8 @@ export default function ActivityModal({
     setDescription(newDescription);
     setSelectedId(newSelectedId);
 
-    let newCategory = categories[newSelectedId - 1][0];
-    let sectionIndex = currentSection === "Dice" ? 0 : 1;// pending or not
-    //console.log(indexInSection);
+    let newCategory = Themes.categories[newSelectedId - 1][0];
+    let sectionIndex = currentSection === "Dice" ? 0 : 1; // pending or not
 
     editActivity(sectionIndex, indexInSection, newName, newDescription, newCategory);
     setEditMode(false);
@@ -200,7 +190,7 @@ export default function ActivityModal({
                   // categoryName={category}
                   // iconName={categoryIcon}
                   id={newSelectedId}
-                  categories={categories}
+                  categories={Themes.categories}
                 />
               </View>
             }
@@ -212,8 +202,8 @@ export default function ActivityModal({
                   id={id}
                   isSelected={id === newSelectedId}
                   onSelect={handleSelect}
-                  categoryName={categories[id - 1][0]} 
-                  iconName={categories[id - 1][1]}
+                  categoryName={Themes.categories[id - 1][0]} 
+                  iconName={Themes.categories[id - 1][1]}
                 />
               ))}
               </View>
