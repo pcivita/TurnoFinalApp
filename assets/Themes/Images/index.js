@@ -7,4 +7,7 @@ export default Images = {
     five: require("./diceIcons/diceFive.png"),
     six: require("./diceIcons/diceSix.png"),
   },
+  profileImages: {
+    pedro: require("./profileImages/IMG_9521.jpg"),
+  },
 };

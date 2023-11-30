@@ -7,6 +7,7 @@ import {
   Button,
   TextInput,
   Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { router, Link, useLocalSearchParams, Stack } from "expo-router";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
@@ -59,6 +60,7 @@ export default function Page() {
           onChangeText={setActivityName} // Update the state variable with the input
         />
       </View>
+
       <View style={styles.descriptionContainer}>
         <Text style={styles.activityName}> Description </Text>
         <TextInput

@@ -1,12 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Themes } from "../assets/Themes";
 import { Link } from "expo-router";
+import Post from "../components/Post";
 
 export default function Page() {
   return (
     <View style={styles.container}>
       <View style={styles.main}>
         <Text style={styles.title}>Profile</Text>
+        <Post style={styles.post} />
       </View>
     </View>
   );
@@ -22,8 +24,10 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     justifyContent: "center",
-    maxWidth: 960,
+    width: "100%",
     marginHorizontal: "auto",
+    borderColor: "black",
+    borderWidth: 2,
   },
   title: {
     fontSize: 64,
@@ -32,5 +36,9 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 36,
     color: "#38434D",
+  },
+  post: {
+    borderColor: "black",
+    borderWidth: 2,
   },
 });
