@@ -54,8 +54,37 @@ export const ActivitiesProvider = ({ children }) => {
     });
   };
 
+  const editActivity = (sectionIndex, activityIndex, newName, newDescription, newCategory) => {
+    setActivities((prevActivities) => {
+      let updatedActivities = [...prevActivities];
+      updatedActivities[sectionIndex].data[activityIndex] = [newName, newDescription, newCategory];
+
+      return updatedActivities;
+    });
+  };
+
+  const changeSection = (oldSectionIndex, oldActivityIndex, newSectionIndex) => {
+    setActivities((prevActivities) => {
+      const updatedActivities = [...prevActivities];
+
+      const removedActivity = updatedActivities[oldSectionIndex].data.splice(oldActivityIndex, 1)[0];
+  
+      // Add to top of pending, or bottom of current
+      if (newSectionIndex == 0) {  // Current
+        updatedActivities[newSectionIndex].data.push(removedActivity);
+      } else {
+        updatedActivities[newSectionIndex].data.unshift(removedActivity);
+      }
+  
+      return updatedActivities;
+    });
+  };
+  
+  
+
+
   return (
-    <ActivitiesContext.Provider value={{ activities, addPendingActivity }}>
+    <ActivitiesContext.Provider value={{ activities, addPendingActivity, editActivity, changeSection }}>
       {children}
     </ActivitiesContext.Provider>
   );

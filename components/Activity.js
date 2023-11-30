@@ -57,6 +57,7 @@ export default function Activity({ activityObject, index, section }) {
             closeModal={closeModal} 
             activity={activityObject}
             section={section}
+            indexInSection={index - 1}
             // style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
           />
         </TouchableOpacity>

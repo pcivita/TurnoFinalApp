@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Modal,
   View,
@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { Link } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { ActivitiesContext } from "../contexts/ActivitiesContext";
 import { Themes } from "../assets/Themes";
 import Category from "./Category";
 import CategoryDisabled from "./CategoryDisabled";
@@ -21,7 +22,11 @@ export default function ActivityModal({
   closeModal,
   activity,
   section,
+  indexInSection,
 }) {
+  const { editActivity } = useContext(ActivitiesContext);
+  const { changeSection } = useContext(ActivitiesContext);
+
   const categories = [
     ["Exercise", "running"],
     ["Relax", "cat"],
@@ -49,10 +54,12 @@ export default function ActivityModal({
     (currentCategory) => currentCategory[0] === activity[2]) + 1
   );
 
-  const [currentSection, setCurrectSection] = useState(
+  const [currentSection, setCurrentSection] = useState(
     section === "Current Activities" ? "Dice" : "Pending"
   );
-  const otherSection = currentSection === "Dice" ? "Pending" : "Dice";
+  const [otherSection, setOtherSection] = useState(
+    section === "Current Activities" ? "Pending" : "Dice"
+  );
 
   const [newName, setNewName] = useState(name);
   const [newDescription, setNewDescription] = useState(description);
@@ -91,6 +98,11 @@ export default function ActivityModal({
     setDescription(newDescription);
     setSelectedId(newSelectedId);
 
+    let newCategory = categories[newSelectedId - 1][0];
+    let sectionIndex = currentSection === "Dice" ? 0 : 1;// pending or not
+    //console.log(indexInSection);
+
+    editActivity(sectionIndex, indexInSection, newName, newDescription, newCategory);
     setEditMode(false);
   }
 
@@ -101,6 +113,22 @@ export default function ActivityModal({
     setNewSelectedId(selectedId);
 
     setEditMode(false)
+  }
+
+  const handleSectionChange = () => {
+    let oldSectionIndex = 0;  // Dice
+    let newSectionIndex = 1;  // Pending
+    
+    if (currentSection === "Dice") {  // Set new section to pending
+      setCurrentSection("Pending");
+      setOtherSection("Dice");
+    } else {  // Section new section to dice/current
+      oldSectionIndex = 1;
+      newSectionIndex = 0;
+      setCurrentSection("Dice");
+      setOtherSection("Pending");
+    }
+    changeSection(oldSectionIndex, indexInSection, newSectionIndex);
   }
 
   return (
@@ -206,7 +234,7 @@ export default function ActivityModal({
               <View style={styles.leftSide}>
                 {!editMode && 
                   <TouchableOpacity 
-                    style={styles.button} onPress={() => setCurrectSection(otherSection)}>
+                    style={styles.button} onPress={handleSectionChange}>
                     <Text style={styles.buttonText}>{"Move to " + otherSection}</Text>
                   </TouchableOpacity>
                 }
