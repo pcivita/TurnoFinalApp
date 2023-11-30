@@ -144,10 +144,13 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     marginHorizontal: 12,
-    fontSize: 15,
-    backgroundColor: Themes.colors.mediumGray,
-    borderRadius: 5,
     padding: 10,
+    fontSize: 15,
+    borderRadius: 5,
+    borderWidth: 3,
+    padding: 10,
+    borderWidth: 3,
+    borderColor: Themes.colors.mediumGray,
   },
   activityNameContainer: {
     paddingTop: "5%",
