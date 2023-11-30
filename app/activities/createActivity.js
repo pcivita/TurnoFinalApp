@@ -105,7 +105,7 @@ export default function Page() {
               name: "Alan",
             },
           }}
-          onPress={handleAddActivity} // Add the click handler here
+          onPress={handleAddActivity}
         >
           <View
             style={isFormFilled ? styles.buttonEnabled : styles.buttonDisabled}

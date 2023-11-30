@@ -4,13 +4,10 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  Touchable,
 } from "react-native";
-import { Link } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ActivitiesContext } from "../contexts/ActivitiesContext";
 import { Themes } from "../assets/Themes";
@@ -48,8 +45,6 @@ export default function ActivityModal({
 
   const [name, setName] = useState(activity[0]);
   const [description, setDescription] = useState(activity[1]);
-  const [category, setCategory] = useState(activity[2].toLowerCase());
-  const [categoryIcon, setCategoryIcon] = useState(Themes.categoryIcons[category]);
   const [selectedId, setSelectedId] = useState(categories.findIndex(
     (currentCategory) => currentCategory[0] === activity[2]) + 1
   );

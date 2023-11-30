@@ -1,8 +1,8 @@
 import { colors } from "./colors";
-import { categoryIcons } from "./categoryIcons";
+import { categories } from "./categories";
 const Themes = {
   colors,
-  categoryIcons,
+  categories,
 };
 
 export default Themes;

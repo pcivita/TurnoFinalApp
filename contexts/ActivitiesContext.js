@@ -66,7 +66,6 @@ export const ActivitiesProvider = ({ children }) => {
   const changeSection = (oldSectionIndex, oldActivityIndex, newSectionIndex) => {
     setActivities((prevActivities) => {
       const updatedActivities = [...prevActivities];
-
       const removedActivity = updatedActivities[oldSectionIndex].data.splice(oldActivityIndex, 1)[0];
   
       // Add to top of pending, or bottom of current
@@ -79,9 +78,6 @@ export const ActivitiesProvider = ({ children }) => {
       return updatedActivities;
     });
   };
-  
-  
-
 
   return (
     <ActivitiesContext.Provider value={{ activities, addPendingActivity, editActivity, changeSection }}>

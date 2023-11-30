@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     gap: 16,
     padding: "10%",
-    // marginVertical: 5
   },
   sectionList: {
     flex: 1,
@@ -85,12 +84,12 @@ const styles = StyleSheet.create({
   createActivityButton: {
     flex: 1,
     backgroundColor: Themes.colors.salmon,
-    paddingVertical: 10, // Adds padding inside the button, making it thicker
-    paddingHorizontal: 30, // Adds padding on the sides, making the button wider
-    borderRadius: 30, // This will give the button rounded corners
-    justifyContent: "center", // Center the text horizontally
-    alignItems: "center", // Center the text vertically
-    overflow: "hidden", // Ensures no child can go outside the button boundaries
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
   },
   createActivityText: {
     paddingHorizontal: 10,
