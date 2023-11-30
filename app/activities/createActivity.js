@@ -59,7 +59,9 @@ export default function Page() {
         <Text style={styles.title}> Create Activity </Text>
       </View>
       <View style={styles.activityNameContainer}>
-        <Text style={styles.subtitle}> Activity Name </Text>
+        <Text style={styles.subtitle}> 
+          Activity Name <Text style={styles.asterick}>*</Text>
+        </Text>
         <TextInput
           style={styles.input}
           placeholder="E. Go on a Run!"
@@ -84,16 +86,21 @@ export default function Page() {
         />
       </View>
       <View style={styles.categoriesContainer}>
-        {[1, 2, 3, 4, 5, 6].map((id) => (
-          <Category
-            key={id}
-            id={id}
-            isSelected={id === selectedId}
-            onSelect={handleSelect}
-            categoryName={categories[id - 1][0]}
-            iconName={categories[id - 1][1]}
-          />
-        ))}
+      <Text style={styles.subtitle}> 
+          Category <Text style={styles.asterick}>*</Text>
+        </Text>
+        <View style={styles.categories}>
+          {[1, 2, 3, 4, 5, 6].map((id) => (
+            <Category
+              key={id}
+              id={id}
+              isSelected={id === selectedId}
+              onSelect={handleSelect}
+              categoryName={categories[id - 1][0]}
+              iconName={categories[id - 1][1]}
+            />
+          ))}
+        </View>
       </View>
 
       <View style={styles.addToDiceContainer}>
@@ -154,18 +161,25 @@ const styles = StyleSheet.create({
     borderColor: Themes.colors.mediumGray,
   },
   activityNameContainer: {
-    paddingTop: "5%",
-    height: "15%",
+    paddingTop: "3%",
+    height: "14%",
     gap: "10%",
   },
   descriptionContainer: {
-    paddingTop: "5%",
-    height: "25%",
+    paddingTop: "2%",
+    height: "23%",
     gap: "10%",
   },
   categoriesContainer: {
+    paddingTop: "2%",
+    paddingBottom: 0,
+    height: "37%",
+    gap: "10%",
+  },
+  categories: {
     gap: 10,
     margin: 12,
+    marginTop: 0,
     flex: 1,
     height: "40%", 
     flexDirection: "row",
@@ -202,4 +216,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
   },
+  asterick: {
+    color: Themes.colors.salmon,
+  }
 });
