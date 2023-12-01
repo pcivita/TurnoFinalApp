@@ -216,7 +216,7 @@ export default function ActivityModal({
               color="black"
             /> */}
             <View style={styles.buttonsContainer}>
-              <View style={styles.leftSide}>
+              <View style={styles.buttonContainer}>
                 {!editMode && 
                   <TouchableOpacity 
                     style={styles.button} onPress={handleSectionChange}>
@@ -233,7 +233,7 @@ export default function ActivityModal({
                 }
               </View>
 
-              <View style={styles.leftSide}>
+              <View style={styles.buttonContainer}>
                 {!editMode &&
                   <TouchableOpacity
                     //disabled={editMode && !isFormChanged}
@@ -428,14 +428,8 @@ const styles = StyleSheet.create({
     //paddingTop: 90,
     paddingBottom: 40,
   },
-
-  leftSide: {
+  buttonContainer: {
     flexDirection: "column",
-    // justifyContent: "space-between",
-    // alignItems: "center",
-  },
-  rightSide: {
-    flexDirection: "column"
   },
   button: {
     backgroundColor: Themes.colors.salmon,
