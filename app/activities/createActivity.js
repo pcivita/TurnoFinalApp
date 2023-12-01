@@ -1,11 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Keyboard,
-} from "react-native";
+import { StyleSheet, Text, View, TextInput, Keyboard } from "react-native";
 import { router, Link, useLocalSearchParams, Stack } from "expo-router";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { Themes } from "../../assets/Themes";
@@ -70,7 +64,7 @@ export default function Page() {
         />
       </View>
       <View style={styles.descriptionContainer}>
-        <Text style={styles.subtitle}> Description </Text>
+        <Text style={styles.subtitle}> Description</Text>
         <TextInput
           editable
           multiline
@@ -85,6 +79,7 @@ export default function Page() {
           onChangeText={setDescription} // Update the state variable with the input
         />
       </View>
+      <Text style={styles.subtitle}> Category* </Text>
       <View style={styles.categoriesContainer}>
       <Text style={styles.subtitle}> 
           Category <Text style={styles.asterick}>*</Text>
@@ -130,7 +125,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     gap: 5,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   titleContainer: {
     height: "10%",
@@ -181,7 +176,7 @@ const styles = StyleSheet.create({
     margin: 12,
     marginTop: 0,
     flex: 1,
-    height: "40%", 
+    height: "40%",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
