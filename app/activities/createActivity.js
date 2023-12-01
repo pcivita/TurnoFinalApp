@@ -64,7 +64,7 @@ export default function Page() {
         </Text>
         <TextInput
           style={styles.input}
-          placeholder="E. Go on a Run!"
+          placeholder="Ex. Go on a Run!"
           value={activityName}
           onChangeText={setActivityName} // Update the state variable with the input
         />
