@@ -1,6 +1,6 @@
 import { Tabs } from "expo-router/tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { FontAwesome5 } from '@expo/vector-icons'; 
+import { FontAwesome5 } from "@expo/vector-icons";
 import { View } from "react-native";
 
 import { Themes } from "../assets/Themes";
@@ -11,7 +11,7 @@ export default function AppLayout() {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: Themes.colors.salmon,
-        tabBarInactiveTintColor: 'black',
+        tabBarInactiveTintColor: "black",
         tabBarStyle: {
           height: 80,
           backgroundColor: Themes.colors.lightGray,
@@ -20,8 +20,8 @@ export default function AppLayout() {
         },
         // tabBarShowLabel: false,
         tabBarLabelStyle: {
-          display: "none"
-        }
+          display: "none",
+        },
       }}
     >
       <Tabs.Screen
@@ -47,7 +47,7 @@ export default function AppLayout() {
         }}
       />
       <Tabs.Screen
-        name="roll/index"      
+        name="roll/index"
         options={{
           tabBarIcon: ({ size, color }) => (
             <View
@@ -57,9 +57,9 @@ export default function AppLayout() {
                 width: 85,
                 borderRadius: 50,
                 backgroundColor: Themes.colors.lightGray,
-                justifyContent: 'center',
-                alignItems: 'center',
-                transform: [{ rotate: '45deg' }],
+                justifyContent: "center",
+                alignItems: "center",
+                transform: [{ rotate: "45deg" }],
               }}
             >
               <FontAwesome5 name="dice-five" size={size + 30} color={color} />
