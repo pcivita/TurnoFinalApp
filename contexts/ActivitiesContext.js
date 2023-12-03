@@ -9,12 +9,12 @@ export const ActivitiesProvider = ({ children }) => {
     {
       title: "Current Activities",
       data: [
-        ["Soccer", "Soccer description", "Exercise"], 
-        ["Write", "Write description", "Work"], 
-        ["Read", "Read description", "Academic"], 
-        ["Meditate", "Meditate description", "Relax"], 
-        ["Have fun", "Have fun description", "Social"], 
-        ["Clean house", "Clean house description", "Chore"]
+        ["Soccer", "Lorem ipsum dolor sit amet. Sed dolores similique aut...", "Exercise"], 
+        ["Write", "Lorem ipsum dolor sit amet. Sed dolores similique aut...", "Work"], 
+        ["Read", "Lorem ipsum dolor sit amet. Sed dolores similique aut...", "Academic"], 
+        ["Meditate", "Lorem ipsum dolor sit amet. Sed dolores similique aut...", "Relax"], 
+        ["Have fun", "Lorem ipsum dolor sit amet. Sed dolores similique aut...", "Social"], 
+        ["Clean house", "Lorem ipsum dolor sit amet. Sed dolores similique aut...", "Chore"]
       ],
       noActivitiesMessage:
         "You have no Current Activities.\n\nCreate an activity or add one from the Pending Activities section to use your dice!",
@@ -22,8 +22,8 @@ export const ActivitiesProvider = ({ children }) => {
     {
       title: "Pending Activities",
       data: [
-        ["Paint", "Paint description", "Relax"], 
-        ["Dishes", "Dishes description", "Chore"],
+        ["Paint", "Lorem ipsum dolor sit amet. Sed dolores similique aut...", "Relax"], 
+        ["Dishes", "Lorem ipsum dolor sit amet. Sed dolores similique aut...", "Chore"],
       ],
       noActivitiesMessage:
         "You have no Pending Activities.\n\nUse the Create Activity button to create new activities for later as you think of them!",
@@ -31,7 +31,7 @@ export const ActivitiesProvider = ({ children }) => {
   ]);
 
   // Function to add a new activity to Pending Activities
-  const addPendingActivity = (name, description, category ) => {
+  const addPendingActivity = (name, description, category) => {
     setActivities((prevActivities) => {
       let updatedActivities = [...prevActivities];
       let newActivity = [name, description, category];
@@ -54,8 +54,33 @@ export const ActivitiesProvider = ({ children }) => {
     });
   };
 
+  const editActivity = (sectionIndex, activityIndex, newName, newDescription, newCategory) => {
+    setActivities((prevActivities) => {
+      let updatedActivities = [...prevActivities];
+      updatedActivities[sectionIndex].data[activityIndex] = [newName, newDescription, newCategory];
+
+      return updatedActivities;
+    });
+  };
+
+  const changeSection = (oldSectionIndex, oldActivityIndex, newSectionIndex) => {
+    setActivities((prevActivities) => {
+      const updatedActivities = [...prevActivities];
+      const removedActivity = updatedActivities[oldSectionIndex].data.splice(oldActivityIndex, 1)[0];
+  
+      // Add to top of pending, or bottom of current
+      if (newSectionIndex == 0) {  // Current
+        updatedActivities[newSectionIndex].data.push(removedActivity);
+      } else {
+        updatedActivities[newSectionIndex].data.unshift(removedActivity);
+      }
+  
+      return updatedActivities;
+    });
+  };
+
   return (
-    <ActivitiesContext.Provider value={{ activities, addPendingActivity }}>
+    <ActivitiesContext.Provider value={{ activities, addPendingActivity, editActivity, changeSection }}>
       {children}
     </ActivitiesContext.Provider>
   );

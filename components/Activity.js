@@ -57,6 +57,7 @@ export default function Activity({ activityObject, index, section }) {
             closeModal={closeModal} 
             activity={activityObject}
             section={section}
+            indexInSection={index - 1}
           />
         </TouchableOpacity>
       </View>
@@ -123,8 +124,5 @@ const styles = StyleSheet.create({
     color: Themes.colors.salmon,
     fontWeight: "bold",
     fontSize: 20,
-  },
-  pendingDiceNumber: {
-    color: Themes.colors.salmonLight,
   },
 });

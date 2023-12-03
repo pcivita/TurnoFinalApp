@@ -15,8 +15,6 @@ export default function AppLayout() {
         tabBarStyle: {
           height: 80,
           backgroundColor: Themes.colors.lightGray,
-          // borderTopWidth: 0.5,
-          // borderTopColor: 'black',
         },
         // tabBarShowLabel: false,
         tabBarLabelStyle: {
@@ -30,7 +28,6 @@ export default function AppLayout() {
           tabBarLabelStyle: { display: "flex" },
           tabBarLabel: "Feed",
           tabBarIcon: ({ size, color }) => (
-            // <Ionicons name="flash-sharp" size={size} color={color} />
             <Ionicons name="home-outline" size={size} color={color} />
           ),
         }}
@@ -41,7 +38,6 @@ export default function AppLayout() {
           tabBarLabelStyle: { display: "flex" },
           tabBarLabel: "Activities",
           tabBarIcon: ({ size, color }) => (
-            // <FontAwesome5 name="clipboard" size={size} color={color} />
             <Ionicons name="clipboard-outline" size={size} color={color} />
           ),
         }}

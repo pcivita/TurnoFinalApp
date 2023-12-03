@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect } from "react";
+
 import {
   ScrollView,
   StyleSheet,
@@ -9,6 +10,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
+
 import { router, Link, useLocalSearchParams, Stack } from "expo-router";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { Themes } from "../../assets/Themes";
@@ -23,7 +25,8 @@ export default function Page() {
 
   const handleAddActivity = () => {
     if (isFormFilled) {
-      addPendingActivity(activityName, description, selectedId);
+      let category = categories[selectedId - 1][0];
+      addPendingActivity(activityName, description, category);
     }
   };
 
@@ -37,13 +40,22 @@ export default function Page() {
     setIsFormFilled(activityName.trim().length > 0 && selectedId !== null);
   }, [activityName, selectedId]);
 
+  const categories = [
+    ["Exercise", "running"],
+    ["Relax", "cat"],
+    ["Social", "user-friends"],
+    ["Work", "briefcase"],
+    ["Academic", "graduation-cap"],
+    ["Chore", "broom"],
+  ];
+
   return (
     <View style={styles.container}>
       <Stack.Screen
         options={{
           title: "",
           headerStyle: {
-            backgroundColor: Themes.colors.salmon, // Set the header background color
+            backgroundColor: Themes.colors.salmon,
           },
           headerTintColor: "white",
         }}
@@ -52,9 +64,11 @@ export default function Page() {
         <Text style={styles.title}> Create Activity </Text>
       </View>
       <View style={styles.activityNameContainer}>
-        <Text style={styles.activityName}> Activity Name </Text>
+        <Text style={styles.subtitle}>
+          Activity Name <Text style={styles.asterick}>*</Text>
+        </Text>
         <TextInput
-          style={styles.activityNameInput}
+          style={styles.input}
           placeholder="Ex. Go on a Run!"
           value={activityName}
           onChangeText={setActivityName} // Update the state variable with the input
@@ -62,7 +76,7 @@ export default function Page() {
       </View>
 
       <View style={styles.descriptionContainer}>
-        <Text style={styles.activityName}> Description </Text>
+        <Text style={styles.subtitle}> Description</Text>
         <TextInput
           editable
           multiline
@@ -71,21 +85,28 @@ export default function Page() {
             Keyboard.dismiss();
           }}
           numberOfLines={4}
-          style={styles.descriptionInput}
-          placeholder="Ex. Go on a Run!"
+          style={styles.input}
+          placeholder="Ex. Go on a run around Lake Lagunita"
           value={description}
           onChangeText={setDescription} // Update the state variable with the input
         />
       </View>
       <View style={styles.categoriesContainer}>
-        {[1, 2, 3, 4, 5, 6].map((id) => (
-          <Category
-            key={id}
-            id={id}
-            isSelected={id === selectedId}
-            onSelect={handleSelect}
-          />
-        ))}
+        <Text style={styles.subtitle}>
+          Category <Text style={styles.asterick}>*</Text>
+        </Text>
+        <View style={styles.categories}>
+          {[1, 2, 3, 4, 5, 6].map((id) => (
+            <Category
+              key={id}
+              id={id}
+              isSelected={id === selectedId}
+              onSelect={handleSelect}
+              categoryName={categories[id - 1][0]}
+              iconName={categories[id - 1][1]}
+            />
+          ))}
+        </View>
       </View>
 
       <View style={styles.addToDiceContainer}>
@@ -97,7 +118,7 @@ export default function Page() {
               name: "Alan",
             },
           }}
-          onPress={handleAddActivity} // Add the click handler here
+          onPress={handleAddActivity}
         >
           <View
             style={isFormFilled ? styles.buttonEnabled : styles.buttonDisabled}
@@ -115,6 +136,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     gap: 5,
+    backgroundColor: "white",
   },
   titleContainer: {
     height: "10%",
@@ -128,56 +150,50 @@ const styles = StyleSheet.create({
     color: "white",
     alignSelf: "center",
   },
-  activityNameContainer: {
-    paddingTop: "5%",
-    height: "15%",
-    // borderWidth: 2,
-    // borderColor: "black",
-    gap: "10%",
-  },
-  activityName: {
+  subtitle: {
     marginHorizontal: 12,
     fontSize: 24,
     fontWeight: "bold",
-    // borderWidth: 2,
-    // borderColor: "black",
   },
-  activityNameInput: {
+  input: {
+    flex: 1,
     marginHorizontal: 12,
-    backgroundColor: "#DCDCDC",
-    borderRadius: 5, // Optional: for rounded corners
     padding: 10,
+    fontSize: 15,
+    borderRadius: 5,
+    borderWidth: 3,
+    padding: 10,
+    borderWidth: 3,
+    borderColor: Themes.colors.mediumGray,
   },
-  descriptionContainer: {
-    paddingTop: "5%",
-    height: "25%",
-    // borderWidth: 2,
-    // borderColor: "black",
+  activityNameContainer: {
+    paddingTop: "3%",
+    height: "14%",
     gap: "10%",
   },
-  descriptionInput: {
-    flex: 1,
-    fontSize: 20,
-    marginHorizontal: 12,
-    backgroundColor: "#DCDCDC",
-    borderRadius: 5, // Optional: for rounded corners
-    padding: 10,
+  descriptionContainer: {
+    paddingTop: "2%",
+    height: "23%",
+    gap: "10%",
   },
   categoriesContainer: {
+    paddingTop: "2%",
+    paddingBottom: 0,
+    height: "37%",
+    gap: "10%",
+  },
+  categories: {
     gap: 10,
     margin: 12,
+    marginTop: 0,
     flex: 1,
-    height: "32%",
-    //borderWidth: 2,
-    //borderColor: "black",
-    flexDirection: "row", // Align children in a row
-    flexWrap: "wrap", // Allow items to wrap to the next line
-    justifyContent: "space-between", // Optional, for spacing between items
+    height: "40%",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
   },
   addToDiceContainer: {
     height: "8%",
-    // borderWidth: 2,
-    // borderColor: "black",
     margin: 12,
     justifyContent: "flex-end", // Align children vertically to the end
     alignItems: "flex-end", // Align children horizontally to the end
@@ -190,24 +206,23 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     borderRadius: 20,
-    // borderWidth: 2,
-    // borderColor: "black",
   },
   buttonDisabled: {
-    backgroundColor: Themes.colors.lightGray,
+    backgroundColor: Themes.colors.salmonTransparent,
     padding: 10,
     width: "100%",
     flex: 1,
     alignContent: "center",
     justifyContent: "center",
     borderRadius: 20,
-    // borderWidth: 2,
-    // borderColor: "black",
   },
   addToDice: {
     alignSelf: "center",
     fontSize: 20,
     fontWeight: "bold",
     color: "white",
+  },
+  asterick: {
+    color: Themes.colors.salmon,
   },
 });
