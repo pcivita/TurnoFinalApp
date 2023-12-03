@@ -1,6 +1,18 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
+
+import { useFonts } from "expo-font";
+
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    "Poppins-Regular": require("./assets/Poppins/Poppins-Regular.ttf"),
+    "Poppins-Bold": require("./assets/Poppins/Poppins-Bold.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return undefined;
+  }
+
   return (
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>

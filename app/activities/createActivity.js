@@ -1,5 +1,16 @@
 import { useContext, useState, useEffect } from "react";
-import { StyleSheet, Text, View, TextInput, Keyboard } from "react-native";
+
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
+
 import { router, Link, useLocalSearchParams, Stack } from "expo-router";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { Themes } from "../../assets/Themes";
@@ -63,6 +74,7 @@ export default function Page() {
           onChangeText={setActivityName} // Update the state variable with the input
         />
       </View>
+
       <View style={styles.descriptionContainer}>
         <Text style={styles.subtitle}> Description</Text>
         <TextInput
