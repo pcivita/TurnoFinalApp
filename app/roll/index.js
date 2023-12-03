@@ -2,12 +2,12 @@ import { StyleSheet, Text, View } from "react-native";
 import { Themes } from "../../assets/Themes";
 import { Link } from "expo-router";
 
+import Dice from "../../components/Dice";
+
 export default function Page() {
   return (
     <View style={styles.container}>
-      <View style={styles.main}>
-        <Text style={styles.title}>Roll</Text>
-      </View>
+      <Dice style={styles.Dice} />
     </View>
   );
 }
@@ -15,7 +15,9 @@ export default function Page() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    display: "flex",
     alignItems: "center",
+    justifyContent: "center",
     padding: 24,
     backgroundColor: Themes.colors.background,
   },
@@ -24,13 +26,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     maxWidth: 960,
     marginHorizontal: "auto",
+    backgroundColor: "blue",
   },
   title: {
     fontSize: 64,
     fontWeight: "bold",
   },
-  subtitle: {
-    fontSize: 36,
-    color: "#38434D",
+  Dice: {
+    width: "100%",
+    borderWidth: 2,
+    borderColor: "red",
   },
 });

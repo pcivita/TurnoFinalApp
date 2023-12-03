@@ -53,7 +53,7 @@ export default function Page() {
         <Text style={styles.title}> Create Activity </Text>
       </View>
       <View style={styles.activityNameContainer}>
-        <Text style={styles.subtitle}> 
+        <Text style={styles.subtitle}>
           Activity Name <Text style={styles.asterick}>*</Text>
         </Text>
         <TextInput
@@ -79,9 +79,8 @@ export default function Page() {
           onChangeText={setDescription} // Update the state variable with the input
         />
       </View>
-      <Text style={styles.subtitle}> Category* </Text>
       <View style={styles.categoriesContainer}>
-      <Text style={styles.subtitle}> 
+        <Text style={styles.subtitle}>
           Category <Text style={styles.asterick}>*</Text>
         </Text>
         <View style={styles.categories}>
@@ -213,5 +212,5 @@ const styles = StyleSheet.create({
   },
   asterick: {
     color: Themes.colors.salmon,
-  }
+  },
 });
