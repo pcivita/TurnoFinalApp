@@ -1,5 +1,5 @@
 export const colors = {
-  background: "#FFFFFF",
+  background: "#FAF9F6",
   salmon: "#FF7474",
   salmonLight: "rgba(255, 116, 116, 0.5)",
   salmonTransparent: "rgba(255, 116, 116, 0.3)",

@@ -5,6 +5,8 @@ import Post from "../components/Post";
 import { useFonts } from "expo-font";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { ScrollView } from "react-native-gesture-handler";
+import ProfileCard from "../components/ProfileCard";
 
 export default function Page() {
   const [fontsLoaded] = useFonts({
@@ -36,7 +38,17 @@ export default function Page() {
         </View>
       </View>
       <View style={styles.main}>
-        <Post style={styles.post} />
+        <View style={styles.profileCard}>
+          <ProfileCard />
+        </View>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Post style={styles.post} />
+          <Post style={styles.post} />
+          <Post style={styles.post} />
+          <Post style={styles.post} />
+          <Post style={styles.post} />
+          <Post style={styles.post} />
+        </ScrollView>
       </View>
     </View>
   );
