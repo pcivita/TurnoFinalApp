@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
   },
   subscreenContainer: {
     flex: 1,
+    // borderWidth: 2,
     position: "relative",
     width: "100%",
   },

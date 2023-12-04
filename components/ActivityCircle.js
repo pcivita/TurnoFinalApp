@@ -1,18 +1,42 @@
-import { View, StyleSheet } from "react-native";
-import { Themes } from "../assets/Themes";
+import { Image, Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import Images from "../assets/Themes/Images";
+import { useFonts } from "expo-font";
+import Kudos from "./Kudos";
 
-export default function ActivityCircle() {
-  return <View style={styles.circle1}></View>;
+import { useState } from "react";
+
+export default function ActivityCircle({ right }) {
+  return (
+    <View style={styles.container}>
+      <View style={styles.ImageText}>
+        <View style={styles.imageContainer} right={right}></View>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-  circle1: {
+  container: {
+    height: 80, // Keep this Standard
+    width: "100%",
+    display: "relative",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    // borderWidth: 0.3,
+    borderColor: "grey",
+  },
+  ImageText: {
+    position: "relative",
+    flexDirection: "row",
+  },
+  imageContainer: {
     position: "absolute",
-    right: "44%",
-    bottom: "-670%",
-    width: 50, // Define a width
-    height: 50, // and a height
-    borderRadius: 25, // and make it round
-    backgroundColor: "red", // Temporarily set a background color to make it visible
+    width: "15%",
+    height: undefined,
+    aspectRatio: 1,
+    borderRadius: 100,
+    borderWidth: 2,
+    overflow: "hidden",
   },
 });
