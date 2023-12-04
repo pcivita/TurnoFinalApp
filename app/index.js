@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   header: {
     width: "100%",
     flexDirection: "row",
-    height: "15%",
+    height: "14%",
     alignItems: "flex-end",
     justifyContent: "center",
     backgroundColor: Themes.colors.salmon,

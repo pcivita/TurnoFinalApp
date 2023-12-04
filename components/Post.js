@@ -2,13 +2,18 @@ import { Image, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import Images from "../assets/Themes/Images";
 import { useFonts } from "expo-font";
 import Kudos from "./Kudos";
+import Comment from "./Comment";
 
 import { useState } from "react";
 
 export default function Post() {
   const [color, setColor] = useState("black"); // Initial color
 
-  const toggleColor = () => {
+  const toggleLike = () => {
+    setColor((prevColor) => (prevColor === "black" ? "red" : "black"));
+  };
+
+  const toggleComment = () => {
     setColor((prevColor) => (prevColor === "black" ? "red" : "black"));
   };
 
@@ -37,12 +42,16 @@ export default function Post() {
           <Text style={styles.postText}>
             You Completed: <Text>{actityName} </Text>
           </Text>
+          <View style={styles.actionItemsContainer}>
+            <TouchableOpacity onPress={toggleLike}>
+              <Kudos color={color} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={toggleComment}>
+              <Comment color={color} />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-
-      <TouchableOpacity onPress={toggleColor}>
-        <Kudos color={color} />
-      </TouchableOpacity>
     </View>
   );
 }
@@ -81,7 +90,14 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   textContainer: {
+    gap: 16,
     width: "80%",
     // borderWidth: 1,
+  },
+  actionItemsContainer: {
+    // borderWidth: 1,
+    flexDirection: "row",
+    alignSelf: "flex-start",
+    gap: 12,
   },
 });
