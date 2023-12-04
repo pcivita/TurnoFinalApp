@@ -1,10 +1,14 @@
 import React from "react";
 import { View, StyleSheet, Button } from "react-native";
 import { Themes } from "../assets/Themes";
-import Animated, { useSharedValue, withTiming, useAnimatedStyle, Easing } from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  withTiming,
+  useAnimatedStyle,
+  Easing,
+} from "react-native-reanimated";
 
 export default function Dice() {
-
   // const rotateY = useSharedValue(0);
 
   // const animatedStyle = useAnimatedStyle(() => {
@@ -22,14 +26,14 @@ export default function Dice() {
 
   return (
     // <View style={styles.container}>
-      <Animated.View style={[styles.diceContainer]}>
-        <View style={[styles.diceFace, styles.faceFront]} />
-        <View style={[styles.diceFace, styles.faceBack]} />
-        <View style={[styles.diceFace, styles.faceTop]} />
-        <View style={[styles.diceFace, styles.faceBottom]} /> 
-        <View style={[styles.diceFace, styles.faceRight]} /> 
-        <View style={[styles.diceFace, styles.faceLeft]} />
-      </Animated.View>
+    <Animated.View style={[styles.diceContainer]}>
+      <View style={[styles.diceFace, styles.faceFront]} />
+      <View style={[styles.diceFace, styles.faceBack]} />
+      <View style={[styles.diceFace, styles.faceTop]} />
+      <View style={[styles.diceFace, styles.faceBottom]} />
+      <View style={[styles.diceFace, styles.faceRight]} />
+      <View style={[styles.diceFace, styles.faceLeft]} />
+    </Animated.View>
     // </View>
   );
 }
@@ -81,4 +85,3 @@ const styles = StyleSheet.create({
   //   transform: [{ rotateY: "-90deg" }, { translateZ: 50 }],
   // },
 });
-
