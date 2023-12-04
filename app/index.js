@@ -7,7 +7,6 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import ProfileCard from "../components/ProfileCard";
-import MyBottomSheet from "../components/MyBottomSheet";
 import { useState } from "react";
 
 export default function Page() {
@@ -59,7 +58,6 @@ export default function Page() {
           <Post style={styles.post} postId={6} />
         </ScrollView>
       </View>
-      {/* <MyBottomSheet postId={bottomSheetPostId}></MyBottomSheet> */}
     </View>
   );
 }

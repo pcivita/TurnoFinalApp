@@ -12,7 +12,6 @@ import { useFonts } from "expo-font";
 import KudosIcon from "./Icons/Kudos";
 import CommentIcon from "./Icons/Comment";
 import CommentModal from "./CommentModal";
-import MyBottomSheet from "./MyBottomSheet";
 import { CommentsProvider } from "../contexts/CommentsContext";
 
 import { useState } from "react";
@@ -73,7 +72,6 @@ export default function Post({ postId }) {
                   toggleModal={toggleModal}
                   setModalVisible={setModalVisible}
                 />
-                {/* <MyBottomSheet></MyBottomSheet> */}
               </TouchableOpacity>
             </View>
           </View>
