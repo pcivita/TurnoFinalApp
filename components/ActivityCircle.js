@@ -2,20 +2,17 @@ import { View, StyleSheet } from "react-native";
 import { Themes } from "../assets/Themes";
 
 export default function ActivityCircle() {
-  return <View style={styles.circle}></View>;
+  return <View style={styles.circle1}></View>;
 }
 
 const styles = StyleSheet.create({
-  circle: {
-    width: 50,
-    height: undefined,
-    aspectRatio: 1,
-    borderRadius: 100,
-    backgroundColor: Themes.colors.salmon,
-
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.55,
-    shadowRadius: 3.84,
+  circle1: {
+    position: "absolute",
+    right: "44%",
+    bottom: "-670%",
+    width: 50, // Define a width
+    height: 50, // and a height
+    borderRadius: 25, // and make it round
+    backgroundColor: "red", // Temporarily set a background color to make it visible
   },
 });

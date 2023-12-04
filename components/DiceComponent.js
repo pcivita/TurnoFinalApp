@@ -8,7 +8,7 @@ const DiceComponent = () => {
     // Start the animation
     Animated.timing(rotateAnim, {
       toValue: 1,
-      duration: 1000,
+      duration: 300,
       useNativeDriver: true,
     }).start(() => {
       rotateAnim.setValue(0); // Reset the animation
