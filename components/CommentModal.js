@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { CommentsContext } from "../contexts/CommentsContext";
-import Comment from "./Comment.js"
+import Comment from "./Comment.js";
 // import { Themes } from "../assets/Themes";
 
 export default function CommentModal({ isVisible, closeModal, postId }) {
@@ -36,18 +36,16 @@ export default function CommentModal({ isVisible, closeModal, postId }) {
       }}
     >
       <View style={styles.container}>
-      <View style={styles.modal}>
-      <Text>Comments</Text>
-      <FlatList
-        data={comments}
-        keyExtractor={(comment, index) => comment + index}
-        renderItem={({ item, index }) => (
-          <Comment comment={"my comment"} />
-        )}
-        style={styles.commentsList}
-      />
-      </View>
-      {/* <TouchableWithoutFeedback onPress={(e) => handlePressOutside(e)} >
+        <View style={styles.modal}>
+          <Text>Comments</Text>
+          <FlatList
+            data={comments}
+            keyExtractor={(comment, index) => comment + index}
+            renderItem={({ item, index }) => <Comment comment={"my comment"} />}
+            style={styles.commentsList}
+          />
+        </View>
+        {/* <TouchableWithoutFeedback onPress={(e) => handlePressOutside(e)} >
         <View style={styles.container}>
           <View style={styles.modal}>
             <Text>Comment Modal</Text>
@@ -65,7 +63,7 @@ export default function CommentModal({ isVisible, closeModal, postId }) {
       </TouchableWithoutFeedback> */}
       </View>
     </Modal>
-  );  
+  );
 }
 
 const styles = StyleSheet.create({
@@ -101,5 +99,5 @@ const styles = StyleSheet.create({
   },
   comment: {
     backgroundColor: "white",
-  }
+  },
 });
