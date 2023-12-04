@@ -4,6 +4,7 @@ import {
   View,
   Text,
   TextInput,
+  ScrollView,
   SectionList,
   FlatList,
   StyleSheet,
@@ -11,7 +12,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { CommentsContext } from "../contexts/CommentsContext";
-import Comment from "./Comment.js"
+import Comment from "./Comment.js";
 // import { Themes } from "../assets/Themes";
 
 export default function CommentModal({ isVisible, closeModal, postId }) {
@@ -34,24 +35,33 @@ export default function CommentModal({ isVisible, closeModal, postId }) {
         closeModal();
       }}
     >
-      <TouchableWithoutFeedback onPress={(e) => handlePressOutside(e)}>
+      <View style={styles.container}>
+        <View style={styles.modal}>
+          <Text>Comments</Text>
+          <FlatList
+            data={comments}
+            keyExtractor={(comment, index) => comment + index}
+            renderItem={({ item, index }) => <Comment comment={"my comment"} />}
+            style={styles.commentsList}
+          />
+        </View>
+        {/* <TouchableWithoutFeedback onPress={(e) => handlePressOutside(e)} >
         <View style={styles.container}>
           <View style={styles.modal}>
-          <Text>Comment Modal</Text>
-            {/* <Comment comment={"my comment"} /> */}
+            <Text>Comment Modal</Text>
             <FlatList
               data={comments}
               keyExtractor={(comment, index) => comment + index}
               renderItem={({ item, index }) => (
-                // <Text className={styles.comment}>{item}</Text>
                 <Comment comment={"my comment"} />
               )}
-              // showsVerticalScrollIndicator={false}
               style={styles.commentsList}
-            />
+            >
+            </FlatList>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback> */}
+      </View>
     </Modal>
   );
 }
@@ -85,8 +95,9 @@ const styles = StyleSheet.create({
   commentsList: {
     backgroundColor: "green",
     width: "95%",
+    flex: 1,
   },
   comment: {
     backgroundColor: "white",
-  }
+  },
 });
