@@ -1,20 +1,23 @@
 import { Image, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import Images from "../assets/Themes/Images";
 import { useFonts } from "expo-font";
-import Kudos from "./Kudos";
-import Comment from "./Comment";
+import KudosIcon from "./Icons/Kudos";
+import CommentIcon from "./Icons/Comment";
+import CommentModal from "./CommentModal";
+import { CommentsProvider } from '../contexts/CommentsContext';
 
 import { useState } from "react";
 
-export default function Post() {
-  const [color, setColor] = useState("black"); // Initial color
+export default function Post({ postId }) {
+  const [kudosColor, setKudosColor] = useState("black"); // Initial color
 
-  const toggleLike = () => {
-    setColor((prevColor) => (prevColor === "black" ? "red" : "black"));
+  const toggleKudos = () => {
+    setKudosColor((prevColor) => (prevColor === "black" ? "red" : "black"));
   };
 
-  const toggleComment = () => {
-    setColor((prevColor) => (prevColor === "black" ? "red" : "black"));
+  const [isModalVisible, setModalVisible] = useState(false);
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
   const [fontsLoaded] = useFonts({
@@ -27,32 +30,35 @@ export default function Post() {
   }
 
   // PROVISORY
-  let actityName = "Go on a run for 100 days in Lake Lag without stopping";
+  let activityName = "Go on a run for 100 days in Lake Lag without stopping";
 
   return (
-    <View style={styles.container}>
-      <View style={styles.ImageText}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={Images.profileImages.pedro}
-            style={styles.profileImg}
-          />
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.postText}>
-            You Completed: <Text>{actityName} </Text>
-          </Text>
-          <View style={styles.actionItemsContainer}>
-            <TouchableOpacity onPress={toggleLike}>
-              <Kudos color={color} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={toggleComment}>
-              <Comment color={color} />
-            </TouchableOpacity>
+    <CommentsProvider postId={postId}>
+      <View style={styles.container}>
+        <View style={styles.ImageText}>
+          <View style={styles.imageContainer}>
+            <Image
+              source={Images.profileImages.pedro}
+              style={styles.profileImg}
+            />
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.postText}>
+              You Completed: <Text>{activityName} </Text>
+            </Text>
+            <View style={styles.actionItemsContainer}>
+              <TouchableOpacity onPress={toggleKudos}>
+                <KudosIcon color={kudosColor} />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.commentContainer} onPress={() => setModalVisible(true)}>
+                <CommentIcon color="black" />
+                <CommentModal isVisible={isModalVisible} closeModal={closeModal} postId={postId}/>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </CommentsProvider>
   );
 }
 
@@ -100,4 +106,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     gap: 12,
   },
+  commentContainer: {
+    marginTop: 3,
+  }
 });

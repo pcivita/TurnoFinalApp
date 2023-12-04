@@ -42,12 +42,12 @@ export default function Page() {
           <ProfileCard />
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Post style={styles.post} />
-          <Post style={styles.post} />
-          <Post style={styles.post} />
-          <Post style={styles.post} />
-          <Post style={styles.post} />
-          <Post style={styles.post} />
+          <Post style={styles.post} postId={1} />
+          <Post style={styles.post} postId={2} />
+          <Post style={styles.post} postId={3} />
+          <Post style={styles.post} postId={4} />
+          <Post style={styles.post} postId={5} />
+          <Post style={styles.post} postId={6} />
         </ScrollView>
       </View>
     </View>
