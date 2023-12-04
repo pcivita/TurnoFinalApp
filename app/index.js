@@ -7,6 +7,8 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import ProfileCard from "../components/ProfileCard";
+import MyBottomSheet from "../components/MyBottomSheet";
+import { useState } from "react";
 
 export default function Page() {
   const [fontsLoaded] = useFonts({
@@ -16,6 +18,13 @@ export default function Page() {
   if (!fontsLoaded) {
     return undefined;
   }
+
+  // const [bottomSheetPostId, setBottomSheetPostId] = useState(null);
+
+  // const handleOpenBottomSheet = (postId) => {
+  //   setBottomSheetPostId(postId);
+  // };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -50,6 +59,7 @@ export default function Page() {
           <Post style={styles.post} postId={6} />
         </ScrollView>
       </View>
+      {/* <MyBottomSheet postId={bottomSheetPostId}></MyBottomSheet> */}
     </View>
   );
 }

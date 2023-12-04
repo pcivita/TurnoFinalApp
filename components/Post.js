@@ -1,10 +1,19 @@
-import { Image, Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Image,
+  Text,
+  View,
+  StyleSheet,
+  StatusBar,
+  TouchableOpacity,
+} from "react-native";
+import Modal from "react-native-modal";
 import Images from "../assets/Themes/Images";
 import { useFonts } from "expo-font";
 import KudosIcon from "./Icons/Kudos";
 import CommentIcon from "./Icons/Comment";
 import CommentModal from "./CommentModal";
-import { CommentsProvider } from '../contexts/CommentsContext';
+import MyBottomSheet from "./MyBottomSheet";
+import { CommentsProvider } from "../contexts/CommentsContext";
 
 import { useState } from "react";
 
@@ -32,6 +41,10 @@ export default function Post({ postId }) {
   // PROVISORY
   let activityName = "Go on a run for 100 days in Lake Lag without stopping";
 
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   return (
     <CommentsProvider postId={postId}>
       <View style={styles.container}>
@@ -50,9 +63,17 @@ export default function Post({ postId }) {
               <TouchableOpacity onPress={toggleKudos}>
                 <KudosIcon color={kudosColor} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.commentContainer} onPress={() => setModalVisible(true)}>
+              <TouchableOpacity
+                style={styles.commentContainer}
+                onPress={toggleModal}
+              >
                 <CommentIcon color="black" />
-                <CommentModal isVisible={isModalVisible} closeModal={closeModal} postId={postId}/>
+                <CommentModal
+                  isModalVisible={isModalVisible}
+                  toggleModal={toggleModal}
+                  setModalVisible={setModalVisible}
+                />
+                {/* <MyBottomSheet></MyBottomSheet> */}
               </TouchableOpacity>
             </View>
           </View>
@@ -108,5 +129,47 @@ const styles = StyleSheet.create({
   },
   commentContainer: {
     marginTop: 3,
-  }
+  },
 });
+
+// const styles = StyleSheet.create({
+//   flexView: {
+//     flex: 1,
+//     backgroundColor: "white",
+//   },
+//   modal: {
+//     justifyContent: "flex-end",
+//     margin: 0,
+//   },
+//   modalContent: {
+//     backgroundColor: "#161616",
+//     paddingTop: 12,
+//     paddingHorizontal: 12,
+//     borderTopRightRadius: 20,
+//     borderTopLeftRadius: 20,
+//     minHeight: 400,
+//     paddingBottom: 20,
+//   },
+//   center: {
+//     display: "flex",
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+//   barIcon: {
+//     width: 60,
+//     height: 5,
+//     backgroundColor: "#bbb",
+//     borderRadius: 3,
+//   },
+//   text: {
+//     color: "#bbb",
+//     fontSize: 24,
+//     marginTop: 100,
+//   },
+//   btnContainer: {
+//     display: "flex",
+//     alignItems: "center",
+//     justifyContent: "center",
+//     height: 500,
+//   },
+// });

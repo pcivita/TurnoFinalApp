@@ -1,103 +1,156 @@
+import Modal from "react-native-modal";
 import React, { useState, useEffect, useContext } from "react";
 import {
-  Modal,
   View,
   Text,
-  TextInput,
-  ScrollView,
-  SectionList,
+  Button,
   FlatList,
   StyleSheet,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
+  ScrollView,
+  TextInput,
 } from "react-native";
-import { CommentsContext } from "../contexts/CommentsContext";
+import { CommentsContext } from "../contexts/CommentsContext.js";
 import Comment from "./Comment.js";
-// import { Themes } from "../assets/Themes";
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
 
-export default function CommentModal({ isVisible, closeModal, postId }) {
-  const { getComments } = useContext(CommentsContext);
-  const comments = getComments(postId);
+export default function CommentModal({
+  isModalVisible,
+  toggleModal,
+  setModalVisible,
+}) {
+  const comments = [
+    ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
+    ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
+    ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
+    ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
+    ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
+    ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
+    ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
+    ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
+  ];
 
-  const handlePressOutside = (e) => {
-    // Check if the click is outside the modal
-    if (e.target === e.currentTarget) {
-      closeModal();
-    }
+  const [newComment, setNewComment] = useState("");
+
+  const handleAddComment = () => {
+    // Add logic to handle the addition of a new comment
+    console.log("New Comment:", newComment);
+    // You can update your state or context with the new comment
+    setNewComment("");
   };
 
   return (
     <Modal
-      animationType="fade"
-      transparent={true}
-      visible={isVisible}
-      onRequestClose={() => {
-        closeModal();
-      }}
+      onBackdropPress={() => setModalVisible(false)}
+      onBackButtonPress={() => setModalVisible(false)}
+      isVisible={isModalVisible}
+      swipeDirection="down"
+      onSwipeComplete={toggleModal}
+      animationIn="bounceInUp"
+      animationOut="bounceOutDown"
+      animationInTiming={900}
+      animationOutTiming={500}
+      backdropTransitionInTiming={1000}
+      backdropTransitionOutTiming={500}
+      propagateSwipe={true}
+      style={styles.modal}
     >
-      <View style={styles.container}>
-        <View style={styles.modal}>
-          <Text>Comments</Text>
-          <FlatList
-            data={comments}
-            keyExtractor={(comment, index) => comment + index}
-            renderItem={({ item, index }) => <Comment comment={"my comment"} />}
-            style={styles.commentsList}
+      <View style={styles.modalContent}>
+        <View style={styles.center}>
+          <View style={styles.barIcon} />
+          <Text style={styles.title}>Comments</Text>
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+            style={styles.scrollView}
+          >
+            <View flex={1} onStartShouldSetResponder={() => true}>
+              {comments.map((commentData, index) => (
+                <Comment key={index} commentData={commentData}></Comment>
+              ))}
+            </View>
+          </ScrollView>
+          <TextInput
+            style={styles.commentInput}
+            placeholder="Add a comment..."
+            value={newComment}
+            onChangeText={(text) => setNewComment(text)}
           />
+          <TouchableOpacity onPress={handleAddComment}>
+            <Text>Add Comment</Text>
+          </TouchableOpacity>
         </View>
-        {/* <TouchableWithoutFeedback onPress={(e) => handlePressOutside(e)} >
-        <View style={styles.container}>
-          <View style={styles.modal}>
-            <Text>Comment Modal</Text>
-            <FlatList
-              data={comments}
-              keyExtractor={(comment, index) => comment + index}
-              renderItem={({ item, index }) => (
-                <Comment comment={"my comment"} />
-              )}
-              style={styles.commentsList}
-            >
-            </FlatList>
-          </View>
-        </View>
-      </TouchableWithoutFeedback> */}
       </View>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  flexView: {
     flex: 1,
-    justifyContent: "flex-end",
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
+    backgroundColor: "white",
   },
   modal: {
-    height: "70%",
-    width: "100%",
+    justifyContent: "flex-end",
+    margin: 0,
+  },
+  modalContent: {
     backgroundColor: "white",
-    borderRadius: 20,
-    paddingTop: 10,
+    paddingTop: 12,
+    paddingHorizontal: 12,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    minHeight: 550,
+    height: 790,
+    paddingBottom: 20,
+  },
+  center: {
+    display: "flex",
     alignItems: "center",
-    justifyContent: "space-between",
-    shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    position: "absolute",
-    top: "auto", // Reset the top position
-    bottom: 0, // Position at the bottom
-    overflow: "hidden",
+    justifyContent: "center",
+  },
+  barIcon: {
+    width: 60,
+    height: 5,
+    backgroundColor: "#bbb",
+    borderRadius: 3,
+  },
+  title: {
+    fontSize: 24,
+    marginVertical: 20,
+  },
+  btnContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 500,
   },
   commentsList: {
+    height: "100%",
     backgroundColor: "green",
-    width: "95%",
-    flex: 1,
   },
-  comment: {
-    backgroundColor: "white",
+  scrollView: {
+    width: "95%",
+    // backgroundColor: "green",
+  },
+  commentInput: {
+    height: 100,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 150,
+    paddingHorizontal: 10,
+    width: "95%", // Adjust width as needed
+    alignSelf: "center", // Center the TextInput
+  },
+  addCommentButton: {
+    alignSelf: "center", // Center the button
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: "blue", // Change color as needed
+    borderRadius: 5,
+  },
+  addCommentButtonText: {
+    color: "white", // Change color as needed
   },
 });

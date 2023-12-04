@@ -9,5 +9,6 @@ export default Images = {
   },
   profileImages: {
     pedro: require("./profileImages/IMG_9521.jpg"),
+    malina: require("./profileImages/Malina.jpg"),
   },
 };
