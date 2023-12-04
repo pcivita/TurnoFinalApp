@@ -1,7 +1,7 @@
 import { Image, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import Images from "../assets/Themes/Images";
 import { useFonts } from "expo-font";
-import Kudos from "./Kudos";
+import Kudos from "./Icons/Kudos";
 
 import { useState } from "react";
 
