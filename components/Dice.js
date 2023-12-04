@@ -62,22 +62,22 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: "black",
   },
-  faceFront: {
-    transform: [{ translateZ: 50 }],
-  },
-  faceBack: {
-    transform: [{ rotateX: "180deg" }, { translateZ: 50 }],
-  },
-  faceTop: {
-    transform: [{ rotateX: "90deg" }, { translateZ: 50 }],
-  },
-  faceBottom: {
-    transform: [{ rotateX: "-90deg" }, { translateZ: 50 }],
-  },
-  faceRight: {
-    transform: [{ rotateY: "90deg" }, { translateZ: 50 }],
-  },
-  faceLeft: {
-    transform: [{ rotateY: "-90deg" }, { translateZ: 50 }],
-  },
+  // faceFront: {
+  //   transform: [{ translateZ: 50 }],
+  // },
+  // faceBack: {
+  //   transform: [{ rotateX: "180deg" }, { translateZ: 50 }],
+  // },
+  // faceTop: {
+  //   transform: [{ rotateX: "90deg" }, { translateZ: 50 }],
+  // },
+  // faceBottom: {
+  //   transform: [{ rotateX: "-90deg" }, { translateZ: 50 }],
+  // },
+  // faceRight: {
+  //   transform: [{ rotateY: "90deg" }, { translateZ: 50 }],
+  // },
+  // faceLeft: {
+  //   transform: [{ rotateY: "-90deg" }, { translateZ: 50 }],
+  // },
 });
