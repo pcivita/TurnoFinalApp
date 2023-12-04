@@ -1,25 +1,11 @@
 import { Image, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import Images from "../assets/Themes/Images";
 import { useFonts } from "expo-font";
-import KudosIcon from "./Icons/Kudos";
 import CommentIcon from "./Icons/Comment";
-import CommentModal from "./CommentModal";
-import { CommentsProvider } from '../contexts/CommentsContext';
 
 import { useState } from "react";
 
-export default function Post({ postId }) {
-  const [kudosColor, setKudosColor] = useState("black"); // Initial color
-
-  const toggleKudos = () => {
-    setKudosColor((prevColor) => (prevColor === "black" ? "red" : "black"));
-  };
-
-  const [isModalVisible, setModalVisible] = useState(false);
-  const closeModal = () => {
-    setModalVisible(false);
-  };
-
+export default function Comment({ comment, commenter }) {
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
     "Poppins-Bold": require("../assets/Poppins/Poppins-Bold.ttf"),
@@ -29,36 +15,19 @@ export default function Post({ postId }) {
     return undefined;
   }
 
-  // PROVISORY
-  let activityName = "Go on a run for 100 days in Lake Lag without stopping";
-
   return (
-    <CommentsProvider postId={postId}>
       <View style={styles.container}>
         <View style={styles.ImageText}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={Images.profileImages.pedro}
-              style={styles.profileImg}
-            />
-          </View>
           <View style={styles.textContainer}>
             <Text style={styles.postText}>
-              You Completed: <Text>{activityName} </Text>
+              {comment}
             </Text>
             <View style={styles.actionItemsContainer}>
-              <TouchableOpacity onPress={toggleKudos}>
-                <KudosIcon color={kudosColor} />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.commentContainer} onPress={() => setModalVisible(true)}>
-                <CommentIcon color="black" />
-                <CommentModal isVisible={isModalVisible} closeModal={closeModal} postId={postId}/>
-              </TouchableOpacity>
+              <CommentIcon color="black" />
             </View>
           </View>
         </View>
       </View>
-    </CommentsProvider>
   );
 }
 
