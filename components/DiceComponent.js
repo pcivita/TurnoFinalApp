@@ -1,59 +1,59 @@
-import React, { useState } from "react";
-import { View, Text, Button, StyleSheet, Animated } from "react-native";
+import React, { useState, useEffect, useContext } from "react";
+import { Text, View, Button } from "react-native";
+import { ActivitiesContext } from "../contexts/ActivitiesContext";
 
-const DiceComponent = () => {
-  const rotateAnim = useState(new Animated.Value(0))[0]; // Initial value for rotation
+const CyclingNumbers = () => {
+  const { activities } = useContext(ActivitiesContext);
 
-  const rotateDice = () => {
-    // Start the animation
-    Animated.timing(rotateAnim, {
-      toValue: 1,
-      duration: 300,
-      useNativeDriver: true,
-    }).start(() => {
-      rotateAnim.setValue(0); // Reset the animation
-    });
+  // Find the "Current Activities" section and its data
+  const currentActivitiesSection = activities.find(
+    (activity) => activity.title === "Current Activities"
+  );
+  const currentActivitiesData = currentActivitiesSection
+    ? currentActivitiesSection.data
+    : [];
+
+  const [currentNumber, setCurrentNumber] = useState(1);
+  const [isCycling, setIsCycling] = useState(false);
+
+  useEffect(() => {
+    let interval;
+    let timeout;
+
+    if (isCycling) {
+      // Start cycling numbers every 500ms
+      interval = setInterval(() => {
+        setCurrentNumber(() => Math.floor(Math.random() * 6) + 1);
+      }, 2);
+
+      // Stop cycling after 3 seconds
+      timeout = setTimeout(() => {
+        setIsCycling(false);
+        clearInterval(interval);
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, [isCycling]);
+
+  const startCycling = () => {
+    setIsCycling(true);
   };
 
-  // Interpolate rotation values
-  const rotateX = rotateAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["0deg", "360deg"],
-  });
-  const rotateY = rotateAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["0deg", "360deg"],
-  });
-
   return (
-    <View style={styles.container}>
-      <Animated.View
-        style={{ ...styles.dice, transform: [{ rotateX }, { rotateY }] }}
-      >
-        <Text style={styles.diceText}> O </Text>
-      </Animated.View>
-      <Button title="Roll Dice" onPress={rotateDice} />
+    <View>
+      <Text>{currentNumber}</Text>
+      <Text>{currentActivitiesData[currentNumber - 1]}</Text>
+      <Button
+        onPress={startCycling}
+        title="Start Cycling"
+        disabled={isCycling}
+      />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  dice: {
-    width: 100,
-    height: 100,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    marginBottom: 20,
-  },
-  diceText: {
-    fontSize: 50,
-  },
-});
-
-export default DiceComponent;
+export default CyclingNumbers;

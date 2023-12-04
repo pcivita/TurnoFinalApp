@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, Animated, Easing } from "react-native";
 import { Themes } from "../../assets/Themes";
 import DiceComponent from "../../components/DiceComponent";
 import SwipeButton from "../../components/SwipeButton";
+
+import { ActivitiesProvider } from "../../contexts/ActivitiesContext";
 export default function Page() {
   const [wiggleAnim] = useState(new Animated.Value(0));
   const onToggle = () => {
@@ -34,12 +36,13 @@ export default function Page() {
   }, [wiggleAnim]);
 
   return (
-    <View style={styles.container}>
-      <Animated.View style={{ transform: [{ translateX: wiggleAnim }] }}>
+    <ActivitiesProvider>
+      <View style={styles.container}>
         <DiceComponent style={styles.Dice} />
-      </Animated.View>
-      <SwipeButton onToggle={onToggle} />
-    </View>
+
+        <SwipeButton onToggle={onToggle} />
+      </View>
+    </ActivitiesProvider>
   );
 }
 
