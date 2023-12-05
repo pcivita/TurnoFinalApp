@@ -7,6 +7,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import DiceComponent from "../DiceComponent";
 import { useState } from "react";
 import ActivityCircle from "../ActivityCircle";
+import CongratsModal from "../CongratsModal";
 
 export default function CompleteDice() {
   const [swipeComplete, setSwipeComplete] = useState(false);
@@ -16,6 +17,7 @@ export default function CompleteDice() {
   };
 
   console.log("swipe complete: " + swipeComplete);
+  const [isModalVisible, setModalVisible] = useState(true);
 
   return (
     <View>
@@ -28,6 +30,11 @@ export default function CompleteDice() {
       <View style={styles.buttonContainer}>
         <SwipeButton onToggle={onToggle} style={styles.swipeButton} />
       </View>
+      <CongratsModal 
+        isModalVisible={isModalVisible}
+        // toggleModal={toggleModal}
+        setModalVisible={setModalVisible}
+      />
     </View>
   );
 }

@@ -18,11 +18,10 @@ export default function Page() {
   return (
     <ActivitiesProvider>
       <View style={styles.container}>
-          {activeScreen === "RollDice" && <RollDice onData={handleData} />}
-          {activeScreen === "CompleteDice" && (
-            <CompleteDice />
-          )}
-        {/* </View> */}
+        {activeScreen === "RollDice" && <RollDice onData={handleData} />}
+        {activeScreen === "CompleteDice" && (
+          <CompleteDice />
+        )}
       </View>
     </ActivitiesProvider>
   );
