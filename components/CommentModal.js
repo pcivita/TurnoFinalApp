@@ -8,6 +8,7 @@ import {
   StyleSheet,
   ScrollView,
   TextInput,
+  KeyboardAvoidingView,
 } from "react-native";
 import { CommentsContext } from "../contexts/CommentsContext.js";
 import Comment from "./Comment.js";
@@ -57,7 +58,11 @@ export default function CommentModal({
       propagateSwipe={true}
       style={styles.modal}
     >
-      <View style={styles.modalContent}>
+       <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding: 300" : "height"}
+        style={styles.modalContent}
+      >
+      {/* <View style={styles.modalContent}> */}
         <View style={styles.center}>
           <View style={styles.barIcon} />
           <Text style={styles.title}>Comments</Text>
@@ -71,17 +76,26 @@ export default function CommentModal({
               ))}
             </View>
           </ScrollView>
-          <TextInput
-            style={styles.commentInput}
-            placeholder="Add a comment..."
-            value={newComment}
-            onChangeText={(text) => setNewComment(text)}
-          />
-          <TouchableOpacity onPress={handleAddComment}>
-            <Text>Add Comment</Text>
-          </TouchableOpacity>
+          <KeyboardAvoidingView
+            behavior="padding"
+            style={styles.inputContainer}
+            // keyboardVerticalOffset={Platform.OS === "ios" ? 70 : 0}
+          >
+          {/* <View style={styles.inputContainer}> */}
+            <TextInput
+              style={styles.input}
+              placeholder="Add a comment..."
+              value={newComment}
+              onChangeText={(text) => setNewComment(text)}
+            />
+            <TouchableOpacity onPress={handleAddComment}>
+              <Text>Add Comment</Text>
+            </TouchableOpacity>
+          {/* </View> */}
+          </KeyboardAvoidingView>
         </View>
-      </View>
+      {/* </View> */}
+      </KeyboardAvoidingView>
     </Modal>
   );
 }
@@ -98,7 +112,7 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: "white",
     paddingTop: 12,
-    paddingHorizontal: 12,
+    // paddingHorizontal: 12,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     minHeight: 550,
@@ -134,14 +148,17 @@ const styles = StyleSheet.create({
     width: "95%",
     // backgroundColor: "green",
   },
-  commentInput: {
+  inputContainer: {
     height: 100,
     borderColor: "gray",
     borderWidth: 1,
     marginBottom: 150,
     paddingHorizontal: 10,
-    width: "95%", // Adjust width as needed
+    width: "100%", // Adjust width as needed
     alignSelf: "center", // Center the TextInput
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   addCommentButton: {
     alignSelf: "center", // Center the button
