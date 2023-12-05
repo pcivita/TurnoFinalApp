@@ -17,7 +17,7 @@ export default function CompleteDice() {
   };
 
   console.log("swipe complete: " + swipeComplete);
-  const [isModalVisible, setModalVisible] = useState(true);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   return (
     <View>
