@@ -23,7 +23,7 @@ export default function AppLayout() {
       }}
     >
       <Tabs.Screen
-        name="feed/index"
+        name="feed"
         options={{
           tabBarLabelStyle: { display: "flex" },
           tabBarLabel: "Feed",
