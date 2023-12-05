@@ -45,14 +45,14 @@ export default function Page() {
       <Link
         style={styles.createActivityContainer}
         href={{
-          pathname: "/activities/createActivity",
+          pathname: "/feed/addFriends",
           params: {
             user: "Alan",
           },
         }}
       >
         <View style={styles.createActivityButton}>
-          <Text style={styles.createActivityText}> Create Activity</Text>
+          <Text style={styles.createActivityText}> Add Friends</Text>
         </View>
       </Link>
     </View>
