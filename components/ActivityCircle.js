@@ -2,14 +2,17 @@ import { Image, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import Images from "../assets/Themes/Images";
 import { useFonts } from "expo-font";
 import Kudos from "./Icons/Kudos";
+import { Themes } from "../assets/Themes";
 
 import { useState } from "react";
 
-export default function ActivityCircle({ right }) {
+export default function ActivityCircle({ right, status }) {
+  let colorStyle = styles.incompleteColor;
+
   return (
     <View style={styles.container}>
-      <View style={styles.ImageText}>
-        <View style={styles.imageContainer} right={right}></View>
+      <View style={[styles.circle, styles.colorStyle]} right={right}>
+
       </View>
     </View>
   );
@@ -17,26 +20,23 @@ export default function ActivityCircle({ right }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 80, // Keep this Standard
+    height: 70,
     width: "100%",
-    display: "relative",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    // borderWidth: 0.3,
     borderColor: "grey",
   },
-  ImageText: {
-    position: "relative",
-    flexDirection: "row",
-  },
-  imageContainer: {
-    position: "absolute",
+  circle: {
     width: "15%",
     height: undefined,
     aspectRatio: 1,
     borderRadius: 100,
     borderWidth: 2,
     overflow: "hidden",
+    backgroundColor: "green"
   },
+  incompleteColor: {
+    backgroundColor: Themes.colors.darkGray
+  }
 });
