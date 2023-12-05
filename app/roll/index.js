@@ -18,32 +18,11 @@ export default function Page() {
   return (
     <ActivitiesProvider>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.banner}>
-            <FontAwesome5
-              name="dice-five"
-              style={styles.headerDice}
-              size={30}
-              color={"white"}
-              transform={[{ rotate: "45deg" }]}
-            />
-            <Text style={styles.title}>Roll</Text>
-            <FontAwesome5
-              name="cog"
-              style={styles.headerDice}
-              size={30}
-              color={"white"}
-              transform={[{ rotate: "45deg" }]}
-            />
-          </View>
-        </View>
-
-        <View style={styles.subscreenContainer}>
           {activeScreen === "RollDice" && <RollDice onData={handleData} />}
           {activeScreen === "CompleteDice" && (
-            <CompleteDice style={styles.competeDice} />
+            <CompleteDice />
           )}
-        </View>
+        {/* </View> */}
       </View>
     </ActivitiesProvider>
   );
