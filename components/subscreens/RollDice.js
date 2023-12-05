@@ -6,7 +6,7 @@ export default function RollDice({ onData }) {
   return (
     <View style={styles.screenContainer}>
       <View styles={styles.upperTextContainer}>
-        <Text style={styles.upperText}>Roll the dice for an Activity! </Text>
+        <Text style={styles.upperText}> Roll the dice for an Activity! </Text>
       </View>
       <DiceComponent style={styles.Dice} onData={onData} />
     </View>

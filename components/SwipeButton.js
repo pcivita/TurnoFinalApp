@@ -123,7 +123,7 @@ const SwipeButton = ({ onToggle }) => {
         <Animated.View style={[styles.swipeable, AnimatedStyles.swipeable]} />
       </PanGestureHandler>
       <Animated.Text style={[styles.swipeText, AnimatedStyles.swipeText]}>
-        Swipe Me
+        Swipe to complete
       </Animated.Text>
     </Animated.View>
   );
@@ -137,9 +137,12 @@ const styles = StyleSheet.create({
     borderRadius: BUTTON_HEIGHT,
     padding: BUTTON_PADDING,
     display: "flex",
+    position: "absolute",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
+    bottom: 150,
+    right: -155,
   },
   colorWave: {
     position: "absolute",
@@ -156,8 +159,10 @@ const styles = StyleSheet.create({
     zIndex: 3,
   },
   swipeText: {
+    marginLeft: 42,
     alignSelf: "center",
     fontSize: 20,
+    fontFamily: "Poppins-Bold",
     fontWeight: "bold",
     zIndex: 2,
     color: "#1b9aaa",

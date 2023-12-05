@@ -6,12 +6,14 @@ import SwipeButton from "../../components/SwipeButton";
 import { ActivitiesProvider } from "../../contexts/ActivitiesContext";
 import { FontAwesome5 } from "@expo/vector-icons";
 import RollDice from "../../components/subscreens/RollDice";
+import CompleteDice from "../../components/subscreens/CompleteDice";
 
 export default function Page() {
   const [activeScreen, setActiveScreen] = useState("RollDice"); // Initial state
   const handleData = (data) => {
     // Process the data
     console.log(data);
+    setActiveScreen("CompleteDice");
   };
   return (
     <ActivitiesProvider>
@@ -38,7 +40,9 @@ export default function Page() {
 
         <View style={styles.subscreenContainer}>
           {activeScreen === "RollDice" && <RollDice onData={handleData} />}
-          {activeScreen === "CompleteDice" && <CompleteDice />}
+          {activeScreen === "CompleteDice" && (
+            <CompleteDice style={styles.competeDice} />
+          )}
         </View>
       </View>
     </ActivitiesProvider>
@@ -80,5 +84,8 @@ const styles = StyleSheet.create({
   subscreenContainer: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  competeDice: {
+    position: "relative",
   },
 });
