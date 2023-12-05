@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Animated, Easing } from "react-native";
 import { Themes } from "../../assets/Themes";
 import DiceComponent from "../../components/DiceComponent";
-
+import SwipeButton from "../../components/SwipeButton";
 export default function Page() {
   const [wiggleAnim] = useState(new Animated.Value(0));
-
+  const onToggle = () => {
+    console.log("WORKED!!!");
+  };
   useEffect(() => {
     const startWiggle = () => {
       Animated.loop(
@@ -36,6 +38,7 @@ export default function Page() {
       <Animated.View style={{ transform: [{ translateX: wiggleAnim }] }}>
         <DiceComponent style={styles.Dice} />
       </Animated.View>
+      <SwipeButton onToggle={onToggle} />
     </View>
   );
 }
