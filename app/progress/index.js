@@ -4,6 +4,7 @@ import { Link } from "expo-router";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useState } from "react";
 import Journey from "../../components/ProgressScreens/Journey";
+import Stats from "../../components/ProgressScreens/Stats";
 
 export default function Page() {
   const [activeScreen, setActiveScreen] = useState("none"); // Initial state
@@ -45,7 +46,7 @@ export default function Page() {
       </View>
       <View style={styles.subscreenContainer}>
         {activeScreen === "Journey" && <Journey />}
-        {activeScreen === "subscreen2" && <SubscreenTwo />}
+        {activeScreen === "Stats" && <Stats />}
       </View>
     </View>
   );
