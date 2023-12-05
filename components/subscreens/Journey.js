@@ -5,32 +5,37 @@ import { Themes } from "../../assets/Themes";
 export default function Journey() {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <ActivityCircle style={styles.post} right={25} />
-      <ActivityCircle style={styles.post} right={15} />
+      <ActivityCircle style={styles.post} right={70} status="completed" />
+      <ActivityCircle style={styles.post} right={55} status="completed" />
+      <ActivityCircle style={styles.post} right={0} status="completed" />
+      <ActivityCircle style={styles.post} right={-55} status="completed" />
+      <ActivityCircle style={styles.post} right={-70} status="completed" />
+      <ActivityCircle style={styles.post} right={-55} status="completed" />
+      <ActivityCircle style={styles.post} right={0} status="completed" />
+      <ActivityCircle style={styles.post} right={55} status="in progress" />
+
+      <ActivityCircle style={styles.post} right={70} status="incomplete" />
+      <ActivityCircle style={styles.post} right={55} status="incomplete" />
+      <ActivityCircle style={styles.post} right={0} status="incomplete" />
+      <ActivityCircle style={styles.post} right={-55} status="incomplete" />
+      <ActivityCircle style={styles.post} right={-70} status="incomplete" />
+      <ActivityCircle style={styles.post} right={-55} status="incomplete" />
+      <ActivityCircle style={styles.post} right={0} status="incomplete" />
+      <ActivityCircle style={styles.post} right={55} status="incomplete" />
+
+      <ActivityCircle style={styles.post} right={70} />
+      <ActivityCircle style={styles.post} right={55} />
       <ActivityCircle style={styles.post} right={0} />
-      <ActivityCircle style={styles.post} right={-15} />
-      <ActivityCircle style={styles.post} right={-30} />
-      <ActivityCircle style={styles.post} right={-20} />
-      <ActivityCircle style={styles.post} right={-5} />
+      <ActivityCircle style={styles.post} right={-55} />
+      <ActivityCircle style={styles.post} right={-70} />
+      <ActivityCircle style={styles.post} right={-55} />
       <ActivityCircle style={styles.post} right={0} />
-      <ActivityCircle style={styles.post} right={2} />
-      <ActivityCircle style={styles.post} right={0} />
-      <ActivityCircle style={styles.post} right={1} />
-      <ActivityCircle style={styles.post} right={2} />
-      <ActivityCircle style={styles.post} right={5} />
+      <ActivityCircle style={styles.post} right={55} />
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    backgroundColor: Themes.colors.background,
-    // Adding position relative here, although it's the default and not strictly necessary
-    //position: "relative",
-    flex: 1,
-    // borderWidth: 2,
-  },
   title: {
     // Assuming you might want your title to have some default styling
     textAlign: "center",
@@ -38,7 +43,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     padding: 20,
   },
-
   circleContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
