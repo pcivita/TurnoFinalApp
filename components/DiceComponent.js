@@ -1,10 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Text, View, Button } from "react-native";
+import { Text, View, Button, Image, StyleSheet, Pressable } from "react-native";
 import { ActivitiesContext } from "../contexts/ActivitiesContext";
+import Images from "../assets/Themes/Images";
+import { Themes } from "../assets/Themes";
+
+const imageSources = [
+  Images.diceFaces.one,
+  Images.diceFaces.two,
+  Images.diceFaces.three,
+  Images.diceFaces.four,
+  Images.diceFaces.five,
+  Images.diceFaces.six,
+];
 
 const CyclingNumbers = () => {
   const { activities } = useContext(ActivitiesContext);
-
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   // Find the "Current Activities" section and its data
   const currentActivitiesSection = activities.find(
     (activity) => activity.title === "Current Activities"
@@ -22,15 +33,15 @@ const CyclingNumbers = () => {
 
     if (isCycling) {
       // Start cycling numbers every 500ms
-      interval = setInterval(() => {
-        setCurrentNumber(() => Math.floor(Math.random() * 6) + 1);
-      }, 2);
+      const interval = setInterval(() => {
+        setCurrentImageIndex(() => Math.floor(Math.random() * 6));
+      }, 75); // Change image every 500ms
 
       // Stop cycling after 3 seconds
       timeout = setTimeout(() => {
         setIsCycling(false);
         clearInterval(interval);
-      }, 1000);
+      }, 2000);
     }
 
     return () => {
@@ -44,16 +55,40 @@ const CyclingNumbers = () => {
   };
 
   return (
-    <View>
-      <Text>{currentNumber}</Text>
-      <Text>{currentActivitiesData[currentNumber - 1]}</Text>
-      <Button
+    <View style={styles.container}>
+      <Pressable
+        style={styles.imageContainer}
+        onPress={startCycling}
+        disabled={isCycling}
+      >
+        <Image source={imageSources[currentImageIndex]} style={styles.image} />
+      </Pressable>
+      {/* <Button
         onPress={startCycling}
         title="Start Cycling"
         disabled={isCycling}
-      />
+      /> */}
     </View>
   );
 };
 
 export default CyclingNumbers;
+
+const styles = StyleSheet.create({
+  container: {
+    width: "30%",
+    height: "40%",
+    aspectRatio: 1,
+    // borderWidth: 2,
+  },
+  imageContainer: {
+    width: "100%",
+    height: "100%",
+    // borderWidth: 2,
+  },
+  image: {
+    resizeMode: "contain",
+    width: "100%",
+    height: "100%",
+  },
+});
