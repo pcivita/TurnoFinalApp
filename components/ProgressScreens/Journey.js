@@ -6,22 +6,22 @@ export default function Journey() {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <ActivityCircle style={styles.post} right={70} status="completed" />
-      <ActivityCircle style={styles.post} right={55} status="completed"/>
-      <ActivityCircle style={styles.post} right={0} status="completed"/>
-      <ActivityCircle style={styles.post} right={-55} status="completed"/>
-      <ActivityCircle style={styles.post} right={-70} status="completed"/>
-      <ActivityCircle style={styles.post} right={-55} status="completed"/>
-      <ActivityCircle style={styles.post} right={0} status="completed"/>
-      <ActivityCircle style={styles.post} right={55} status="in progress"/>
+      <ActivityCircle style={styles.post} right={55} status="completed" />
+      <ActivityCircle style={styles.post} right={0} status="completed" />
+      <ActivityCircle style={styles.post} right={-55} status="completed" />
+      <ActivityCircle style={styles.post} right={-70} status="completed" />
+      <ActivityCircle style={styles.post} right={-55} status="completed" />
+      <ActivityCircle style={styles.post} right={0} status="completed" />
+      <ActivityCircle style={styles.post} right={55} status="in progress" />
 
-      <ActivityCircle style={styles.post} right={70} status="incomplete"/>
-      <ActivityCircle style={styles.post} right={55} status="incomplete"/>
-      <ActivityCircle style={styles.post} right={0} status="incomplete"/>
-      <ActivityCircle style={styles.post} right={-55} status="incomplete"/>
-      <ActivityCircle style={styles.post} right={-70} status="incomplete"/>
-      <ActivityCircle style={styles.post} right={-55} status="incomplete"/>
-      <ActivityCircle style={styles.post} right={0} status="incomplete"/>
-      <ActivityCircle style={styles.post} right={55} status="incomplete"/>
+      <ActivityCircle style={styles.post} right={70} status="incomplete" />
+      <ActivityCircle style={styles.post} right={55} status="incomplete" />
+      <ActivityCircle style={styles.post} right={0} status="incomplete" />
+      <ActivityCircle style={styles.post} right={-55} status="incomplete" />
+      <ActivityCircle style={styles.post} right={-70} status="incomplete" />
+      <ActivityCircle style={styles.post} right={-55} status="incomplete" />
+      <ActivityCircle style={styles.post} right={0} status="incomplete" />
+      <ActivityCircle style={styles.post} right={55} status="incomplete" />
 
       <ActivityCircle style={styles.post} right={70} />
       <ActivityCircle style={styles.post} right={55} />

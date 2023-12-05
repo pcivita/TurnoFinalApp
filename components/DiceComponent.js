@@ -13,7 +13,12 @@ const imageSources = [
   Images.diceFaces.six,
 ];
 
-const CyclingNumbers = () => {
+const DiceComponent = ({ onData }) => {
+  const sendData = () => {
+    const data = currentActivitiesData[currentImageIndex]; // The data you want to send to the grandparent
+    onData(data);
+  };
+
   const { activities } = useContext(ActivitiesContext);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   // Find the "Current Activities" section and its data
@@ -35,11 +40,13 @@ const CyclingNumbers = () => {
       // Start cycling numbers every 500ms
       const interval = setInterval(() => {
         setCurrentImageIndex(() => Math.floor(Math.random() * 6));
-      }, 75); // Change image every 500ms
+      }, 100); // Change image every 500ms
 
-      // Stop cycling after 3 seconds
+      // Stop cycling after x seconds
       timeout = setTimeout(() => {
         setIsCycling(false);
+        //Start Fade
+        sendData();
         clearInterval(interval);
       }, 2000);
     }
@@ -72,7 +79,7 @@ const CyclingNumbers = () => {
   );
 };
 
-export default CyclingNumbers;
+export default DiceComponent;
 
 const styles = StyleSheet.create({
   container: {
