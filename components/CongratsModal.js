@@ -1,62 +1,47 @@
 import Modal from "react-native-modal";
 import React, { useState, useEffect, useContext } from "react";
-import {
-  View,
-  Text,
-  Button,
-  FlatList,
-  StyleSheet,
-  ScrollView,
-  TextInput,
-  KeyboardAvoidingView,
+import { View, Text, StyleSheet, Image
 } from "react-native";
-import { CommentsContext } from "../contexts/CommentsContext.js";
-import Comment from "./Comment.js";
-import {
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
+import Images from "../assets/Themes/Images/index.js";
+import { useFonts } from "expo-font";
+import PostPreview from "./PostPreview.js";
 
-export default function CongratsModal({
-  isModalVisible,
-  toggleModal,
-  setModalVisible,
-}) {
+export default function CongratsModal({ isModalVisible, toggleModal, setModalVisible }) {
+  const [fontsLoaded] = useFonts({
+    "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
+    "Poppins-Bold": require("../assets/Poppins/Poppins-Bold.ttf"),
+  });
+  if (!fontsLoaded) {
+    return undefined;
+  }
+
   return (
     <Modal
       onBackdropPress={() => setModalVisible(false)}
       onBackButtonPress={() => setModalVisible(false)}
       isVisible={isModalVisible}
       swipeDirection="down"
-      onSwipeComplete={toggleModal}
-      animationIn="bounceInUp"
-      animationOut="bounceOutDown"
-      animationInTiming={900}
+      onSwipeComplete={() => setModalVisible(false)}
+      // animationIn="bounceInUp"
+      // animationOut="bounceOutDown"
+      animationInTiming={800}
       animationOutTiming={500}
-      backdropTransitionInTiming={1000}
+      backdropTransitionInTiming={800}
       backdropTransitionOutTiming={500}
-      propagateSwipe={true}
       style={styles.modal}
     >
-       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding: 300" : "height"}
-        style={styles.modalContent}
-      >
-        <View style={styles.center}>
+       <View style={styles.modalContent}>
           <View style={styles.barIcon} />
-          <Text style={styles.title}>Congrats</Text>
-        </View>
-      {/* </View> */}
-      </KeyboardAvoidingView>
+          <Image source={Images.confetti} style={styles.confetti} />
+          <Text style={styles.title}>Congrats!</Text>
+          <PostPreview />
+        {/* </View> */}
+      </View>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  flexView: {
-    flex: 1,
-    backgroundColor: "white",
-  },
   modal: {
     justifyContent: "flex-end",
     margin: 0,
@@ -67,14 +52,12 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 12,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    minHeight: 550,
-    height: 790,
+    // minHeight: 600,
+    height: 600,
     paddingBottom: 20,
-  },
-  center: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
   barIcon: {
     width: 60,
@@ -82,9 +65,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#bbb",
     borderRadius: 3,
   },
+  confetti: {
+    position: "absolute",
+    top: 5,
+  },
   title: {
     fontSize: 24,
     marginVertical: 20,
+    fontFamily: "Poppins-Bold"
   },
   btnContainer: {
     display: "flex",

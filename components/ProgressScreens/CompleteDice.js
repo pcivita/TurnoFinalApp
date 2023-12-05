@@ -11,13 +11,14 @@ import CongratsModal from "../CongratsModal";
 
 export default function CompleteDice() {
   const [swipeComplete, setSwipeComplete] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const onToggle = () => {
     setSwipeComplete(!swipeComplete);
+    setModalVisible(!swipeComplete);
   };
 
   console.log("swipe complete: " + swipeComplete);
-  const [isModalVisible, setModalVisible] = useState(false);
 
   return (
     <View>
