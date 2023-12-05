@@ -1,5 +1,4 @@
 import { useContext, useState, useEffect } from "react";
-
 import {
   ScrollView,
   StyleSheet,
@@ -10,7 +9,6 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
-
 import { router, Link, useLocalSearchParams, Stack } from "expo-router";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { Themes } from "../../assets/Themes";

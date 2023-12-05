@@ -5,6 +5,6 @@ export const colors = {
   salmonLight: "rgba(255, 116, 116, 0.5)",
   salmonTransparent: "rgba(255, 116, 116, 0.3)",
   lightGray: "#EEEEEE",
-  mediumGray: "#DCDCDC",
-  darkGray: "#A9A9A9",
+  mediumGray: "#D7D7D7",
+  darkGray: "B4B4B4",
 };

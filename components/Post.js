@@ -15,6 +15,7 @@ import CommentModal from "./CommentModal";
 import { CommentsProvider } from "../contexts/CommentsContext";
 
 import { useState } from "react";
+import { Themes } from "../assets/Themes";
 
 export default function Post({ postId }) {
   const [kudosColor, setKudosColor] = useState("black"); // Initial color
@@ -83,7 +84,7 @@ export default function Post({ postId }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 150, // Keep this Standard
+    height: 140, // Keep this Standard
     width: "100%",
     display: "flex",
     flexDirection: "column",
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 24,
     borderWidth: 0.3,
-    borderColor: "grey",
+    borderColor: Themes.colors.darkGray,
   },
   ImageText: {
     gap: 16,

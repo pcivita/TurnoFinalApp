@@ -4,9 +4,18 @@ import { Themes } from "../../assets/Themes";
 import { useState, useEffect, useContext } from "react";
 import Activity from "../../components/Activity";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
+import { useFonts } from "expo-font";
 
 export default function Page() {
   const { activities } = useContext(ActivitiesContext);
+
+  const [fontsLoaded] = useFonts({
+    "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
+    "Poppins-Bold": require("../../assets/Poppins/Poppins-Bold.ttf"),
+  });
+  if (!fontsLoaded) {
+    return undefined;
+  }
 
   return (
     <View style={styles.container}>
@@ -15,6 +24,7 @@ export default function Page() {
           title: "My Activities",
           headerStyle: {
             backgroundColor: Themes.colors.lightGray, // Set the header background color
+            fontFamily: "Poppins-Regular"
           },
           headerShown: true,
         }}
@@ -82,7 +92,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   createActivityButton: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: Themes.colors.salmon,
     paddingVertical: 10,
     paddingHorizontal: 30,
@@ -94,12 +104,14 @@ const styles = StyleSheet.create({
   createActivityText: {
     paddingHorizontal: 10,
     color: "white",
-    fontSize: 24,
+    fontSize: 22,
+    fontFamily: "Poppins-Regular",
   },
   header: {
     backgroundColor: "white",
-    fontSize: 20,
+    fontSize: 18,
     height: 30,
+    fontFamily: "Poppins-Regular",
   },
   main: {
     flex: 1,
