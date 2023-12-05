@@ -3,11 +3,11 @@ import { Themes } from "../../assets/Themes";
 import { Link } from "expo-router";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useState } from "react";
-import Journey from "../../components/ProgressScreens/Journey";
-import Stats from "../../components/ProgressScreens/Stats";
+import Journey from "../../components/subscreens/Journey";
+import Stats from "../../components/subscreens/Stats";
 
 export default function Page() {
-  const [activeScreen, setActiveScreen] = useState("none"); // Initial state
+  const [activeScreen, setActiveScreen] = useState("Journey"); // Initial state
 
   return (
     <View style={styles.container}>

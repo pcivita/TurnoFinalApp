@@ -5,13 +5,14 @@ import DiceComponent from "../../components/DiceComponent";
 import SwipeButton from "../../components/SwipeButton";
 import { ActivitiesProvider } from "../../contexts/ActivitiesContext";
 import { FontAwesome5 } from "@expo/vector-icons";
+import RollDice from "../../components/subscreens/RollDice";
 
 export default function Page() {
-  const [wiggleAnim] = useState(new Animated.Value(0));
-  const onToggle = () => {
-    console.log("WORKED!!!");
+  const [activeScreen, setActiveScreen] = useState("RollDice"); // Initial state
+  const handleData = (data) => {
+    // Process the data
+    console.log(data);
   };
-
   return (
     <ActivitiesProvider>
       <View style={styles.container}>
@@ -34,16 +35,10 @@ export default function Page() {
             />
           </View>
         </View>
-        <View style={styles.screenContainer}>
-          <View styles={styles.upperTextContainer}>
-            <Text style={styles.upperText}>
-              Roll the dice for an Activity!{" "}
-            </Text>
-          </View>
 
-          <DiceComponent style={styles.Dice} />
-
-          <SwipeButton onToggle={onToggle} />
+        <View style={styles.subscreenContainer}>
+          {activeScreen === "RollDice" && <RollDice onData={handleData} />}
+          {activeScreen === "CompleteDice" && <CompleteDice />}
         </View>
       </View>
     </ActivitiesProvider>
@@ -74,31 +69,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     color: "white",
-
     fontFamily: "Poppins-Bold",
   },
   container: {
     flex: 1,
     display: "flex",
     alignItems: "center",
-
     backgroundColor: Themes.colors.blue,
   },
-  screenContainer: {
-    flex: 1,
-    gap: 20,
-    justifyContent: "center",
+  subscreenContainer: {
     alignItems: "center",
-  },
-  upperTextContainer: {
-    width: "60%",
-
-    borderWidth: 2,
-  },
-  upperText: {
-    color: Themes.colors.background,
-    fontSize: 32,
-    fontFamily: "Poppins-Bold",
-    textAlign: "center",
+    justifyContent: "center",
   },
 });
