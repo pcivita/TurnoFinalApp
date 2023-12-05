@@ -35,7 +35,7 @@ export default function Page() {
             color={"white"}
             transform={[{ rotate: "45deg" }]}
           />
-          <Text style={styles.title}>Profile</Text>
+          <Text style={styles.title}>Profiles</Text>
           <FontAwesome5
             name="cog"
             style={styles.headerDice}
