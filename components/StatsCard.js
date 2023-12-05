@@ -1,6 +1,5 @@
-import { View, Text, StyleSheet, ScrollView, Image} from "react-native";
+import { View, Text, StyleSheet, Image} from "react-native";
 import { Themes } from "../assets/Themes";
-import Images from "../assets/Themes/Images";
 import Fire from "./Icons/Fire";
 
 export default function Stats({ index, statContent }) {
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
   },
   statCard: {
     width: 310,
-    height: 450,
+    // height: 450,
     // backgroundColor: Themes.colors.salmon,
     borderRadius: 30,
     borderWidth: 3,
@@ -94,11 +93,15 @@ const styles = StyleSheet.create({
   description1: {
     fontSize: 18,
     lineHeight: 30,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 10,
   },
   description2: {
     fontSize: 15,
     lineHeight: 25,
+    textAlign: "center",
+    marginTop: -10
   }
 });
 
