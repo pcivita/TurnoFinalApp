@@ -1,59 +1,94 @@
-import React, { useState } from "react";
-import { View, Text, Button, StyleSheet, Animated } from "react-native";
+import React, { useState, useEffect, useContext } from "react";
+import { Text, View, Button, Image, StyleSheet, Pressable } from "react-native";
+import { ActivitiesContext } from "../contexts/ActivitiesContext";
+import Images from "../assets/Themes/Images";
+import { Themes } from "../assets/Themes";
 
-const DiceComponent = () => {
-  const rotateAnim = useState(new Animated.Value(0))[0]; // Initial value for rotation
+const imageSources = [
+  Images.diceFaces.one,
+  Images.diceFaces.two,
+  Images.diceFaces.three,
+  Images.diceFaces.four,
+  Images.diceFaces.five,
+  Images.diceFaces.six,
+];
 
-  const rotateDice = () => {
-    // Start the animation
-    Animated.timing(rotateAnim, {
-      toValue: 1,
-      duration: 300,
-      useNativeDriver: true,
-    }).start(() => {
-      rotateAnim.setValue(0); // Reset the animation
-    });
+const CyclingNumbers = () => {
+  const { activities } = useContext(ActivitiesContext);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  // Find the "Current Activities" section and its data
+  const currentActivitiesSection = activities.find(
+    (activity) => activity.title === "Current Activities"
+  );
+  const currentActivitiesData = currentActivitiesSection
+    ? currentActivitiesSection.data
+    : [];
+
+  const [currentNumber, setCurrentNumber] = useState(1);
+  const [isCycling, setIsCycling] = useState(false);
+
+  useEffect(() => {
+    let interval;
+    let timeout;
+
+    if (isCycling) {
+      // Start cycling numbers every 500ms
+      const interval = setInterval(() => {
+        setCurrentImageIndex(() => Math.floor(Math.random() * 6));
+      }, 75); // Change image every 500ms
+
+      // Stop cycling after 3 seconds
+      timeout = setTimeout(() => {
+        setIsCycling(false);
+        clearInterval(interval);
+      }, 2000);
+    }
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, [isCycling]);
+
+  const startCycling = () => {
+    setIsCycling(true);
   };
-
-  // Interpolate rotation values
-  const rotateX = rotateAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["0deg", "360deg"],
-  });
-  const rotateY = rotateAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["0deg", "360deg"],
-  });
 
   return (
     <View style={styles.container}>
-      <Animated.View
-        style={{ ...styles.dice, transform: [{ rotateX }, { rotateY }] }}
+      <Pressable
+        style={styles.imageContainer}
+        onPress={startCycling}
+        disabled={isCycling}
       >
-        <Text style={styles.diceText}> O </Text>
-      </Animated.View>
-      <Button title="Roll Dice" onPress={rotateDice} />
+        <Image source={imageSources[currentImageIndex]} style={styles.image} />
+      </Pressable>
+      {/* <Button
+        onPress={startCycling}
+        title="Start Cycling"
+        disabled={isCycling}
+      /> */}
     </View>
   );
 };
 
+export default CyclingNumbers;
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    width: "30%",
+    height: "40%",
+    aspectRatio: 1,
+    // borderWidth: 2,
   },
-  dice: {
-    width: 100,
-    height: 100,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    marginBottom: 20,
+  imageContainer: {
+    width: "100%",
+    height: "100%",
+    // borderWidth: 2,
   },
-  diceText: {
-    fontSize: 50,
+  image: {
+    resizeMode: "contain",
+    width: "100%",
+    height: "100%",
   },
 });
-
-export default DiceComponent;

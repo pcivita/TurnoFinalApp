@@ -35,7 +35,7 @@ export default function Page() {
             color={"white"}
             transform={[{ rotate: "45deg" }]}
           />
-          <Text style={styles.title}>Profile</Text>
+          <Text style={styles.title}>Profiles</Text>
           <FontAwesome5
             name="cog"
             style={styles.headerDice}
@@ -46,10 +46,13 @@ export default function Page() {
         </View>
       </View>
       <View style={styles.main}>
-        <View style={styles.profileCard}>
+        {/* <View style={styles.profileCard}>
           <ProfileCard />
-        </View>
+        </View> */}
         <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.profileCard}>
+            <ProfileCard />
+          </View>
           <Post style={styles.post} postId={1} />
           <Post style={styles.post} postId={2} />
           <Post style={styles.post} postId={3} />
