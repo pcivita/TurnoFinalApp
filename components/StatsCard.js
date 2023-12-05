@@ -50,11 +50,12 @@ export default function Stats({ index, statContent }) {
 const styles = StyleSheet.create({
   container: {
     // width: 310,
-    height: 450,
+    height: 420,
     alignItems: "center"
   },
   statCard: {
     width: 310,
+    flex: 1,
     // height: 450,
     // backgroundColor: Themes.colors.salmon,
     borderRadius: 30,
