@@ -34,6 +34,8 @@ export default function Activity({ activityObject, index, section }) {
     6: Images.diceIcons.six,
   };
 
+  let activityName = activityObject ? activityObject[0] : null;
+
   return (
     // <View>
     //   <View style={[styles.container, sectionColor]}>
@@ -63,17 +65,36 @@ export default function Activity({ activityObject, index, section }) {
     //     </TouchableOpacity>
     //   </View>
     // </View>
-    <View style={styles.container}>
-      <Text>helloooooo</Text>
-    </View>
+
+    <TouchableOpacity onPress={activityObject ? openModal : null}>
+      <View style={styles.container}>
+        <View style={styles.diceContainer}>
+          <Image
+            source={diceImages[index]}
+            style={styles.diceNumberIcon}
+          />
+        </View>
+        <Text style={[styles.text, textColor]}> {activityName} </Text>
+      </View>
+      {activityObject &&
+        <ActivityModal 
+          isVisible={isModalVisible} 
+          closeModal={closeModal} 
+          activity={activityObject}
+          indexInSection={index - 1}
+          section="Current Activities"
+        />
+      }
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Themes.colors.salmonLight,
-    height: 150,
-    width: 200,
+    height: 100,
+    width: 160,
+    borderRadius: 10,
     // flex: 1,
     // flexDirection: "row",
     // alignItems: "center",
