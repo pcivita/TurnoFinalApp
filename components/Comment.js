@@ -40,9 +40,9 @@ export default function Comment({ commentData }) {
           <View style={styles.textContainer}>
             <Text style={styles.usernameText}>{username}</Text>
             <Text style={styles.commentText}>{comment}</Text>
-            <TouchableOpacity onPress={toggleCommentKudos(kudosColor)}>
+            {/* <TouchableOpacity onPress={toggleCommentKudos(kudosColor)}>
               <Text style={styles.replyText}>Reply</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>

@@ -35,46 +35,52 @@ export default function Activity({ activityObject, index, section }) {
   };
 
   return (
-    <View>
-      <View style={[styles.container, sectionColor]}>
-        <View style={styles.leftOfContainer}>
-          {section === "Current Activities" && (
-            <View style={styles.diceContainer}>
-              <Image
-                source={diceImages[index]}
-                style={styles.diceNumberIcon}
-              />
-            </View>
-          )}
-          <Text style={[styles.text, textColor]}> {activityObject[0]} </Text>
-        </View>
-        <TouchableOpacity
-          style={styles.rightOfContainer}
-          onPress={openModal}
-        >
-          <MaterialCommunityIcons name="dots-vertical" size={30} color={iconColor} />
-          <ActivityModal 
-            isVisible={isModalVisible} 
-            closeModal={closeModal} 
-            activity={activityObject}
-            section={section}
-            indexInSection={index - 1}
-          />
-        </TouchableOpacity>
-      </View>
+    // <View>
+    //   <View style={[styles.container, sectionColor]}>
+    //     <View style={styles.leftOfContainer}>
+    //       {section === "Current Activities" && (
+    //         <View style={styles.diceContainer}>
+    //           <Image
+    //             source={diceImages[index]}
+    //             style={styles.diceNumberIcon}
+    //           />
+    //         </View>
+    //       )}
+    //       <Text style={[styles.text, textColor]}> {activityObject[0]} </Text>
+    //     </View>
+    //     <TouchableOpacity
+    //       style={styles.rightOfContainer}
+    //       onPress={openModal}
+    //     >
+    //       <MaterialCommunityIcons name="dots-vertical" size={30} color={iconColor} />
+    //       <ActivityModal 
+    //         isVisible={isModalVisible} 
+    //         closeModal={closeModal} 
+    //         activity={activityObject}
+    //         section={section}
+    //         indexInSection={index - 1}
+    //       />
+    //     </TouchableOpacity>
+    //   </View>
+    // </View>
+    <View style={styles.container}>
+      <Text>helloooooo</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderRadius: 10,
-    marginVertical: 5,
-    height: 60,
+    backgroundColor: Themes.colors.salmonLight,
+    height: 150,
+    width: 200,
+    // flex: 1,
+    // flexDirection: "row",
+    // alignItems: "center",
+    // justifyContent: "space-between",
+    // borderRadius: 10,
+    // marginVertical: 5,
+    // height: 60,
   },
   leftOfContainer: {
     flexDirection: "row",
@@ -128,3 +134,67 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
+
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     flexDirection: "row",
+//     alignItems: "center",
+//     justifyContent: "space-between",
+//     borderRadius: 10,
+//     marginVertical: 5,
+//     height: 60,
+//   },
+//   leftOfContainer: {
+//     flexDirection: "row",
+//     alignItems: "center",
+//     left: 10,
+//   },
+//   rightOfContainer: {
+//     right: 10,
+//   },
+//   currentActivity: {
+//     backgroundColor: Themes.colors.salmon,
+//   },
+//   pendingActivity: {
+//     backgroundColor: Themes.colors.salmonLight,
+//   },
+//   text: {
+//     fontSize: 18,
+//     fontFamily: "Poppins-Regular"
+//   },
+//   currentText: {
+//     color: "white",
+//   },
+//   pendingText: {
+//     color: "black",
+//   },
+//   diceContainer: {
+//     backgroundColor: "white",
+//     width: 40,
+//     height: 40,
+//     borderRadius: 30,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     marginRight: 15,
+//     backgroundColor: "white",
+//   },
+//   diceNumberIcon: {
+//     flex: 1,
+//     width: "100%",
+//     height: undefined,
+//     aspectRatio: 1,
+//   },
+//   currentDiceContainer: {
+//     backgroundColor: "white",
+//   },
+//   pendingDiceContainer: {
+//     backgroundColor: "transparent",
+//   },
+//   currentDiceNumber: {
+//     color: Themes.colors.salmon,
+//     fontWeight: "bold",
+//     fontSize: 20,
+//   },
+// });

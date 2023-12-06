@@ -5,13 +5,15 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { useState } from "react";
 import Journey from "../../components/ProgressScreens/Journey";
 import Stats from "../../components/ProgressScreens/Stats";
+import Header from "../../components/Header";
 
 export default function Page() {
   const [activeScreen, setActiveScreen] = useState("Stats"); // Initial state
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <Header title="Progress" />
+      {/* <View style={styles.header}>
         <View style={styles.banner}>
           <FontAwesome5
             name="dice-five"
@@ -29,7 +31,7 @@ export default function Page() {
             transform={[{ rotate: "45deg" }]}
           />
         </View>
-      </View>
+      </View> */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}

@@ -28,7 +28,7 @@ export default function CompleteDice() {
           <Text> Your activity is: </Text>
         </View>
       </View>
-      <Journey style={styles.journey} />
+      <Journey />
       <View style={styles.buttonContainer}>
         <SwipeButton onToggle={onToggle} style={styles.swipeButton} />
       </View>

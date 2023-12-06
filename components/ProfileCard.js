@@ -1,4 +1,5 @@
 import { Image, Text, View, StyleSheet } from "react-native";
+import { Link } from "expo-router";
 import Images from "../assets/Themes/Images";
 import { useFonts } from "expo-font";
 
@@ -18,9 +19,11 @@ export default function ProfileCard() {
       </View>
       <Text style={styles.profileName}> Pedro Civita </Text>
       <Text style={styles.handle}> pcivita </Text>
-      <View style={styles.friendsBox}>
-        <Text style={styles.handle}> 16 friends </Text>
-      </View>
+      {/* <Link href={{ pathname: "/feed/myFriends" }} > */}
+        <View style={styles.friendsBox}>
+          <Text style={styles.handle}> 16 friends </Text>
+        </View>
+      {/* </Link> */}
     </View>
   );
 }
@@ -35,8 +38,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 24,
-    borderWidth: 0.3,
-    borderColor: "grey",
   },
   imageContainer: {
     width: "30%",

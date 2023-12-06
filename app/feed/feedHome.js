@@ -6,6 +6,7 @@ import Activity from "../../components/Activity";
 import { useFonts } from "expo-font";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Post from "../../components/Post";
+import Header from "../../components/Header";
 
 export default function Page() {
   const [fontsLoaded] = useFonts({
@@ -19,41 +20,18 @@ export default function Page() {
   return (
     <View style={styles.container}>
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
+        options={{ headerShown: false }}
       />
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.banner}>
-            <FontAwesome5
-              name="dice-five"
-              style={styles.headerDice}
-              size={30}
-              color={"white"}
-              transform={[{ rotate: "45deg" }]}
-            />
-            <Text style={styles.title}>Feed</Text>
-            <Link href={{ pathname: "/feed/myFriends" }} >
-              <FontAwesome5 
-                name="user-friends"
-                style={styles.headerFriends}
-                size={30}
-                color={"white"}
-              />
-            </Link>
-          </View>
-        </View>
-        <View style={styles.main}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <Post style={styles.post} postId={1} />
-            <Post style={styles.post} postId={2} />
-            <Post style={styles.post} postId={3} />
-            <Post style={styles.post} postId={4} />
-            <Post style={styles.post} postId={5} />
-            <Post style={styles.post} postId={6} />
-          </ScrollView>
-        </View>
+      <Header title="Feed" />
+      <View style={styles.main}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Post style={styles.post} postId={1} />
+          <Post style={styles.post} postId={2} />
+          <Post style={styles.post} postId={3} />
+          <Post style={styles.post} postId={4} />
+          <Post style={styles.post} postId={5} />
+          <Post style={styles.post} postId={6} />
+        </ScrollView>
       </View>
     </View>
   );

@@ -1,13 +1,15 @@
-import { StyleSheet, Text, View, Button, SectionList, Modal } from "react-native";
+import { StyleSheet, Text, View, Button, SectionList, FlatList, Modal } from "react-native";
 import { router, Link, Stack, useLocalSearchParams } from "expo-router";
 import { Themes } from "../../assets/Themes";
 import { useState, useEffect, useContext } from "react";
 import Activity from "../../components/Activity";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { useFonts } from "expo-font";
+import Header from "../../components/Header";
 
 export default function Page() {
   const { activities } = useContext(ActivitiesContext);
+  const currentActivities = activities[0].data;
 
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
@@ -20,16 +22,11 @@ export default function Page() {
   return (
     <View style={styles.container}>
       <Stack.Screen
-        options={{
-          title: "My Activities",
-          headerStyle: {
-            backgroundColor: Themes.colors.lightGray, // Set the header background color
-            fontFamily: "Poppins-Regular"
-          },
-          headerShown: true,
-        }}
+        options={{ headerShown: false }}
       />
-      <SectionList
+      <Header title="Activities" />
+      {/* <SectionList
+        style={styles.sectionList}
         sections={activities}
         keyExtractor={(item, index) => item + index}
         renderItem={({ item, index, section }) => (
@@ -52,8 +49,16 @@ export default function Page() {
           </View>
         )}
         showsVerticalScrollIndicator={false}
-        style={styles.sectionList}
-      />
+      /> */}
+
+      {currentActivities.map((item, index) => (
+        <Activity
+          key={index} // Ensure each child in a list has a unique key
+          activityObject={item}
+          index={index + 1}
+          // section={section.title}
+        />
+      ))}
       <Link
         style={styles.createActivityContainer}
         href={{
@@ -72,19 +77,32 @@ export default function Page() {
 }
 
 const styles = StyleSheet.create({
+  // container: {
+  //   flex: 1,
+  //   alignItems: "center",
+  //   paddingLeft: 20,
+  //   paddingRight: 20,
+  //   paddingTop: 20,
+  //   backgroundColor: "white",
+  //   gap: 16,
+  //   padding: "10%",
+  // },
   container: {
     flex: 1,
     alignItems: "center",
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingTop: 20,
-    backgroundColor: "white",
-    gap: 16,
-    padding: "10%",
+    backgroundColor: Themes.colors.background,
   },
   sectionList: {
+    width: "90%",
     flex: 1,
-    width: "100%",
+    // padding: 10,
+    // gap: 16,
+  },
+  flatList: {
+    width: "90%",
+    flex: 1,
+    // padding: 10,
+    // gap: 16,
   },
   createActivityContainer: {
     flex: 0.09,
