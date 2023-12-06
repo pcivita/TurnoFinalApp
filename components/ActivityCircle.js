@@ -3,10 +3,20 @@ import Images from "../assets/Themes/Images";
 import { useFonts } from "expo-font";
 import Kudos from "./Icons/Kudos";
 import { Themes } from "../assets/Themes";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 import { useState } from "react";
 
-export default function ActivityCircle({ right, status }) {
+export default function ActivityCircle({ right, top, status }) {
+  const categories = [
+    ["Exercise", "running"],
+    ["Relax", "cat"],
+    ["Social", "user-friends"],
+    ["Work", "briefcase"],
+    ["Academic", "graduation-cap"],
+    ["Chore", "broom"],
+  ];
+
   let colorStyle = styles.incompleteColor;
   if (status === "complete") {
     colorStyle = styles.completeColor;
@@ -16,9 +26,16 @@ export default function ActivityCircle({ right, status }) {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { height: top }]}>
       <View style={[styles.circle, colorStyle]} right={right}>
-
+        {status === "complete" && (
+          <FontAwesome5
+            style={styles.icon}
+            name={"user-friends"}
+            size={30}
+            color={Themes.colors.background}
+          />
+        )}
       </View>
     </View>
   );
@@ -26,26 +43,30 @@ export default function ActivityCircle({ right, status }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 70,
     width: "100%",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    borderColor: "grey",
   },
   circle: {
     width: "15%",
     height: undefined,
     aspectRatio: 1,
     borderRadius: 100,
-    borderWidth: 2,
-    overflow: "hidden",
-    backgroundColor: Themes.colors.mediumGray
+
+    backgroundColor: Themes.colors.mediumGray,
+    justifyContent: "center",
+
+    shadowOpacity: 0.3,
+    shadowOffset: { height: 2 },
   },
   completeColor: {
-    backgroundColor: Themes.colors.salmon
+    backgroundColor: Themes.colors.salmon,
   },
   progressColor: {
-    backgroundColor: Themes.colors.salmonLight
-  }
+    backgroundColor: Themes.colors.salmonLight,
+  },
+  icon: {
+    alignSelf: "center",
+  },
 });
