@@ -34,44 +34,51 @@ export default function Page() {
           <Post
             style={styles.post}
             postId={1}
-            imageSource={Images.profileImages.malina}
-            profile={"@malinac"}
+            profileName="Malina Calarco"
+            profilePic={Images.profileImages.malina}
+            handle={"@malinac"}
             activityName={"Lake Lag"}
           />
           <Post
             style={styles.post}
             postId={2}
-            imageSource={Images.profileImages.luca}
-            profile={"@lcivita"}
+            profileName="L Civita"
+            profilePic={Images.profileImages.luca}
+            handle={"@lcivita"}
             activityName={"Lake Lag"}
           />
           <Post
             style={styles.post}
             postId={5}
-            imageSource={Images.profileImages.pedro}
-            profile={"@pedro"}
+            profileName="Pedro 2"
+            profilePic={Images.profileImages.pedro}
+            handle={"@pedro"}
             activityName={"Lake Lag"}
           />
           <Post
             style={styles.post}
             postId={3}
-            imageSource={Images.profileImages.cecilia}
-            profile={"@ccevgrb"}
+            profileName="EVGR Gal"
+            profilePic={Images.profileImages.cecilia}
+            handle={"@ccevgrb"}
             activityName={"Lake Lag"}
           />
           <Post
             style={styles.post}
             postId={4}
-            imageSource={Images.profileImages.digo}
-            profile={"Digo"}
+            profileName="Digo"
+            profilePic={Images.profileImages.digo}
+            handle={"@digo"}
             activityName={"Lake Lag"}
           />
           <Post
             style={styles.post}
             postId={6}
-            imageSource={Images.profileImages.pedro}
-            profile={"You"}
+            profileName="Pedro Civita"
+            profilePic={Images.profileImages.pedro}
+            handle={"@pcivita"}
             activityName={"Lake Lag"}
+            isYourPost={true}
           />
         </ScrollView>
       </View>

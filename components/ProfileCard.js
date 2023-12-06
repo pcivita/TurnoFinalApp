@@ -2,8 +2,9 @@ import { Image, Text, View, StyleSheet } from "react-native";
 import { Link } from "expo-router";
 import Images from "../assets/Themes/Images";
 import { useFonts } from "expo-font";
+import { Themes } from "../assets/Themes";
 
-export default function ProfileCard() {
+export default function ProfileCard({ isYourProfile, profileName, handle, profilePic }) {
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
   });
@@ -15,14 +16,20 @@ export default function ProfileCard() {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image source={Images.profileImages.pedro} style={styles.profileImg} />
+        <Image source={profilePic} style={styles.profileImg} />
       </View>
-      <Text style={styles.profileName}> Pedro Civita </Text>
-      <Text style={styles.handle}> pcivita </Text>
+      <Text style={styles.profileName}>{profileName}</Text>
+      <Text style={styles.handle}>{handle}</Text>
       {/* <Link href={{ pathname: "/feed/myFriends" }} > */}
+      {isYourProfile ? 
         <View style={styles.friendsBox}>
           <Text style={styles.handle}> 16 friends </Text>
         </View>
+        :
+        <View style={styles.addFriendBox}>
+          <Text style={styles.handle}> Add Friend </Text>
+        </View>
+      }
       {/* </Link> */}
     </View>
   );
@@ -68,5 +75,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 0.5,
     padding: 10,
+  },
+  addFriendBox: {
+    borderRadius: 10,
+    borderWidth: 0.5,
+    padding: 10,
+    // backgroundColor: Themes.colors.salmon
+  },
+  addFriendText: {
+    fontFamily: "Poppins-Regular",
+    fontSize: 17,
+    color: "white"
   },
 });

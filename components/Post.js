@@ -17,7 +17,7 @@ import { Link } from "expo-router";
 import { useState } from "react";
 import { Themes } from "../assets/Themes";
 
-export default function Post({ postId, imageSource, profile, activityName }) {
+export default function Post({ postId, profileName, handle, profilePic, activityName, isYourPost }) {
   const [kudosColor, setKudosColor] = useState("black"); // Initial color
 
   const toggleKudos = () => {
@@ -49,16 +49,31 @@ export default function Post({ postId, imageSource, profile, activityName }) {
       <View style={styles.container}>
         <View style={styles.ImageText}>
           <View style={styles.imageContainer}>
-            <Image source={imageSource} style={styles.profileImg} />
+            <Image source={profilePic} style={styles.profileImg} />
           </View>
           <View style={styles.textContainer}>
-            <Link href={{ pathname: "/feed/profileClicked" }}>
+            {isYourPost ? 
               <Text style={styles.postText}>
-                {profile}:{" "}
+                {handle}:{" "}
                 <Text style={styles.activityNameStyle}>{activityName} </Text>
               </Text>
-            </Link>
-
+            :
+              <Text style={styles.postText}>
+                <Link 
+                  href={{ 
+                    pathname: "/feed/profileClicked" ,
+                    params: {
+                      profileName: profileName,
+                      handle: handle,
+                      profilePic: profilePic,
+                    },
+                  }}
+                >
+                  {handle}:
+                </Link>
+                <Text style={styles.activityNameStyle}>{" "}{activityName} </Text>
+              </Text>
+            }
             <View style={styles.actionItemsContainer}>
               <TouchableOpacity onPress={toggleKudos}>
                 <KudosIcon color={kudosColor} />

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Themes } from "../../assets/Themes";
-import { Link } from "expo-router";
+import { Link, Stack, useNavigation, useRouter, useLocalSearchParams } from "expo-router";
 import Post from "../../components/Post";
 import { useFonts } from "expo-font";
 import { Colors } from "react-native/Libraries/NewAppScreen";
@@ -12,57 +12,32 @@ import Header from "../../components/Header";
 import Images from "../../assets/Themes/Images";
 
 export default function Page() {
+  const navigation = useNavigation();
+  const router = useRouter();
+  const params = useLocalSearchParams();
+  const { profileName, handle, profilePic } = params;
+
   return (
     <View style={styles.container}>
-      <Header title="Profile" />
-      <View style={styles.main}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.profileCard}>
-            <ProfileCard />
-          </View>
-          <Post
-            style={styles.post}
-            postId={1}
-            imageSource={Images.profileImages.pedro}
-            profile={"@pcivita"}
-            activityName={"Lake Lag"}
-          />
-          <Post
-            style={styles.post}
-            postId={2}
-            imageSource={Images.profileImages.pedro}
-            profile={"@pcivita"}
-            activityName={"Lake Lag"}
-          />
-          <Post
-            style={styles.post}
-            postId={3}
-            imageSource={Images.profileImages.pedro}
-            profile={"@pcivita"}
-            activityName={"Lake Lag"}
-          />
-          <Post
-            style={styles.post}
-            postId={4}
-            imageSource={Images.profileImages.pedro}
-            profile={"@pcivita"}
-            activityName={"Lake Lag"}
-          />
-          <Post
-            style={styles.post}
-            postId={5}
-            imageSource={Images.profileImages.pedro}
-            profile={"@pcivita"}
-            activityName={"Lake Lag"}
-          />
-          <Post
-            style={styles.post}
-            postId={6}
-            imageSource={Images.profileImages.pedro}
-            profile={"@pcivita"}
-            activityName={"Lake Lag"}
-          />
-        </ScrollView>
+      <Stack.Screen
+        options={{
+          title: "",
+          headerStyle: {
+            backgroundColor: Themes.colors.salmon,
+          },
+          headerTintColor: "white",
+        }}
+      />
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Profile</Text>
+      </View>
+      <View style={styles.profileCard}>
+        <ProfileCard 
+          isYourProfile={false}
+          profileName={profileName}
+          handle={handle}
+          profilePic={profilePic}
+        />
       </View>
     </View>
   );
@@ -70,9 +45,23 @@ export default function Page() {
 
 const styles = StyleSheet.create({
   container: {
+    display: "flex",
     flex: 1,
-    alignItems: "center",
-    backgroundColor: Themes.colors.background,
+    gap: 5,
+    backgroundColor: "white",
+  },
+  titleContainer: {
+    height: "10%",
+    backgroundColor: Themes.colors.salmon,
+    borderColor: "black",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 40,
+    color: "white",
+    alignSelf: "center",
   },
   header: {
     width: "100%",
