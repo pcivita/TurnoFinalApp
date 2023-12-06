@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View, Button, SectionList, FlatList, Modal } from "react-native";
+import { StyleSheet, Text, View, Button, SectionList, TouchableOpacity } from "react-native";
+import Modal from "react-native-modal";
 import { router, Link, Stack, useLocalSearchParams } from "expo-router";
 import { Themes } from "../../assets/Themes";
 import { useState, useEffect, useContext } from "react";
@@ -6,6 +7,7 @@ import Activity from "../../components/Activity";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { useFonts } from "expo-font";
 import Header from "../../components/Header";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function Page() {
   const { activities } = useContext(ActivitiesContext);
@@ -25,40 +27,38 @@ export default function Page() {
         options={{ headerShown: false }}
       />
       <Header title="Activities" />
-      {/* <SectionList
-        style={styles.sectionList}
-        sections={activities}
-        keyExtractor={(item, index) => item + index}
-        renderItem={({ item, index, section }) => (
-          <Activity
-            activityObject={item}
-            index={index + 1}
-            section={section.title}
+      <View style={styles.helpButton}>
+        <TouchableOpacity>
+          <MaterialCommunityIcons 
+            name="help-circle" 
+            size={30} 
+            color={Themes.colors.darkGray}
           />
-        )}
-        renderSectionHeader={({ section }) => (
-          <View>
-            <Text style={styles.header}>{section.title}</Text>
-            {(section.data.length === 0 || !section.data) && (
-              <View style={styles.noActivitiesContainer}>
-                <Text style={styles.noActivitesMessage}>
-                  {section.noActivitiesMessage}
-                </Text>
-              </View>
-            )}
+        </TouchableOpacity>
+      </View>
+      {currentActivities.size === 0 &&
+        <View style={styles.noActivitiesContainer}>
+          <Text style={styles.noActivitesMessage}>
+            {section.noActivitiesMessage}
+          </Text>
+        </View>
+      }
+      {currentActivities.size !== 0 &&
+        <View style={styles.activitiesContainer}>
+          <View style={styles.activitiesRow}>
+            <Activity activityObject={currentActivities[0]} index={1} />
+            <Activity activityObject={currentActivities[1]} index={2} />
           </View>
-        )}
-        showsVerticalScrollIndicator={false}
-      /> */}
-
-      {currentActivities.map((item, index) => (
-        <Activity
-          key={index} // Ensure each child in a list has a unique key
-          activityObject={item}
-          index={index + 1}
-          // section={section.title}
-        />
-      ))}
+          <View style={styles.activitiesRow}>
+            <Activity activityObject={currentActivities[3]} index={3} />
+            <Activity activityObject={currentActivities[4]} index={4} />
+          </View>
+          <View style={styles.activitiesRow}>
+            <Activity activityObject={currentActivities[5]} index={5} />
+            <Activity activityObject={currentActivities[6]} index={6} />
+          </View>
+        </View>
+      }
       <Link
         style={styles.createActivityContainer}
         href={{
@@ -167,4 +167,24 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 5, // Android shadow
   },
+  activitiesContainer: {
+    width: "100%",
+    height: "80%",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    flexDirection: "space-between",
+    gap: 30,
+  },
+  activitiesRow: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  helpButton: {
+    width: "100%",
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    flexDirection: "row",
+    justifyContent: "flex-end"
+  }
 });

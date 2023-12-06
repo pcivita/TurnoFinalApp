@@ -114,16 +114,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     marginHorizontal: "auto",
-    // borderColor: "black",
-    // borderWidth: 2,
-  },
-
-  subtitle: {
-    fontSize: 36,
-    color: "#38434D",
-  },
-  post: {
-    // borderColor: "black",
-    // borderWidth: 2,
   },
 });
