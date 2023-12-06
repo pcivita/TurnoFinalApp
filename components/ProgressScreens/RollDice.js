@@ -57,11 +57,7 @@ export default function RollDice({ onData }) {
           />
         </View>
       </View>
-      {appearHeader && (
-        <Animated.View style={[styles.square, rStyle]}>
-          <ActvityRollled />
-        </Animated.View>
-      )}
+
       <View styles={styles.upperTextContainer}>
         <Text style={styles.upperText}> Roll the dice for an Activity! </Text>
       </View>
