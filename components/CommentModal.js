@@ -55,14 +55,15 @@ export default function CommentModal({
       animationOutTiming={500}
       backdropTransitionInTiming={1000}
       backdropTransitionOutTiming={500}
+      avoidKeyboard
       propagateSwipe={true}
       style={styles.modal}
     >
-       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding: 300" : "height"}
+      {/* <KeyboardAvoidingView
+        behavior="margin"
         style={styles.modalContent}
-      >
-      {/* <View style={styles.modalContent}> */}
+      > */}
+        <View style={styles.modalContent}>
         <View style={styles.center}>
           <View style={styles.barIcon} />
           <Text style={styles.title}>Comments</Text>
@@ -76,12 +77,12 @@ export default function CommentModal({
               ))}
             </View>
           </ScrollView>
-          <KeyboardAvoidingView
+          {/* <KeyboardAvoidingView
             behavior="padding"
             style={styles.inputContainer}
             // keyboardVerticalOffset={Platform.OS === "ios" ? 70 : 0}
-          >
-          {/* <View style={styles.inputContainer}> */}
+          > */}
+            <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
               placeholder="Add a comment..."
@@ -91,11 +92,11 @@ export default function CommentModal({
             <TouchableOpacity onPress={handleAddComment}>
               <Text>Add Comment</Text>
             </TouchableOpacity>
-          {/* </View> */}
-          </KeyboardAvoidingView>
+            </View>
+          {/* </KeyboardAvoidingView> */}
         </View>
-      {/* </View> */}
-      </KeyboardAvoidingView>
+        </View>
+      {/* </KeyboardAvoidingView> */}
     </Modal>
   );
 }
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 12,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    minHeight: 550,
+    // minHeight: 550,
     height: 790,
     paddingBottom: 20,
   },

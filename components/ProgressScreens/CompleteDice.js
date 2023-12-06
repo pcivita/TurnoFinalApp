@@ -11,13 +11,15 @@ import CongratsModal from "../CongratsModal";
 
 export default function CompleteDice() {
   const [swipeComplete, setSwipeComplete] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [switchEnabled, setSwitchEnabled] = useState(false);
+  // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const onToggle = () => {
     setSwipeComplete(!swipeComplete);
+    setModalVisible(!swipeComplete);
   };
 
-  console.log("swipe complete: " + swipeComplete);
-  const [isModalVisible, setModalVisible] = useState(false);
 
   return (
     <View>
@@ -32,8 +34,9 @@ export default function CompleteDice() {
       </View>
       <CongratsModal 
         isModalVisible={isModalVisible}
-        // toggleModal={toggleModal}
         setModalVisible={setModalVisible}
+        switchEnabled={switchEnabled}
+        setSwitchEnabled={setSwitchEnabled}
       />
     </View>
   );

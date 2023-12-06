@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState } from "react";
 import Images from "../assets/Themes/Images";
 import ActivityModal from "./ActivityModal";
+import { useFonts } from "expo-font";
 
 export default function Activity({ activityObject, index, section }) {
   const sectionColor =
@@ -90,7 +91,8 @@ const styles = StyleSheet.create({
     backgroundColor: Themes.colors.salmonLight,
   },
   text: {
-    fontSize: 20,
+    fontSize: 18,
+    fontFamily: "Poppins-Regular"
   },
   currentText: {
     color: "white",
