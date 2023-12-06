@@ -3,6 +3,16 @@ import { Text, View, Button, Image, StyleSheet, Pressable } from "react-native";
 import { ActivitiesContext } from "../contexts/ActivitiesContext";
 import Images from "../assets/Themes/Images";
 import { Themes } from "../assets/Themes";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withSpring,
+  withRepeat,
+  useAnimatedGestureHandler,
+  runOnJS,
+} from "react-native-reanimated";
+import { PanGestureHandler } from "react-native-gesture-handler";
 
 const imageSources = [
   Images.diceFaces.one,
@@ -13,7 +23,29 @@ const imageSources = [
   Images.diceFaces.six,
 ];
 
+const SIZE = 100.0;
+
 const DiceComponent = ({ onData }) => {
+  const progress = useSharedValue(1);
+  const scale = useSharedValue(1);
+
+  const reanimatedStyle = useAnimatedStyle(() => {
+    return {
+      // borderRadius: (progress.value * SIZE) / 2,
+      transform: [
+        // { scale: scale.value },
+        // { rotate: `${progress.value * 2 * Math.PI}rad` },
+        { translateX: scale.value * 20 },
+        { translateY: scale.value * 20 },
+      ],
+    };
+  }, []);
+
+  useEffect(() => {
+    progress.value = withRepeat(withSpring(1.5, { duration: 3000 }), -1, true);
+    scale.value = withRepeat(withSpring(1), -1, true);
+  }, []);
+
   const sendData = () => {
     const data = currentActivitiesData[currentImageIndex]; // The data you want to send to the grandparent
     onData(data);
@@ -61,20 +93,58 @@ const DiceComponent = ({ onData }) => {
     setIsCycling(true);
   };
 
+  const translateX = useSharedValue(0);
+  const contextTranslateX = useSharedValue(0);
+
+  const translateY = useSharedValue(0);
+  const contextTranslateY = useSharedValue(0);
+
+  const panGestureEvent = useAnimatedGestureHandler({
+    onStart: (event) => {
+      scale.value = withSpring(1.5);
+      contextTranslateX.value = translateX.value;
+      contextTranslateY.value = translateY.value;
+    },
+    onActive: (event) => {
+      translateX.value = event.translationX + contextTranslateX.value;
+      translateY.value = event.translationY + contextTranslateY.value;
+    },
+    onEnd: (event) => {
+      scale.value = withSpring(0.5);
+      runOnJS(startCycling)();
+    },
+  });
+  const rStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { scale: scale.value },
+        {
+          translateX: translateX.value,
+        },
+        {
+          translateY: translateY.value,
+        },
+      ],
+    };
+  });
+
+  //TODO: REMEMBER rStyle vs reanimatedStyle
   return (
     <View style={styles.container}>
-      <Pressable
-        style={styles.imageContainer}
-        onPress={startCycling}
-        disabled={isCycling}
-      >
-        <Image source={imageSources[currentImageIndex]} style={styles.image} />
-      </Pressable>
-      {/* <Button
-        onPress={startCycling}
-        title="Start Cycling"
-        disabled={isCycling}
-      /> */}
+      <PanGestureHandler onGestureEvent={panGestureEvent}>
+        <Animated.View style={[styles.square, rStyle]}>
+          {/* <Pressable
+            style={styles.imageContainer}
+            onPress={startCycling}
+            disabled={isCycling}
+          > */}
+          <Image
+            source={imageSources[currentImageIndex]}
+            style={styles.image}
+          />
+          {/* </Pressable> */}
+        </Animated.View>
+      </PanGestureHandler>
     </View>
   );
 };
@@ -97,5 +167,9 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     width: "100%",
     height: "100%",
+  },
+  square: {
+    width: 200,
+    height: 200,
   },
 });

@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     alignItems: "center",
-    backgroundColor: Themes.colors.blue,
+    backgroundColor: Themes.colors.background,
   },
   subscreenContainer: {
     alignItems: "center",
