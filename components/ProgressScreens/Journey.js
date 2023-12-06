@@ -1,36 +1,41 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Button } from "react-native";
 import ActivityCircle from "../ActivityCircle";
 import { Themes } from "../../assets/Themes";
+import SwipeButton from "../SwipeButton";
 
 export default function Journey() {
+
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ActivityCircle style={styles.post} right={70} status="completed" />
-      <ActivityCircle style={styles.post} right={55} status="completed" />
-      <ActivityCircle style={styles.post} right={0} status="completed" />
-      <ActivityCircle style={styles.post} right={-55} status="completed" />
-      <ActivityCircle style={styles.post} right={-70} status="completed" />
-      <ActivityCircle style={styles.post} right={-55} status="completed" />
-      <ActivityCircle style={styles.post} right={0} status="completed" />
-      <ActivityCircle style={styles.post} right={55} status="in progress" />
+    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollView}>
+      <ActivityCircle right={70} status="complete" />
+      <ActivityCircle right={55} status="complete" />
+      <ActivityCircle right={0} status="complete" />
+      <ActivityCircle right={-55} status="complete" />
+      <ActivityCircle right={-70} status="complete" />
+      <ActivityCircle right={-55} status="complete" />
+      <ActivityCircle right={0} status="complete" />
+      <ActivityCircle right={55} status="in progress" />
 
-      <ActivityCircle style={styles.post} right={70} status="incomplete" />
-      <ActivityCircle style={styles.post} right={55} status="incomplete" />
-      <ActivityCircle style={styles.post} right={0} status="incomplete" />
-      <ActivityCircle style={styles.post} right={-55} status="incomplete" />
-      <ActivityCircle style={styles.post} right={-70} status="incomplete" />
-      <ActivityCircle style={styles.post} right={-55} status="incomplete" />
-      <ActivityCircle style={styles.post} right={0} status="incomplete" />
-      <ActivityCircle style={styles.post} right={55} status="incomplete" />
+      <ActivityCircle right={70} status="incomplete" />
+      <ActivityCircle right={55} status="incomplete" />
+      <ActivityCircle right={0} status="incomplete" />
+      <ActivityCircle right={-55} status="incomplete" />
+      <ActivityCircle right={-70} status="incomplete" />
+      <ActivityCircle right={-55} status="incomplete" />
+      <ActivityCircle right={0} status="incomplete" />
+      <ActivityCircle right={55} status="incomplete" />
 
-      <ActivityCircle style={styles.post} right={70} />
-      <ActivityCircle style={styles.post} right={55} />
-      <ActivityCircle style={styles.post} right={0} />
-      <ActivityCircle style={styles.post} right={-55} />
-      <ActivityCircle style={styles.post} right={-70} />
-      <ActivityCircle style={styles.post} right={-55} />
-      <ActivityCircle style={styles.post} right={0} />
-      <ActivityCircle style={styles.post} right={55} />
+      <ActivityCircle right={70} status="incomplete" />
+      <ActivityCircle right={55} status="incomplete" />
+      <ActivityCircle right={0} status="incomplete" />
+      <ActivityCircle right={-55} status="incomplete" />
+      <ActivityCircle right={-70} status="incomplete" />
+      <ActivityCircle right={-55} status="incomplete" />
+      <ActivityCircle right={0} status="incomplete" />
+      <ActivityCircle right={55} status="incomplete" />
+
+    {/* <Button title="button" style={styles.swipeButton}></Button> */}
+    {/* <SwipeButton onToggle={onToggle} style={styles.swipeButton} /> */}
     </ScrollView>
   );
 }
@@ -49,4 +54,16 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     flex: 1,
   },
+  swipeButton: {
+    justifyContent: 'center',
+    alignItems:'center',
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    height: 100,
+    width: "100%"
+  },
+  scrollView: {
+    width: "100%"
+  }
 });

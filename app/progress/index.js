@@ -71,6 +71,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     justifyContent: "center",
+    marginTop: 16,
+    // backgroundColor: "green"
   },
   buttonText: {
     fontFamily: "Poppins-Bold",
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
     color: Themes.colors.background,
   },
   container: {
-    gap: 16,
+    // gap: 16,
     flex: 1,
     alignItems: "center",
     backgroundColor: Themes.colors.background,
@@ -114,5 +116,7 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
     position: "relative",
     width: "100%",
+    height: "100%",
+    // backgroundColor: "black"
   },
 });

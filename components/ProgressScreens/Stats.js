@@ -9,19 +9,19 @@ export default function Stats() {
       Images.diceIcons.one, "fire", 10, "You're on Fire!", "Here is your streak of completing activities"
     ],
     [
-      Images.diceIcons.two, "fire", 2, "You're on Fire!", "Here is your streak of completing activities"
+      Images.diceIcons.two, "fire", 34, "You've come a long way!", "Here is the number of times you have rolled the dice"
     ],
     [
-      Images.diceIcons.three, "fire", 5, "You're on Fire!", "Here is your streak of completing activities"
+      Images.diceIcons.three, "fire", 5, "You're chillin'!", "So far, you've completed 5 activities labeled as 'Relax'"
     ],
     [
-      Images.diceIcons.four, "fire", 5, "You're on Fire!", "Here is your streak of completing activities"
+      Images.diceIcons.four, "fire", 82, "You're a star!", "You have beeen given 82 kudos by your friends"
     ],
     [
-      Images.diceIcons.five, "fire", 5, "You're on Fire!", "Here is your streak of completing activities"
+      Images.diceIcons.five, "fire", 96, "You're so kind!", "You have given 96 kudos to your beloved friends"
     ],
     [
-      Images.diceIcons.six, "fire", 5, "You're on Fire!", "Here is your streak of completing activities"
+      Images.diceIcons.six, "fire", 5, "Okay, celeb!", "You've made 100 posts"
     ],
   ];
 
@@ -79,7 +79,7 @@ export default function Stats() {
 const styles = StyleSheet.create({
   container: {
     height: "100%",
-    marginTop: 20,
+    marginTop: 36,
 
     flexDirection: "column",
     justifyContent: "center", 

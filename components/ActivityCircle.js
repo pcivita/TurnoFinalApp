@@ -8,10 +8,16 @@ import { useState } from "react";
 
 export default function ActivityCircle({ right, status }) {
   let colorStyle = styles.incompleteColor;
+  if (status === "complete") {
+    colorStyle = styles.completeColor;
+  }
+  if (status === "in progress") {
+    colorStyle = styles.progressColor;
+  }
 
   return (
     <View style={styles.container}>
-      <View style={[styles.circle, styles.colorStyle]} right={right}>
+      <View style={[styles.circle, colorStyle]} right={right}>
 
       </View>
     </View>
@@ -34,9 +40,12 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 2,
     overflow: "hidden",
-    backgroundColor: "green"
+    backgroundColor: Themes.colors.mediumGray
   },
-  incompleteColor: {
-    backgroundColor: Themes.colors.darkGray
+  completeColor: {
+    backgroundColor: Themes.colors.salmon
+  },
+  progressColor: {
+    backgroundColor: Themes.colors.salmonLight
   }
 });
