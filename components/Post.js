@@ -13,7 +13,7 @@ import KudosIcon from "./Icons/Kudos";
 import CommentIcon from "./Icons/Comment";
 import CommentModal from "./CommentModal";
 import { CommentsProvider } from "../contexts/CommentsContext";
-
+import { Link } from "expo-router";
 import { useState } from "react";
 import { Themes } from "../assets/Themes";
 
@@ -52,10 +52,13 @@ export default function Post({ postId, imageSource, profile, activityName }) {
             <Image source={imageSource} style={styles.profileImg} />
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.postText}>
-              {profile}:{" "}
-              <Text style={styles.activityNameStyle}>{activityName} </Text>
-            </Text>
+            <Link href={{ pathname: "/feed/profileClicked" }}>
+              <Text style={styles.postText}>
+                {profile}:{" "}
+                <Text style={styles.activityNameStyle}>{activityName} </Text>
+              </Text>
+            </Link>
+
             <View style={styles.actionItemsContainer}>
               <TouchableOpacity onPress={toggleKudos}>
                 <KudosIcon color={kudosColor} />

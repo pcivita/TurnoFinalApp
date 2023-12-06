@@ -39,7 +39,6 @@ export default function RollDice({ onData }) {
 
   return (
     <View style={styles.screenContainer}>
-
       <Header title="Roll" />
       {appearHeader && (
         <Animated.View style={[styles.square, rStyle]}>
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Themes.colors.background,
     gap: 30,
-    width: "100%"
+    width: "100%",
   },
   header: {
     width: "100%",

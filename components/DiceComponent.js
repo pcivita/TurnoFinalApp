@@ -47,7 +47,7 @@ const DiceComponent = ({ onData }) => {
   }, []);
 
   const sendData = () => {
-    const data = currentActivitiesData[currentImageIndex]; // The data you want to send to the grandparent
+    const data = [currentImageIndex, currentActivitiesData[currentImageIndex]]; // The data you want to send to the grandparent
     onData(data);
   };
 
