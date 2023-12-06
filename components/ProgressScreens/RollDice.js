@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     borderWidth: 5,
   },
   upperText: {
-    color: Themes.colors.background,
+    color: "black",
     fontSize: 32,
     fontFamily: "Poppins-Bold",
     textAlign: "center",

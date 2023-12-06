@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
   header: {
     width: "100%",
     flexDirection: "row",
-    height: "14%",
+    height: "16%",
+    paddingBottom: 12,
     alignItems: "flex-end",
     justifyContent: "center",
     backgroundColor: Themes.colors.salmon,

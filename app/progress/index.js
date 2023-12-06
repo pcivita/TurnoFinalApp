@@ -7,7 +7,7 @@ import Journey from "../../components/ProgressScreens/Journey";
 import Stats from "../../components/ProgressScreens/Stats";
 
 export default function Page() {
-  const [activeScreen, setActiveScreen] = useState("none"); // Initial state
+  const [activeScreen, setActiveScreen] = useState("Stats"); // Initial state
 
   return (
     <View style={styles.container}>

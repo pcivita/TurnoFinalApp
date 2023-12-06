@@ -11,7 +11,7 @@ export default function CompleteDice() {
   return (
     <View>
       <Journey />
-      <Text>Hello </Text>
+
       <SwipeButton onToggle={onToggle} style={styles.swipeButton} />
     </View>
   );
