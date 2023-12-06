@@ -6,7 +6,7 @@ import SwipeButton from "../SwipeButton";
 export default function Journey() {
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollView}>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <ActivityCircle right={70} status="complete" />
       <ActivityCircle right={55} status="complete" />
       <ActivityCircle right={0} status="complete" />
@@ -33,16 +33,12 @@ export default function Journey() {
       <ActivityCircle right={-55} status="incomplete" />
       <ActivityCircle right={0} status="incomplete" />
       <ActivityCircle right={55} status="incomplete" />
-
-    {/* <Button title="button" style={styles.swipeButton}></Button> */}
-    {/* <SwipeButton onToggle={onToggle} style={styles.swipeButton} /> */}
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   title: {
-    // Assuming you might want your title to have some default styling
     textAlign: "center",
     fontSize: 24,
     fontWeight: "bold",
@@ -63,7 +59,4 @@ const styles = StyleSheet.create({
     height: 100,
     width: "100%"
   },
-  scrollView: {
-    width: "100%"
-  }
 });
