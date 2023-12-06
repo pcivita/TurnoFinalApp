@@ -69,8 +69,8 @@ export default function Page() {
           <Post
             style={styles.post}
             postId={6}
-            imageSource={Images.profileImages.pedro}
-            profile={"You"}
+            imageSource={Images.profileImages.naz}
+            profile={"Naz"}
             activityName={"Lake Lag"}
           />
         </ScrollView>

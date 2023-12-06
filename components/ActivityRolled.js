@@ -2,14 +2,22 @@ import { View, StyleSheet, Text, Image } from "react-native";
 import { Themes } from "../assets/Themes";
 import Images from "../assets/Themes/Images";
 
-export default function ActvityRollled() {
+export default function ActvityRollled({ diceNum, activityName }) {
+  const icons = [
+    Images.diceIcons.one,
+    Images.diceIcons.two,
+    Images.diceIcons.three,
+    Images.diceIcons.four,
+    Images.diceIcons.five,
+    Images.diceIcons.six,
+  ];
   return (
     <View style={styles.activityName}>
       <View style={styles.imageContainer}>
-        <Image source={Images.diceIcons.four} style={styles.image} />
+        <Image source={icons[diceNum]} style={styles.image} />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.text}> Go for a Run </Text>
+        <Text style={styles.text}> {activityName} </Text>
       </View>
     </View>
   );

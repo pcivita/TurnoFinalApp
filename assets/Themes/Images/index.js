@@ -21,6 +21,7 @@ export default Images = {
     luca: require("./profileImages/Luca.jpeg"),
     cecilia: require("./profileImages/Cecilia.jpg"),
     digo: require("./profileImages/Digo.jpeg"),
+    naz: require("./profileImages/Naz.heic"),
   },
   confetti: require("./other/Confetti.png"),
 };

@@ -28,7 +28,8 @@ export default function Page() {
   }, []);
 
   const [activeScreen, setActiveScreen] = useState("RollDice"); // Initial state
-
+  const [diceNum, setDiceNum] = useState(-1);
+  const [activityName, setActivityName] = useState("");
   const startAnimation = () => {
     // Wait for 1.5 seconds (1500 milliseconds) before starting the animation
     setTimeout(() => {
@@ -63,6 +64,8 @@ export default function Page() {
 
   const handleData = (data) => {
     console.log(data);
+    setDiceNum(data[0]);
+    setActivityName(data[1][0]);
     setAppearHeader(true);
     headerBounce();
     startAnimation();
@@ -74,7 +77,7 @@ export default function Page() {
     <ActivitiesProvider>
       {appearHeader && (
         <Animated.View style={[styles.square, rStyle2]}>
-          <ActvityRollled />
+          <ActvityRollled diceNum={diceNum} activityName={activityName} />
         </Animated.View>
       )}
       <Animated.View style={[styles.container, rStyle]}>
