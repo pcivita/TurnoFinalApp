@@ -1,5 +1,11 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import SwipeButton from "../SwipeButton";
 import Journey from "./Journey";
 import { Themes } from "../../assets/Themes";
@@ -8,7 +14,7 @@ import DiceComponent from "../DiceComponent";
 import { useState } from "react";
 import ActivityCircle from "../ActivityCircle";
 import CongratsModal from "../CongratsModal";
-
+import ActvityRollled from "../ActivityRolled";
 export default function CompleteDice() {
   const [swipeComplete, setSwipeComplete] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
@@ -20,7 +26,6 @@ export default function CompleteDice() {
     setModalVisible(!swipeComplete);
   };
 
-
   return (
     <View>
       <View style={styles.header}>
@@ -28,11 +33,14 @@ export default function CompleteDice() {
           <Text> Your activity is: </Text>
         </View>
       </View>
+      <View style={[styles.square]}>
+        <ActvityRollled />
+      </View>
       <Journey />
       <View style={styles.buttonContainer}>
         <SwipeButton onToggle={onToggle} style={styles.swipeButton} />
       </View>
-      <CongratsModal 
+      <CongratsModal
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}
         switchEnabled={switchEnabled}
@@ -61,7 +69,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     position: "absolute",
-    bottom: 40
+    bottom: 40,
   },
   buttonText: {
     fontFamily: "Poppins-Bold",
@@ -101,5 +109,14 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     // backgroundColor: "black"
+  },
+  square: {
+    color: "red",
+    width: "100%",
+    height: 100,
+    position: "absolute",
+    top: 130,
+    right: 0,
+    zIndex: 10,
   },
 });

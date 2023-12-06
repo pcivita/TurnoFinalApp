@@ -7,6 +7,7 @@ import { ActivitiesProvider } from "../../contexts/ActivitiesContext";
 import { FontAwesome5 } from "@expo/vector-icons";
 import RollDice from "../../components/ProgressScreens/RollDice";
 import CompleteDice from "../../components/ProgressScreens/CompleteDice";
+import ActvityRollled from "../../components/ActivityRolled";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -18,10 +19,11 @@ import Animated, {
 } from "react-native-reanimated";
 
 export default function Page() {
-  const progress = useSharedValue(1);
+  const [appearHeader, setAppearHeader] = useState(false);
+  const progress1 = useSharedValue(1);
   const rStyle = useAnimatedStyle(() => {
     return {
-      opacity: progress.value,
+      opacity: progress1.value,
     };
   }, []);
 
@@ -30,7 +32,7 @@ export default function Page() {
   const startAnimation = () => {
     // Wait for 1.5 seconds (1500 milliseconds) before starting the animation
     setTimeout(() => {
-      progress.value = withTiming(
+      progress1.value = withTiming(
         0,
         {
           duration: 500, // Animation duration
@@ -38,7 +40,7 @@ export default function Page() {
         (isFinished) => {
           if (isFinished) {
             runOnJS(setActiveScreen)("CompleteDice");
-            progress.value = withTiming(1, {
+            progress1.value = withTiming(1, {
               duration: 500, // Animation duration
             });
           }
@@ -47,8 +49,22 @@ export default function Page() {
     }, 1500);
   };
 
+  const headerBounce = () => {
+    progress.value = withSpring(130);
+  };
+
+  const progress = useSharedValue(0);
+
+  const rStyle2 = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: progress.value }],
+    };
+  }, []);
+
   const handleData = (data) => {
     console.log(data);
+    setAppearHeader(true);
+    headerBounce();
     startAnimation();
     // setActiveScreen will be called after the animation completes
   };
@@ -56,6 +72,11 @@ export default function Page() {
   //TODO: Dice shouldn't be clickable after rolling
   return (
     <ActivitiesProvider>
+      {appearHeader && (
+        <Animated.View style={[styles.square, rStyle2]}>
+          <ActvityRollled />
+        </Animated.View>
+      )}
       <Animated.View style={[styles.container, rStyle]}>
         {activeScreen === "RollDice" && <RollDice onData={handleData} />}
         {activeScreen === "CompleteDice" && <CompleteDice />}
@@ -102,9 +123,12 @@ const styles = StyleSheet.create({
   },
   competeDice: {},
   square: {
-    position: "absolute",
-    bottom: 50,
-    height: 100,
+    color: "red",
     width: "100%",
+    height: 100,
+    position: "absolute",
+    top: 0,
+    right: 0,
+    zIndex: 10,
   },
 });

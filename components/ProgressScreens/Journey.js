@@ -4,35 +4,37 @@ import { Themes } from "../../assets/Themes";
 import SwipeButton from "../SwipeButton";
 
 export default function Journey() {
-
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <ActivityCircle right={70} status="complete" />
-      <ActivityCircle right={55} status="complete" />
-      <ActivityCircle right={0} status="complete" />
-      <ActivityCircle right={-55} status="complete" />
-      <ActivityCircle right={-70} status="complete" />
-      <ActivityCircle right={-55} status="complete" />
-      <ActivityCircle right={0} status="complete" />
-      <ActivityCircle right={55} status="in progress" />
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentOffset={{ x: 0, y: 300 }}
+    >
+      <ActivityCircle right={70} status="complete" top={70} />
+      <ActivityCircle right={55} status="complete" top={70} />
+      <ActivityCircle right={25} status="complete" top={70} />
+      <ActivityCircle right={-15} status="complete" top={60} />
+      <ActivityCircle right={-50} status="complete" top={70} />
+      <ActivityCircle right={-50} status="complete" top={70} />
+      <ActivityCircle right={-25} status="complete" top={70} />
+      <ActivityCircle right={25} status="in progress" top={30} />
 
-      <ActivityCircle right={70} status="incomplete" />
-      <ActivityCircle right={55} status="incomplete" />
-      <ActivityCircle right={0} status="incomplete" />
-      <ActivityCircle right={-55} status="incomplete" />
-      <ActivityCircle right={-70} status="incomplete" />
-      <ActivityCircle right={-55} status="incomplete" />
-      <ActivityCircle right={0} status="incomplete" />
-      <ActivityCircle right={55} status="incomplete" />
+      <ActivityCircle right={60} status="incomplete" top={95} />
+      <ActivityCircle right={70} status="incomplete" top={50} />
+      <ActivityCircle right={70} status="incomplete" top={100} />
+      <ActivityCircle right={60} status="incomplete" top={50} />
+      <ActivityCircle right={25} status="incomplete" top={90} />
+      <ActivityCircle right={0} status="incomplete" top={50} />
+      <ActivityCircle right={0} status="incomplete" top={100} />
+      <ActivityCircle right={55} status="incomplete" top={0} />
 
-      <ActivityCircle right={70} status="incomplete" />
-      <ActivityCircle right={55} status="incomplete" />
-      <ActivityCircle right={0} status="incomplete" />
-      <ActivityCircle right={-55} status="incomplete" />
-      <ActivityCircle right={-70} status="incomplete" />
-      <ActivityCircle right={-55} status="incomplete" />
-      <ActivityCircle right={0} status="incomplete" />
-      <ActivityCircle right={55} status="incomplete" />
+      <ActivityCircle right={70} status="incomplete" top={130} />
+      <ActivityCircle right={55} status="incomplete" top={70} />
+      <ActivityCircle right={0} status="incomplete" top={70} />
+      <ActivityCircle right={-55} status="incomplete" top={70} />
+      <ActivityCircle right={-70} status="incomplete" top={70} />
+      <ActivityCircle right={-55} status="incomplete" top={70} />
+      <ActivityCircle right={0} status="incomplete" top={70} />
+      <ActivityCircle right={55} status="incomplete" top={70} />
     </ScrollView>
   );
 }
@@ -51,12 +53,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   swipeButton: {
-    justifyContent: 'center',
-    alignItems:'center',
-    position: 'absolute',
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
     bottom: 20,
     right: 20,
     height: 100,
-    width: "100%"
+    width: "100%",
   },
 });

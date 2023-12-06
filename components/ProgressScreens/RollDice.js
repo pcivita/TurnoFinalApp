@@ -39,6 +39,7 @@ export default function RollDice({ onData }) {
 
   return (
     <View style={styles.screenContainer}>
+
       <Header title="Roll" />
       {appearHeader && (
         <Animated.View style={[styles.square, rStyle]}>

@@ -1,6 +1,7 @@
 import { Tabs } from "expo-router/tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FontAwesome5 } from "@expo/vector-icons";
+
 import { View } from "react-native";
 
 import { Themes } from "../assets/Themes";
@@ -28,7 +29,7 @@ export default function AppLayout() {
           tabBarLabelStyle: { display: "flex" },
           tabBarLabel: "Feed",
           tabBarIcon: ({ size, color }) => (
-            <Ionicons name="home-outline" size={size} color={color} />
+            <FontAwesome5 name="home" size={size} color={color} />
           ),
         }}
       />
@@ -38,7 +39,7 @@ export default function AppLayout() {
           tabBarLabelStyle: { display: "flex" },
           tabBarLabel: "Activities",
           tabBarIcon: ({ size, color }) => (
-            <Ionicons name="clipboard-outline" size={size} color={color} />
+            <FontAwesome5 name="clipboard" size={size} color={color} />
           ),
         }}
       />
@@ -69,7 +70,7 @@ export default function AppLayout() {
           tabBarLabelStyle: { display: "flex" },
           tabBarLabel: "Progress",
           tabBarIcon: ({ size, color }) => (
-            <Ionicons name="checkbox-outline" size={size} color={color} />
+            <FontAwesome5 name="check-circle" size={size} color={color} />
           ),
         }}
       />
@@ -79,7 +80,7 @@ export default function AppLayout() {
           tabBarLabelStyle: { display: "flex" },
           tabBarLabel: "Profile",
           tabBarIcon: ({ size, color }) => (
-            <Ionicons name="person-outline" size={size} color={color} />
+            <FontAwesome5 name="user" size={size} color={color} />
           ),
         }}
       />
