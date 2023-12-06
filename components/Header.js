@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
+import { Link } from "expo-router";
 import { Themes } from "../assets/Themes";
 import { FontAwesome5 } from "@expo/vector-icons";
 
@@ -15,12 +16,16 @@ export default function Header({ title }) {
       />
       <Text style={styles.title}>{title}</Text>
       {(title === "Profile" || title === "Feed") && (
-        <FontAwesome5
-          name={title === "Profile" ? "cog" : "user:friends"} 
-          size={25}
-          color={"white"}
+        <Link 
+          href={ title === "Profile" ? {pathname: "/"} : {pathname: "/feed/myFriends"}} 
           style={styles.rightIcon}
-        />
+        >
+          <FontAwesome5
+            name={title === "Profile" ? "cog" : "user-friends"} 
+            size={25}
+            color={"white"}
+          />
+        </Link>
       )}
     </View>
   );
@@ -39,7 +44,7 @@ const styles = StyleSheet.create({
   leftIcon: {
     position: "absolute",
     left: 15,
-    top: 65
+    top: 65,
   },
   title: {
     fontSize: 32,

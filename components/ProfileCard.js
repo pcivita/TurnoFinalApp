@@ -38,8 +38,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 24,
-    borderWidth: 0.3,
-    borderColor: "grey",
   },
   imageContainer: {
     width: "30%",
