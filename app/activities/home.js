@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     fontSize: 18,
     height: 30,
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Poppins-Bold",
   },
   main: {
     flex: 1,
