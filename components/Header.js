@@ -7,19 +7,21 @@ export default function Header({ title }) {
   return (
     <View style={styles.container}>
       <FontAwesome5
-        name="dice-five"
+        name="dice-five" 
         size={25}
         color={"white"}
         transform={[{ rotate: "45deg" }]}
+        style={styles.leftIcon}
       />
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>{title}</Text>
-      </View>
-      <FontAwesome5
-        name="cog"
-        size={25}
-        color={"white"}
-      />
+      <Text style={styles.title}>{title}</Text>
+      {(title === "Profile" || title === "Feed") && (
+        <FontAwesome5
+          name={title === "Profile" ? "cog" : "user:friends"} 
+          size={25}
+          color={"white"}
+          style={styles.rightIcon}
+        />
+      )}
     </View>
   );
 }
@@ -34,13 +36,19 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     backgroundColor: Themes.colors.salmon,
   },
-  titleContainer: {
-    width: 210,
-    alignItems: "center",
+  leftIcon: {
+    position: "absolute",
+    left: 15,
+    top: 65
   },
   title: {
     fontSize: 32,
     color: "white",
     fontFamily: "Poppins-Bold",
+  },
+  rightIcon: {
+    position: "absolute",
+    right: 15,
+    top: 65
   },
 });
