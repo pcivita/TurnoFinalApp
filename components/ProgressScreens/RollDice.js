@@ -13,6 +13,7 @@ import Animated, {
   useAnimatedGestureHandler,
   runOnJS,
 } from "react-native-reanimated";
+import Header from "../Header";
 
 export default function RollDice({ onData }) {
   const [appearHeader, setAppearHeader] = useState(false);
@@ -38,26 +39,13 @@ export default function RollDice({ onData }) {
 
   return (
     <View style={styles.screenContainer}>
-      <View style={styles.header}>
-        <View style={styles.banner}>
-          <FontAwesome5
-            name="dice-five"
-            style={styles.headerDice}
-            size={30}
-            color={"white"}
-            transform={[{ rotate: "45deg" }]}
-          />
-          <Text style={styles.title}>Roll</Text>
-          <FontAwesome5
-            name="cog"
-            style={styles.headerDice}
-            size={30}
-            color={"white"}
-            transform={[{ rotate: "45deg" }]}
-          />
-        </View>
-      </View>
 
+      <Header title="Roll" />
+      {appearHeader && (
+        <Animated.View style={[styles.square, rStyle]}>
+          <ActvityRollled />
+        </Animated.View>
+      )}
       <View styles={styles.upperTextContainer}>
         <Text style={styles.upperText}> Roll the dice for an Activity! </Text>
       </View>
@@ -67,27 +55,21 @@ export default function RollDice({ onData }) {
 }
 
 const styles = StyleSheet.create({
-  // screenContainer: {
-  //   flex: 1,
-  //   justifyContent: "flex-start",
-  //   alignItems: "center",
-  //   marginTop: 100,
-  //   gap: 20,
-  //   // borderWidth: 2,
-  // },
   screenContainer: {
     flex: 1,
     display: "flex",
     alignItems: "center",
     backgroundColor: Themes.colors.background,
     gap: 30,
+    width: "100%"
   },
   header: {
     width: "100%",
     flexDirection: "row",
-    height: "14%",
-    alignItems: "flex-end",
-    justifyContent: "center",
+    height: 110,
+    paddingTop: 45,
+    alignItems: "center",
+    justifyContent: "space-around",
     backgroundColor: Themes.colors.salmon,
   },
   banner: {
