@@ -1,9 +1,9 @@
 import { Tabs } from "expo-router/tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FontAwesome5 } from "@expo/vector-icons";
-
 import { View } from "react-native";
-
+import Kudos from "../components/Icons/Kudos";
+import KudosIcon from "../components/Icons/Kudos";
 import { Themes } from "../assets/Themes";
 
 export default function AppLayout() {
@@ -28,9 +28,7 @@ export default function AppLayout() {
         options={{
           tabBarLabelStyle: { display: "flex" },
           tabBarLabel: "Feed",
-          tabBarIcon: ({ size, color }) => (
-            <FontAwesome5 name="home" size={size} color={color} />
-          ),
+          tabBarIcon: ({ size, color }) => <KudosIcon color={"black"} />,
         }}
       />
       <Tabs.Screen

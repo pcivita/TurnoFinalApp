@@ -163,6 +163,8 @@ const styles = StyleSheet.create({
     height: "40%",
     aspectRatio: 1,
     // borderWidth: 2,
+    justifyContent: "center",
+    alignItems: "center",
   },
   imageContainer: {
     width: "100%",
