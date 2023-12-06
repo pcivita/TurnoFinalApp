@@ -1,4 +1,12 @@
-import { StyleSheet, Text, View, Button, SectionList, Modal, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  SectionList,
+  Modal,
+  ScrollView,
+} from "react-native";
 import { router, Link, Stack, useLocalSearchParams } from "expo-router";
 import { Themes } from "../../assets/Themes";
 import { useState, useEffect, useContext } from "react";
@@ -19,18 +27,52 @@ export default function Page() {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen options={{ headerShown: false }} />
       <Header title="Feed" />
       <View style={styles.main}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Post style={styles.post} postId={1} />
-          <Post style={styles.post} postId={2} />
-          <Post style={styles.post} postId={3} />
-          <Post style={styles.post} postId={4} />
-          <Post style={styles.post} postId={5} />
-          <Post style={styles.post} postId={6} />
+          <Post
+            style={styles.post}
+            postId={1}
+            imageSource={Images.profileImages.malina}
+            profile={"@malinac"}
+            activityName={"Lake Lag"}
+          />
+          <Post
+            style={styles.post}
+            postId={2}
+            imageSource={Images.profileImages.luca}
+            profile={"@lcivita"}
+            activityName={"Lake Lag"}
+          />
+          <Post
+            style={styles.post}
+            postId={5}
+            imageSource={Images.profileImages.pedro}
+            profile={"@pedro"}
+            activityName={"Lake Lag"}
+          />
+          <Post
+            style={styles.post}
+            postId={3}
+            imageSource={Images.profileImages.cecilia}
+            profile={"@ccevgrb"}
+            activityName={"Lake Lag"}
+          />
+          <Post
+            style={styles.post}
+            postId={4}
+            imageSource={Images.profileImages.digo}
+            profile={"Digo"}
+            activityName={"Lake Lag"}
+          />
+          <Post
+            style={styles.post}
+            postId={6}
+            imageSource={Images.profileImages.pedro}
+            profile={"You"}
+            activityName={"Lake Lag"}
+          />
         </ScrollView>
       </View>
     </View>
@@ -61,7 +103,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   headerFriends: {
-    marginTop: 5
+    marginTop: 5,
   },
   title: {
     fontSize: 32,

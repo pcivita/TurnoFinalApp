@@ -18,6 +18,9 @@ export default Images = {
   profileImages: {
     pedro: require("./profileImages/IMG_9521.jpg"),
     malina: require("./profileImages/Malina.jpg"),
+    luca: require("./profileImages/Luca.jpeg"),
+    cecilia: require("./profileImages/Cecilia.jpg"),
+    digo: require("./profileImages/Digo.jpeg"),
   },
-  confetti: require("./other/Confetti.png")
+  confetti: require("./other/Confetti.png"),
 };

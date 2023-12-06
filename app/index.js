@@ -9,6 +9,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import ProfileCard from "../components/ProfileCard";
 import { useState } from "react";
 import Header from "../components/Header";
+import Images from "../assets/Themes/Images";
 
 export default function Page() {
   const [fontsLoaded] = useFonts({
@@ -21,18 +22,54 @@ export default function Page() {
 
   return (
     <View style={styles.container}>
-      <Header title="Profile"/>
+      <Header title="Profile" />
       <View style={styles.main}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.profileCard}>
             <ProfileCard />
           </View>
-          <Post style={styles.post} postId={1} />
-          <Post style={styles.post} postId={2} />
-          <Post style={styles.post} postId={3} />
-          <Post style={styles.post} postId={4} />
-          <Post style={styles.post} postId={5} />
-          <Post style={styles.post} postId={6} />
+          <Post
+            style={styles.post}
+            postId={1}
+            imageSource={Images.profileImages.pedro}
+            profile={"@pcivita"}
+            activityName={"Lake Lag"}
+          />
+          <Post
+            style={styles.post}
+            postId={2}
+            imageSource={Images.profileImages.pedro}
+            profile={"@pcivita"}
+            activityName={"Lake Lag"}
+          />
+          <Post
+            style={styles.post}
+            postId={3}
+            imageSource={Images.profileImages.pedro}
+            profile={"@pcivita"}
+            activityName={"Lake Lag"}
+          />
+          <Post
+            style={styles.post}
+            postId={4}
+            imageSource={Images.profileImages.pedro}
+            profile={"@pcivita"}
+            activityName={"Lake Lag"}
+          />
+          <Post
+            style={styles.post}
+            postId={5}
+            imageSource={Images.profileImages.pedro}
+            profile={"@pcivita"}
+            activityName={"Lake Lag"}
+          />
+          <Post
+            style={styles.post}
+            postId={6}
+            imageSource={Images.profileImages.pedro}
+            profile={"@pcivita"}
+            activityName={"Lake Lag"}
+          />
         </ScrollView>
       </View>
     </View>

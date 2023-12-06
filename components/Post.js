@@ -17,7 +17,7 @@ import { CommentsProvider } from "../contexts/CommentsContext";
 import { useState } from "react";
 import { Themes } from "../assets/Themes";
 
-export default function Post({ postId }) {
+export default function Post({ postId, imageSource, profile, activityName }) {
   const [kudosColor, setKudosColor] = useState("black"); // Initial color
 
   const toggleKudos = () => {
@@ -39,7 +39,6 @@ export default function Post({ postId }) {
   }
 
   // PROVISORY
-  let activityName = "Go on a run for 100 days in Lake Lag without stopping";
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -50,14 +49,12 @@ export default function Post({ postId }) {
       <View style={styles.container}>
         <View style={styles.ImageText}>
           <View style={styles.imageContainer}>
-            <Image
-              source={Images.profileImages.pedro}
-              style={styles.profileImg}
-            />
+            <Image source={imageSource} style={styles.profileImg} />
           </View>
           <View style={styles.textContainer}>
             <Text style={styles.postText}>
-              You Completed: <Text>{activityName} </Text>
+              {profile}:{" "}
+              <Text style={styles.activityNameStyle}>{activityName} </Text>
             </Text>
             <View style={styles.actionItemsContainer}>
               <TouchableOpacity onPress={toggleKudos}>
@@ -112,6 +109,10 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   postText: {
+    fontFamily: "Poppins-Bold",
+    fontSize: 15,
+  },
+  activityNameStyle: {
     fontFamily: "Poppins-Regular",
     fontSize: 15,
   },
