@@ -82,7 +82,9 @@ export default function Page() {
       )}
       <Animated.View style={[styles.container, rStyle]}>
         {activeScreen === "RollDice" && <RollDice onData={handleData} />}
-        {activeScreen === "CompleteDice" && <CompleteDice />}
+        {activeScreen === "CompleteDice" && 
+          <CompleteDice setActiveScreen={setActiveScreen} setAppearHeader={setAppearHeader} />
+        }
       </Animated.View>
     </ActivitiesProvider>
   );

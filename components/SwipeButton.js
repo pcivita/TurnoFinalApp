@@ -1,8 +1,6 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-
 import { LinearGradient } from "expo-linear-gradient";
-
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedGestureHandler,
@@ -124,7 +122,7 @@ const SwipeButton = ({ onToggle }) => {
         <Animated.View style={[styles.swipeable, AnimatedStyles.swipeable]} />
       </PanGestureHandler>
       <Animated.Text style={[styles.swipeText, AnimatedStyles.swipeText]}>
-        Swipe Me
+        Slide to Complete
       </Animated.Text>
     </Animated.View>
   );
@@ -141,6 +139,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
+
+    shadowOpacity: 0.3,
+    shadowOffset: {
+      height: 3,
+    },
   },
   colorWave: {
     position: "absolute",
@@ -162,6 +165,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     zIndex: 2,
     color: Themes.colors.salmon,
+    paddingLeft: 40,
   },
 });
 

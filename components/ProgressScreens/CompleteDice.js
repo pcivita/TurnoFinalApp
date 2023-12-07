@@ -14,11 +14,11 @@ import DiceComponent from "../DiceComponent";
 import { useState } from "react";
 import ActivityCircle from "../ActivityCircle";
 import CongratsModal from "../CongratsModal";
-import ActvityRollled from "../ActivityRolled";
+import ActvityRolled from "../ActivityRolled";
 import Fire from "../Icons/Fire";
 
 
-export default function CompleteDice() {
+export default function CompleteDice({ setActiveScreen, setAppearHeader }) {
   const [swipeComplete, setSwipeComplete] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [switchEnabled, setSwitchEnabled] = useState(false);
@@ -33,17 +33,23 @@ export default function CompleteDice() {
     <View>
       <View style={styles.header}>
         <View style={styles.banner}>
-        <FontAwesome5
-          name="dice-five" 
-          size={25}
-          color={Themes.colors.salmon}
-          transform={[{ rotate: "45deg" }]}
-        />
-        <Fire width={25} height={30} />
+          <View style={styles.iconsContainer}>
+            <FontAwesome5
+              name="dice-five" 
+              size={25}
+              color={Themes.colors.salmon}
+              transform={[{ rotate: "45deg" }]}
+            />
+            <Text style={styles.iconText}>x34</Text>
+          </View>
+          <View style={styles.iconsContainer}>
+            <Fire width={25} height={30} />
+            <Text style={styles.iconText}>x10</Text>
+          </View>
         </View>
       </View>
       <View style={[styles.square]}>
-        <ActvityRollled />
+        <ActvityRolled />
       </View>
       <Journey />
       <View style={styles.buttonContainer}>
@@ -54,6 +60,8 @@ export default function CompleteDice() {
         setModalVisible={setModalVisible}
         switchEnabled={switchEnabled}
         setSwitchEnabled={setSwitchEnabled}
+        setActiveScreen={setActiveScreen}
+        setAppearHeader={setAppearHeader}
       />
     </View>
   );
@@ -130,4 +138,13 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 10,
   },
+  iconsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+  },
+  iconText: {
+    fontFamily: "Poppins-Bold"
+  }
 });

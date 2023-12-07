@@ -5,23 +5,31 @@ import Images from "../assets/Themes/Images/index.js";
 import { useFonts } from "expo-font";
 import PostPreview from "./PostPreview.js";
 import Themes from "../assets/Themes/themes.js";
+import Fire from "./Icons/Fire";
+import { FontAwesome5 } from "@expo/vector-icons";
 
-export default function CongratsModal({ isModalVisible, setModalVisible, switchEnabled, setSwitchEnabled }) {
+export default function CongratsModal({ isModalVisible, setModalVisible, switchEnabled, setSwitchEnabled, setActiveScreen, setAppearHeader }) {
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
     "Poppins-Bold": require("../assets/Poppins/Poppins-Bold.ttf"),
   });
   if (!fontsLoaded) {
     return undefined;
-  }
+  };
+
+  const onExitModal = () => {
+    setModalVisible(false);
+    setActiveScreen("RollDice");
+    setAppearHeader(false);
+  };
 
   return (
     <Modal
-      onBackdropPress={() => setModalVisible(false)}
-      onBackButtonPress={() => setModalVisible(false)}
+      onBackdropPress={onExitModal}
+      onBackButtonPress={onExitModal}
       isVisible={isModalVisible}
       swipeDirection="down"
-      onSwipeComplete={() => setModalVisible(false)}
+      onSwipeComplete={onExitModal}
       // animationIn="bounceInUp"
       // animationOut="bounceOutDown"
       animationInTiming={800}
@@ -38,17 +46,17 @@ export default function CongratsModal({ isModalVisible, setModalVisible, switchE
         <View style={styles.statsContainer}>
           <View style={styles.stat}>
             <View style={styles.circle}>
-              {/* {iconComponent} */}
-              <Text style={styles.circleText}>stat1</Text>
+              <FontAwesome5 name="dice-two" size={50} color={Themes.colors.salmon} />
+              <Text style={styles.circleText}>x34</Text>
             </View>
-            <Text style={styles.circleDescription}>description</Text>
+            <Text style={styles.circleDescription}>You have rolled the dice 34 times</Text>
           </View>
           <View style={styles.stat}>
             <View style={styles.circle}>
-              {/* {iconComponent} */}
-              <Text style={styles.circleText}>stat1</Text>
+              <Fire width={44} height={57} />
+              <Text style={styles.circleText}>x10</Text>
             </View>
-            <Text style={styles.circleDescription}>description</Text>
+            <Text style={styles.circleDescription}>Congrats on your 10 day streak</Text>
           </View>
         </View>
         <View style={styles.toggleContainer}>
@@ -62,6 +70,12 @@ export default function CongratsModal({ isModalVisible, setModalVisible, switchE
           />
         </View>
         <View style={styles.buttonsContainer}>
+          <View>
+            <Text>hi</Text>
+          </View>
+          <View>
+            <Text>hi</Text>
+          </View>
         </View>
       </View>
     </Modal>
@@ -105,13 +119,15 @@ const styles = StyleSheet.create({
     width: "90%",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    flex: 1
   },
   stat: {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
     gap: 15,
+    maxWidth: "50%"
   },
   circle: {
     width: 150,
@@ -135,7 +151,7 @@ const styles = StyleSheet.create({
   },
   toggleContainer: {
     width: "102%",
-    marginTop: 45,
+    marginTop: 20,
     padding: 25,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -159,4 +175,9 @@ const styles = StyleSheet.create({
   addCommentButtonText: {
     color: "white", // Change color as needed
   },
+  buttonsContainer: {
+    height: 70,
+    flexDirection: "row",
+    gap: 80,
+  }
 });
