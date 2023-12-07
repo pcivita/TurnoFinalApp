@@ -33,7 +33,10 @@ export const ActivitiesProvider = ({ children }) => {
 
   const deleteActivity = (activityIndex) => {
     setActivities((prevActivities) => {
+      console.log("DELETING ACTIVITY CALLED " + activityIndex);
       const updatedActivities = prevActivities.filter((activity, index) => index !== activityIndex);
+      console.log("updated: ");
+      console.log(updatedActivities);
       return updatedActivities;
     });
   };

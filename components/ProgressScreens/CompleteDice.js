@@ -21,6 +21,7 @@ export default function CompleteDice({
   setActiveScreen,
   setAppearHeader,
   activityName,
+  activityIndex
 }) {
   const [swipeComplete, setSwipeComplete] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
@@ -60,6 +61,7 @@ export default function CompleteDice({
       </View>
       <CongratsModal
         activityName={activityName}
+        activityIndex={activityIndex}
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}
         switchEnabled={switchEnabled}

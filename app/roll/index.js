@@ -84,6 +84,7 @@ export default function Page() {
             setActiveScreen={setActiveScreen}
             setAppearHeader={setAppearHeader}
             activityName={activityName}
+            activityIndex={diceNum}
           />
         )}
       </Animated.View>
