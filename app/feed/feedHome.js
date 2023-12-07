@@ -80,6 +80,14 @@ export default function Page() {
             activityName={"Lake Lag"}
             isYourPost={true}
           />
+          <Post
+            style={styles.post}
+            postId={7}
+            profileName="Naz"
+            profilePic={Images.profileImages.naz}
+            handle={"@nazzz"}
+            activityName={"Lake Lag"}
+          />
         </ScrollView>
       </View>
     </View>

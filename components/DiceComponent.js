@@ -23,8 +23,6 @@ const imageSources = [
   Images.diceFaces.six,
 ];
 
-const SIZE = 100.0;
-
 const DiceComponent = ({ onData }) => {
   const progress = useSharedValue(1);
   const scale = useSharedValue(1);
@@ -63,6 +61,7 @@ const DiceComponent = ({ onData }) => {
 
   const [currentNumber, setCurrentNumber] = useState(1);
   const [isCycling, setIsCycling] = useState(false);
+  const [noRoll, setnoRoll] = useState(true);
 
   useEffect(() => {
     let interval;
@@ -78,7 +77,6 @@ const DiceComponent = ({ onData }) => {
       timeout = setTimeout(() => {
         setIsCycling(false);
         //Start Fade
-        sendData();
         clearInterval(interval);
       }, 2000);
     }
@@ -89,8 +87,16 @@ const DiceComponent = ({ onData }) => {
     };
   }, [isCycling]);
 
+  useEffect(() => {
+    if (!isCycling && !noRoll) {
+      // Only send data when cycling has stopped
+      sendData();
+    }
+  }, [isCycling, currentImageIndex]); // Add currentImageIndex as a dependency
+
   const startCycling = () => {
     setIsCycling(true);
+    setnoRoll(false);
   };
 
   const translateX = useSharedValue(0);
