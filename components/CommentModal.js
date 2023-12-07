@@ -47,9 +47,9 @@ export default function CommentModal({
   const userHandle = "@pcivita";
   const userName = "Pedro Civita";
 
-  console.log("POSTs CONTEXT ", posts);
-  console.log("POSTs Test ", postsTest);
-  console.log("POST INDEX", postIndex);
+  // console.log("POSTs CONTEXT ", posts);
+  // console.log("POSTs Test ", postsTest);
+  // console.log("POST INDEX", postIndex);
 
   const commentsTEST = posts[postIndex].comments;
 
@@ -72,7 +72,7 @@ export default function CommentModal({
     // You can update your state or context with the new comment
     setNewComment("");
   };
-  console.log(postIndex);
+  // console.log(postIndex);
 
   return (
     <Modal

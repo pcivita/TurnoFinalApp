@@ -20,30 +20,12 @@ export default function ActivityModal({
   section,
   indexInSection,
 }) {
-  const { editActivity } = useContext(ActivitiesContext);
-  const { changeSection } = useContext(ActivitiesContext);
-
-  const handlePressOutside = (e) => {
-    // Check if the click is outside the modal
-    if (e.target === e.currentTarget) {
-      closeModal();
-    }
-  };
-
-  const title = 
-    section === "Current Activities" ? "Current Activity" : "Pending Activity";
+  const { editActivity, deleteActivity } = useContext(ActivitiesContext);
 
   const [name, setName] = useState(activity[0]);
   const [description, setDescription] = useState(activity[1]);
   const [selectedId, setSelectedId] = useState(Themes.categories.findIndex(
     (currentCategory) => currentCategory[0] === activity[2]) + 1
-  );
-
-  const [currentSection, setCurrentSection] = useState(
-    section === "Current Activities" ? "Dice" : "Pending"
-  );
-  const [otherSection, setOtherSection] = useState(
-    section === "Current Activities" ? "Pending" : "Dice"
   );
 
   const [newName, setNewName] = useState(name);
@@ -78,39 +60,32 @@ export default function ActivityModal({
   }, [isVisible]);
 
   const handleSave = () => {
-    // Update name, description, selectedId
     setName(newName);
     setDescription(newDescription);
     setSelectedId(newSelectedId);
 
     let newCategory = Themes.categories[newSelectedId - 1][0];
-    let sectionIndex = currentSection === "Dice" ? 0 : 1; // pending or not
 
-    editActivity(sectionIndex, indexInSection, newName, newDescription, newCategory);
+    editActivity(indexInSection, newName, newDescription, newCategory);
     setEditMode(false);
   }
 
   const handleCancel = () => {
-    // Revert name, description, selectedId
+    // Revert everything back to how it was before
     setNewName(name);
     setNewDescription(description);
     setNewSelectedId(selectedId);
 
-    setEditMode(false)
+    setEditMode(false);
   }
 
-  const handleSectionChange = () => {
-    console.log("Delete activity!!");
+  const handleDelete = () => {
+    deleteActivity(indexInSection);
+    setEditMode(false);
   }
 
   return (
     <Modal
-      // animationType="fade"
-      // transparent={true}
-      // visible={isVisible}
-      // onRequestClose={() => {
-      //   closeModal();
-      // }}
       onBackdropPress={() => closeModal()}
       onBackButtonPress={() => closeModal()}
       isVisible={isVisible}
@@ -210,7 +185,7 @@ export default function ActivityModal({
               {!editMode && 
                 <TouchableOpacity 
                   style={styles.button} 
-                  onPress={handleSectionChange}
+                  onPress={handleDelete}
                 >
                   <Text style={styles.buttonText}>Delete Activity</Text>
                   <MaterialCommunityIcons name="trash-can-outline" size={20} color="white"/>

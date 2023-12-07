@@ -11,7 +11,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function Page() {
   const { activities } = useContext(ActivitiesContext);
-  const currentActivities = activities[0].data;
+  const currentActivities = activities;
 
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
@@ -36,42 +36,29 @@ export default function Page() {
           />
         </TouchableOpacity>
       </View>
-      {currentActivities.size === 0 &&
+      {currentActivities == [] &&
         <View style={styles.noActivitiesContainer}>
           <Text style={styles.noActivitesMessage}>
             {section.noActivitiesMessage}
           </Text>
         </View>
       }
-      {currentActivities.size !== 0 &&
+      {currentActivities &&
         <View style={styles.activitiesContainer}>
           <View style={styles.activitiesRow}>
             <Activity activityObject={currentActivities[0]} index={1} />
             <Activity activityObject={currentActivities[1]} index={2} />
           </View>
           <View style={styles.activitiesRow}>
-            <Activity activityObject={currentActivities[3]} index={3} />
-            <Activity activityObject={currentActivities[4]} index={4} />
+            <Activity activityObject={currentActivities[2]} index={3} />
+            <Activity activityObject={currentActivities[3]} index={4} />
           </View>
           <View style={styles.activitiesRow}>
-            <Activity activityObject={currentActivities[5]} index={5} />
-            <Activity activityObject={currentActivities[6]} index={6} />
+            <Activity activityObject={currentActivities[4]} index={5} />
+            <Activity activityObject={currentActivities[5]} index={6} />
           </View>
         </View>
       }
-      {/* <Link
-        style={styles.createActivityContainer}
-        href={{
-          pathname: "/activities/createActivity",
-          params: {
-            user: "Alan",
-          },
-        }}
-      >
-        <View style={styles.createActivityButton}>
-          <Text style={styles.createActivityText}> Create Activity</Text>
-        </View>
-      </Link> */}
     </View>
   );
 }

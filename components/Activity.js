@@ -60,17 +60,17 @@ export default function Activity({ activityObject, index, section }) {
           </View>
         </TouchableOpacity>
       :
-        <View style={[styles.container, styles.gray]}>
-          <Link
-            href={{
-              pathname: "/activities/createActivity",
-            }}
-          >
+        <Link
+          href={{
+            pathname: "/activities/createActivity",
+          }}
+        >
+          <View style={[styles.container, styles.gray]}>
             <View style={styles.createActivityContainer}>
               <FontAwesome5 name="plus" size={40} color="white" style={styles.createActivity} />
             </View>
-          </Link>
-        </View>
+          </View>
+        </Link>
       }
     </View>
   );
