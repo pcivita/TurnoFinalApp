@@ -10,13 +10,15 @@ import ProgressNavigation from "../../components/ProgressNavigation";
 
 export default function Page() {
   const [activeScreen, setActiveScreen] = useState("Stats"); // Initial state
-
+  handleData = (data) => {
+    setActiveScreen(data);
+  };
   return (
     <View style={styles.container}>
       <Header title="Progress" />
 
       <View style={styles.buttonContainer}>
-        <ProgressNavigation />
+        <ProgressNavigation onData={handleData} />
         {/* <TouchableOpacity
           style={styles.button}
           onPress={() => setActiveScreen("Stats")}

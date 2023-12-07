@@ -33,8 +33,6 @@ export default function Stats({ index, statContent }) {
       break;
   }
 
-  console.log(iconComponent);
-
   let additionalStyle;
   switch (index) {
     case 0:

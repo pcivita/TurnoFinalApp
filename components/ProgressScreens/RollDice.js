@@ -19,7 +19,6 @@ export default function RollDice({ onData }) {
   const [appearHeader, setAppearHeader] = useState(false);
   const handleData = (data) => {
     // Process the data
-    console.log("Hello");
     onData(data);
     setAppearHeader(true);
     headerBounce();
