@@ -87,14 +87,13 @@ export default function CommentModal({
               value={newComment}
               onChangeText={(text) => setNewComment(text)}
             />
-            {newComment &&
+            {newComment && (
               <TouchableOpacity onPress={handleAddComment}>
-              <View style={styles.sendContainer}>
-                <FontAwesome5 name="arrow-up" size={20} color={"white"} />
-              </View>
-            </TouchableOpacity>
-            }
-            
+                <View style={styles.sendContainer}>
+                  <FontAwesome5 name="arrow-up" size={20} color={"white"} />
+                </View>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </View>
@@ -124,7 +123,8 @@ const styles = StyleSheet.create({
   center: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    flex: 1,
+
   },
   barIcon: {
     width: 60,
@@ -151,10 +151,11 @@ const styles = StyleSheet.create({
     // backgroundColor: "green",
   },
   inputContainer: {
+    alignSelf: "flex-end",
     height: 100,
     borderTopWidth: 0.3,
     borderTopColor: "black",
-    marginBottom: 110,
+
     // paddingHorizontal: 10,
     width: "100%", // Adjust width as needed
     flexDirection: "row",
