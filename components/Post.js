@@ -44,7 +44,6 @@ export default function Post({ postId, profileName, handle, profilePic, activity
   };
 
   return (
-    <CommentsProvider postId={postId}>
       <View style={styles.container}>
         <View style={styles.ImageText}>
           <View style={styles.imageContainer}>
@@ -92,7 +91,6 @@ export default function Post({ postId, profileName, handle, profilePic, activity
           </View>
         </View>
       </View>
-    </CommentsProvider>
   );
 }
 
