@@ -20,7 +20,7 @@ export default function ActivityModal({
   section,
   indexInSection,
 }) {
-  const { editActivity } = useContext(ActivitiesContext);
+  const { editActivity, deleteActivity } = useContext(ActivitiesContext);
 
   const [name, setName] = useState(activity[0]);
   const [description, setDescription] = useState(activity[1]);
@@ -60,7 +60,6 @@ export default function ActivityModal({
   }, [isVisible]);
 
   const handleSave = () => {
-    // Update name, description, selectedId
     setName(newName);
     setDescription(newDescription);
     setSelectedId(newSelectedId);
@@ -72,10 +71,16 @@ export default function ActivityModal({
   }
 
   const handleCancel = () => {
+    // Revert everything back to how it was before
     setNewName(name);
     setNewDescription(description);
     setNewSelectedId(selectedId);
 
+    setEditMode(false);
+  }
+
+  const handleDelete = () => {
+    deleteActivity(indexInSection);
     setEditMode(false);
   }
 
@@ -180,7 +185,7 @@ export default function ActivityModal({
               {!editMode && 
                 <TouchableOpacity 
                   style={styles.button} 
-                  // onPress={handleSectionChange}
+                  onPress={handleDelete}
                 >
                   <Text style={styles.buttonText}>Delete Activity</Text>
                   <MaterialCommunityIcons name="trash-can-outline" size={20} color="white"/>

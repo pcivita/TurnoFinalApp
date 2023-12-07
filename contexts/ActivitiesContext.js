@@ -7,7 +7,9 @@ export const ActivitiesContext = createContext();
 export const ActivitiesProvider = ({ children }) => {
   const [activities, setActivities] = useState([
     ["Soccer", "I want to play soccer", "Exercise"],
-    ["Reading", "I want to read", "Relax"],
+    ["Read", "I want to read", "Academic"],
+    ["Write", "Write a chapter in my novel", "Work"],
+    ["Meditate", "Medidate for 10 minutes outside", "Relax"],
   ]);
 
   // Function to add a new activity
@@ -28,12 +30,17 @@ export const ActivitiesProvider = ({ children }) => {
       return updatedActivities;
     });
   };
+
+  const deleteActivity = (activityIndex) => {
+    setActivities((prevActivities) => {
+      const updatedActivities = prevActivities.filter((activity, index) => index !== activityIndex);
+      return updatedActivities;
+    });
+  };
   
 
   return (
-    <ActivitiesContext.Provider
-      value={{ activities, addActivity, editActivity }}
-    >
+    <ActivitiesContext.Provider value={{ activities, addActivity, editActivity, deleteActivity }}>
       {children}
     </ActivitiesContext.Provider>
   );
@@ -41,36 +48,6 @@ export const ActivitiesProvider = ({ children }) => {
 
 export default ActivitiesProvider;
 
-// [
-//   "Soccer",
-//   "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
-//   "Exercise",
-// ],
-// [
-//   "Write",
-//   "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
-//   "Work",
-// ],
-// [
-//   "Read",
-//   "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
-//   "Academic",
-// ],
-// [
-//   "Meditate",
-//   "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
-//   "Relax",
-// ],
-// [
-//   "Have fun",
-//   "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
-//   "Social",
-// ],
-// [
-//   "Clean house",
-//   "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
-//   "Chore",
-// ],
 
 // noActivitiesMessage:
 // "You have no Current Activities.\n\nCreate an activity or add one from the Pending Activities section to use your dice!",
