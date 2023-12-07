@@ -72,11 +72,11 @@ export default function Page() {
 
   useEffect(() => {
     // CHECKING
-    console.log(data);
+    // console.log(data);
   }, [data]);
 
   const { posts } = useContext(PostsContext);
-  console.log(posts);
+  // console.log(posts);
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
     "Poppins-Bold": require("../assets/Poppins/Poppins-Bold.ttf"),
