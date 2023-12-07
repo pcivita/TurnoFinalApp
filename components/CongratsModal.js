@@ -9,10 +9,12 @@ import Fire from "./Icons/Fire";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Supabase from "../Supabase.js";
 import { PostsContext } from "../contexts/PostsContext.js";
+import { ActivitiesContext } from "../contexts/ActivitiesContext.js";
 // import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function CongratsModal({
   activityName,
+  activityIndex,
   isModalVisible,
   setModalVisible,
   switchEnabled,
@@ -20,7 +22,13 @@ export default function CongratsModal({
   setActiveScreen,
   setAppearHeader,
 }) {
+  const { deleteActivity } = useContext(ActivitiesContext);
+
   const onExitModal = () => {
+    if (!switchEnabled) {
+      console.log("deletingActivity of index: " + activityIndex);
+      deleteActivity(activityIndex);
+    }
     setModalVisible(false);
     setActiveScreen("RollDice");
     setAppearHeader(false);

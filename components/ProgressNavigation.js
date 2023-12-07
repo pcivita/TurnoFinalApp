@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   tab: {
     paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingHorizontal: 24,
     borderRadius: 20,
     // Add additional styling to match the screenshot
   },
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   tabText: {
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 20,
     // Add additional text styling
   },
 });
