@@ -53,7 +53,7 @@ export default function Comment({ commentData }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 100, // Keep this Standard
+    height: 90, // Keep this Standard
     width: "100%",
     display: "flex",
     flexDirection: "column",

@@ -7,6 +7,7 @@ import {
   ScrollView,
   TextInput,
   KeyboardAvoidingView,
+  Image,
 } from "react-native";
 import { CommentsContext } from "../contexts/CommentsContext.js";
 import Comment from "./Comment.js";
@@ -14,6 +15,8 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
+import Themes from "../assets/Themes/themes.js";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function CommentModal({
   isModalVisible,
@@ -67,21 +70,32 @@ export default function CommentModal({
           >
             <View flex={1} onStartShouldSetResponder={() => true}>
               {comments.map((commentData, index) => (
-                <Comment key={index} commentData={commentData} toggleModal={toggleModal} />
+                <Comment key={index} commentData={commentData} />
               ))}
             </View>
           </ScrollView>
-            <View style={styles.inputContainer}>
+          <View style={styles.inputContainer}>
+            <View style={styles.imageContainer}>
+              <Image
+                source={Images.profileImages.pedro}
+                style={styles.profileImg}
+              />
+            </View>
             <TextInput
               style={styles.input}
               placeholder="Add a comment..."
               value={newComment}
               onChangeText={(text) => setNewComment(text)}
             />
-            <TouchableOpacity onPress={handleAddComment}>
-              <Text>Add Comment</Text>
+            {newComment &&
+              <TouchableOpacity onPress={handleAddComment}>
+              <View style={styles.sendContainer}>
+                <FontAwesome5 name="arrow-up" size={20} color={"white"} />
+              </View>
             </TouchableOpacity>
-            </View>
+            }
+            
+          </View>
         </View>
       </View>
     </Modal>
@@ -138,15 +152,25 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     height: 100,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 150,
-    paddingHorizontal: 10,
+    borderTopWidth: 0.3,
+    borderTopColor: "black",
+    marginBottom: 110,
+    // paddingHorizontal: 10,
     width: "100%", // Adjust width as needed
-    alignSelf: "center", // Center the TextInput
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    paddingHorizontal: 10,
+    gap: 12,
+  },
+  input: {
+    height: 40,
+    flex: 1,
+    borderRadius: 30,
+    borderWidth: 1,
+    borderColor: Themes.colors.darkGray,
+    paddingHorizontal: 10,
+    // width: "90%"
   },
   addCommentButton: {
     alignSelf: "center", // Center the button
@@ -157,5 +181,24 @@ const styles = StyleSheet.create({
   },
   addCommentButtonText: {
     color: "white", // Change color as needed
+  },
+  imageContainer: {
+    width: "11.5%",
+    height: undefined,
+    aspectRatio: 1,
+    borderRadius: 100,
+    overflow: "hidden",
+  },
+  profileImg: {
+    width: "100%",
+    height: undefined,
+    aspectRatio: 1,
+    borderRadius: 100,
+  },
+  sendContainer: {
+    width: "100%",
+    padding: 10,
+    borderRadius: 100,
+    backgroundColor: Themes.colors.salmon,
   },
 });
