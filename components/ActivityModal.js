@@ -82,6 +82,7 @@ export default function ActivityModal({
   const handleDelete = () => {
     deleteActivity(indexInSection);
     setEditMode(false);
+    closeModal();
   }
 
   return (
