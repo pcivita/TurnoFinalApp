@@ -17,8 +17,11 @@ import CongratsModal from "../CongratsModal";
 import ActvityRolled from "../ActivityRolled";
 import Fire from "../Icons/Fire";
 
-
-export default function CompleteDice({ setActiveScreen, setAppearHeader }) {
+export default function CompleteDice({
+  setActiveScreen,
+  setAppearHeader,
+  activityName,
+}) {
   const [swipeComplete, setSwipeComplete] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [switchEnabled, setSwitchEnabled] = useState(false);
@@ -35,7 +38,7 @@ export default function CompleteDice({ setActiveScreen, setAppearHeader }) {
         <View style={styles.banner}>
           <View style={styles.iconsContainer}>
             <FontAwesome5
-              name="dice-five" 
+              name="dice-five"
               size={25}
               color={Themes.colors.salmon}
               transform={[{ rotate: "45deg" }]}
@@ -56,6 +59,7 @@ export default function CompleteDice({ setActiveScreen, setAppearHeader }) {
         <SwipeButton onToggle={onToggle} style={styles.swipeButton} />
       </View>
       <CongratsModal
+        activityName={activityName}
         isModalVisible={isModalVisible}
         setModalVisible={setModalVisible}
         switchEnabled={switchEnabled}
@@ -99,7 +103,7 @@ const styles = StyleSheet.create({
     height: "15%",
     alignItems: "flex-end",
     justifyContent: "center",
-    backgroundColor: Themes.colors.background
+    backgroundColor: Themes.colors.background,
   },
   banner: {
     paddingHorizontal: 20,
@@ -110,7 +114,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
   headerDice: {
     // borderWidth: 2,
@@ -145,6 +149,6 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   iconText: {
-    fontFamily: "Poppins-Bold"
-  }
+    fontFamily: "Poppins-Bold",
+  },
 });

@@ -8,36 +8,20 @@ export const PostsContext = createContext();
 export const PostsProvider = ({ children }) => {
   const [posts, setPosts] = useState([
     {
-      postIndex: 0,
       profilePost: true,
       userHandle: "@pcivita",
       userName: "Pedro Civita",
       userProfilePic: Images.profileImages.pedro,
       userText: "Run Around Lake Lag",
-      comments: [
-        {
-          postIndex: 0,
-          commentUserHandle: "@malinac",
-          commentUserProfilePic: Images.profileImages.malina,
-          commentText: "This is so Cool",
-        },
-      ],
+      comments: [],
     },
     {
-      postIndex: 1,
       profilePost: true,
       userHandle: "@pcivita",
       userName: "Pedro Civita",
       userProfilePic: Images.profileImages.pedro,
       userText: "Read my new book!!!!",
-      comments: [
-        {
-          postIndex: 1,
-          commentUserHandle: "@malinac",
-          commentUserProfilePic: Images.profileImages.malina,
-          commentText: "Wow I love reading too!!!!",
-        },
-      ],
+      comments: [],
     },
     {
       profilePost: false,
@@ -45,14 +29,7 @@ export const PostsProvider = ({ children }) => {
       userName: "Nazanin",
       userProfilePic: Images.profileImages.naz,
       userText: "Meditate for 5 minutes",
-      comments: [
-        {
-          postIndex: 0,
-          commentUserHandle: "@lcivita99",
-          commentUserProfilePic: Images.profileImages.luca,
-          commentText: "Wow I love reading too!!!!",
-        },
-      ],
+      comments: [],
     },
     {
       profilePost: false,
@@ -60,14 +37,7 @@ export const PostsProvider = ({ children }) => {
       userName: "Cecilia",
       userProfilePic: Images.profileImages.cecilia,
       userText: "Take Ringo on a long walk",
-      comments: [
-        {
-          postIndex: 0,
-          commentUserHandle: "@malinac",
-          commentUserProfilePic: Images.profileImages.malina,
-          commentText: "Wow I love reading too!!!!",
-        },
-      ],
+      comments: [],
     },
     {
       profilePost: false,
@@ -75,14 +45,7 @@ export const PostsProvider = ({ children }) => {
       userName: "Luca Civita",
       userProfilePic: Images.profileImages.luca,
       userText: "Read my new book!!!!",
-      comments: [
-        {
-          postIndex: 0,
-          commentUserHandle: "@malinac",
-          commentUserProfilePic: Images.profileImages.malina,
-          commentText: "Wow I love reading too!!!!",
-        },
-      ],
+      comments: [],
     },
     {
       profilePost: false,
@@ -90,14 +53,7 @@ export const PostsProvider = ({ children }) => {
       userName: "Pedro Civita",
       userProfilePic: Images.profileImages.malina,
       userText: "See a new movie",
-      comments: [
-        {
-          postIndex: 0,
-          commentUserHandle: "@malinac",
-          commentUserProfilePic: Images.profileImages.malina,
-          commentText: "Wow I love reading too!!!!",
-        },
-      ],
+      comments: [],
     },
     {
       profilePost: false,
@@ -105,14 +61,7 @@ export const PostsProvider = ({ children }) => {
       userName: "Pedro Civita",
       userProfilePic: Images.profileImages.digo,
       userText: "Go out to a new Restaurant",
-      comments: [
-        {
-          postIndex: 0,
-          commentUserHandle: "@malinac",
-          commentUserProfilePic: Images.profileImages.malina,
-          commentText: "Wow I love reading too!!!!",
-        },
-      ],
+      comments: [],
     },
     {
       profilePost: false,
@@ -120,14 +69,7 @@ export const PostsProvider = ({ children }) => {
       userName: "Pedro Civita",
       userProfilePic: Images.profileImages.naz,
       userText: "Run 10k",
-      comments: [
-        {
-          postIndex: 0,
-          commentUserHandle: "@malinac",
-          commentUserProfilePic: Images.profileImages.malina,
-          commentText: "Wow I love reading too!!!!",
-        },
-      ],
+      comments: [],
     },
   ]);
 
@@ -140,15 +82,15 @@ export const PostsProvider = ({ children }) => {
     profilePost
   ) => {
     setPosts((prevPosts) => [
-      ...prevPosts,
       {
-        userHandle,
-        userName,
-        userProfilePic,
-        userText,
+        userHandle: userHandle,
+        userName: userName,
+        userProfilePic: userProfilePic,
+        userText: userText,
         comments: [],
         profilePost: profilePost,
       },
+      ...prevPosts,
     ]);
   };
 
@@ -170,7 +112,6 @@ export const PostsProvider = ({ children }) => {
         commentUserHandle: commentUserHandle,
         commentUserProfilePic: commentUserProfilePic,
         commentText: commentText,
-        postIndex: 0,
       };
       if (updatedPosts[postIndex]) {
         updatedPosts[postIndex].comments.push(comment);

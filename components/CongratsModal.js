@@ -7,21 +7,36 @@ import PostPreview from "./PostPreview.js";
 import Themes from "../assets/Themes/themes.js";
 import Fire from "./Icons/Fire";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { PostsContext } from "../contexts/PostsContext.js";
 // import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function CongratsModal({ isModalVisible, setModalVisible, switchEnabled, setSwitchEnabled, setActiveScreen, setAppearHeader }) {
-  const [fontsLoaded] = useFonts({
-    "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
-    "Poppins-Bold": require("../assets/Poppins/Poppins-Bold.ttf"),
-  });
-  if (!fontsLoaded) {
-    return undefined;
-  };
-
+export default function CongratsModal({
+  activityName,
+  isModalVisible,
+  setModalVisible,
+  switchEnabled,
+  setSwitchEnabled,
+  setActiveScreen,
+  setAppearHeader,
+}) {
   const onExitModal = () => {
     setModalVisible(false);
     setActiveScreen("RollDice");
     setAppearHeader(false);
+  };
+
+  const { addPost } = useContext(PostsContext);
+  const { posts } = useContext(PostsContext);
+
+  const postActivity = () => {
+    addPost(
+      "@pcivita",
+      "Pedro Civita",
+      Images.profileImages.pedro,
+      "New Post",
+      true
+    );
+    onExitModal();
   };
 
   return (
@@ -43,27 +58,35 @@ export default function CongratsModal({ isModalVisible, setModalVisible, switchE
         <View style={styles.barIcon} />
         <Image source={Images.confetti} style={styles.confetti} />
         <Text style={styles.title}>Congrats!</Text>
-        <PostPreview />
+        <PostPreview activityName={activityName} />
         <View style={styles.statsContainer}>
           <View style={styles.stat}>
             <View style={styles.circle}>
-              <FontAwesome5 name="dice-two" size={50} color={Themes.colors.salmon} />
+              <FontAwesome5
+                name="dice-two"
+                size={50}
+                color={Themes.colors.salmon}
+              />
               <Text style={styles.circleText}>x34</Text>
             </View>
-            <Text style={styles.circleDescription}>You have rolled the dice 34 times</Text>
+            <Text style={styles.circleDescription}>
+              You have rolled the dice 34 times
+            </Text>
           </View>
           <View style={styles.stat}>
             <View style={styles.circle}>
               <Fire width={44} height={57} />
               <Text style={styles.circleText}>x10</Text>
             </View>
-            <Text style={styles.circleDescription}>Congrats on your 10 day streak</Text>
+            <Text style={styles.circleDescription}>
+              Congrats on your 10 day streak
+            </Text>
           </View>
         </View>
         <View style={styles.toggleContainer}>
-          <Text> Add "Go for a run" back to Activities List?</Text>
+          <Text> Add "{activityName}" back to Activities List?</Text>
           <Switch
-            trackColor={{true: Themes.colors.salmon}}
+            trackColor={{ true: Themes.colors.salmon }}
             thumbColor={"white"}
             ios_backgroundColor={Themes.colors.mediumGray}
             onValueChange={() => setSwitchEnabled(!switchEnabled)}
@@ -71,9 +94,12 @@ export default function CongratsModal({ isModalVisible, setModalVisible, switchE
           />
         </View>
         <View style={styles.buttonsContainer}>
-          <View style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>Post</Text>
-          </View>
+          <Pressable onPress={postActivity}>
+            <View style={styles.buttonContainer}>
+              <Text style={styles.buttonText}>Post</Text>
+            </View>
+          </Pressable>
+
           <Pressable onPress={onExitModal}>
             <View style={styles.buttonContainer}>
               <Text style={styles.buttonText}>Done</Text>
@@ -116,21 +142,21 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     marginVertical: 20,
-    fontFamily: "Poppins-Bold"
+    fontFamily: "Poppins-Bold",
   },
   statsContainer: {
     width: "90%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    flex: 1
+    flex: 1,
   },
   stat: {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
     gap: 15,
-    maxWidth: "50%"
+    maxWidth: "50%",
   },
   circle: {
     width: 150,
@@ -140,7 +166,7 @@ const styles = StyleSheet.create({
     borderWidth: 6,
     borderColor: Themes.colors.salmon,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   circleText: {
     fontSize: 40,
@@ -182,7 +208,7 @@ const styles = StyleSheet.create({
     height: 70,
     flexDirection: "row",
     gap: 50,
-    padding: 10
+    padding: 10,
   },
   buttonContainer: {
     backgroundColor: Themes.colors.salmon,
@@ -190,11 +216,11 @@ const styles = StyleSheet.create({
     height: "90%",
     borderRadius: 10,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   buttonText: {
     color: "white",
     fontFamily: "Poppins-Bold",
     fontSize: 24,
-  }
+  },
 });

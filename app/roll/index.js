@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, Easing, Text } from "react-native";
 import { Themes } from "../../assets/Themes";
-import DiceComponent from "../../components/DiceComponent";
-import SwipeButton from "../../components/SwipeButton";
+import { PostsProvider } from "../../contexts/PostsContext";
 import { ActivitiesProvider } from "../../contexts/ActivitiesContext";
 import { FontAwesome5 } from "@expo/vector-icons";
 import RollDice from "../../components/ProgressScreens/RollDice";
@@ -82,9 +81,13 @@ export default function Page() {
       )}
       <Animated.View style={[styles.container, rStyle]}>
         {activeScreen === "RollDice" && <RollDice onData={handleData} />}
-        {activeScreen === "CompleteDice" && 
-          <CompleteDice setActiveScreen={setActiveScreen} setAppearHeader={setAppearHeader} />
-        }
+        {activeScreen === "CompleteDice" && (
+          <CompleteDice
+            setActiveScreen={setActiveScreen}
+            setAppearHeader={setAppearHeader}
+            activityName={activityName}
+          />
+        )}
       </Animated.View>
     </ActivitiesProvider>
   );

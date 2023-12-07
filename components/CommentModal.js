@@ -21,6 +21,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { PostsContext } from "../contexts/PostsContext";
 
 export default function CommentModal({
+  postsTest,
   postIndex,
   isModalVisible,
   toggleModal,
@@ -46,15 +47,19 @@ export default function CommentModal({
   const userHandle = "@pcivita";
   const userName = "Pedro Civita";
 
+  console.log("POSTs CONTEXT ", posts);
+  console.log("POSTs Test ", postsTest);
+  console.log("POST INDEX", postIndex);
+
   const commentsTEST = posts[postIndex].comments;
 
-  // console.log(comments);
   const handleAddComment = () => {
-    console.log(postIndex);
-    console.log(Images.profileImages.pedro);
-    console.log(newComment);
-    console.log(userHandle);
-    console.log(userName);
+    // console.log(postIndex);
+    // console.log(Images.profileImages.pedro);
+    // console.log(newComment);
+    // console.log(userHandle);
+    // console.log(userName);
+
     addCommentToPost(
       postIndex,
       userHandle,
@@ -67,6 +72,7 @@ export default function CommentModal({
     // You can update your state or context with the new comment
     setNewComment("");
   };
+  console.log(postIndex);
 
   return (
     <Modal

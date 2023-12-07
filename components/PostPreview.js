@@ -16,7 +16,7 @@ import CommentModal from "./CommentModal";
 import { useState } from "react";
 import { Themes } from "../assets/Themes";
 
-export default function PostPreview({ postId }) {
+export default function PostPreview({ postId, activityName }) {
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
     "Poppins-Bold": require("../assets/Poppins/Poppins-Bold.ttf"),
@@ -27,16 +27,12 @@ export default function PostPreview({ postId }) {
   }
 
   // PROVISORY
-  let activityName = "Go on a run for 100 days in Lake Lag without stopping";
 
   return (
     // <CommentsProvider postId={postId}>
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image
-          source={Images.profileImages.pedro}
-          style={styles.profileImg}
-        />
+        <Image source={Images.profileImages.pedro} style={styles.profileImg} />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.postText}>

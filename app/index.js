@@ -14,6 +14,7 @@ import Images from "../assets/Themes/Images";
 
 export default function Page() {
   const { posts } = useContext(PostsContext);
+
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
     "Poppins-Bold": require("../assets/Poppins/Poppins-Bold.ttf"),
@@ -43,6 +44,7 @@ export default function Page() {
               (post, index) =>
                 post.profilePost === true && (
                   <Post
+                    posts={posts}
                     key={index}
                     postIndex={index}
                     handle={post.userHandle}
