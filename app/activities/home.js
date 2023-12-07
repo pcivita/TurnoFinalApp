@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
   activitiesContainer: {
     width: "100%",
-    height: "80%",
+    height: "60%",
     paddingHorizontal: 20,
     paddingVertical: 10,
     flexDirection: "space-between",

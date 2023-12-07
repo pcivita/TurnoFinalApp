@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
-  Modal,
   View,
   Text,
   TextInput,
   StyleSheet,
-  TouchableWithoutFeedback,
   TouchableOpacity,
 } from "react-native";
+import Modal from 'react-native-modal';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ActivitiesContext } from "../contexts/ActivitiesContext";
 import { Themes } from "../assets/Themes";
@@ -101,101 +100,99 @@ export default function ActivityModal({
   }
 
   const handleSectionChange = () => {
-    let oldSectionIndex = 0;  // Dice
-    let newSectionIndex = 1;  // Pending
-    
-    if (currentSection === "Dice") {  // Set new section to pending
-      setCurrentSection("Pending");
-      setOtherSection("Dice");
-    } else {  // Section new section to dice/current
-      oldSectionIndex = 1;
-      newSectionIndex = 0;
-      setCurrentSection("Dice");
-      setOtherSection("Pending");
-    }
-    changeSection(oldSectionIndex, indexInSection, newSectionIndex);
+    console.log("Delete activity!!");
   }
 
   return (
     <Modal
-      animationType="fade"
-      transparent={true}
-      visible={isVisible}
-      onRequestClose={() => {
-        closeModal();
-      }}
+      // animationType="fade"
+      // transparent={true}
+      // visible={isVisible}
+      // onRequestClose={() => {
+      //   closeModal();
+      // }}
+      onBackdropPress={() => closeModal()}
+      onBackButtonPress={() => closeModal()}
+      isVisible={isVisible}
+      swipeDirection="down"
+      onSwipeComplete={() => closeModal()}
+      animationIn="bounceInUp"
+      animationOut="bounceOutDown"
+      animationInTiming={900}
+      animationOutTiming={500}
+      backdropTransitionInTiming={1000}
+      backdropTransitionOutTiming={500}
+      avoidKeyboard
+      propagateSwipe={true}
+      style={styles.modal}
     >
-      <TouchableWithoutFeedback onPress={(e) => handlePressOutside(e)}>
-        <View style={styles.container}>
-          <View style={styles.modal}>
-            <View style={styles.titleContainer}>
-              <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-                <MaterialCommunityIcons name="close" size={30} color="white" />
-              </TouchableOpacity>
-              <Text style={styles.title}>{title}</Text>
-            </View>
-            <View style={styles.activityNameContainer}>
-              <Text style={styles.subtitle}> Activity Name </Text>
-              {!editMode &&
-                <TextInput
-                  style={styles.input}
-                  value={newName}
-                  editable={false}
-                />
-              }
-              {editMode &&
-                <TextInput
-                  style={styles.editableInput}
-                  value={newName}
-                  editable
-                  onChangeText={setNewName} // Update the state variable with the input
-                />
-              }
-            </View>
-            <View style={styles.descriptionContainer}>
-              <Text style={styles.subtitle}> Description </Text>
-              {!editMode &&
-                <TextInput
-                  multiline
-                  editable={false}
-                  blurOnSubmit={true}
-                  onSubmitEditing={() => {
-                    Keyboard.dismiss();
-                  }}
-                  numberOfLines={4}
-                  style={styles.input}
-                  value={newDescription}
-                />
-              }
-              {editMode &&
-                <TextInput
-                  multiline
-                  editable
-                  blurOnSubmit={true}
-                  onSubmitEditing={() => {
-                    Keyboard.dismiss();
-                  }}
-                  numberOfLines={4}
-                  style={styles.editableInput}
-                  value={newDescription}
-                  onChangeText={setNewDescription}
-                />
-              }
-            </View>
+      <View style={styles.modalContent}>
+        <View style={styles.barIcon} />
+          <View style={styles.titleContainer}>
+            <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+              <MaterialCommunityIcons name="close" size={30} color="white" />
+            </TouchableOpacity>
+            <Text style={styles.title}>Activity {indexInSection + 1}</Text>
+          </View>
+          <View style={styles.activityNameContainer}>
+            <Text style={styles.subtitle}> Activity Name </Text>
             {!editMode &&
-              <View style={styles.oneCategoryContainer}>
-                <CategoryDisabled
-                  //key={1}
-                  isSelected="true"
-                  // categoryName={category}
-                  // iconName={categoryIcon}
-                  id={newSelectedId}
-                  categories={Themes.categories}
-                />
-              </View>
+              <TextInput
+                style={styles.input}
+                value={newName}
+                editable={false}
+              />
             }
             {editMode &&
-              <View style={styles.categoriesContainer}>
+              <TextInput
+                style={styles.editableInput}
+                value={newName}
+                editable
+                onChangeText={setNewName} // Update the state variable with the input
+              />
+            }
+          </View>
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.subtitle}> Description </Text>
+            {!editMode &&
+              <TextInput
+                multiline
+                editable={false}
+                blurOnSubmit={true}
+                onSubmitEditing={() => {
+                  Keyboard.dismiss();
+                }}
+                numberOfLines={4}
+                style={styles.input}
+                value={newDescription}
+              />
+            }
+            {editMode &&
+              <TextInput
+                multiline
+                editable
+                blurOnSubmit={true}
+                onSubmitEditing={() => {
+                  Keyboard.dismiss();
+                }}
+                numberOfLines={4}
+                style={styles.editableInput}
+                value={newDescription}
+                onChangeText={setNewDescription}
+              />
+            }
+          </View>
+          {!editMode &&
+            <View style={styles.categoriesContainer}>
+              <CategoryDisabled
+                isSelected="true"
+                id={newSelectedId}
+                categories={Themes.categories}
+              />
+            </View>
+          }
+          {editMode &&
+            <View style={styles.categoriesContainer}>
               {[1, 2, 3, 4, 5, 6].map((id) => (
                 <Category
                   key={id}
@@ -206,112 +203,103 @@ export default function ActivityModal({
                   iconName={Themes.categories[id - 1][1]}
                 />
               ))}
-              </View>
-            }
+            </View>
+          }
+          <View style={styles.buttonsContainer}>
+            <View style={styles.buttonContainer}>
+              {!editMode && 
+                <TouchableOpacity 
+                  style={styles.button} 
+                  onPress={handleSectionChange}
+                >
+                  <Text style={styles.buttonText}>Delete Activity</Text>
+                  <MaterialCommunityIcons name="trash-can-outline" size={20} color="white"/>
+                </TouchableOpacity>
+              }
+              {editMode && 
+                <TouchableOpacity 
+                  style={styles.buttonSecondary} 
+                  onPress={handleCancel}
+                >
+                  <Text style={styles.buttonTextSecondary}>Cancel</Text>
+                </TouchableOpacity>
+              }
+            </View>
 
-
-            {/* <MaterialCommunityIcons
-              name="trash-can-outline"
-              size={40}
-              color="black"
-            /> */}
-            <View style={styles.buttonsContainer}>
-              <View style={styles.buttonContainer}>
-                {!editMode && 
-                  <TouchableOpacity 
-                    style={styles.button} onPress={handleSectionChange}>
-                    <Text style={styles.buttonText}>{"Move to " + otherSection}</Text>
-                  </TouchableOpacity>
-                }
-                {editMode && 
-                  <TouchableOpacity 
-                    style={styles.buttonSecondary} 
-                    onPress={handleCancel}
-                  >
-                    <Text style={styles.buttonTextSecondary}>Cancel</Text>
-                  </TouchableOpacity>
-                }
-              </View>
-
-              <View style={styles.buttonContainer}>
-                {!editMode &&
-                  <TouchableOpacity
-                    //disabled={editMode && !isFormChanged}
-                    onPress={() => {
-                      setEditMode(true);
-                    }}
-                  >
-                    <View style={styles.button}>
-                      <Text style={styles.buttonText}>Edit Activity</Text>
-                      <MaterialCommunityIcons name="pencil" size={20} color="white"/>
-                    </View>
-                  </TouchableOpacity>
-                }
-                {editMode &&
-                  <TouchableOpacity
-                    disabled={editMode && !isFormChanged}
-                    onPress={handleSave}
-                  >
-                    <View style={[styles.button, isFormChanged ? null : styles.buttonDisabled ]}>
-                      <Text style={styles.buttonText}>Save Activity</Text>
-                      <MaterialCommunityIcons name="content-save" size={20} color="white" />
-                    </View>
-                  </TouchableOpacity>
-                }
-              </View>
+            <View style={styles.buttonContainer}>
+              {!editMode &&
+                <TouchableOpacity
+                  //disabled={editMode && !isFormChanged}
+                  onPress={() => {
+                    setEditMode(true);
+                  }}
+                >
+                  <View style={styles.button}>
+                    <Text style={styles.buttonText}>Edit Activity</Text>
+                    <MaterialCommunityIcons name="pencil" size={20} color="white"/>
+                  </View>
+                </TouchableOpacity>
+              }
+              {editMode &&
+                <TouchableOpacity
+                  disabled={editMode && !isFormChanged}
+                  onPress={handleSave}
+                >
+                  <View style={[styles.button, isFormChanged ? null : styles.buttonDisabled ]}>
+                    <Text style={styles.buttonText}>Save Activity</Text>
+                    <MaterialCommunityIcons name="content-save" size={20} color="white" />
+                  </View>
+                </TouchableOpacity>
+              }
             </View>
           </View>
         </View>
-      </TouchableWithoutFeedback>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "flex-end",
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
-  },
   modal: {
-    height: "90%",
-    width: "100%",
+    justifyContent: "flex-end",
+    margin: 0,
+  },
+  modalContent: {
     backgroundColor: "white",
-    borderRadius: 20,
-    paddingTop: 10,
+    paddingTop: 12,
+    // paddingHorizontal: 12,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    // minHeight: 600,
+    height: 730,
+    paddingBottom: 20,
+    display: "flex",
     alignItems: "center",
-    justifyContent: "space-between",
-    shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    position: "absolute",
-    top: "auto", // Reset the top position
-    bottom: 0, // Position at the bottom
-    overflow: "hidden",
+    justifyContent: "flex-start",
+  },
+  barIcon: {
+    width: 60,
+    height: 5,
+    backgroundColor: "#bbb",
+    borderRadius: 3,
   },
   titleContainer: {
-    //height: "10%",
     height: 70,
     width: "100%",
-    backgroundColor: Themes.colors.salmon,
     borderColor: "black",
     justifyContent: "center",
-    marginTop: -15,
+    alignItems: "center",
   },
   title: {
     fontWeight: "bold",
     fontSize: 28,
-    color: "white",
     alignSelf: "center",
+    fontFamily: "Poppins-Bold"
   },
   subtitle: {
     marginHorizontal: 12,
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
+    fontFamily: "Poppins-Bold"
   },
   closeButton: {
     position: "absolute",
@@ -328,7 +316,8 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     marginHorizontal: 12,
-    fontSize: 19,
+    fontSize: 16,
+    fontFamily: "Poppins-Regular",
     backgroundColor: Themes.colors.lightGray,
     borderRadius: 5,
     borderWidth: 3,
@@ -338,7 +327,8 @@ const styles = StyleSheet.create({
   editableInput: {
     flex: 1,
     marginHorizontal: 12,
-    fontSize: 19,
+    fontSize: 16,
+    fontFamily: "Poppins-Regular",
     borderRadius: 5,
     borderWidth: 3,
     borderColor: Themes.colors.mediumGray,
@@ -360,10 +350,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 15,
     paddingTop: 10,
-  },
-  oneCategoryContainer: {
-    margin: 15,
-    flex: 1,
   },
   categoriesContainer: {
     margin: 15,

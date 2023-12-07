@@ -26,49 +26,48 @@ export default function Page() {
       <View style={styles.main}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.profileCard}>
-            <ProfileCard />
+            <ProfileCard 
+              isYourProfile={true}
+              profileName="Pedro Civita"
+              handle="@pcivita"
+              profilePic={Images.profileImages.pedro}
+            />
           </View>
           <Post
-            style={styles.post}
             postId={1}
-            imageSource={Images.profileImages.pedro}
-            profile={"@pcivita"}
+            handle={"@pcivita"}
             activityName={"Lake Lag"}
+            profilePic={Images.profileImages.pedro}
           />
           <Post
-            style={styles.post}
             postId={2}
-            imageSource={Images.profileImages.pedro}
-            profile={"@pcivita"}
+            handle={"@pcivita"}
             activityName={"Lake Lag"}
+            profilePic={Images.profileImages.pedro}
           />
           <Post
-            style={styles.post}
             postId={3}
-            imageSource={Images.profileImages.pedro}
-            profile={"@pcivita"}
+            handle={"@pcivita"}
             activityName={"Lake Lag"}
+            profilePic={Images.profileImages.pedro}
           />
           <Post
-            style={styles.post}
             postId={4}
-            imageSource={Images.profileImages.pedro}
-            profile={"@pcivita"}
+            handle={"@pcivita"}
             activityName={"Lake Lag"}
+            profilePic={Images.profileImages.pedro}
           />
           <Post
-            style={styles.post}
             postId={5}
-            imageSource={Images.profileImages.pedro}
-            profile={"@pcivita"}
+            handle={"@pcivita"}
             activityName={"Lake Lag"}
+            profilePic={Images.profileImages.pedro}
           />
           <Post
-            style={styles.post}
             postId={6}
-            imageSource={Images.profileImages.pedro}
-            profile={"@pcivita"}
+            handle={"@pcivita"}
             activityName={"Lake Lag"}
+            profilePic={Images.profileImages.pedro}
           />
         </ScrollView>
       </View>

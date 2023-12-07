@@ -24,21 +24,20 @@ export default function CategoryDisabled({ id, categories }) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "35%",
-    height: undefined,
-    aspectRatio: 1,
+    width: "30%",
+    height: 90,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Themes.colors.lightGray,
     borderColor: Themes.colors.mediumGray,
     borderRadius: 20,
     borderWidth: 3,
-    paddingTop: 15,
-    paddingBottom: 15,
+    paddingVertical: 14,
     backgroundColor: Themes.colors.salmon,
   },
   categoryText: {
     fontSize: 14,
     color: "white",
+    fontFamily: "Poppins-Regular"
   },
 });
