@@ -133,8 +133,9 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     marginVertical: 20,
+    fontFamily: "Poppins-Bold"
   },
   btnContainer: {
     display: "flex",
