@@ -92,7 +92,6 @@ export default function Post({
               <CommentIcon color="black" />
               <CommentModal
                 postIndex={postIndex}
-                comments={comments}
                 isModalVisible={isModalVisible}
                 toggleModal={toggleModal}
                 setModalVisible={setModalVisible}

@@ -22,7 +22,6 @@ import { PostsContext } from "../contexts/PostsContext";
 
 export default function CommentModal({
   postIndex,
-  comments,
   isModalVisible,
   toggleModal,
   setModalVisible,
@@ -42,18 +41,23 @@ export default function CommentModal({
 
   const [newComment, setNewComment] = useState("");
 
-  const [commentsCopy, setCommentsCopy] = useState(comments);
+  const { posts } = useContext(PostsContext);
 
-  useEffect(() => {
-    setCommentsCopy(comments);
-  }, [comments]);
+  const userHandle = "@pcivita";
+  const userName = "Pedro Civita";
 
-  console.log(comments);
+  const commentsTEST = posts[postIndex].comments;
+
+  // console.log(comments);
   const handleAddComment = () => {
+    console.log(postIndex);
+    console.log(Images.profileImages.pedro);
+    console.log(newComment);
+    console.log(userHandle);
+    console.log(userName);
     addCommentToPost(
       postIndex,
-      "pcivita",
-      "Pedro Civita",
+      userHandle,
       Images.profileImages.pedro,
       newComment
     );
@@ -90,7 +94,7 @@ export default function CommentModal({
             style={styles.scrollView}
           >
             <View flex={1} onStartShouldSetResponder={() => true}>
-              {comments.map((commentData, index) => (
+              {commentsTEST.map((commentData, index) => (
                 <Comment key={index} commentData={commentData} />
               ))}
             </View>

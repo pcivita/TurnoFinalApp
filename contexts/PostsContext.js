@@ -8,6 +8,7 @@ export const PostsContext = createContext();
 export const PostsProvider = ({ children }) => {
   const [posts, setPosts] = useState([
     {
+      postIndex: 0,
       profilePost: true,
       userHandle: "@pcivita",
       userName: "Pedro Civita",
@@ -23,6 +24,7 @@ export const PostsProvider = ({ children }) => {
       ],
     },
     {
+      postIndex: 1,
       profilePost: true,
       userHandle: "@pcivita",
       userName: "Pedro Civita",
@@ -30,7 +32,7 @@ export const PostsProvider = ({ children }) => {
       userText: "Read my new book!!!!",
       comments: [
         {
-          postIndex: 0,
+          postIndex: 1,
           commentUserHandle: "@malinac",
           commentUserProfilePic: Images.profileImages.malina,
           commentText: "Wow I love reading too!!!!",
@@ -150,11 +152,15 @@ export const PostsProvider = ({ children }) => {
     ]);
   };
 
+  // postIndex: 0,
+  // commentUserHandle: "@malinac",
+  // commentUserProfilePic: Images.profileImages.malina,
+  // commentText: "Wow I love reading too!!!!",
+
   // Function to add a comment to a post
   const addCommentToPost = (
     postIndex,
     commentUserHandle,
-    commentUserName,
     commentUserProfilePic,
     commentText
   ) => {
