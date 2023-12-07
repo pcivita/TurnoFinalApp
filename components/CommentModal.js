@@ -146,11 +146,13 @@ export default function CommentModal({
               value={newComment}
               onChangeText={(text) => setNewComment(text)}
             />
-            <Pressable onPress={handleAddComment}>
-              <View style={styles.sendContainer}>
-                <FontAwesome5 name="arrow-up" size={20} color={"white"} />
-              </View>
-            </Pressable>
+            {newComment &&
+              <Pressable onPress={handleAddComment}>
+                <View style={styles.sendContainer}>
+                  <FontAwesome5 name="arrow-up" size={20} color={"white"} />
+                </View>
+              </Pressable>
+            }
           </View>
         </View>
       </View>
