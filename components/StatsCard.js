@@ -14,7 +14,7 @@ export default function Stats({ index, statContent }) {
   let iconComponent = <FontAwesome5 name="dice-five" size={50} color={Themes.colors.salmon} />;
   switch (iconType) {
     case "fire":
-      iconComponent = <Fire />;
+      iconComponent = <Fire width={44} height={57} />;
       break;
     case "dice":
       iconComponent = <FontAwesome5 name="dice-two" size={50} color={Themes.colors.salmon} />

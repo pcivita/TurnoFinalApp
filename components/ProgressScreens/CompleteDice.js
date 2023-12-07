@@ -15,6 +15,9 @@ import { useState } from "react";
 import ActivityCircle from "../ActivityCircle";
 import CongratsModal from "../CongratsModal";
 import ActvityRollled from "../ActivityRolled";
+import Fire from "../Icons/Fire";
+
+
 export default function CompleteDice() {
   const [swipeComplete, setSwipeComplete] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
@@ -30,6 +33,13 @@ export default function CompleteDice() {
     <View>
       <View style={styles.header}>
         <View style={styles.banner}>
+        <FontAwesome5
+          name="dice-five" 
+          size={25}
+          color={Themes.colors.salmon}
+          transform={[{ rotate: "45deg" }]}
+        />
+        <Fire width={25} height={30} />
         </View>
       </View>
       <View style={[styles.square]}>
@@ -85,12 +95,14 @@ const styles = StyleSheet.create({
   },
   banner: {
     paddingHorizontal: 20,
+    marginBottom: 10,
     // borderWidth: 2,
     // borderColor: "blue",
     display: "flex",
     width: "100%",
-    justifyContent: "space-between",
     flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   headerDice: {
     // borderWidth: 2,
