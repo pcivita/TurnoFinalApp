@@ -16,22 +16,26 @@ import {
 } from "react-native-gesture-handler";
 import Themes from "../assets/Themes/themes.js";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { PostsContext } from "../contexts/PostsContext";
 
 export default function CommentModal({
+  comments,
   isModalVisible,
   toggleModal,
   setModalVisible,
 }) {
-  const comments = [
-    ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
-    ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
-    // ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
-    // ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
-    // ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
-    // ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
-    // ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
-    // ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
-  ];
+  // const comments = [
+  //   ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
+  //   ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
+  //   // ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
+  //   // ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
+  //   // ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
+  //   // ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
+  //   // ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
+  //   // ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
+  // ];
+
+  const { addCommentToPost } = useContext(PostsContext);
 
   const [newComment, setNewComment] = useState("");
 
@@ -123,7 +127,6 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     flex: 1,
-
   },
   barIcon: {
     width: 60,
@@ -134,7 +137,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     marginVertical: 20,
-    fontFamily: "Poppins-Bold"
+    fontFamily: "Poppins-Bold",
   },
   btnContainer: {
     display: "flex",

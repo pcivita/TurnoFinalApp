@@ -18,38 +18,29 @@ export default function Comment({ commentData }) {
     return undefined;
   }
 
-  const username = commentData[0];
-  const profilePic = commentData[1];
-  const comment = commentData[2];
-  let kudosColor = commentData[3];
+  const username = commentData.commentUserHandle;
+  const profilePic = commentData.commentUserProfilePic;
+  const comment = commentData.commentText;
 
   // const [commentKudosColor, setCommentKudosColor] = useState("black"); // Initial color
 
-  const toggleCommentKudos = (prevColor) => {
-    kudosColor === "black" ? "red" : "black"
-  };
-
   return (
     <View style={styles.container}>
-        <View style={styles.ImageText}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={profilePic}
-              style={styles.profileImg}
-            />
-          </View>
-          <View style={styles.textContainer}>
-            <Text style={styles.usernameText}>{username}</Text>
-            <Text style={styles.commentText}>{comment}</Text>
-            {/* <TouchableOpacity onPress={toggleCommentKudos(kudosColor)}>
+      <View style={styles.ImageText}>
+        <View style={styles.imageContainer}>
+          <Image source={profilePic} style={styles.profileImg} />
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.usernameText}>{username}</Text>
+          <Text style={styles.commentText}>{comment}</Text>
+          {/* <TouchableOpacity onPress={toggleCommentKudos(kudosColor)}>
               <Text style={styles.replyText}>Reply</Text>
             </TouchableOpacity> */}
-          </View>
         </View>
       </View>
+    </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {

@@ -13,14 +13,25 @@ import KudosIcon from "./Icons/Kudos";
 import CommentIcon from "./Icons/Comment";
 import CommentModal from "./CommentModal";
 import { Link } from "expo-router";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { PostsContext } from "../contexts/PostsContext";
 import { Themes } from "../assets/Themes";
 
-export default function Post({ postId, profileName, handle, profilePic, activityName, isYourPost }) {
+export default function Post({
+  postId,
+  profileName,
+  handle,
+  profilePic,
+  activityName,
+  isYourPost,
+  comments,
+}) {
   const [kudosColor, setKudosColor] = useState("black"); // Initial color
-
+  const { addCommentToPost } = useContext(PostsContext);
   const toggleKudos = () => {
-    setKudosColor((prevColor) => (prevColor === "black" ? Themes.colors.salmon : "black"));
+    setKudosColor((prevColor) =>
+      prevColor === "black" ? Themes.colors.salmon : "black"
+    );
   };
 
   const [isModalVisible, setModalVisible] = useState(false);
@@ -44,53 +55,54 @@ export default function Post({ postId, profileName, handle, profilePic, activity
   };
 
   return (
-      <View style={styles.container}>
-        <View style={styles.ImageText}>
-          <View style={styles.imageContainer}>
-            <Image source={profilePic} style={styles.profileImg} />
-          </View>
-          <View style={styles.textContainer}>
-            {isYourPost ? 
-              <Text style={styles.postText}>
-                {handle}:{" "}
-                <Text style={styles.activityNameStyle}>{activityName} </Text>
-              </Text>
-            :
-              <Text style={styles.postText}>
-                <Link 
-                  href={{ 
-                    pathname: "/feed/profileClicked" ,
-                    params: {
-                      profileName: profileName,
-                      handle: handle,
-                      profilePic: profilePic,
-                    },
-                  }}
-                >
-                  {handle}:
-                </Link>
-                <Text style={styles.activityNameStyle}>{" "}{activityName} </Text>
-              </Text>
-            }
-            <View style={styles.actionItemsContainer}>
-              <TouchableOpacity onPress={toggleKudos}>
-                <KudosIcon color={kudosColor} size={25} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.commentContainer}
-                onPress={toggleModal}
+    <View style={styles.container}>
+      <View style={styles.ImageText}>
+        <View style={styles.imageContainer}>
+          <Image source={profilePic} style={styles.profileImg} />
+        </View>
+        <View style={styles.textContainer}>
+          {isYourPost ? (
+            <Text style={styles.postText}>
+              {handle}:{" "}
+              <Text style={styles.activityNameStyle}>{activityName} </Text>
+            </Text>
+          ) : (
+            <Text style={styles.postText}>
+              <Link
+                href={{
+                  pathname: "/feed/profileClicked",
+                  params: {
+                    profileName: profileName,
+                    handle: handle,
+                    profilePic: profilePic,
+                  },
+                }}
               >
-                <CommentIcon color="black" />
-                <CommentModal
-                  isModalVisible={isModalVisible}
-                  toggleModal={toggleModal}
-                  setModalVisible={setModalVisible}
-                />
-              </TouchableOpacity>
-            </View>
+                {handle}:
+              </Link>
+              <Text style={styles.activityNameStyle}> {activityName} </Text>
+            </Text>
+          )}
+          <View style={styles.actionItemsContainer}>
+            <TouchableOpacity onPress={toggleKudos}>
+              <KudosIcon color={kudosColor} size={25} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.commentContainer}
+              onPress={toggleModal}
+            >
+              <CommentIcon color="black" />
+              <CommentModal
+                comments={comments}
+                isModalVisible={isModalVisible}
+                toggleModal={toggleModal}
+                setModalVisible={setModalVisible}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
+    </View>
   );
 }
 
@@ -131,7 +143,7 @@ const styles = StyleSheet.create({
   activityNameStyle: {
     fontFamily: "Poppins-Regular",
     fontSize: 15,
-    color: "black"
+    color: "black",
   },
   textContainer: {
     gap: 16,
