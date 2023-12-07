@@ -110,6 +110,7 @@ export default function Page() {
                       key={index}
                       id={post.id}
                       postIndex={index}
+                      profilePost={post.is_profile_post}
                       handle={post.user_handle}
                       profilePic={post.user_profile_pic}
                       activityName={post.post_text}

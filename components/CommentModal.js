@@ -22,6 +22,7 @@ import { PostsContext } from "../contexts/PostsContext";
 import Supabase from "../Supabase.js";
 
 export default function CommentModal({
+  profilePost,
   id,
   postsTest,
   postIndex,
@@ -57,6 +58,12 @@ export default function CommentModal({
   // const commentsTEST = posts[postIndex].comments;
 
   const handleAddComment = async () => {
+    let dataBaseName;
+    if (profilePost) {
+      dataBaseName = "posts";
+    } else {
+      dataBaseName = "posts_feed";
+    }
     console.log("ID:", id);
     const post_id = id;
     const new_comment = {
@@ -65,14 +72,14 @@ export default function CommentModal({
       comment_text: newComment,
     };
 
-    const { data: post, error } = await Supabase.from("posts")
+    const { data: post, error } = await Supabase.from(dataBaseName)
       .select("comments")
       .eq("id", post_id)
       .single();
 
     if (post) {
       const updated_comments = [...post.comments, new_comment];
-      await Supabase.from("posts")
+      await Supabase.from(dataBaseName)
         .update({ comments: updated_comments })
         .eq("id", post_id);
     }
@@ -146,13 +153,13 @@ export default function CommentModal({
               value={newComment}
               onChangeText={(text) => setNewComment(text)}
             />
-            {newComment &&
+            {newComment && (
               <Pressable onPress={handleAddComment}>
                 <View style={styles.sendContainer}>
                   <FontAwesome5 name="arrow-up" size={20} color={"white"} />
                 </View>
               </Pressable>
-            }
+            )}
           </View>
         </View>
       </View>

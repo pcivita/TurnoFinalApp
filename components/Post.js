@@ -18,6 +18,7 @@ import { PostsContext } from "../contexts/PostsContext";
 import { Themes } from "../assets/Themes";
 
 export default function Post({
+  profilePost,
   id,
   posts,
   postIndex,
@@ -93,6 +94,7 @@ export default function Post({
             >
               <CommentIcon color="black" />
               <CommentModal
+                profilePost={profilePost}
                 id={id}
                 postsTest={posts}
                 postIndex={postIndex}

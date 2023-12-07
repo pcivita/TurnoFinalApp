@@ -21,16 +21,10 @@ import Supabase from "../../Supabase";
 export default function Page() {
   const [data, setData] = useState();
 
-  const handleRecordUpdated2 = (payload) => {
-    console.log("UDPATE", payload);
+  const handleRecordUpdated = (payload) => {
+    console.log("UPDATE", payload);
     setData((oldData) =>
-      oldData.map((item) => {
-        if (item.id === payload.old.id) {
-          return payload.new;
-        } else {
-          return item;
-        }
-      })
+      oldData.map((item) => (item.id === payload.old.id ? payload.new : item))
     );
   };
 
@@ -45,32 +39,39 @@ export default function Page() {
   };
 
   useEffect(() => {
-    // Listen for changes to db
-    // From https://supabase.com/docs/guides/realtime/concepts#postgres-changes
-    Supabase.channel("schema-db-changes")
+    const subscription = Supabase.channel("feed-schema")
       .on(
         "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "posts" },
-        handleRecordUpdated2
+        { event: "UPDATE", schema: "public", table: "posts_feed" },
+        handleRecordUpdated
       )
       .on(
         "postgres_changes",
-        { event: "INSERT", schema: "public", table: "posts" },
+        { event: "INSERT", schema: "public", table: "posts_feed" },
         handleRecordInserted
       )
       .on(
         "postgres_changes",
-        { event: "DELETE", schema: "public", table: "posts" },
+        { event: "DELETE", schema: "public", table: "posts_feed" },
         handleRecordDeleted
       )
       .subscribe();
+
+    // Unsubscribe on cleanup
+    return () => subscription.unsubscribe();
   }, []);
 
   useEffect(() => {
-    // Fetch data on initial load
     const fetchData = async () => {
-      const response = await Supabase.from("posts").select("*");
-      setData(response.data);
+      try {
+        const response = await Supabase.from("posts_feed").select("*");
+        if (response.error) {
+          throw response.error;
+        }
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
     };
     fetchData();
   }, []);
@@ -154,6 +155,7 @@ export default function Page() {
                   <Post
                     key={index}
                     id={post.id}
+                    profilePost={post.is_profile_post}
                     postIndex={index}
                     handle={post.user_handle}
                     profilePic={post.user_profile_pic}
