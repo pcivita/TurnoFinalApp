@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     // minHeight: 550,
-    height: 790,
+    height: "85%",
     paddingBottom: 20,
   },
   center: {

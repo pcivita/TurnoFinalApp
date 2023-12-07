@@ -1,5 +1,6 @@
 import React from "react";
 import Svg, { Path } from "react-native-svg";
+import { Themes } from "../../assets/Themes";
 
 const Kudos = ({ color, onPress }) => (
   <Svg width="23" height="25" viewBox="0 0 23 25" fill="none">
@@ -9,7 +10,7 @@ const Kudos = ({ color, onPress }) => (
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
-      fill={color === "red" ? color : undefined}
+      fill={color === Themes.colors.salmon ? color : undefined}
     />
     <Path
       d="M1 12.4921C1.79011 12.0478 2.71539 11.9137 3.59774 12.1156"

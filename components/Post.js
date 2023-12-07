@@ -21,7 +21,7 @@ export default function Post({ postId, profileName, handle, profilePic, activity
   const [kudosColor, setKudosColor] = useState("black"); // Initial color
 
   const toggleKudos = () => {
-    setKudosColor((prevColor) => (prevColor === "black" ? "red" : "black"));
+    setKudosColor((prevColor) => (prevColor === "black" ? Themes.colors.salmon : "black"));
   };
 
   const [isModalVisible, setModalVisible] = useState(false);

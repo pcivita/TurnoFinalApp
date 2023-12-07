@@ -39,37 +39,37 @@ export default function Page() {
           <Post
             postId={1}
             handle={"@pcivita"}
-            activityName={"Lake Lag"}
+            activityName={"Run around Lake Lag"}
             profilePic={Images.profileImages.pedro}
           />
           <Post
             postId={2}
             handle={"@pcivita"}
-            activityName={"Lake Lag"}
+            activityName={"Read 5 pages of new book"}
             profilePic={Images.profileImages.pedro}
           />
           <Post
             postId={3}
             handle={"@pcivita"}
-            activityName={"Lake Lag"}
+            activityName={"Meditate for 10 minutes"}
             profilePic={Images.profileImages.pedro}
           />
           <Post
             postId={4}
             handle={"@pcivita"}
-            activityName={"Lake Lag"}
+            activityName={"Clean my room"}
             profilePic={Images.profileImages.pedro}
           />
           <Post
             postId={5}
             handle={"@pcivita"}
-            activityName={"Lake Lag"}
+            activityName={"Set up an ice cream date with a friend"}
             profilePic={Images.profileImages.pedro}
           />
           <Post
             postId={6}
             handle={"@pcivita"}
-            activityName={"Lake Lag"}
+            activityName={"Watch a new movie"}
             profilePic={Images.profileImages.pedro}
           />
         </ScrollView>
