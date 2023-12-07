@@ -9,7 +9,6 @@ import {
   KeyboardAvoidingView,
   Image,
 } from "react-native";
-import { CommentsContext } from "../contexts/CommentsContext.js";
 import Comment from "./Comment.js";
 import {
   TouchableOpacity,

@@ -12,7 +12,6 @@ import { useFonts } from "expo-font";
 import KudosIcon from "./Icons/Kudos";
 import CommentIcon from "./Icons/Comment";
 import CommentModal from "./CommentModal";
-import { CommentsProvider } from "../contexts/CommentsContext";
 import { Link } from "expo-router";
 import { useState } from "react";
 import { Themes } from "../assets/Themes";
