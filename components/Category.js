@@ -23,15 +23,14 @@ export default function Category({ id, isSelected, onSelect, categoryName, iconN
 const styles = StyleSheet.create({
   container: {
     width: "30%",
-    height: undefined,
-    aspectRatio: 1,
+    height: 90,
     alignItems: "center",
+    justifyContent: "center",
     backgroundColor: Themes.colors.lightGray,
     borderColor: Themes.colors.mediumGray,
     borderRadius: 20,
     borderWidth: 3,
-    paddingTop: 15,
-    paddingBottom: 15,
+    paddingVertical: 14,
   },
 
   selectedContainer: {
@@ -40,6 +39,7 @@ const styles = StyleSheet.create({
   categoryText: {
     fontSize: 14,
     color: Themes.colors.salmon,
+    fontFamily: "Poppins-Regular"
   },
   selectedText: {
     color: "white",
