@@ -3,8 +3,6 @@ import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
-  Button,
-  FlatList,
   StyleSheet,
   ScrollView,
   TextInput,
@@ -25,12 +23,12 @@ export default function CommentModal({
   const comments = [
     ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
     ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
-    ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
-    ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
-    ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
-    ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
-    ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
-    ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
+    // ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
+    // ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
+    // ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
+    // ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
+    // ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
+    // ["@pcivita", Images.profileImages.pedro, "Awesome!", "black"],
   ];
 
   const [newComment, setNewComment] = useState("");
@@ -69,7 +67,7 @@ export default function CommentModal({
           >
             <View flex={1} onStartShouldSetResponder={() => true}>
               {comments.map((commentData, index) => (
-                <Comment key={index} commentData={commentData}></Comment>
+                <Comment key={index} commentData={commentData} toggleModal={toggleModal} />
               ))}
             </View>
           </ScrollView>

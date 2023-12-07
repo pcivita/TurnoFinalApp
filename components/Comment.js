@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import CommentIcon from "./Icons/Comment";
 import KudosIcon from "./Icons/Kudos";
 import { Themes } from "../assets/Themes";
+import { Link } from "expo-router";
 
 import { useState } from "react";
 
@@ -58,9 +59,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    padding: 24,
-    borderWidth: 0.3,
-    borderColor: "grey",
+    padding: 20,
   },
   ImageText: {
     gap: 16,
@@ -81,17 +80,11 @@ const styles = StyleSheet.create({
   },
   usernameText: {
     fontFamily: "Poppins-Regular",
-    fontSize: 13,
-    color: Themes.colors.salmon,
+    fontSize: 15,
   },
   commentText: {
     fontFamily: "Poppins-Regular",
     fontSize: 15,
-  },
-  replyText: {
-    fontFamily: "Poppins-Regular",
-    fontSize: 13,
-    color: "gray",
   },
   textContainer: {
     gap: 5,
