@@ -16,8 +16,65 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import Post from "../../components/Post";
 import Header from "../../components/Header";
 import { PostsContext, PostsProvider } from "../../contexts/PostsContext";
+import Supabase from "../../Supabase";
 
 export default function Page() {
+  const [data, setData] = useState();
+
+  const handleRecordUpdated2 = (payload) => {
+    console.log("UDPATE", payload);
+    setData((oldData) =>
+      oldData.map((item) => {
+        if (item.id === payload.old.id) {
+          return payload.new;
+        } else {
+          return item;
+        }
+      })
+    );
+  };
+
+  const handleRecordInserted = (payload) => {
+    console.log("INSERT", payload);
+    setData((oldData) => [...oldData, payload.new]);
+  };
+
+  const handleRecordDeleted = (payload) => {
+    console.log("DELETE", payload);
+    setData((oldData) => oldData.filter((item) => item.id !== payload.old.id));
+  };
+
+  useEffect(() => {
+    // Listen for changes to db
+    // From https://supabase.com/docs/guides/realtime/concepts#postgres-changes
+    Supabase.channel("schema-db-changes")
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "posts" },
+        handleRecordUpdated2
+      )
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "posts" },
+        handleRecordInserted
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "posts" },
+        handleRecordDeleted
+      )
+      .subscribe();
+  }, []);
+
+  useEffect(() => {
+    // Fetch data on initial load
+    const fetchData = async () => {
+      const response = await Supabase.from("posts").select("*");
+      setData(response.data);
+    };
+    fetchData();
+  }, []);
+
   const { posts } = useContext(PostsContext);
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
@@ -90,19 +147,21 @@ export default function Page() {
             handle={"@nazzz"}
             activityName={"Lake Lag"}
           /> */}
-          {posts.map(
-            (post, index) =>
-              post.profilePost === false && (
-                <Post
-                  key={index}
-                  postIndex={index}
-                  handle={post.userHandle}
-                  profilePic={post.userProfilePic}
-                  activityName={post.userText}
-                  comments={post.comments}
-                />
-              )
-          )}
+          {data !== undefined &&
+            data.map(
+              (post, index) =>
+                post.is_profile_post !== true && (
+                  <Post
+                    key={index}
+                    id={post.id}
+                    postIndex={index}
+                    handle={post.user_handle}
+                    profilePic={post.user_profile_pic}
+                    activityName={post.post_text}
+                    comments={post.comments}
+                  />
+                )
+            )}
         </ScrollView>
       </View>
     </View>

@@ -28,6 +28,7 @@ export default function CommentModal({
   isModalVisible,
   toggleModal,
   setModalVisible,
+  comments,
 }) {
   // const comments = [
   //   ["@malinac", Images.profileImages.malina, "Great post!!", "black"],
@@ -53,15 +54,15 @@ export default function CommentModal({
   // console.log("POSTs Test ", postsTest);
   // console.log("POST INDEX", postIndex);
 
-  const commentsTEST = posts[postIndex].comments;
+  // const commentsTEST = posts[postIndex].comments;
 
   const handleAddComment = async () => {
     console.log("ID:", id);
     const post_id = id;
     const new_comment = {
-      user_handle: "exampleUser",
-      user_image: "imageURL",
-      comment_text: "This is a comment",
+      user_handle: "@pcivita",
+      user_image: 31, //Pedro Profile IMG
+      comment_text: newComment,
     };
 
     const { data: post, error } = await Supabase.from("posts")
@@ -122,9 +123,14 @@ export default function CommentModal({
             style={styles.scrollView}
           >
             <View flex={1} onStartShouldSetResponder={() => true}>
-              {commentsTEST.map((commentData, index) => (
-                <Comment key={index} commentData={commentData} />
-              ))}
+              {comments !== null &&
+                comments.map((commentData, index) => {
+                  // Log the current commentData to the console
+                  // console.log(commentData);
+
+                  // Return the Comment component for each comment
+                  return <Comment key={index} commentData={commentData} />;
+                })}
             </View>
           </ScrollView>
           <View style={styles.inputContainer}>

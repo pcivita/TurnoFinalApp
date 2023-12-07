@@ -18,9 +18,9 @@ export default function Comment({ commentData }) {
     return undefined;
   }
 
-  const username = commentData.commentUserHandle;
-  const profilePic = commentData.commentUserProfilePic;
-  const comment = commentData.commentText;
+  const username = commentData.user_handle;
+  const profilePic = commentData.user_image;
+  const comment = commentData.comment_text;
 
   // const [commentKudosColor, setCommentKudosColor] = useState("black"); // Initial color
 

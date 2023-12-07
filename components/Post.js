@@ -99,6 +99,7 @@ export default function Post({
                 isModalVisible={isModalVisible}
                 toggleModal={toggleModal}
                 setModalVisible={setModalVisible}
+                comments={comments}
               />
             </TouchableOpacity>
           </View>
