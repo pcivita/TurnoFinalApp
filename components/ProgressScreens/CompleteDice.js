@@ -30,7 +30,7 @@ export default function CompleteDice() {
     <View>
       <View style={styles.header}>
         <View style={styles.banner}>
-          <Text> Your activity is: </Text>
+          
         </View>
       </View>
       <View style={[styles.square]}>
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     height: "15%",
     alignItems: "flex-end",
     justifyContent: "center",
-    backgroundColor: Themes.colors.salmon,
+    backgroundColor: Themes.colors.background
   },
   banner: {
     paddingHorizontal: 20,
