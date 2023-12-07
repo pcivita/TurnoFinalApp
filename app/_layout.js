@@ -28,7 +28,7 @@ export default function AppLayout() {
         options={{
           tabBarLabelStyle: { display: "flex" },
           tabBarLabel: "Feed",
-          tabBarIcon: ({ size, color }) => <KudosIcon color={"black"} />,
+          tabBarIcon: ({ size, color }) => <KudosIcon size={28} color={color} notFilled={true} />,
         }}
       />
       <Tabs.Screen
