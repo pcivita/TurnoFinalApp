@@ -59,11 +59,7 @@ export default function CommentModal({
       propagateSwipe={true}
       style={styles.modal}
     >
-      {/* <KeyboardAvoidingView
-        behavior="margin"
-        style={styles.modalContent}
-      > */}
-        <View style={styles.modalContent}>
+      <View style={styles.modalContent}>
         <View style={styles.center}>
           <View style={styles.barIcon} />
           <Text style={styles.title}>Comments</Text>
@@ -77,11 +73,6 @@ export default function CommentModal({
               ))}
             </View>
           </ScrollView>
-          {/* <KeyboardAvoidingView
-            behavior="padding"
-            style={styles.inputContainer}
-            // keyboardVerticalOffset={Platform.OS === "ios" ? 70 : 0}
-          > */}
             <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
@@ -93,10 +84,8 @@ export default function CommentModal({
               <Text>Add Comment</Text>
             </TouchableOpacity>
             </View>
-          {/* </KeyboardAvoidingView> */}
         </View>
-        </View>
-      {/* </KeyboardAvoidingView> */}
+      </View>
     </Modal>
   );
 }
