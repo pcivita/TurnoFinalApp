@@ -30,7 +30,6 @@ export default function CompleteDice() {
     <View>
       <View style={styles.header}>
         <View style={styles.banner}>
-          
         </View>
       </View>
       <View style={[styles.square]}>

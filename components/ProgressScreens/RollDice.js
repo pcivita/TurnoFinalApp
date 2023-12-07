@@ -39,7 +39,6 @@ export default function RollDice({ onData }) {
   return (
     <View style={styles.screenContainer}>
       <Header title="Roll" />
-
       <View styles={styles.upperTextContainer}>
         <Text style={styles.upperText}> Roll the dice for an Activity! </Text>
       </View>

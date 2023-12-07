@@ -26,14 +26,15 @@ export default function ActvityRollled({ diceNum, activityName }) {
 const styles = StyleSheet.create({
   activityName: {
     backgroundColor: Themes.colors.blue,
-    flex: 1,
     width: "95%",
+    height: 120,
     alignSelf: "center",
     flexDirection: "row",
     justifyContent: "center",
     zIndex: 10,
     borderRadius: 20,
     gap: 12,
+    top: -16,
 
     shadowOpacity: 0.3,
     shadowOffset: {
