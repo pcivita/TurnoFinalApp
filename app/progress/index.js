@@ -6,6 +6,7 @@ import { useState } from "react";
 import Journey from "../../components/ProgressScreens/Journey";
 import Stats from "../../components/ProgressScreens/Stats";
 import Header from "../../components/Header";
+import ProgressNavigation from "../../components/ProgressNavigation";
 
 export default function Page() {
   const [activeScreen, setActiveScreen] = useState("Stats"); // Initial state
@@ -13,27 +14,10 @@ export default function Page() {
   return (
     <View style={styles.container}>
       <Header title="Progress" />
-      {/* <View style={styles.header}>
-        <View style={styles.banner}>
-          <FontAwesome5
-            name="dice-five"
-            style={styles.headerDice}
-            size={30}
-            color={"white"}
-            transform={[{ rotate: "45deg" }]}
-          />
-          <Text style={styles.title}>Progress</Text>
-          <FontAwesome5
-            name="cog"
-            style={styles.headerDice}
-            size={30}
-            color={"white"}
-            transform={[{ rotate: "45deg" }]}
-          />
-        </View>
-      </View> */}
+
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
+        <ProgressNavigation />
+        {/* <TouchableOpacity
           style={styles.button}
           onPress={() => setActiveScreen("Stats")}
         >
@@ -44,7 +28,7 @@ export default function Page() {
           onPress={() => setActiveScreen("Journey")}
         >
           <Text style={styles.buttonText}>Journey</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <View style={styles.subscreenContainer}>
         {activeScreen === "Journey" && <Journey />}
