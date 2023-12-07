@@ -74,7 +74,6 @@ export default function Page() {
           onChangeText={setActivityName} // Update the state variable with the input
         />
       </View>
-
       <View style={styles.descriptionContainer}>
         <Text style={styles.subtitle}> Description</Text>
         <TextInput
@@ -146,25 +145,28 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
-    fontSize: 40,
+    fontSize: 32,
     color: "white",
     alignSelf: "center",
+    fontFamily: "Poppins-Bold"
   },
   subtitle: {
     marginHorizontal: 12,
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
+    fontFamily: "Poppins-Bold"
   },
   input: {
     flex: 1,
     marginHorizontal: 12,
     padding: 10,
-    fontSize: 15,
+    fontSize: 16,
     borderRadius: 5,
     borderWidth: 3,
     padding: 10,
     borderWidth: 3,
     borderColor: Themes.colors.mediumGray,
+    fontFamily: "Poppins-Regular"
   },
   activityNameContainer: {
     paddingTop: "3%",
@@ -221,6 +223,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "white",
+    fontFamily: "Poppins-Bold"
   },
   asterick: {
     color: Themes.colors.salmon,
