@@ -9,13 +9,13 @@ export default function Journey() {
       showsVerticalScrollIndicator={false}
       contentOffset={{ x: 0, y: 300 }}
     >
-      <ActivityCircle right={70} status="complete" top={70} />
-      <ActivityCircle right={55} status="complete" top={70} />
-      <ActivityCircle right={25} status="complete" top={70} />
-      <ActivityCircle right={-15} status="complete" top={60} />
-      <ActivityCircle right={-50} status="complete" top={70} />
-      <ActivityCircle right={-50} status="complete" top={70} />
-      <ActivityCircle right={-25} status="complete" top={70} />
+      <ActivityCircle right={70} status="complete" top={70} index={0} />
+      <ActivityCircle right={55} status="complete" top={70} index={1} />
+      <ActivityCircle right={25} status="complete" top={70} index={3} />
+      <ActivityCircle right={-15} status="complete" top={60} index={4} />
+      <ActivityCircle right={-50} status="complete" top={70} index={1} />
+      <ActivityCircle right={-50} status="complete" top={70} index={5} />
+      <ActivityCircle right={-25} status="complete" top={70} index={0} />
       <ActivityCircle right={25} status="in progress" top={30} />
 
       <ActivityCircle right={60} status="incomplete" top={95} />
@@ -25,16 +25,9 @@ export default function Journey() {
       <ActivityCircle right={25} status="incomplete" top={90} />
       <ActivityCircle right={0} status="incomplete" top={50} />
       <ActivityCircle right={0} status="incomplete" top={100} />
-      <ActivityCircle right={55} status="incomplete" top={0} />
+      <ActivityCircle right={35} status="incomplete" top={30} />
 
-      <ActivityCircle right={70} status="incomplete" top={130} />
-      <ActivityCircle right={55} status="incomplete" top={70} />
-      <ActivityCircle right={0} status="incomplete" top={70} />
-      <ActivityCircle right={-55} status="incomplete" top={70} />
-      <ActivityCircle right={-70} status="incomplete" top={70} />
-      <ActivityCircle right={-55} status="incomplete" top={70} />
-      <ActivityCircle right={0} status="incomplete" top={70} />
-      <ActivityCircle right={55} status="incomplete" top={70} />
+      <ActivityCircle right={70} status="incomplete" top={100} />
     </ScrollView>
   );
 }

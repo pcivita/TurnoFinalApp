@@ -4,18 +4,39 @@ import { useFonts } from "expo-font";
 import Kudos from "./Icons/Kudos";
 import { Themes } from "../assets/Themes";
 import { FontAwesome5 } from "@expo/vector-icons";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withSpring,
+  withRepeat,
+  useAnimatedGestureHandler,
+  runOnJS,
+} from "react-native-reanimated";
 
 import { useState } from "react";
 
-export default function ActivityCircle({ right, top, status }) {
+export default function ActivityCircle({ right, top, status, index }) {
   const categories = [
-    ["Exercise", "running"],
-    ["Relax", "cat"],
-    ["Social", "user-friends"],
-    ["Work", "briefcase"],
-    ["Academic", "graduation-cap"],
-    ["Chore", "broom"],
+    "running",
+    "cat",
+    "user-friends",
+    "briefcase",
+    "graduation-cap",
+    "broom",
   ];
+
+  // const reanimatedStyle = useAnimatedStyle(() => {
+  //   return {
+  //     // borderRadius: (progress.value * SIZE) / 2,
+  //     transform: [
+  //       // { scale: scale.value },
+  //       // { rotate: `${progress.value * 2 * Math.PI}rad` },
+  //       { translateX: scale.value * 20 },
+  //       { translateY: scale.value * 20 },
+  //     ],
+  //   };
+  // }, []);
 
   let colorStyle = styles.incompleteColor;
   if (status === "complete") {
@@ -31,11 +52,12 @@ export default function ActivityCircle({ right, top, status }) {
         {status === "complete" && (
           <FontAwesome5
             style={styles.icon}
-            name={"user-friends"}
+            name={categories[index]}
             size={30}
             color={Themes.colors.background}
           />
         )}
+        {status === "in pro"}
       </View>
     </View>
   );
@@ -47,9 +69,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    marginVertical: 10,
   },
   circle: {
-    width: "15%",
+    width: "20%",
     height: undefined,
     aspectRatio: 1,
     borderRadius: 100,
@@ -64,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundColor: Themes.colors.salmon,
   },
   progressColor: {
-    backgroundColor: Themes.colors.salmonLight,
+    backgroundColor: Themes.colors.blue,
   },
   icon: {
     alignSelf: "center",
