@@ -39,7 +39,7 @@ export default function Activity({ activityObject, index, section }) {
   let activityName = activityObject ? activityObject[0] : null;
 
   return (
-    <View>
+    <View style={styles.outerContainer}>
       {activityObject ? 
         <TouchableOpacity onPress={activityObject ? openModal : null}>
           <View style={styles.container}>
@@ -84,9 +84,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "space-around",
     alignItems: "center",
+    shadowColor: 'rgba(0, 0, 0, 0.5)',
+    shadowOffset: { height: 2},
     shadowOpacity: 0.3,
-    shadowOffset: { height: 2 },
-    shadowColor: 'rgba(0, 0, 0, 0.2)', // Set shadow color with some transparency
+    shadowRadius: 2,
   },
   gray: {
     backgroundColor: Themes.colors.darkGray,
