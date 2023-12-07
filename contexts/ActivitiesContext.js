@@ -8,8 +8,8 @@ export const ActivitiesProvider = ({ children }) => {
   const [activities, setActivities] = useState([
     ["Soccer", "I want to play soccer", "Exercise"],
     ["Read", "I want to read", "Academic"],
-    ["Write", "Write a chapter in my novel", "Work"],
-    ["Meditate", "Medidate for 10 minutes outside", "Relax"],
+    // ["Write", "Write a chapter in my novel", "Work"],
+    // ["Meditate", "Medidate for 10 minutes outside", "Relax"],
   ]);
 
   // Function to add a new activity

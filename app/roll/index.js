@@ -62,6 +62,7 @@ export default function Page() {
   }, []);
 
   const handleData = (data) => {
+    console.log(data);
     setDiceNum(data[0]);
     setActivityName(data[1][0]);
     setAppearHeader(true);

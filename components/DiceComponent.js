@@ -45,8 +45,8 @@ const DiceComponent = ({ onData }) => {
   }, []);
 
   const sendData = () => {
-    console.log(currentActivitiesData);
-    const data = [currentImageIndex, currentActivitiesData[currentImageIndex]]; // The data you want to send to the grandparent
+    console.log(activities);
+    const data = [currentImageIndex, activities[currentImageIndex]]; // The data you want to send to the grandparent
     onData(data);
   };
 
@@ -54,7 +54,7 @@ const DiceComponent = ({ onData }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   // Find the "Current Activities" section and its data
   
-  const currentActivitiesData = activities;
+  // const currentActivitiesData = activities;
 
   const [currentNumber, setCurrentNumber] = useState(1);
   const [isCycling, setIsCycling] = useState(false);
@@ -67,7 +67,7 @@ const DiceComponent = ({ onData }) => {
     if (isCycling) {
       // Start cycling numbers every 500ms
       const interval = setInterval(() => {
-        setCurrentImageIndex(() => Math.floor(Math.random() * 6));
+        setCurrentImageIndex(() => Math.floor(Math.random() * activities.length));
       }, 100); // Change image every 500ms
 
       // Stop cycling after x seconds
@@ -94,6 +94,9 @@ const DiceComponent = ({ onData }) => {
   const startCycling = () => {
     setIsCycling(true);
     setnoRoll(false);
+
+    // Roll a number between 1 and the number of activities
+    setCurrentImageIndex(() => Math.floor(Math.random() * activities.length));
   };
 
   const translateX = useSharedValue(0);
