@@ -129,10 +129,12 @@ const styles = StyleSheet.create({
   postText: {
     fontFamily: "Poppins-Bold",
     fontSize: 15,
+    color: Themes.colors.salmon,
   },
   activityNameStyle: {
     fontFamily: "Poppins-Regular",
     fontSize: 15,
+    color: "black"
   },
   textContainer: {
     gap: 16,
