@@ -45,6 +45,7 @@ const DiceComponent = ({ onData }) => {
   }, []);
 
   const sendData = () => {
+    console.log(currentActivitiesData);
     const data = [currentImageIndex, currentActivitiesData[currentImageIndex]]; // The data you want to send to the grandparent
     onData(data);
   };
@@ -52,12 +53,8 @@ const DiceComponent = ({ onData }) => {
   const { activities } = useContext(ActivitiesContext);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   // Find the "Current Activities" section and its data
-  const currentActivitiesSection = activities.find(
-    (activity) => activity.title === "Current Activities"
-  );
-  const currentActivitiesData = currentActivitiesSection
-    ? currentActivitiesSection.data
-    : [];
+  
+  const currentActivitiesData = activities;
 
   const [currentNumber, setCurrentNumber] = useState(1);
   const [isCycling, setIsCycling] = useState(false);
