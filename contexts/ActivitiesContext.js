@@ -9,36 +9,36 @@ export const ActivitiesProvider = ({ children }) => {
     {
       title: "Current Activities",
       data: [
-        [
-          "Soccer",
-          "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
-          "Exercise",
-        ],
-        [
-          "Write",
-          "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
-          "Work",
-        ],
-        [
-          "Read",
-          "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
-          "Academic",
-        ],
-        [
-          "Meditate",
-          "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
-          "Relax",
-        ],
-        [
-          "Have fun",
-          "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
-          "Social",
-        ],
-        [
-          "Clean house",
-          "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
-          "Chore",
-        ],
+        // [
+        //   "Soccer",
+        //   "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
+        //   "Exercise",
+        // ],
+        // [
+        //   "Write",
+        //   "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
+        //   "Work",
+        // ],
+        // [
+        //   "Read",
+        //   "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
+        //   "Academic",
+        // ],
+        // [
+        //   "Meditate",
+        //   "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
+        //   "Relax",
+        // ],
+        // [
+        //   "Have fun",
+        //   "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
+        //   "Social",
+        // ],
+        // [
+        //   "Clean house",
+        //   "Lorem ipsum dolor sit amet. Sed dolores similique aut...",
+        //   "Chore",
+        // ],
       ],
       noActivitiesMessage:
         "You have no Current Activities.\n\nCreate an activity or add one from the Pending Activities section to use your dice!",

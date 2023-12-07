@@ -50,28 +50,15 @@ export default function Page() {
             <Activity activityObject={currentActivities[1]} index={2} />
           </View>
           <View style={styles.activitiesRow}>
-            <Activity activityObject={currentActivities[3]} index={3} />
-            <Activity activityObject={currentActivities[4]} index={4} />
+            <Activity activityObject={currentActivities[2]} index={3} />
+            <Activity activityObject={currentActivities[3]} index={4} />
           </View>
           <View style={styles.activitiesRow}>
-            <Activity activityObject={currentActivities[5]} index={5} />
-            <Activity activityObject={currentActivities[6]} index={6} />
+            <Activity activityObject={currentActivities[4]} index={5} />
+            <Activity activityObject={currentActivities[5]} index={6} />
           </View>
         </View>
       }
-      {/* <Link
-        style={styles.createActivityContainer}
-        href={{
-          pathname: "/activities/createActivity",
-          params: {
-            user: "Alan",
-          },
-        }}
-      >
-        <View style={styles.createActivityButton}>
-          <Text style={styles.createActivityText}> Create Activity</Text>
-        </View>
-      </Link> */}
     </View>
   );
 }
