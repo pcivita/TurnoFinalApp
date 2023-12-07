@@ -83,7 +83,10 @@ const styles = StyleSheet.create({
     width: 170,
     borderRadius: 10,
     justifyContent: "space-around",
-    alignItems: "center"
+    alignItems: "center",
+    shadowOpacity: 0.3,
+    shadowOffset: { height: 2 },
+    shadowColor: 'rgba(0, 0, 0, 0.2)', // Set shadow color with some transparency
   },
   gray: {
     backgroundColor: Themes.colors.darkGray,
