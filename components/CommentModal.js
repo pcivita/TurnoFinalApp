@@ -19,8 +19,10 @@ import {
 import Themes from "../assets/Themes/themes.js";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { PostsContext } from "../contexts/PostsContext";
+import Supabase from "../Supabase.js";
 
 export default function CommentModal({
+  id,
   postsTest,
   postIndex,
   isModalVisible,
@@ -53,19 +55,39 @@ export default function CommentModal({
 
   const commentsTEST = posts[postIndex].comments;
 
-  const handleAddComment = () => {
+  const handleAddComment = async () => {
+    console.log("ID:", id);
+    const post_id = id;
+    const new_comment = {
+      user_handle: "exampleUser",
+      user_image: "imageURL",
+      comment_text: "This is a comment",
+    };
+
+    const { data: post, error } = await Supabase.from("posts")
+      .select("comments")
+      .eq("id", post_id)
+      .single();
+
+    if (post) {
+      const updated_comments = [...post.comments, new_comment];
+      await Supabase.from("posts")
+        .update({ comments: updated_comments })
+        .eq("id", post_id);
+    }
+
     // console.log(postIndex);
     // console.log(Images.profileImages.pedro);
     // console.log(newComment);
     // console.log(userHandle);
     // console.log(userName);
 
-    addCommentToPost(
-      postIndex,
-      userHandle,
-      Images.profileImages.pedro,
-      newComment
-    );
+    // addCommentToPost(
+    //   postIndex,
+    //   userHandle,
+    //   Images.profileImages.pedro,
+    //   newComment
+    // );
 
     // Add logic to handle the addition of a new comment
     // console.log("New Comment:", newComment);

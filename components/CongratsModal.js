@@ -7,6 +7,7 @@ import PostPreview from "./PostPreview.js";
 import Themes from "../assets/Themes/themes.js";
 import Fire from "./Icons/Fire";
 import { FontAwesome5 } from "@expo/vector-icons";
+import Supabase from "../Supabase.js";
 import { PostsContext } from "../contexts/PostsContext.js";
 // import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -28,7 +29,20 @@ export default function CongratsModal({
   const { addPost } = useContext(PostsContext);
   const { posts } = useContext(PostsContext);
 
-  const postActivity = () => {
+  const postActivity = async () => {
+    const { data, error } = await Supabase.from("posts")
+      .insert([
+        {
+          is_profile_post: true,
+          user_handle: "@pcivita",
+          user_name: "Pedro Civita",
+          user_profile_pic: Images.profileImages.pedro,
+          post_text: activityName,
+          comments: [],
+        },
+      ])
+      .select();
+
     addPost(
       "@pcivita",
       "Pedro Civita",

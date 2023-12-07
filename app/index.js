@@ -7,14 +7,76 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import ProfileCard from "../components/ProfileCard";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { PostsContext, PostsProvider } from "../contexts/PostsContext";
 import Header from "../components/Header";
 import Images from "../assets/Themes/Images";
+import Supabase from "../Supabase";
 
 export default function Page() {
-  const { posts } = useContext(PostsContext);
+  const [data, setData] = useState();
 
+  const handleRecordUpdated = (payload) => {
+    console.log("UDPATE", payload);
+    setData((oldData) =>
+      oldData.map((item) => {
+        if (item.id === payload.old.id) {
+          return payload.new;
+        } else {
+          return item;
+        }
+      })
+    );
+  };
+
+  const handleRecordInserted = (payload) => {
+    console.log("INSERT", payload);
+    setData((oldData) => [...oldData, payload.new]);
+  };
+
+  const handleRecordDeleted = (payload) => {
+    console.log("DELETE", payload);
+    setData((oldData) => oldData.filter((item) => item.id !== payload.old.id));
+  };
+
+  useEffect(() => {
+    // Listen for changes to db
+    // From https://supabase.com/docs/guides/realtime/concepts#postgres-changes
+    Supabase.channel("schema-db-changes")
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "posts" },
+        handleRecordUpdated
+      )
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "posts" },
+        handleRecordInserted
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "posts" },
+        handleRecordDeleted
+      )
+      .subscribe();
+  }, []);
+
+  useEffect(() => {
+    // Fetch data on initial load
+    const fetchData = async () => {
+      const response = await Supabase.from("posts").select("*");
+      setData(response.data);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    // CHECKING
+    console.log(data);
+  }, [data]);
+
+  const { posts } = useContext(PostsContext);
+  console.log(posts);
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
     "Poppins-Bold": require("../assets/Poppins/Poppins-Bold.ttf"),
@@ -40,20 +102,21 @@ export default function Page() {
             <View style={styles.postTextContainer}>
               <Text style={styles.postText}>Posts</Text>
             </View>
-            {posts.map(
-              (post, index) =>
-                post.profilePost === true && (
-                  <Post
-                    posts={posts}
-                    key={index}
-                    postIndex={index}
-                    handle={post.userHandle}
-                    profilePic={post.userProfilePic}
-                    activityName={post.userText}
-                    comments={post.comments}
-                  />
-                )
-            )}
+            {data !== undefined &&
+              data.map(
+                (post, index) =>
+                  post.is_profile_post === true && (
+                    <Post
+                      key={index}
+                      id={post.id}
+                      postIndex={index}
+                      handle={post.user_handle}
+                      profilePic={post.user_profile_pic}
+                      activityName={post.post_text}
+                      comments={post.comments}
+                    />
+                  )
+              )}
 
             {/* <Post
               postId={1}
