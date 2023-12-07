@@ -76,7 +76,7 @@ export default function Post({ postId, profileName, handle, profilePic, activity
             }
             <View style={styles.actionItemsContainer}>
               <TouchableOpacity onPress={toggleKudos}>
-                <KudosIcon color={kudosColor} />
+                <KudosIcon color={kudosColor} size={25} />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.commentContainer}

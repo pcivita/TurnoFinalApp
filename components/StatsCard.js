@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, Image} from "react-native";
 import { Themes } from "../assets/Themes";
 import Fire from "./Icons/Fire";
+import Kudos from "./Icons/Kudos";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Stats({ index, statContent }) {
   const diceImage = statContent[0];
@@ -9,15 +11,29 @@ export default function Stats({ index, statContent }) {
   const description1 = statContent[3];
   const description2 = statContent[4];
 
-  let iconComponent;
+  let iconComponent = <FontAwesome5 name="dice-five" size={50} color={Themes.colors.salmon} />;
   switch (iconType) {
     case "fire":
       iconComponent = <Fire />;
       break;
-    default:
-      iconComponent = null;
+    case "dice":
+      iconComponent = <FontAwesome5 name="dice-two" size={50} color={Themes.colors.salmon} />
+      break;
+    case "cat":
+      iconComponent = <FontAwesome5 name="cat" size={50} color={Themes.colors.salmon} />
+      break;
+    case "star":
+      iconComponent = <FontAwesome5 name="star" size={50} color={Themes.colors.salmon} />
+      break;
+    case "kudos":
+      iconComponent = <Kudos size={50} color={Themes.colors.salmon} />
+      break;
+    case "celeb":
+      iconComponent = <FontAwesome5 name="camera-retro" size={50} color={Themes.colors.salmon} />
       break;
   }
+
+  console.log(iconComponent);
 
   let additionalStyle;
   switch (index) {
@@ -38,6 +54,7 @@ export default function Stats({ index, statContent }) {
         />
         <View style={styles.circle}>
           {iconComponent}
+          {/* <FontAwesome5 name="dice-five" size={50} color={Themes.colors.salmon} /> */}
           <Text style={styles.circleText}>x{stat}</Text>
         </View>
         <Text style={styles.description1}>{description1}</Text>
@@ -82,14 +99,15 @@ const styles = StyleSheet.create({
     width: 180,
     height: undefined,
     aspectRatio: 1,
-    borderRadius: 90,
+    borderRadius: 30,
     borderWidth: 6,
-    borderColor: Themes.colors.salmonLight,
+    borderColor: Themes.colors.salmon,
     justifyContent: "center",
     alignItems: "center"
   },
   circleText: {
     fontSize: 40,
+    fontFamily: "Poppins-Bold"
   },
   description1: {
     fontSize: 18,

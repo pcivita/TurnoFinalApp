@@ -6,22 +6,22 @@ import { useRef } from "react";
 export default function Stats() {
   const statsContent = [
     [
-      Images.diceIcons.one, "fire", 10, "You're on Fire!", "Here is your streak of completing activities"
+      Images.diceIcons.one, "fire", 10, "You're on Fire!", "Congrats on your 10 day streak"
     ],
     [
-      Images.diceIcons.two, "fire", 34, "You've come a long way!", "Here is the number of times you have rolled the dice"
+      Images.diceIcons.two, "dice", 34, "You've come a long way!", "You have rolled the dice 34 times"
     ],
     [
-      Images.diceIcons.three, "fire", 5, "You're chillin'!", "So far, you've completed 5 activities labeled as 'Relax'"
+      Images.diceIcons.three, "cat", 5, "You're chillin'!", "So far, you've completed 5 activities labeled as 'Relax'"
     ],
     [
-      Images.diceIcons.four, "fire", 82, "You're a star!", "You have beeen given 82 kudos by your friends"
+      Images.diceIcons.four, "star", 82, "You're a star!", "You have received 82 kudos"
     ],
     [
-      Images.diceIcons.five, "fire", 96, "You're so kind!", "You have given 96 kudos to your beloved friends"
+      Images.diceIcons.five, "kudos", 96, "You're so kind!", "You have given 96 kudos"
     ],
     [
-      Images.diceIcons.six, "fire", 5, "Okay, celeb!", "You've made 100 posts"
+      Images.diceIcons.six, "celeb", 100, "Okay, celeb!", "You have made 100 posts"
     ],
   ];
 
@@ -79,15 +79,14 @@ export default function Stats() {
 const styles = StyleSheet.create({
   container: {
     height: "100%",
-    marginTop: 36,
-
+    marginTop: 60,
     flexDirection: "column",
     justifyContent: "center", 
     alignItems: "center",
   },
   dots: {
     position: "absolute",
-    bottom: 75,
+    bottom: 130,
     flexDirection: "row",
     width: "100%",
     justifyContent: "center",
