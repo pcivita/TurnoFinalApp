@@ -1,12 +1,13 @@
 import Modal from "react-native-modal";
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, StyleSheet, Image, Switch } from "react-native";
+import { View, Text, StyleSheet, Image, Switch, Pressable } from "react-native";
 import Images from "../assets/Themes/Images/index.js";
 import { useFonts } from "expo-font";
 import PostPreview from "./PostPreview.js";
 import Themes from "../assets/Themes/themes.js";
 import Fire from "./Icons/Fire";
 import { FontAwesome5 } from "@expo/vector-icons";
+// import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function CongratsModal({ isModalVisible, setModalVisible, switchEnabled, setSwitchEnabled, setActiveScreen, setAppearHeader }) {
   const [fontsLoaded] = useFonts({
@@ -70,12 +71,14 @@ export default function CongratsModal({ isModalVisible, setModalVisible, switchE
           />
         </View>
         <View style={styles.buttonsContainer}>
-          <View>
-            <Text>hi</Text>
+          <View style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>Post</Text>
           </View>
-          <View>
-            <Text>hi</Text>
-          </View>
+          <Pressable onPress={onExitModal}>
+            <View style={styles.buttonContainer}>
+              <Text style={styles.buttonText}>Done</Text>
+            </View>
+          </Pressable>
         </View>
       </View>
     </Modal>
@@ -178,6 +181,20 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     height: 70,
     flexDirection: "row",
-    gap: 80,
+    gap: 50,
+    padding: 10
+  },
+  buttonContainer: {
+    backgroundColor: Themes.colors.salmon,
+    width: 120,
+    height: "90%",
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  buttonText: {
+    color: "white",
+    fontFamily: "Poppins-Bold",
+    fontSize: 24,
   }
 });
