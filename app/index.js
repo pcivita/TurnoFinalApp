@@ -33,6 +33,9 @@ export default function Page() {
               profilePic={Images.profileImages.pedro}
             />
           </View>
+          <View style={styles.postTextContainer}>
+            <Text style={styles.postText}>Posts</Text>
+          </View>
           <Post
             postId={1}
             handle={"@pcivita"}
@@ -114,4 +117,15 @@ const styles = StyleSheet.create({
     width: "100%",
     marginHorizontal: "auto",
   },
+  postTextContainer: {
+    height: 30,
+    paddingHorizontal: 20,
+    alignItems: "flex-start",
+    justifyContent: "center"
+  },
+
+  postText: {
+    fontFamily: "Poppins-Bold",
+    fontSize: 20,
+  }
 });

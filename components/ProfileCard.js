@@ -19,6 +19,7 @@ export default function ProfileCard({ isYourProfile, profileName, handle, profil
         <Image source={profilePic} style={styles.profileImg} />
       </View>
       <Text style={styles.profileName}>{profileName}</Text>
+      
       <Text style={styles.handle}>{handle}</Text>
       {/* <Link href={{ pathname: "/feed/myFriends" }} > */}
       {isYourProfile ? 
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   friendsBox: {
+    marginTop: 8,
     borderRadius: 10,
     borderWidth: 0.5,
     padding: 10,
