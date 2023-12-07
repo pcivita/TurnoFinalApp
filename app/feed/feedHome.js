@@ -15,8 +15,10 @@ import { useFonts } from "expo-font";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Post from "../../components/Post";
 import Header from "../../components/Header";
+import { PostsContext, PostsProvider } from "../../contexts/PostsContext";
 
 export default function Page() {
+  const { posts } = useContext(PostsContext);
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
     "Poppins-Bold": require("../../assets/Poppins/Poppins-Bold.ttf"),
@@ -31,7 +33,7 @@ export default function Page() {
       <Header title="Feed" />
       <View style={styles.main}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Post
+          {/* <Post
             style={styles.post}
             postId={1}
             profileName="Malina Calarco"
@@ -87,7 +89,20 @@ export default function Page() {
             profilePic={Images.profileImages.naz}
             handle={"@nazzz"}
             activityName={"Lake Lag"}
-          />
+          /> */}
+          {posts.map(
+            (post, index) =>
+              post.profilePost === false && (
+                <Post
+                  key={index}
+                  postIndex={index}
+                  handle={post.userHandle}
+                  profilePic={post.userProfilePic}
+                  activityName={post.userText}
+                  comments={post.comments}
+                />
+              )
+          )}
         </ScrollView>
       </View>
     </View>

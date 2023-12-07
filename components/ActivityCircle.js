@@ -14,7 +14,7 @@ import Animated, {
   runOnJS,
 } from "react-native-reanimated";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ActivityCircle({ right, top, status, index }) {
   const categories = [
@@ -25,7 +25,16 @@ export default function ActivityCircle({ right, top, status, index }) {
     "graduation-cap",
     "broom",
   ];
-
+  const scale = useSharedValue(1);
+  const rotation = useSharedValue(1);
+  const reanimatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { scale: scale.value },
+        { rotate: `${rotation.value * 2 * Math.PI}rad` },
+      ],
+    };
+  });
   // const reanimatedStyle = useAnimatedStyle(() => {
   //   return {
   //     // borderRadius: (progress.value * SIZE) / 2,
@@ -46,19 +55,39 @@ export default function ActivityCircle({ right, top, status, index }) {
     colorStyle = styles.progressColor;
   }
 
+  useEffect(() => {
+    scale.value = withRepeat(withTiming(1.1, { duration: 1000 }), -1, true);
+    rotation.value = withRepeat(withTiming(1.5, { duration: 1000 }), -1, true);
+  });
+
   return (
     <View style={[styles.container, { height: top }]}>
-      <View style={[styles.circle, colorStyle]} right={right}>
+      <Animated.View
+        style={[
+          [styles.circle, colorStyle],
+          status === "in progress"
+            ? reanimatedStyle
+            : [styles.circle, colorStyle],
+        ]}
+        right={right}
+      >
         {status === "complete" && (
           <FontAwesome5
             style={styles.icon}
             name={categories[index]}
-            size={30}
+            size={40}
             color={Themes.colors.background}
           />
         )}
-        {status === "in pro"}
-      </View>
+        {status === "in progress" && (
+          <FontAwesome5
+            style={styles.icon}
+            name={"dice-five"}
+            size={40}
+            color={Themes.colors.background}
+          />
+        )}
+      </Animated.View>
     </View>
   );
 }

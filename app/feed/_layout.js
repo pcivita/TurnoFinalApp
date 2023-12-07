@@ -1,10 +1,11 @@
 import { Stack } from "expo-router";
-// import { ActivitiesProvider } from "../../contexts/ActivitiesContext";
+
+import { PostsProvider } from "../../contexts/PostsContext";
 
 export default function Layout() {
   return (
-    // <ActivitiesProvider>
+    <PostsProvider>
       <Stack />
-    // </ActivitiesProvider>
+    </PostsProvider>
   );
 }

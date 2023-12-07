@@ -5,7 +5,7 @@ import { Themes } from "../assets/Themes";
 const ProgressNavigation = ({ onData }) => {
   const [activeTab, setActiveTab] = useState("Stats"); // Default active tab
 
-  const tabs = ["Journey", "Stats"];
+  const tabs = ["Stats", "Journey"];
 
   return (
     <View style={styles.container}>

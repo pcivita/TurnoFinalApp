@@ -39,16 +39,20 @@ export default function Page() {
             <View style={styles.postTextContainer}>
               <Text style={styles.postText}>Posts</Text>
             </View>
-            {posts.map((post, index) => (
-              <Post
-                key={index}
-                postIndex={index}
-                handle={post.userHandle}
-                profilePic={post.userProfilePic}
-                activityName={post.userText}
-                comments={post.comments}
-              />
-            ))}
+            {posts.map(
+              (post, index) =>
+                post.profilePost === true && (
+                  <Post
+                    key={index}
+                    postIndex={index}
+                    handle={post.userHandle}
+                    profilePic={post.userProfilePic}
+                    activityName={post.userText}
+                    comments={post.comments}
+                  />
+                )
+            )}
+
             {/* <Post
               postId={1}
               handle={"@pcivita"}
