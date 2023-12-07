@@ -19,14 +19,14 @@ import Category from "../../components/Category";
 export default function Page() {
   const [activityName, setActivityName] = useState("");
   const [description, setDescription] = useState("");
-  const { addPendingActivity } = useContext(ActivitiesContext);
+  const { addActivity } = useContext(ActivitiesContext);
 
   const [selectedId, setSelectedId] = useState(null);
 
   const handleAddActivity = () => {
     if (isFormFilled) {
       let category = categories[selectedId - 1][0];
-      addPendingActivity(activityName, description, category);
+      addActivity(activityName, description, category);
     }
   };
 
@@ -148,13 +148,13 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: "white",
     alignSelf: "center",
-    fontFamily: "Poppins-Bold"
+    fontFamily: "Poppins-Bold",
   },
   subtitle: {
     marginHorizontal: 12,
     fontSize: 20,
     fontWeight: "bold",
-    fontFamily: "Poppins-Bold"
+    fontFamily: "Poppins-Bold",
   },
   input: {
     flex: 1,
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 3,
     borderColor: Themes.colors.mediumGray,
-    fontFamily: "Poppins-Regular"
+    fontFamily: "Poppins-Regular",
   },
   activityNameContainer: {
     paddingTop: "3%",
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "white",
-    fontFamily: "Poppins-Bold"
+    fontFamily: "Poppins-Bold",
   },
   asterick: {
     color: Themes.colors.salmon,

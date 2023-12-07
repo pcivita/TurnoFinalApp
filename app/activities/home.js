@@ -11,7 +11,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function Page() {
   const { activities } = useContext(ActivitiesContext);
-  const currentActivities = activities[0].data;
+  const currentActivities = activities;
+  console.log(currentActivities);
 
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
@@ -36,14 +37,14 @@ export default function Page() {
           />
         </TouchableOpacity>
       </View>
-      {currentActivities.size === 0 &&
+      {currentActivities == [] &&
         <View style={styles.noActivitiesContainer}>
           <Text style={styles.noActivitesMessage}>
             {section.noActivitiesMessage}
           </Text>
         </View>
       }
-      {currentActivities.size !== 0 &&
+      {currentActivities &&
         <View style={styles.activitiesContainer}>
           <View style={styles.activitiesRow}>
             <Activity activityObject={currentActivities[0]} index={1} />
