@@ -59,7 +59,7 @@ export default function Page() {
           </View>
         </View>
       }
-      <Link
+      {/* <Link
         style={styles.createActivityContainer}
         href={{
           pathname: "/activities/createActivity",
@@ -71,22 +71,12 @@ export default function Page() {
         <View style={styles.createActivityButton}>
           <Text style={styles.createActivityText}> Create Activity</Text>
         </View>
-      </Link>
+      </Link> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   alignItems: "center",
-  //   paddingLeft: 20,
-  //   paddingRight: 20,
-  //   paddingTop: 20,
-  //   backgroundColor: "white",
-  //   gap: 16,
-  //   padding: "10%",
-  // },
   container: {
     flex: 1,
     alignItems: "center",

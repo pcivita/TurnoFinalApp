@@ -14,8 +14,11 @@ import DiceComponent from "../DiceComponent";
 import { useState } from "react";
 import ActivityCircle from "../ActivityCircle";
 import CongratsModal from "../CongratsModal";
-import ActvityRollled from "../ActivityRolled";
-export default function CompleteDice() {
+import ActvityRolled from "../ActivityRolled";
+import Fire from "../Icons/Fire";
+
+
+export default function CompleteDice({ setActiveScreen, setAppearHeader }) {
   const [swipeComplete, setSwipeComplete] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [switchEnabled, setSwitchEnabled] = useState(false);
@@ -30,11 +33,23 @@ export default function CompleteDice() {
     <View>
       <View style={styles.header}>
         <View style={styles.banner}>
-          
+          <View style={styles.iconsContainer}>
+            <FontAwesome5
+              name="dice-five" 
+              size={25}
+              color={Themes.colors.salmon}
+              transform={[{ rotate: "45deg" }]}
+            />
+            <Text style={styles.iconText}>x34</Text>
+          </View>
+          <View style={styles.iconsContainer}>
+            <Fire width={25} height={30} />
+            <Text style={styles.iconText}>x10</Text>
+          </View>
         </View>
       </View>
       <View style={[styles.square]}>
-        <ActvityRollled />
+        <ActvityRolled />
       </View>
       <Journey />
       <View style={styles.buttonContainer}>
@@ -45,6 +60,8 @@ export default function CompleteDice() {
         setModalVisible={setModalVisible}
         switchEnabled={switchEnabled}
         setSwitchEnabled={setSwitchEnabled}
+        setActiveScreen={setActiveScreen}
+        setAppearHeader={setAppearHeader}
       />
     </View>
   );
@@ -86,12 +103,14 @@ const styles = StyleSheet.create({
   },
   banner: {
     paddingHorizontal: 20,
+    marginBottom: 10,
     // borderWidth: 2,
     // borderColor: "blue",
     display: "flex",
     width: "100%",
-    justifyContent: "space-between",
     flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   headerDice: {
     // borderWidth: 2,
@@ -119,4 +138,13 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 10,
   },
+  iconsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+  },
+  iconText: {
+    fontFamily: "Poppins-Bold"
+  }
 });
