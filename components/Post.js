@@ -18,7 +18,7 @@ import { PostsContext } from "../contexts/PostsContext";
 import { Themes } from "../assets/Themes";
 
 export default function Post({
-  postId,
+  postIndex,
   profileName,
   handle,
   profilePic,
@@ -27,13 +27,11 @@ export default function Post({
   comments,
 }) {
   const [kudosColor, setKudosColor] = useState("black"); // Initial color
-  const { addCommentToPost } = useContext(PostsContext);
   const toggleKudos = () => {
     setKudosColor((prevColor) =>
       prevColor === "black" ? Themes.colors.salmon : "black"
     );
   };
-
   const [isModalVisible, setModalVisible] = useState(false);
   const closeModal = () => {
     setModalVisible(false);
@@ -93,6 +91,7 @@ export default function Post({
             >
               <CommentIcon color="black" />
               <CommentModal
+                postIndex={postIndex}
                 comments={comments}
                 isModalVisible={isModalVisible}
                 toggleModal={toggleModal}

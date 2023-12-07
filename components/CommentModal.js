@@ -1,4 +1,5 @@
 import Modal from "react-native-modal";
+import Images from "../assets/Themes/Images/index.js";
 import React, { useState, useEffect, useContext } from "react";
 import {
   View,
@@ -8,6 +9,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Image,
+  Pressable,
 } from "react-native";
 import Comment from "./Comment.js";
 import {
@@ -19,6 +21,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { PostsContext } from "../contexts/PostsContext";
 
 export default function CommentModal({
+  postIndex,
   comments,
   isModalVisible,
   toggleModal,
@@ -39,9 +42,24 @@ export default function CommentModal({
 
   const [newComment, setNewComment] = useState("");
 
+  const [commentsCopy, setCommentsCopy] = useState(comments);
+
+  useEffect(() => {
+    setCommentsCopy(comments);
+  }, [comments]);
+
+  console.log(comments);
   const handleAddComment = () => {
+    addCommentToPost(
+      postIndex,
+      "pcivita",
+      "Pedro Civita",
+      Images.profileImages.pedro,
+      newComment
+    );
+
     // Add logic to handle the addition of a new comment
-    console.log("New Comment:", newComment);
+    // console.log("New Comment:", newComment);
     // You can update your state or context with the new comment
     setNewComment("");
   };
@@ -91,11 +109,11 @@ export default function CommentModal({
               onChangeText={(text) => setNewComment(text)}
             />
             {newComment && (
-              <TouchableOpacity onPress={handleAddComment}>
+              <Pressable onPress={handleAddComment}>
                 <View style={styles.sendContainer}>
                   <FontAwesome5 name="arrow-up" size={20} color={"white"} />
                 </View>
-              </TouchableOpacity>
+              </Pressable>
             )}
           </View>
         </View>

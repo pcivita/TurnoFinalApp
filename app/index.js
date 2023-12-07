@@ -42,6 +42,7 @@ export default function Page() {
             {posts.map((post, index) => (
               <Post
                 key={index}
+                postIndex={index}
                 handle={post.userHandle}
                 profilePic={post.userProfilePic}
                 activityName={post.userText}

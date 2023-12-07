@@ -62,10 +62,10 @@ export const PostsProvider = ({ children }) => {
     setPosts((prevPosts) => {
       const updatedPosts = [...prevPosts];
       const comment = {
-        userHandle: commentUserHandle,
-        userName: commentUserName,
-        userProfilePic: commentUserProfilePic,
-        text: commentText,
+        commentUserHandle: commentUserHandle,
+        commentUserProfilePic: commentUserProfilePic,
+        commentText: commentText,
+        postIndex: 0,
       };
       if (updatedPosts[postIndex]) {
         updatedPosts[postIndex].comments.push(comment);
