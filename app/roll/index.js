@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { StyleSheet, View, Easing, Text } from "react-native";
 import { Themes } from "../../assets/Themes";
-import { router, Link, Stack, useLocalSearchParams } from "expo-router";
-import { PostsProvider } from "../../contexts/PostsContext";
-import { ActivitiesProvider, ActivitiesContext } from "../../contexts/ActivitiesContext";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { Stack } from "expo-router";
+import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import RollDice from "../../components/ProgressScreens/RollDice";
 import CompleteDice from "../../components/ProgressScreens/CompleteDice";
 import ActvityRollled from "../../components/ActivityRolled";
@@ -13,16 +11,12 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
   withSpring,
-  withRepeat,
-  useAnimatedGestureHandler,
   runOnJS,
 } from "react-native-reanimated";
 import { CommentsProvider } from "../../contexts/CommentsContext";
 
 export default function Page() {
   const { activities, canRoll } = useContext(ActivitiesContext);
-  // const [canRoll, setCanRoll] = useState(true);
-
   
   const [appearHeader, setAppearHeader] = useState(false);
   const progress1 = useSharedValue(1);
@@ -32,7 +26,7 @@ export default function Page() {
     };
   }, []);
 
-  const [activeScreen, setActiveScreen] = useState("RollDice"); // Initial state
+  const [activeScreen, setActiveScreen] = useState("RollDice");
   const [diceNum, setDiceNum] = useState(-1);
   const [activityName, setActivityName] = useState("");
   const startAnimation = () => {

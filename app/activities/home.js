@@ -1,8 +1,7 @@
-import { StyleSheet, Text, View, Button, SectionList, TouchableOpacity } from "react-native";
-import Modal from "react-native-modal";
-import { router, Link, Stack, useLocalSearchParams } from "expo-router";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Stack } from "expo-router";
 import { Themes } from "../../assets/Themes";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import Activity from "../../components/Activity";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { useFonts } from "expo-font";
@@ -80,14 +79,10 @@ const styles = StyleSheet.create({
   sectionList: {
     width: "90%",
     flex: 1,
-    // padding: 10,
-    // gap: 16,
   },
   flatList: {
     width: "90%",
     flex: 1,
-    // padding: 10,
-    // gap: 16,
   },
   createActivityContainer: {
     flex: 0.09,
@@ -95,7 +90,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   createActivityButton: {
-    // flex: 1,
     backgroundColor: Themes.colors.salmon,
     paddingVertical: 10,
     paddingHorizontal: 30,
@@ -144,17 +138,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
-    elevation: 5, // Android shadow
+    elevation: 5,
   },
   activitiesContainer: {
     width: "100%",
-    // height: "60%",
     padding: 20,
     flexDirection: "space-between",
     gap: 20,

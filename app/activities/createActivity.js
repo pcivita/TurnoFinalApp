@@ -1,16 +1,13 @@
 import { useContext, useState, useEffect } from "react";
 import {
-  ScrollView,
   StyleSheet,
   Text,
   View,
-  Button,
   TextInput,
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
-
-import { router, Link, useLocalSearchParams, Stack } from "expo-router";
+import { Link, Stack } from "expo-router";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { Themes } from "../../assets/Themes";
 import Category from "../../components/Category";
@@ -71,7 +68,7 @@ export default function Page() {
             style={styles.input}
             placeholder="Ex. Go on a Run!"
             value={activityName}
-            onChangeText={setActivityName} // Update the state variable with the input
+            onChangeText={setActivityName}
           />
         </View>
         <View style={styles.descriptionContainer}>
@@ -87,7 +84,7 @@ export default function Page() {
             style={styles.input}
             placeholder="Ex. Go on a run around Lake Lagunita"
             value={description}
-            onChangeText={setDescription} // Update the state variable with the input
+            onChangeText={setDescription}
           />
         </View>
         <View style={styles.categoriesContainer}>
@@ -122,7 +119,7 @@ export default function Page() {
             <View
               style={isFormFilled ? styles.buttonEnabled : styles.buttonDisabled}
             >
-              <Text style={styles.addToDice}> Add to Dice </Text>
+              <Text style={styles.addToDice}>Add to Dice</Text>
             </View>
           </Link>
         </View>
@@ -198,8 +195,8 @@ const styles = StyleSheet.create({
   addToDiceContainer: {
     height: "8%",
     margin: 12,
-    justifyContent: "flex-end", // Align children vertically to the end
-    alignItems: "flex-end", // Align children horizontally to the end
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
   },
   buttonEnabled: {
     backgroundColor: Themes.colors.salmon,

@@ -1,21 +1,11 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  SectionList,
-  Modal,
-  ScrollView,
-} from "react-native";
-import { router, Link, Stack, useLocalSearchParams } from "expo-router";
+import { StyleSheet, View, ScrollView } from "react-native";
+import { Stack } from "expo-router";
 import { Themes } from "../../assets/Themes";
 import { useState, useEffect, useContext } from "react";
-import Activity from "../../components/Activity";
 import { useFonts } from "expo-font";
-import { FontAwesome5 } from "@expo/vector-icons";
 import Post from "../../components/Post";
 import Header from "../../components/Header";
-import { PostsContext, PostsProvider } from "../../contexts/PostsContext";
+import { PostsContext } from "../../contexts/PostsContext";
 import Supabase from "../../Supabase";
 
 export default function Page() {
@@ -91,79 +81,19 @@ export default function Page() {
       <Header title="Feed" />
       <View style={styles.main}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {/* <Post
-            style={styles.post}
-            postId={1}
-            profileName="Malina Calarco"
-            profilePic={Images.profileImages.malina}
-            handle={"@malinac"}
-            activityName={"Lake Lag"}
-          />
-          <Post
-            style={styles.post}
-            postId={2}
-            profileName="L Civita"
-            profilePic={Images.profileImages.luca}
-            handle={"@lcivita"}
-            activityName={"Lake Lag"}
-          />
-          <Post
-            style={styles.post}
-            postId={5}
-            profileName="Pedro 2"
-            profilePic={Images.profileImages.pedro}
-            handle={"@pedro"}
-            activityName={"Lake Lag"}
-          />
-          <Post
-            style={styles.post}
-            postId={3}
-            profileName="EVGR Gal"
-            profilePic={Images.profileImages.cecilia}
-            handle={"@ccevgrb"}
-            activityName={"Lake Lag"}
-          />
-          <Post
-            style={styles.post}
-            postId={4}
-            profileName="Digo"
-            profilePic={Images.profileImages.digo}
-            handle={"@digo"}
-            activityName={"Lake Lag"}
-          />
-          <Post
-            style={styles.post}
-            postId={6}
-            profileName="Pedro Civita"
-            profilePic={Images.profileImages.pedro}
-            handle={"@pcivita"}
-            activityName={"Lake Lag"}
-            isYourPost={true}
-          />
-          <Post
-            style={styles.post}
-            postId={7}
-            profileName="Naz"
-            profilePic={Images.profileImages.naz}
-            handle={"@nazzz"}
-            activityName={"Lake Lag"}
-          /> */}
           {data !== undefined &&
-            data.map(
-              (post, index) =>
-                post.is_profile_post !== true && (
-                  <Post
-                    key={index}
-                    id={post.id}
-                    profilePost={post.is_profile_post}
-                    postIndex={index}
-                    handle={post.user_handle}
-                    profilePic={post.user_profile_pic}
-                    activityName={post.post_text}
-                    comments={post.comments}
-                  />
-                )
-            )}
+            data.map((post, index) => post.is_profile_post !== true && (
+            <Post
+              key={index}
+              id={post.id}
+              profilePost={post.is_profile_post}
+              postIndex={index}
+              handle={post.user_handle}
+              profilePic={post.user_profile_pic}
+              activityName={post.post_text}
+              comments={post.comments}
+            />
+         ))}
         </ScrollView>
       </View>
     </View>
@@ -186,8 +116,6 @@ const styles = StyleSheet.create({
   },
   banner: {
     paddingHorizontal: 20,
-    // borderWidth: 2,
-    // borderColor: "blue",
     display: "flex",
     width: "100%",
     justifyContent: "space-between",
@@ -207,8 +135,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     marginHorizontal: "auto",
-    // borderColor: "black",
-    // borderWidth: 2,
   },
   subtitle: {
     fontSize: 36,

@@ -116,45 +116,8 @@ export default function Page() {
                       activityName={post.post_text}
                       comments={post.comments}
                     />
-                  )
-              )}
-
-            {/* <Post
-              postId={1}
-              handle={"@pcivita"}
-              activityName={"Run around Lake Lag"}
-              profilePic={Images.profileImages.pedro}
-            />
-            <Post
-              postId={2}
-              handle={"@pcivita"}
-              activityName={"Read 5 pages of new book"}
-              profilePic={Images.profileImages.pedro}
-            />
-            <Post
-              postId={3}
-              handle={"@pcivita"}
-              activityName={"Meditate for 10 minutes"}
-              profilePic={Images.profileImages.pedro}
-            />
-            <Post
-              postId={4}
-              handle={"@pcivita"}
-              activityName={"Clean my room"}
-              profilePic={Images.profileImages.pedro}
-            />
-            <Post
-              postId={5}
-              handle={"@pcivita"}
-              activityName={"Set up an ice cream date with a friend"}
-              profilePic={Images.profileImages.pedro}
-            />
-            <Post
-              postId={6}
-              handle={"@pcivita"}
-              activityName={"Watch a new movie"}
-              profilePic={Images.profileImages.pedro}
-            /> */}
+                )
+            )}
           </ScrollView>
         </View>
       </View>
@@ -179,8 +142,6 @@ const styles = StyleSheet.create({
   },
   banner: {
     paddingHorizontal: 20,
-    // borderWidth: 2,
-    // borderColor: "blue",
     display: "flex",
     width: "100%",
     justifyContent: "space-between",

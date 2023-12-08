@@ -74,8 +74,6 @@ const styles = StyleSheet.create({
   },
   banner: {
     paddingHorizontal: 20,
-    // borderWidth: 2,
-    // borderColor: "blue",
     display: "flex",
     width: "100%",
     justifyContent: "space-between",

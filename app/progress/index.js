@@ -1,7 +1,5 @@
 import { StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
 import { Themes } from "../../assets/Themes";
-import { Link } from "expo-router";
-import { FontAwesome5 } from "@expo/vector-icons";
 import { useState } from "react";
 import Journey from "../../components/ProgressScreens/Journey";
 import Stats from "../../components/ProgressScreens/Stats";
@@ -16,21 +14,8 @@ export default function Page() {
   return (
     <View style={styles.container}>
       <Header title="Progress" />
-
       <View style={styles.buttonContainer}>
         <ProgressNavigation onData={handleData} />
-        {/* <TouchableOpacity
-          style={styles.button}
-          onPress={() => setActiveScreen("Stats")}
-        >
-          <Text style={styles.buttonText}>Stats</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setActiveScreen("Journey")}
-        >
-          <Text style={styles.buttonText}>Journey</Text>
-        </TouchableOpacity> */}
       </View>
       <View style={styles.subscreenContainer}>
         {activeScreen === "Journey" && <Journey />}
@@ -60,7 +45,6 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     marginTop: 16,
-    // backgroundColor: "green"
   },
   buttonText: {
     fontFamily: "Poppins-Bold",
@@ -68,7 +52,6 @@ const styles = StyleSheet.create({
     color: Themes.colors.background,
   },
   container: {
-    // gap: 16,
     flex: 1,
     alignItems: "center",
     backgroundColor: Themes.colors.background,
@@ -83,15 +66,12 @@ const styles = StyleSheet.create({
   },
   banner: {
     paddingHorizontal: 20,
-    // borderWidth: 2,
-    // borderColor: "blue",
     display: "flex",
     width: "100%",
     justifyContent: "space-between",
     flexDirection: "row",
   },
   headerDice: {
-    // borderWidth: 2,
   },
   title: {
     fontSize: 32,
@@ -101,10 +81,8 @@ const styles = StyleSheet.create({
   },
   subscreenContainer: {
     flex: 1,
-    // borderWidth: 2,
     position: "relative",
     width: "100%",
     height: "100%",
-    // backgroundColor: "black"
   },
 });

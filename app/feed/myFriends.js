@@ -1,18 +1,6 @@
-import { useContext, useState, useEffect } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TextInput,
-  Keyboard,
-  TouchableWithoutFeedback,
-} from "react-native";
-import { router, Link, useLocalSearchParams, Stack } from "expo-router";
-import { ActivitiesContext } from "../../contexts/ActivitiesContext";
+import { StyleSheet, Text, View } from "react-native";
+import { Stack } from "expo-router";
 import { Themes } from "../../assets/Themes";
-import Category from "../../components/Category";
 
 export default function Page() {
   return (
@@ -102,8 +90,8 @@ const styles = StyleSheet.create({
   addToDiceContainer: {
     height: "8%",
     margin: 12,
-    justifyContent: "flex-end", // Align children vertically to the end
-    alignItems: "flex-end", // Align children horizontally to the end
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
   },
   buttonEnabled: {
     backgroundColor: Themes.colors.salmon,
