@@ -10,6 +10,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import Supabase from "../Supabase.js";
 import { PostsContext } from "../contexts/PostsContext.js";
 import { ActivitiesContext } from "../contexts/ActivitiesContext.js";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 // import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function CongratsModal({
@@ -119,12 +120,14 @@ export default function CongratsModal({
           <Pressable onPress={postActivity}>
             <View style={styles.buttonContainer}>
               <Text style={styles.buttonText}>Post</Text>
+              <MaterialCommunityIcons name="send-circle-outline" size={30} color="white" />
             </View>
           </Pressable>
 
           <Pressable onPress={onExitModal}>
             <View style={styles.buttonContainer}>
               <Text style={styles.buttonText}>Done</Text>
+              <MaterialCommunityIcons name="check-circle-outline" size={30} color="white" />
             </View>
           </Pressable>
         </View>
@@ -237,8 +240,10 @@ const styles = StyleSheet.create({
     width: 120,
     height: "90%",
     borderRadius: 10,
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    gap: 5,
   },
   buttonText: {
     color: "white",
