@@ -29,7 +29,6 @@ export default function Page() {
   }, []);
 
   const { flipProgress } = useContext(InProgressContext);
-
   const [activeScreen, setActiveScreen] = useState("RollDice");
   const [diceNum, setDiceNum] = useState(-1);
   const [activityName, setActivityName] = useState("");

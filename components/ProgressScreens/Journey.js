@@ -8,14 +8,17 @@ import { InProgressContext } from "../../contexts/InProgressContext";
 
 export default function Journey({ flipping }) {
   const { inProgress } = useContext(InProgressContext);
+  const { curActivity } = useContext(InProgressContext);
   const [isModalVisible, setModalVisible] = useState(false);
   const [modalCategory, setModalCategory] = useState(0);
   const [modalStatus, setModalStatus] = useState("");
+  const [modalActivity, setModalActivity] = useState("");
 
-  const handleActivityCirclePress = (status, category) => {
+  const handleActivityCirclePress = (status, category, curActivity) => {
     if (status !== "incomplete") {
       setModalCategory(category);
       setModalStatus(status);
+      setModalActivity(curActivity);
       setModalVisible(true);
     }
   };
@@ -97,7 +100,11 @@ export default function Journey({ flipping }) {
           top={topPosition}
           index={index} // Set the index if needed, otherwise remove it
           onPress={() =>
-            handleActivityCirclePress(status[index], category[index])
+            handleActivityCirclePress(
+              status[index],
+              category[index],
+              curActivity
+            )
           }
         />
       ))}
@@ -113,6 +120,7 @@ export default function Journey({ flipping }) {
 
       <ActivityCircleModal
         modalCategory={modalCategory}
+        modalStatus={modalStatus}
         isModalVisible={isModalVisible}
         closeModal={() => setModalVisible(false)}
       />

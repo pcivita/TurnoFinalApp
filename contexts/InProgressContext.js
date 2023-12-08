@@ -7,6 +7,9 @@ export const InProgressContext = createContext();
 export const InProgressProvider = ({ children }) => {
   const [inProgress, setinProgress] = useState(false);
 
+  const [curActivity, setCurActivity] = useState("");
+
+  const setAct = (activity) => setCurActivity(activity);
   // Function to add a new activity
   const flipProgress = () => setinProgress(!inProgress);
 

@@ -4,12 +4,14 @@ import { View, Text, StyleSheet, Image, Switch, Pressable } from "react-native";
 import Themes from "../assets/Themes/themes.js";
 
 export default function ActivityCircleModal({
+  modalCategory,
+  modalStatus,
   isModalVisible,
   closeModal,
-  inProgress,
 }) {
   //Provisory
   let activityName = "Soccer";
+
   return (
     <Modal
       onBackdropPress={closeModal}
@@ -28,12 +30,17 @@ export default function ActivityCircleModal({
       <View style={styles.modalContent}>
         {/* <View style={styles.barIcon} /> */}
         <Text style={styles.title}>
-          {!inProgress
-            ? "You Have an activity in progress:"
-            : "You completed: "}
+          {modalStatus === "complete"
+            ? "You Completed: "
+            : "You Have an activity in progress: "}
         </Text>
-
-        <Text>{activityName}</Text>
+        <View style={styles.activityTextContainer}>
+          <Text style={styles.activityName}>
+            {modalStatus === "complete"
+              ? "Run Around Lake Lag with Matt!"
+              : "Your Current Activity!"}
+          </Text>
+        </View>
 
         <View style={styles.buttonsContainer}>
           <Pressable onPress={closeModal}>
@@ -48,6 +55,17 @@ export default function ActivityCircleModal({
 }
 
 const styles = StyleSheet.create({
+  activityTextContainer: {
+    flex: 0.8,
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 16,
+  },
+  activityName: {
+    fontFamily: "Poppins-Regular",
+    fontSize: 24,
+    textAlign: "center",
+  },
   modal: {
     justifyContent: "center",
     alignItems: "center",
@@ -83,19 +101,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 500,
   },
-  buttonsContainer: {
-    height: 70,
-    flexDirection: "row",
-    gap: 50,
-    padding: 10,
-  },
+
   buttonContainer: {
     backgroundColor: Themes.colors.salmon,
     width: 120,
-    height: "90%",
     borderRadius: 10,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end",
   },
   buttonText: {
     color: "white",
