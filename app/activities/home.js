@@ -10,6 +10,7 @@ import Header from "../../components/Header";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function Page() {
+  const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);
   const { activities } = useContext(ActivitiesContext);
   const currentActivities = activities;
   console.log(activities); 
@@ -22,6 +23,7 @@ export default function Page() {
     return undefined;
   }
 
+  
   return (
     <View style={styles.container}>
       <Stack.Screen

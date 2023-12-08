@@ -83,26 +83,8 @@ export default function CommentModal({
         .update({ comments: updated_comments })
         .eq("id", post_id);
     }
-
-    // console.log(postIndex);
-    // console.log(Images.profileImages.pedro);
-    // console.log(newComment);
-    // console.log(userHandle);
-    // console.log(userName);
-
-    // addCommentToPost(
-    //   postIndex,
-    //   userHandle,
-    //   Images.profileImages.pedro,
-    //   newComment
-    // );
-
-    // Add logic to handle the addition of a new comment
-    // console.log("New Comment:", newComment);
-    // You can update your state or context with the new comment
     setNewComment("");
   };
-  // console.log(postIndex);
 
   return (
     <Modal
@@ -132,12 +114,8 @@ export default function CommentModal({
             <View flex={1} onStartShouldSetResponder={() => true}>
               {comments !== null &&
                 comments.map((commentData, index) => {
-                  // Log the current commentData to the console
-                  // console.log(commentData);
-
-                  // Return the Comment component for each comment
                   return <Comment key={index} commentData={commentData} />;
-                })}
+              })}
             </View>
           </ScrollView>
           <View style={styles.inputContainer}>
@@ -154,11 +132,11 @@ export default function CommentModal({
               onChangeText={(text) => setNewComment(text)}
             />
             {newComment && (
-              <Pressable onPress={handleAddComment}>
+              <TouchableOpacity onPress={handleAddComment}>
                 <View style={styles.sendContainer}>
                   <FontAwesome5 name="arrow-up" size={20} color={"white"} />
                 </View>
-              </Pressable>
+              </TouchableOpacity>
             )}
           </View>
         </View>

@@ -50,83 +50,85 @@ export default function Page() {
   ];
 
   return (
-    <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          title: "",
-          headerStyle: {
-            backgroundColor: Themes.colors.salmon,
-          },
-          headerTintColor: "white",
-        }}
-      />
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}> Create Activity </Text>
-      </View>
-      <View style={styles.activityNameContainer}>
-        <Text style={styles.subtitle}>
-          Activity Name <Text style={styles.asterick}>*</Text>
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Ex. Go on a Run!"
-          value={activityName}
-          onChangeText={setActivityName} // Update the state variable with the input
-        />
-      </View>
-      <View style={styles.descriptionContainer}>
-        <Text style={styles.subtitle}> Description</Text>
-        <TextInput
-          editable
-          multiline
-          blurOnSubmit={true}
-          onSubmitEditing={() => {
-            Keyboard.dismiss();
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <Stack.Screen
+          options={{
+            title: "",
+            headerStyle: {
+              backgroundColor: Themes.colors.salmon,
+            },
+            headerTintColor: "white",
           }}
-          numberOfLines={4}
-          style={styles.input}
-          placeholder="Ex. Go on a run around Lake Lagunita"
-          value={description}
-          onChangeText={setDescription} // Update the state variable with the input
         />
-      </View>
-      <View style={styles.categoriesContainer}>
-        <Text style={styles.subtitle}>
-          Category <Text style={styles.asterick}>*</Text>
-        </Text>
-        <View style={styles.categories}>
-          {[1, 2, 3, 4, 5, 6].map((id) => (
-            <Category
-              key={id}
-              id={id}
-              isSelected={id === selectedId}
-              onSelect={handleSelect}
-              categoryName={categories[id - 1][0]}
-              iconName={categories[id - 1][1]}
-            />
-          ))}
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}> Create Activity </Text>
+        </View>
+        <View style={styles.activityNameContainer}>
+          <Text style={styles.subtitle}>
+            Activity Name <Text style={styles.asterick}>*</Text>
+          </Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Ex. Go on a Run!"
+            value={activityName}
+            onChangeText={setActivityName} // Update the state variable with the input
+          />
+        </View>
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.subtitle}> Description</Text>
+          <TextInput
+            editable
+            multiline
+            blurOnSubmit={true}
+            onSubmitEditing={() => {
+              Keyboard.dismiss();
+            }}
+            numberOfLines={4}
+            style={styles.input}
+            placeholder="Ex. Go on a run around Lake Lagunita"
+            value={description}
+            onChangeText={setDescription} // Update the state variable with the input
+          />
+        </View>
+        <View style={styles.categoriesContainer}>
+          <Text style={styles.subtitle}>
+            Category <Text style={styles.asterick}>*</Text>
+          </Text>
+          <View style={styles.categories}>
+            {[1, 2, 3, 4, 5, 6].map((id) => (
+              <Category
+                key={id}
+                id={id}
+                isSelected={id === selectedId}
+                onSelect={handleSelect}
+                categoryName={categories[id - 1][0]}
+                iconName={categories[id - 1][1]}
+              />
+            ))}
+          </View>
+        </View>
+
+        <View style={styles.addToDiceContainer}>
+          <Link
+            disabled={!isFormFilled}
+            href={{
+              pathname: "/activities/home",
+              params: {
+                name: "Alan",
+              },
+            }}
+            onPress={handleAddActivity}
+          >
+            <View
+              style={isFormFilled ? styles.buttonEnabled : styles.buttonDisabled}
+            >
+              <Text style={styles.addToDice}> Add to Dice </Text>
+            </View>
+          </Link>
         </View>
       </View>
-
-      <View style={styles.addToDiceContainer}>
-        <Link
-          disabled={!isFormFilled}
-          href={{
-            pathname: "/activities/home",
-            params: {
-              name: "Alan",
-            },
-          }}
-          onPress={handleAddActivity}
-        >
-          <View
-            style={isFormFilled ? styles.buttonEnabled : styles.buttonDisabled}
-          >
-            <Text style={styles.addToDice}> Add to Dice </Text>
-          </View>
-        </Link>
-      </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 

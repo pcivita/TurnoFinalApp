@@ -24,7 +24,6 @@ export default function Page() {
   // const [canRoll, setCanRoll] = useState(true);
 
   
-
   const [appearHeader, setAppearHeader] = useState(false);
   const progress1 = useSharedValue(1);
   const rStyle = useAnimatedStyle(() => {
