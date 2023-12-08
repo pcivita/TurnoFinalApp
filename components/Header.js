@@ -17,7 +17,7 @@ export default function Header({ title }) {
       <Text style={styles.title}>{title}</Text>
       {(title === "Profile" || title === "Feed") && (
         <Link 
-          href={ title === "Profile" ? {pathname: "/"} : {pathname: "/feed/myFriends"}} 
+          href={ title === "Profile" ? {pathname: "/profile/settings"} : {pathname: "/feed/myFriends"}} 
           style={styles.rightIcon}
         >
           <FontAwesome5

@@ -1,147 +1,124 @@
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState, useContext } from "react";
+import { StyleSheet, View, Easing, Text } from "react-native";
 import { Themes } from "../assets/Themes";
-import { Link } from "expo-router";
-import Post from "../components/Post";
-import { useFonts } from "expo-font";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
-import ProfileCard from "../components/ProfileCard";
-import { useState, useContext, useEffect } from "react";
-import { PostsContext, PostsProvider } from "../contexts/PostsContext";
-import Header from "../components/Header";
-import Images from "../assets/Themes/Images";
-import Supabase from "../Supabase";
+import { Stack } from "expo-router";
+import { ActivitiesContext } from "../contexts/ActivitiesContext";
+import RollDice from "../components/ProgressScreens/RollDice";
+import CompleteDice from "../components/ProgressScreens/CompleteDice";
+import ActvityRollled from "../components/ActivityRolled";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withSpring,
+  runOnJS,
+} from "react-native-reanimated";
+import { CommentsProvider } from "../contexts/CommentsContext";
 
 export default function Page() {
-  const [data, setData] = useState();
-
-  const handleRecordUpdated = (payload) => {
-    console.log("UDPATE", payload);
-    setData((oldData) =>
-      oldData.map((item) => {
-        if (item.id === payload.old.id) {
-          return payload.new;
-        } else {
-          return item;
-        }
-      })
-    );
-  };
-
-  const handleRecordInserted = (payload) => {
-    console.log("INSERT", payload);
-    setData((oldData) => [...oldData, payload.new]);
-  };
-
-  const handleRecordDeleted = (payload) => {
-    console.log("DELETE", payload);
-    setData((oldData) => oldData.filter((item) => item.id !== payload.old.id));
-  };
-
-  useEffect(() => {
-    // Listen for changes to db
-    // From https://supabase.com/docs/guides/realtime/concepts#postgres-changes
-    Supabase.channel("schema-db-changes")
-      .on(
-        "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "posts" },
-        handleRecordUpdated
-      )
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "posts" },
-        handleRecordInserted
-      )
-      .on(
-        "postgres_changes",
-        { event: "DELETE", schema: "public", table: "posts" },
-        handleRecordDeleted
-      )
-      .subscribe();
-  }, []);
-
-  useEffect(() => {
-    // Fetch data on initial load
-    const fetchData = async () => {
-      const response = await Supabase.from("posts").select("*");
-      setData(response.data);
+  const { activities, canRoll } = useContext(ActivitiesContext);
+  
+  const [appearHeader, setAppearHeader] = useState(false);
+  const progress1 = useSharedValue(1);
+  const rStyle = useAnimatedStyle(() => {
+    return {
+      opacity: progress1.value,
     };
-    fetchData();
   }, []);
 
-  useEffect(() => {
-    // CHECKING
-    // console.log(data);
-  }, [data]);
+  const [activeScreen, setActiveScreen] = useState("RollDice");
+  const [diceNum, setDiceNum] = useState(-1);
+  const [activityName, setActivityName] = useState("");
+  const startAnimation = () => {
+    // Wait for 1.5 seconds (1500 milliseconds) before starting the animation
+    setTimeout(() => {
+      progress1.value = withTiming(
+        0,
+        {
+          duration: 500, // Animation duration
+        },
+        (isFinished) => {
+          if (isFinished) {
+            runOnJS(setActiveScreen)("CompleteDice");
+            progress1.value = withTiming(1, {
+              duration: 500, // Animation duration
+            });
+          }
+        }
+      );
+    }, 1500);
+  };
 
-  const { posts } = useContext(PostsContext);
-  // console.log(posts);
-  const [fontsLoaded] = useFonts({
-    "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
-    "Poppins-Bold": require("../assets/Poppins/Poppins-Bold.ttf"),
-  });
-  if (!fontsLoaded) {
-    return undefined;
-  }
+  const headerBounce = () => {
+    progress.value = withSpring(130);
+  };
 
+  const progress = useSharedValue(0);
+
+  const rStyle2 = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: progress.value }],
+    };
+  }, []);
+
+  const handleData = (data) => {
+    console.log(data);
+    setDiceNum(data[0]);
+    setActivityName(data[1][0]);
+    setAppearHeader(true);
+    headerBounce();
+    startAnimation();
+  };
+
+  //TODO: Dice shouldn't be clickable after rolling
   return (
-    <PostsProvider>
-      <View style={styles.container}>
-        <Header title="Profile" />
-        <View style={styles.main}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.profileCard}>
-              <ProfileCard
-                isYourProfile={true}
-                profileName="Pedro Civita"
-                handle="@pcivita"
-                profilePic={Images.profileImages.pedro}
-              />
-            </View>
-            <View style={styles.postTextContainer}>
-              <Text style={styles.postText}>Posts</Text>
-            </View>
-            {data !== undefined &&
-              data.map(
-                (post, index) =>
-                  post.is_profile_post === true && (
-                    <Post
-                      key={index}
-                      id={post.id}
-                      postIndex={index}
-                      profilePost={post.is_profile_post}
-                      handle={post.user_handle}
-                      profilePic={post.user_profile_pic}
-                      activityName={post.post_text}
-                      comments={post.comments}
-                    />
-                )
-            )}
-          </ScrollView>
-        </View>
-      </View>
-    </PostsProvider>
+    <CommentsProvider>
+     
+      {appearHeader && (
+        <Animated.View style={[styles.square, rStyle2]}>
+          <ActvityRollled diceNum={diceNum} activityName={activityName} />
+        </Animated.View>
+      )}
+      <Animated.View style={[styles.container, rStyle]}>
+        {activeScreen === "RollDice" && 
+          <RollDice 
+            onData={handleData}
+            canRoll={canRoll} 
+          />
+        }
+        {activeScreen === "CompleteDice" && (
+          <CompleteDice
+            setActiveScreen={setActiveScreen}
+            setAppearHeader={setAppearHeader}
+            activityName={activityName}
+            activityIndex={diceNum}
+          />
+        )}
+      </Animated.View>
+    </CommentsProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: Themes.colors.background,
+    // width: "100%",
+    // height: "100%",
+    // alignItems: "center",
+    // justifyContent: "flex-start",
+    // flex: 1,
   },
   header: {
     width: "100%",
     flexDirection: "row",
-    height: "16%",
-    paddingBottom: 12,
+    height: "14%",
     alignItems: "flex-end",
     justifyContent: "center",
     backgroundColor: Themes.colors.salmon,
   },
   banner: {
     paddingHorizontal: 20,
+    // borderWidth: 2,
+    // borderColor: "blue",
     display: "flex",
     width: "100%",
     justifyContent: "space-between",
@@ -153,24 +130,26 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     color: "white",
-    fontWeight: "bold",
     fontFamily: "Poppins-Bold",
   },
-  main: {
+  container: {
     flex: 1,
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: Themes.colors.background,
+  },
+  subscreenContainer: {
+    alignItems: "center",
     justifyContent: "center",
+  },
+  competeDice: {},
+  square: {
+    color: "red",
     width: "100%",
-    marginHorizontal: "auto",
-  },
-  postTextContainer: {
-    height: 30,
-    paddingHorizontal: 20,
-    alignItems: "flex-start",
-    justifyContent: "center",
-  },
-
-  postText: {
-    fontFamily: "Poppins-Bold",
-    fontSize: 20,
+    height: 100,
+    position: "absolute",
+    top: 0,
+    right: 0,
+    zIndex: 10,
   },
 });

@@ -7,7 +7,6 @@ import KudosIcon from "../components/Icons/Kudos";
 import { Themes } from "../assets/Themes";
 import { PostsProvider } from "../contexts/PostsContext";
 import { ActivitiesProvider, ActivitiesContext } from "../contexts/ActivitiesContext";
-import { useContext } from "react";
 import { useFonts } from "expo-font";
 import DiceSVG from "../components/Icons/Dice";
 
@@ -60,7 +59,7 @@ export default function AppLayout() {
           }}
         />
         <Tabs.Screen
-          name="roll"
+          name="index"
           options={{
             tabBarIcon: ({ size, color }) => (
               <View
@@ -91,7 +90,7 @@ export default function AppLayout() {
           }}
         />
         <Tabs.Screen
-          name="index"
+          name="profile"
           options={{
             tabBarLabelStyle: styles.iconAndText,
             tabBarLabel: "Profile",
