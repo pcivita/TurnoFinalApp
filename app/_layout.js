@@ -1,15 +1,25 @@
 import { Tabs } from "expo-router/tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Kudos from "../components/Icons/Kudos";
 import KudosIcon from "../components/Icons/Kudos";
 import { Themes } from "../assets/Themes";
 import { PostsProvider } from "../contexts/PostsContext";
 import { ActivitiesProvider, ActivitiesContext } from "../contexts/ActivitiesContext";
 import { useContext } from "react";
+import { useFonts } from "expo-font";
+import DiceSVG from "../components/Icons/Dice";
 
 export default function AppLayout() {
+  const [fontsLoaded] = useFonts({
+    "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
+    "Poppins-Bold": require("../assets/Poppins/Poppins-Bold.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return undefined;
+  }
 
   return (
     <ActivitiesProvider>
@@ -32,17 +42,17 @@ export default function AppLayout() {
         <Tabs.Screen
           name="feed"
           options={{
-            tabBarLabelStyle: { display: "flex" },
+            tabBarLabelStyle: styles.iconAndText,
             tabBarLabel: "Feed",
-            tabBarIcon: ({ size, color }) => (
-              <KudosIcon size={28} color={color} notFilled={true} />
+            tabBarIcon: ({ color }) => (
+              <KudosIcon size={27} color={color} notFilled={true} />
             ),
           }}
         />
         <Tabs.Screen
           name="activities"
           options={{
-            tabBarLabelStyle: { display: "flex" },
+            tabBarLabelStyle: styles.iconAndText,
             tabBarLabel: "Activities",
             tabBarIcon: ({ size, color }) => (
               <FontAwesome5 name="clipboard" size={size} color={color} />
@@ -55,17 +65,17 @@ export default function AppLayout() {
             tabBarIcon: ({ size, color }) => (
               <View
                 style={{
-                  top: -5,
-                  height: 85,
-                  width: 85,
+                  top: -4,
+                  height: 80,
+                  width: 80,
                   borderRadius: 50,
                   backgroundColor: Themes.colors.lightGray,
-                  justifyContent: "center",
+                  justifyContent: "flex-start",
+                  paddingTop: 2,
                   alignItems: "center",
-                  transform: [{ rotate: "45deg" }],
                 }}
               >
-                <FontAwesome5 name="dice-five" size={size + 30} color={color} />
+                <DiceSVG width={70} color={color} rectSize={10}/>
               </View>
             ),
           }}
@@ -73,7 +83,7 @@ export default function AppLayout() {
         <Tabs.Screen
           name="progress/index"
           options={{
-            tabBarLabelStyle: { display: "flex" },
+            tabBarLabelStyle: styles.iconAndText,
             tabBarLabel: "Progress",
             tabBarIcon: ({ size, color }) => (
               <FontAwesome5 name="check-circle" size={size} color={color} />
@@ -83,7 +93,7 @@ export default function AppLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            tabBarLabelStyle: { display: "flex" },
+            tabBarLabelStyle: styles.iconAndText,
             tabBarLabel: "Profile",
             tabBarIcon: ({ size, color }) => (
               <FontAwesome5 name="user" size={size} color={color} />
@@ -95,3 +105,13 @@ export default function AppLayout() {
     </ActivitiesProvider>
   );
 }
+
+
+const styles = StyleSheet.create({
+  iconAndText: {
+    display: "flex", 
+    fontSize: 12, 
+    fontFamily: "Poppins-Regular", 
+    
+  },
+});
