@@ -35,17 +35,6 @@ export default function ActivityCircle({ right, top, status, index, onPress }) {
       ],
     };
   });
-  // const reanimatedStyle = useAnimatedStyle(() => {
-  //   return {
-  //     // borderRadius: (progress.value * SIZE) / 2,
-  //     transform: [
-  //       // { scale: scale.value },
-  //       // { rotate: `${progress.value * 2 * Math.PI}rad` },
-  //       { translateX: scale.value * 20 },
-  //       { translateY: scale.value * 20 },
-  //     ],
-  //   };
-  // }, []);
 
   let colorStyle = styles.incompleteColor;
   if (status === "complete") {
@@ -60,8 +49,16 @@ export default function ActivityCircle({ right, top, status, index, onPress }) {
   //   rotation.value = withRepeat(withTiming(1.5, { duration: 1000 }), -1, true);
   // });
   useEffect(() => {
-    const scaleAnimation = withRepeat(withTiming(1.1, { duration: 1000 }), -1, true);
-    const rotationAnimation = withRepeat(withTiming(1.5, { duration: 1000 }), -1, true);
+    const scaleAnimation = withRepeat(
+      withTiming(1.1, { duration: 1000 }),
+      -1,
+      true
+    );
+    const rotationAnimation = withRepeat(
+      withTiming(1.5, { duration: 1000 }),
+      -1,
+      true
+    );
 
     scale.value = scaleAnimation;
     rotation.value = rotationAnimation;
@@ -76,38 +73,36 @@ export default function ActivityCircle({ right, top, status, index, onPress }) {
   // console.log('onPress prop:', onPress);
 
   return (
-    
     <View style={[styles.container, { height: top }]}>
       <TouchableOpacity onPress={onPress}>
-      <Animated.View
-        style={[
-          [styles.circle, colorStyle],
-          status === "in progress"
-            ? reanimatedStyle
-            : [styles.circle, colorStyle],
-        ]}
-        right={right}
-      >
-        {status === "complete" && (
-          <FontAwesome5
-            style={styles.icon}
-            name={categories[index]}
-            size={40}
-            color={Themes.colors.background}
-          />
-        )}
-        {status === "in progress" && (
-          <FontAwesome5
-            style={styles.icon}
-            name={"dice-five"}
-            size={40}
-            color={Themes.colors.background}
-          />
-        )}
-      </Animated.View>
+        <Animated.View
+          style={[
+            [styles.circle, colorStyle],
+            status === "in progress"
+              ? reanimatedStyle
+              : [styles.circle, colorStyle],
+          ]}
+          right={right}
+        >
+          {status === "complete" && (
+            <FontAwesome5
+              style={styles.icon}
+              name={categories[index]}
+              size={40}
+              color={Themes.colors.background}
+            />
+          )}
+          {status === "in progress" && (
+            <FontAwesome5
+              style={styles.icon}
+              name={"dice-five"}
+              size={40}
+              color={Themes.colors.background}
+            />
+          )}
+        </Animated.View>
       </TouchableOpacity>
     </View>
-    
   );
 }
 

@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { Stack, useRouter, useLocalSearchParams } from "expo-router";
 import { Themes } from "../assets/Themes";
 import Header from "../components/Header";
+import FriendCard from "../components/FriendCard";
 
 export default function Page() {
   // const router = useRouter();
@@ -11,12 +12,19 @@ export default function Page() {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
-      <Header title={previousPage === "Profile" ? "Friends from Profile" : "Friends from Feed"} />
-      <View style={styles.activityNameContainer}>
-        <Text style={styles.subtitle}>
-          Friends PAGEEEE 
-        </Text>
-      </View>
+      <Header
+        title={
+          previousPage === "Profile"
+            ? "Friends from Profile"
+            : "Friends from Feed"
+        }
+      />
+      <ScrollView style={styles.activityNameContainer}>
+        <FriendCard friendName={"Malina"} />
+        <FriendCard friendName={"Nazanin"} />
+        <FriendCard friendName={"Cecilia"} />
+        <FriendCard friendName={"Matt"} />
+      </ScrollView>
     </View>
   );
 }
@@ -25,41 +33,12 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flex: 1,
-    gap: 5,
-    backgroundColor: Themes.colors.background
+
+    backgroundColor: Themes.colors.background,
   },
-  titleContainer: {
-    height: "10%",
-    backgroundColor: Themes.colors.salmon,
-    borderColor: "black",
-    justifyContent: "center",
-  },
-  title: {
-    fontWeight: "bold",
-    fontSize: 40,
-    color: "white",
-    alignSelf: "center",
-  },
-  subtitle: {
-    marginHorizontal: 12,
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  input: {
-    flex: 1,
-    marginHorizontal: 12,
-    padding: 10,
-    fontSize: 15,
-    borderRadius: 5,
-    borderWidth: 3,
-    padding: 10,
-    borderWidth: 3,
-    borderColor: Themes.colors.mediumGray,
-  },
+
   activityNameContainer: {
-    paddingTop: "3%",
-    height: "14%",
-    gap: "10%",
+    flex: 1,
   },
   descriptionContainer: {
     paddingTop: "2%",

@@ -87,9 +87,7 @@ export default function Page() {
 
   return (
     <PostsProvider>
-      <Stack.Screen
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen options={{ headerShown: false }} />
       <View style={styles.container}>
         <Header title="Profile" />
         <View style={styles.main}>
@@ -106,21 +104,23 @@ export default function Page() {
               <Text style={styles.postText}>Posts</Text>
             </View>
             {data !== undefined &&
-              data.map(
-                (post, index) =>
-                  post.is_profile_post === true && (
-                    <Post
-                      key={index}
-                      id={post.id}
-                      postIndex={index}
-                      profilePost={post.is_profile_post}
-                      handle={post.user_handle}
-                      profilePic={post.user_profile_pic}
-                      activityName={post.post_text}
-                      comments={post.comments}
-                    />
-                )
-            )}
+              [...data]
+                .reverse()
+                .map(
+                  (post, index) =>
+                    post.is_profile_post === true && (
+                      <Post
+                        key={index}
+                        id={post.id}
+                        postIndex={index}
+                        profilePost={post.is_profile_post}
+                        handle={post.user_handle}
+                        profilePic={post.user_profile_pic}
+                        activityName={post.post_text}
+                        comments={post.comments}
+                      />
+                    )
+                )}
           </ScrollView>
         </View>
       </View>

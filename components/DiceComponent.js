@@ -11,6 +11,7 @@ import Animated, {
   withRepeat,
   useAnimatedGestureHandler,
   runOnJS,
+  Easing,
 } from "react-native-reanimated";
 import { PanGestureHandler } from "react-native-gesture-handler";
 
@@ -26,6 +27,7 @@ const imageSources = [
 const DiceComponent = ({ onData }) => {
   const progress = useSharedValue(1);
   const scale = useSharedValue(1);
+  const diceTransform = useSharedValue(0);
 
   const reanimatedStyle = useAnimatedStyle(() => {
     return {
@@ -33,8 +35,8 @@ const DiceComponent = ({ onData }) => {
       transform: [
         // { scale: scale.value },
         // { rotate: `${progress.value * 2 * Math.PI}rad` },
-        { translateX: scale.value * 20 },
-        { translateY: scale.value * 20 },
+        { translateX: diceTransform.value * 5 },
+        { translateY: diceTransform.value * 2 },
       ],
     };
   }, []);
@@ -42,6 +44,16 @@ const DiceComponent = ({ onData }) => {
   useEffect(() => {
     progress.value = withRepeat(withSpring(1.5, { duration: 3000 }), -1, true);
     scale.value = withRepeat(withSpring(1), -1, true);
+    translateX.value = withRepeat(
+      withTiming(5, { duration: 3000, easing: Easing.elastic(10) }),
+      -1,
+      true
+    );
+    translateY.value = withRepeat(
+      withTiming(2, { duration: 3000, easing: Easing.elastic(10) }),
+      -1,
+      true
+    );
   }, []);
 
   const sendData = () => {
@@ -54,7 +66,7 @@ const DiceComponent = ({ onData }) => {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   // Find the "Current Activities" section and its data
-  
+
   // const currentActivitiesData = activities;
 
   const [currentNumber, setCurrentNumber] = useState(1);
@@ -68,7 +80,9 @@ const DiceComponent = ({ onData }) => {
     if (isCycling) {
       // Start cycling numbers every 500ms
       const interval = setInterval(() => {
-        setCurrentImageIndex(() => Math.floor(Math.random() * activities.length));
+        setCurrentImageIndex(() =>
+          Math.floor(Math.random() * activities.length)
+        );
       }, 100); // Change image every 500ms
 
       // Stop cycling after x seconds
@@ -106,8 +120,11 @@ const DiceComponent = ({ onData }) => {
   const translateY = useSharedValue(0);
   const contextTranslateY = useSharedValue(0);
 
+  const [diceNudge, setDiceNudge] = useState(true);
+  const setDice = () => setDiceNudge(false);
   const panGestureEvent = useAnimatedGestureHandler({
     onStart: (event) => {
+      runOnJS(setDice);
       scale.value = withSpring(1.5);
       contextTranslateX.value = translateX.value;
       contextTranslateY.value = translateY.value;
