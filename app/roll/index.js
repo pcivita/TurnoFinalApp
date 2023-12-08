@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, Easing, Text } from "react-native";
 import { Themes } from "../../assets/Themes";
+import { router, Link, Stack, useLocalSearchParams } from "expo-router";
 import { PostsProvider } from "../../contexts/PostsContext";
-import { ActivitiesProvider } from "../../contexts/ActivitiesContext";
+import { ActivitiesProvider, ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { FontAwesome5 } from "@expo/vector-icons";
 import RollDice from "../../components/ProgressScreens/RollDice";
 import CompleteDice from "../../components/ProgressScreens/CompleteDice";
@@ -16,8 +17,14 @@ import Animated, {
   useAnimatedGestureHandler,
   runOnJS,
 } from "react-native-reanimated";
+import { CommentsProvider } from "../../contexts/CommentsContext";
 
 export default function Page() {
+  const { activities, canRoll } = useContext(ActivitiesContext);
+  // const [canRoll, setCanRoll] = useState(true);
+
+  
+
   const [appearHeader, setAppearHeader] = useState(false);
   const progress1 = useSharedValue(1);
   const rStyle = useAnimatedStyle(() => {
@@ -72,14 +79,22 @@ export default function Page() {
 
   //TODO: Dice shouldn't be clickable after rolling
   return (
-    <ActivitiesProvider>
+    <CommentsProvider>
+      <Stack.Screen
+        options={{ headerShown: false }}
+      />
       {appearHeader && (
         <Animated.View style={[styles.square, rStyle2]}>
           <ActvityRollled diceNum={diceNum} activityName={activityName} />
         </Animated.View>
       )}
       <Animated.View style={[styles.container, rStyle]}>
-        {activeScreen === "RollDice" && <RollDice onData={handleData} />}
+        {activeScreen === "RollDice" && 
+          <RollDice 
+            onData={handleData}
+            canRoll={canRoll} 
+          />
+        }
         {activeScreen === "CompleteDice" && (
           <CompleteDice
             setActiveScreen={setActiveScreen}
@@ -89,11 +104,18 @@ export default function Page() {
           />
         )}
       </Animated.View>
-    </ActivitiesProvider>
+    </CommentsProvider>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    // width: "100%",
+    // height: "100%",
+    // alignItems: "center",
+    // justifyContent: "flex-start",
+    // flex: 1,
+  },
   header: {
     width: "100%",
     flexDirection: "row",

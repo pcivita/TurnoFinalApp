@@ -12,6 +12,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 export default function Page() {
   const { activities } = useContext(ActivitiesContext);
   const currentActivities = activities;
+  console.log(activities); 
 
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),

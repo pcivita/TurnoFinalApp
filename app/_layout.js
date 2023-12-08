@@ -6,9 +6,13 @@ import Kudos from "../components/Icons/Kudos";
 import KudosIcon from "../components/Icons/Kudos";
 import { Themes } from "../assets/Themes";
 import { PostsProvider } from "../contexts/PostsContext";
+import { ActivitiesProvider, ActivitiesContext } from "../contexts/ActivitiesContext";
+import { useContext } from "react";
 
 export default function AppLayout() {
+
   return (
+    <ActivitiesProvider>
     <PostsProvider>
       <Tabs
         screenOptions={{
@@ -46,7 +50,7 @@ export default function AppLayout() {
           }}
         />
         <Tabs.Screen
-          name="roll/index"
+          name="roll"
           options={{
             tabBarIcon: ({ size, color }) => (
               <View
@@ -88,5 +92,6 @@ export default function AppLayout() {
         />
       </Tabs>
     </PostsProvider>
+    </ActivitiesProvider>
   );
 }

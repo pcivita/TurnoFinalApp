@@ -45,12 +45,13 @@ const DiceComponent = ({ onData }) => {
   }, []);
 
   const sendData = () => {
-    console.log(activities);
+    // console.log(activities);
     const data = [currentImageIndex, activities[currentImageIndex]]; // The data you want to send to the grandparent
     onData(data);
   };
 
   const { activities } = useContext(ActivitiesContext);
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   // Find the "Current Activities" section and its data
   
@@ -163,7 +164,7 @@ const styles = StyleSheet.create({
     height: "40%",
     aspectRatio: 1,
     // borderWidth: 2,
-    justifyContent: "center",
+    right: -73,
     alignItems: "center",
   },
   imageContainer: {

@@ -8,15 +8,22 @@ export const ActivitiesProvider = ({ children }) => {
   const [activities, setActivities] = useState([
     ["Soccer", "I want to play soccer", "Exercise"],
     ["Read", "I want to read", "Academic"],
-    // ["Write", "Write a chapter in my novel", "Work"],
+    ["Write", "Write a chapter in my novel", "Work"],
     // ["Meditate", "Medidate for 10 minutes outside", "Relax"],
   ]);
+
+  const [canRoll, setCanRoll] = useState(true);
 
   // Function to add a new activity
   const addActivity = (name, description, category) => {
     setActivities((activities) => {
       let newActivity = [name, description, category];
       activities.push(newActivity);
+
+      if (activities.length >= 2) {
+        setCanRoll(true);
+      }
+
       return activities;
     });
   };
@@ -37,13 +44,18 @@ export const ActivitiesProvider = ({ children }) => {
       const updatedActivities = prevActivities.filter((activity, index) => index !== activityIndex);
       console.log("updated: ");
       console.log(updatedActivities);
+
+      if (updatedActivities.length < 2) {
+        setCanRoll(false);
+      }
+
       return updatedActivities;
     });
   };
-  
+
 
   return (
-    <ActivitiesContext.Provider value={{ activities, addActivity, editActivity, deleteActivity }}>
+    <ActivitiesContext.Provider value={{ activities, addActivity, editActivity, deleteActivity, canRoll }}>
       {children}
     </ActivitiesContext.Provider>
   );
