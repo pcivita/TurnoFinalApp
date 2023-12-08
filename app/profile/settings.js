@@ -1,6 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
-import { Stack } from "expo-router";
+import { StyleSheet, Text, View, TextInput,
+  Keyboard, } from "react-native";
+import { Link, Stack } from "expo-router";
 import { Themes } from "../../assets/Themes";
+import Category from "../../components/Category";
+import Header from "../../components/Header";
 
 export default function Page() {
   return (
@@ -12,15 +15,57 @@ export default function Page() {
             backgroundColor: Themes.colors.salmon,
           },
           headerTintColor: "white",
+          // header: () => <Header />
         }}
       />
-      <View style={styles.titleContainer}>
+     <View style={styles.titleContainer}>
         <Text style={styles.title}> Settings </Text>
       </View>
       <View style={styles.activityNameContainer}>
-        <Text style={styles.subtitle}>
-          Friend Name
-        </Text>
+        <Text style={styles.subtitle}>Your Name</Text>
+        <TextInput
+          editable={false}
+          style={styles.input}
+          value="Pedro Civita"
+          // onChangeText={setActivityName}
+        />
+      </View>
+      <View style={styles.activityNameContainer}>
+        <Text style={styles.subtitle}>Username</Text>
+        <TextInput
+          editable={false}
+          style={styles.input}
+          value="pcivita"
+          // onChangeText={setActivityName}
+        />
+      </View>
+      <View style={styles.activityNameContainer}>
+        <Text style={styles.subtitle}>Password</Text>
+        <TextInput
+          editable={false}
+          style={styles.input}
+          value="*****************"
+          // onChangeText={setActivityName}
+        />
+      </View>
+
+      <View style={styles.addToDiceContainer}>
+        <Link
+          // disabled={!isFormFilled}
+          href={{
+            pathname: "/activities/home",
+            params: {
+              name: "Alan",
+            },
+          }}
+          // onPress={handleAddActivity}
+        >
+          <View
+            // style={isFormFilled ? styles.buttonEnabled : styles.buttonDisabled}
+          >
+            <Text style={styles.addToDice}>Add to Dice</Text>
+          </View>
+        </Link>
       </View>
     </View>
   );
@@ -41,25 +86,27 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
-    fontSize: 40,
+    fontSize: 32,
     color: "white",
     alignSelf: "center",
+    fontFamily: "Poppins-Bold",
   },
   subtitle: {
     marginHorizontal: 12,
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
+    fontFamily: "Poppins-Bold",
   },
   input: {
     flex: 1,
     marginHorizontal: 12,
-    padding: 10,
-    fontSize: 15,
+    fontSize: 16,
+    fontFamily: "Poppins-Regular",
+    backgroundColor: Themes.colors.lightGray,
     borderRadius: 5,
     borderWidth: 3,
+    borderColor: Themes.colors.lightGray,
     padding: 10,
-    borderWidth: 3,
-    borderColor: Themes.colors.mediumGray,
   },
   activityNameContainer: {
     paddingTop: "3%",
