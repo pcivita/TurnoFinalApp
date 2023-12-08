@@ -6,12 +6,16 @@ import { useState, useContext } from "react";
 import ActivityCircleModal from "../ActivityCircleModal";
 import { InProgressContext } from "../../contexts/InProgressContext";
 
-export default function Journey() {
+export default function Journey({ flipping }) {
   const { inProgress } = useContext(InProgressContext);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [modalCategory, setModalCategory] = useState(0);
+  const [modalStatus, setModalStatus] = useState("");
 
-  const handleActivityCirclePress = (status) => {
+  const handleActivityCirclePress = (status, category) => {
     if (status !== "incomplete") {
+      setModalCategory(category);
+      setModalStatus(status);
       setModalVisible(true);
     }
   };
@@ -74,6 +78,8 @@ export default function Journey() {
     "incomplete",
     "incomplete",
   ];
+
+  const category = [0, 1, 4, 3, 5, 2, 3, 2, 5, 1, 2, 4];
   const topPosition = 70;
 
   return (
@@ -83,12 +89,16 @@ export default function Journey() {
     >
       {rightPosition.map((circle, index) => (
         <ActivityCircle
+          category={category[index]}
+          flipping={flipping}
           key={index} // Ensure a unique key for each component
           right={circle} // Assuming 'circle' represents the right position
           status={status[index]}
           top={topPosition}
           index={index} // Set the index if needed, otherwise remove it
-          onPress={() => handleActivityCirclePress(status[index])}
+          onPress={() =>
+            handleActivityCirclePress(status[index], category[index])
+          }
         />
       ))}
 
@@ -102,6 +112,7 @@ export default function Journey() {
       )}
 
       <ActivityCircleModal
+        modalCategory={modalCategory}
         isModalVisible={isModalVisible}
         closeModal={() => setModalVisible(false)}
       />

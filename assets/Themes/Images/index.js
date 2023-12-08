@@ -6,6 +6,7 @@ export default Images = {
     four: require("./diceIcons/diceFour.png"),
     five: require("./diceIcons/diceFive.png"),
     six: require("./diceIcons/diceSix.png"),
+    faded: require("./diceIcons/diceFaded.png"),
   },
   diceFaces: {
     one: require("./DiceFaces/Dice.png"),

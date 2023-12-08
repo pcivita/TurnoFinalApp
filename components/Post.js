@@ -75,8 +75,10 @@ export default function Post({
         <View style={styles.textContainer}>
           {isYourPost ? (
             <Text style={styles.postText}>
-              {handle}:{" "}
-              <Text style={styles.activityNameStyle}>{activityName} </Text>
+              {handle}:
+              <Text style={styles.activityNameStyle}>
+                {" " + activityName}{" "}
+              </Text>
             </Text>
           ) : (
             <Text style={styles.postText}>
@@ -92,7 +94,10 @@ export default function Post({
               >
                 {handle}:
               </Link>
-              <Text style={styles.activityNameStyle}> {activityName} </Text>
+              <Text style={styles.activityNameStyle}>
+                {" "}
+                {" " + activityName}{" "}
+              </Text>
             </Text>
           )}
           <View style={styles.actionItemsContainer}>

@@ -97,7 +97,7 @@ export default function Page() {
                 isYourProfile={true}
                 profileName="Pedro Civita"
                 handle="@pcivita"
-                profilePic={require("../../assets/Themes/Images/profileImages/IMG_9521.jpg")}
+                profilePic={"Pedro"}
               />
             </View>
             <View style={styles.postTextContainer}>
@@ -110,6 +110,7 @@ export default function Page() {
                   (post, index) =>
                     post.is_profile_post === true && (
                       <Post
+                        isYourPost={true}
                         key={index}
                         id={post.id}
                         postIndex={index}

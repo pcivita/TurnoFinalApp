@@ -1,7 +1,8 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Image } from "react-native";
 import { Themes } from "../../assets/Themes";
 import DiceComponent from "../DiceComponent";
 import { FontAwesome5 } from "@expo/vector-icons";
+import Images from "../../assets/Themes/Images";
 import { useContext, useState } from "react";
 import Animated, {
   useSharedValue,
@@ -60,6 +61,9 @@ export default function RollDice({ onData, canRoll }) {
               Add at least one more activity to get started!
             </Text>
           </View>
+          <View style={styles.imageContainer}>
+            <Image source={Images.diceIcons.faded} style={styles.diceImage} />
+          </View>
           <View style={styles.takeMeThere}>
             <Link href={"/activities/createActivity"}>
               <Text style={styles.takeMeText}>Create an Activity</Text>
@@ -72,8 +76,22 @@ export default function RollDice({ onData, canRoll }) {
 }
 
 const styles = StyleSheet.create({
+  imageContainer: {
+    alignSelf: "center",
+    width: "80%",
+    height: undefined,
+    aspectRatio: 1,
+    borderRadius: 100,
+    overflow: "hidden",
+  },
+  diceImage: {
+    width: "100%",
+    height: undefined,
+    aspectRatio: 1,
+    borderRadius: 100,
+  },
   msg: {
-    gap: 150,
+    gap: 50,
     zIndex: 10,
   },
   takeMeText: {
@@ -86,7 +104,11 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     borderRadius: 10,
+    paddingVertical: 10,
     backgroundColor: Themes.colors.blue,
+
+    shadowOpacity: 0.3,
+    shadowOffset: { height: 2 },
   },
 
   screenContainer: {

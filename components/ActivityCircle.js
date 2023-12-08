@@ -13,10 +13,18 @@ import Animated, {
   useAnimatedGestureHandler,
   runOnJS,
 } from "react-native-reanimated";
+import { useEffect, useState, useContext } from "react";
+import { InProgressContext } from "../contexts/InProgressContext";
 
-import { useEffect, useState } from "react";
-
-export default function ActivityCircle({ right, top, status, index, onPress }) {
+export default function ActivityCircle({
+  right,
+  top,
+  status,
+  index,
+  onPress,
+  flipping,
+  category,
+}) {
   const categories = [
     "running",
     "cat",
@@ -25,6 +33,7 @@ export default function ActivityCircle({ right, top, status, index, onPress }) {
     "graduation-cap",
     "broom",
   ];
+  const { inProgress } = useContext(InProgressContext);
   const scale = useSharedValue(1);
   const rotation = useSharedValue(1);
   const reanimatedStyle = useAnimatedStyle(() => {
@@ -78,7 +87,7 @@ export default function ActivityCircle({ right, top, status, index, onPress }) {
         <Animated.View
           style={[
             [styles.circle, colorStyle],
-            status === "in progress"
+            status === "in progress" && (inProgress || flipping)
               ? reanimatedStyle
               : [styles.circle, colorStyle],
           ]}
@@ -87,7 +96,7 @@ export default function ActivityCircle({ right, top, status, index, onPress }) {
           {status === "complete" && (
             <FontAwesome5
               style={styles.icon}
-              name={categories[index]}
+              name={categories[category]}
               size={40}
               color={Themes.colors.background}
             />

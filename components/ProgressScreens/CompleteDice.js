@@ -21,7 +21,7 @@ export default function CompleteDice({
   setActiveScreen,
   setAppearHeader,
   activityName,
-  activityIndex
+  activityIndex,
 }) {
   const [swipeComplete, setSwipeComplete] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
@@ -55,7 +55,7 @@ export default function CompleteDice({
       <View style={[styles.square]}>
         <ActvityRolled />
       </View>
-      <Journey />
+      <Journey flipping={true} />
       <View style={styles.buttonContainer}>
         <SwipeButton onToggle={onToggle} style={styles.swipeButton} />
       </View>

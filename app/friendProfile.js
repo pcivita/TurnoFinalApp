@@ -25,7 +25,7 @@ export default function Page() {
       <ScrollView style={styles.activityNameContainer}>
         <ProfileCard
           isYourProfile={false}
-          profileName={params.profileName}
+          profileName={params.profilePic}
           handle={params.handle}
           profilePic={params.profilePic}
         />

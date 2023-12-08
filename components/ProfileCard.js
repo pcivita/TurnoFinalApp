@@ -14,6 +14,16 @@ export default function ProfileCard({
     console.log("Pressed");
   };
 
+  const imageDict = {
+    Pedro: require("../assets/Themes/Images/profileImages/IMG_9521.jpg"),
+    Malina: require("../assets/Themes/Images/profileImages/Malina.jpg"),
+    Naz: require("../assets/Themes/Images/profileImages/Naz.heic"),
+    Cecilia: require("../assets/Themes/Images/profileImages/Cecilia.jpg"),
+    Matt: require("../assets/Themes/Images/profileImages/Matt.jpg"),
+    Digo: require("../assets/Themes/Images/profileImages/Digo.jpeg"),
+    Luca: require("../assets/Themes/Images/profileImages/Luca.jpeg"),
+  };
+
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
   });
@@ -25,7 +35,7 @@ export default function ProfileCard({
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image source={profilePic} style={styles.profileImg} />
+        <Image source={imageDict[profilePic]} style={styles.profileImg} />
       </View>
       <Text style={styles.profileName}>{profileName}</Text>
 
@@ -45,7 +55,7 @@ export default function ProfileCard({
         </Link>
       ) : (
         <View style={styles.addFriendBox}>
-          <Text style={styles.handle}> Add Friend </Text>
+          <Text style={styles.handle}> Your Friend </Text>
         </View>
       )}
     </View>

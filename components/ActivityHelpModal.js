@@ -32,15 +32,22 @@ export default function ActivityHelpModal({ isModalVisible, closeHelpModal }) {
         <View style={styles.barIcon} />
 
         <Text style={styles.title}>
-          Turno only allows you to have 6 activities at a time... So choose
-          wisely!
+          Turno only allows you to have 6 activities at a time... Choose wisely!
         </Text>
+
         <View style={styles.h1Container}>
+          <Text style={styles.h1}>To add an activity:</Text>
+          <Text style={styles.h1}>1. Click on a greyed “+” box</Text>
           <Text style={styles.h1}>
-            To add an activity, simply click on an empty slot's plus icon.
+            2. Choose a name for the activity (e.g. “Go on a run”)
           </Text>
-        </View>
-        <View style={styles.h1Container}>
+          <Text style={styles.h1}>
+            3. Write a description (e.g. Run around lake lag for 40 minutes) 4.
+          </Text>
+          <Text style={styles.h1}>
+            4. Choose a category (e.g. Exercise) Click on add!
+          </Text>
+          <Text style={styles.h1}>5. Click on add!</Text>
           <Text style={styles.h1}>
             Clicking on an already made activity allows you to edit it and
             delete it!
@@ -77,6 +84,7 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
+    gap: 12,
   },
   barIcon: {
     width: 60,
@@ -100,9 +108,11 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-Bold",
   },
   h1Container: {
+    width: "80%",
     backgroundColor: Themes.colors.salmonLight,
     padding: 12,
     borderRadius: 16,
+    gap: 12,
   },
 
   btnContainer: {
