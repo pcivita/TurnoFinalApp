@@ -3,8 +3,14 @@ import { View, StyleSheet, Text } from "react-native";
 import { Link, useNavigation } from "expo-router";
 import { Themes } from "../assets/Themes";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Header({ title }) {
+  let headerTitle = title;
+  if (title === "Friends from Feed" || title === "Friends from Profile") {
+    headerTitle="Friends";
+  }
+
   let backPath;
   switch (title) {
     case "Settings":
@@ -13,23 +19,27 @@ export default function Header({ title }) {
     case "Create Activity":
       backPath = {pathname: "/activities/home"};
       break;
-    case "Friends":
-      backPath = {pathname: "/feed/feedHome"};
+    case "Friends from Feed":
+      backPath = {pathname: "/feed"};
+      break;
+    case "Friends from Profile":
+      backPath = {pathname: "/profile"};
       break;
   }
 
-
   return (
     <View style={styles.container}>
-      {(title === "Settings" || title === "Create Activity" || title === "Friends") ?
-        <Link href={backPath}>
-          <FontAwesome5
-            name="arrow-left"
-            size={25}
-            color={"white"}
-            style={styles.leftIcon}
-          />
-        </Link>
+      {(title === "Settings" || title === "Create Activity" || 
+      title === "Friends from Feed" || title === "Friends from Profile") ?
+        <View style={styles.leftIcon}>
+          <Link href={backPath}>
+            <FontAwesome5
+              name="arrow-left"
+              size={25}
+              color={"white"}
+            />
+          </Link>
+        </View>
       :
         <FontAwesome5
           name="dice-five" 
@@ -39,10 +49,10 @@ export default function Header({ title }) {
           style={styles.leftIcon}
         />
       }
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title}>{headerTitle}</Text>
       {(title === "Profile" || title === "Feed") && (
         <Link 
-          href={ title === "Profile" ? {pathname: "/profile/settings"} : {pathname: "/feed/myFriends"}} 
+          href={ title === "Profile" ? {pathname: "/profile/settings"} : {pathname: "friendsPage", previousPage: "Feed"}} 
           style={styles.rightIcon}
         >
           <FontAwesome5

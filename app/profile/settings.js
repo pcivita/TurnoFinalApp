@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     gap: 5,
-    backgroundColor: "white",
+    backgroundColor: Themes.colors.background
   },
   titleContainer: {
     height: "10%",

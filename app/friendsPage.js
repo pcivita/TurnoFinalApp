@@ -1,16 +1,20 @@
 import { StyleSheet, Text, View } from "react-native";
-import { Stack } from "expo-router";
-import { Themes } from "../../assets/Themes";
-import Header from "../../components/Header";
+import { Stack, useRouter, useLocalSearchParams } from "expo-router";
+import { Themes } from "../assets/Themes";
+import Header from "../components/Header";
 
 export default function Page() {
+  // const router = useRouter();
+  const params = useLocalSearchParams();
+  const { previousPage } = params;
+
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
-      <Header title="Friends" />
+      <Header title={previousPage === "Profile" ? "Friends from Profile" : "Friends from Feed"} />
       <View style={styles.activityNameContainer}>
         <Text style={styles.subtitle}>
-          Friend Name
+          Friends PAGEEEE 
         </Text>
       </View>
     </View>
@@ -22,7 +26,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flex: 1,
     gap: 5,
-    backgroundColor: "white",
+    backgroundColor: Themes.colors.background
   },
   titleContainer: {
     height: "10%",

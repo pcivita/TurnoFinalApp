@@ -21,17 +21,22 @@ export default function ProfileCard({ isYourProfile, profileName, handle, profil
       <Text style={styles.profileName}>{profileName}</Text>
       
       <Text style={styles.handle}>{handle}</Text>
-      {/* <Link href={{ pathname: "/feed/myFriends" }} > */}
-      {isYourProfile ? 
-        <View style={styles.friendsBox}>
-          <Text style={styles.handle}> 16 friends </Text>
-        </View>
+      {isYourProfile ?
+        <Link href={{ 
+          pathname: "/friendsPage", 
+          params: {previousPage: "Profile"}
+        }}> 
+          <View>
+            <View style={styles.friendsBox}>
+              <Text style={styles.handle}> 16 friends </Text>
+            </View>
+          </View>
+        </Link>
         :
         <View style={styles.addFriendBox}>
           <Text style={styles.handle}> Add Friend </Text>
         </View>
       }
-      {/* </Link> */}
     </View>
   );
 }

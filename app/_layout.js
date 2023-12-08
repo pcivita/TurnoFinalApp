@@ -99,12 +99,17 @@ export default function AppLayout() {
             ),
           }}
         />
+        <Tabs.Screen
+          name="friendsPage"
+          options={{
+            href: null,
+          }}
+        />
       </Tabs>
     </PostsProvider>
     </ActivitiesProvider>
   );
 }
-
 
 const styles = StyleSheet.create({
   iconAndText: {
