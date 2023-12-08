@@ -1,10 +1,19 @@
-import { Image, Text, View, StyleSheet } from "react-native";
+import { Image, Text, View, StyleSheet, Pressable } from "react-native";
 import { Link } from "expo-router";
 import Images from "../assets/Themes/Images";
 import { useFonts } from "expo-font";
 import { Themes } from "../assets/Themes";
 
-export default function ProfileCard({ isYourProfile, profileName, handle, profilePic }) {
+export default function ProfileCard({
+  isYourProfile,
+  profileName,
+  handle,
+  profilePic,
+}) {
+  const handleFriends = () => {
+    console.log("Pressed");
+  };
+
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
   });
@@ -19,19 +28,26 @@ export default function ProfileCard({ isYourProfile, profileName, handle, profil
         <Image source={profilePic} style={styles.profileImg} />
       </View>
       <Text style={styles.profileName}>{profileName}</Text>
-      
+
       <Text style={styles.handle}>{handle}</Text>
-      {/* <Link href={{ pathname: "/feed/myFriends" }} > */}
-      {isYourProfile ? 
-        <View style={styles.friendsBox}>
-          <Text style={styles.handle}> 16 friends </Text>
-        </View>
-        :
+      {isYourProfile ? (
+        <Link
+          href={{
+            pathname: "/friendsPage",
+            params: { previousPage: "Profile" },
+          }}
+        >
+          <View>
+            <View style={styles.friendsBox}>
+              <Text style={styles.handle}> 3 friends </Text>
+            </View>
+          </View>
+        </Link>
+      ) : (
         <View style={styles.addFriendBox}>
           <Text style={styles.handle}> Add Friend </Text>
         </View>
-      }
-      {/* </Link> */}
+      )}
     </View>
   );
 }
@@ -71,6 +87,7 @@ const styles = StyleSheet.create({
   handle: {
     fontFamily: "Poppins-Regular",
     fontSize: 17,
+    textAlign: "center",
   },
   friendsBox: {
     marginTop: 8,
@@ -87,6 +104,6 @@ const styles = StyleSheet.create({
   addFriendText: {
     fontFamily: "Poppins-Regular",
     fontSize: 17,
-    color: "white"
+    color: "white",
   },
 });

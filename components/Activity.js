@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { Themes } from "../assets/Themes";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import Images from "../assets/Themes/Images";
 import ActivityModal from "./ActivityModal";
@@ -15,9 +15,7 @@ export default function Activity({ activityObject, index, section }) {
       : styles.pendingActivity;
   const textColor =
     section === "Current Activities" ? styles.currentText : styles.pendingText;
-  const iconColor = 
-    section === "Current Activities" ? "white": "black";
-    
+  const iconColor = section === "Current Activities" ? "white" : "black";
 
   const [isModalVisible, setModalVisible] = useState(false);
   const openModal = () => {
@@ -39,27 +37,28 @@ export default function Activity({ activityObject, index, section }) {
   let activityName = activityObject ? activityObject[0] : null;
 
   return (
-    <View style={styles.outerContainer}>
-      {activityObject ? 
+    <View>
+      {activityObject ? (
         <TouchableOpacity onPress={activityObject ? openModal : null}>
           <View style={styles.container}>
             <View style={styles.diceContainer}>
-              <Image
-                source={diceImages[index]}
-                style={styles.diceNumberIcon}
-              />
+              <Image source={diceImages[index]} style={styles.diceNumberIcon} />
             </View>
-            <Text style={styles.text}> {activityName} </Text>
-            <ActivityModal 
-              isVisible={isModalVisible} 
-              closeModal={closeModal} 
+            <View style={styles.textContainer}>
+              <Text style={styles.text} numberOfLines={3} ellipsizeMode="tail">
+                {activityName}
+              </Text>
+            </View>
+            <ActivityModal
+              isVisible={isModalVisible}
+              closeModal={closeModal}
               activity={activityObject}
               indexInSection={index - 1}
               section="Current Activities"
             />
           </View>
         </TouchableOpacity>
-      :
+      ) : (
         <Link
           href={{
             pathname: "/activities/createActivity",
@@ -67,11 +66,16 @@ export default function Activity({ activityObject, index, section }) {
         >
           <View style={[styles.container, styles.gray]}>
             <View style={styles.createActivityContainer}>
-              <FontAwesome5 name="plus" size={40} color="white" style={styles.createActivity} />
+              <FontAwesome5
+                name="plus"
+                size={40}
+                color="white"
+                style={styles.createActivity}
+              />
             </View>
           </View>
         </Link>
-      }
+      )}
     </View>
   );
 }
@@ -84,15 +88,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "space-around",
     alignItems: "center",
-    shadowColor: 'rgba(0, 0, 0, 0.5)',
-    shadowOffset: { height: 2},
+    shadowColor: "rgba(0, 0, 0, 0.5)",
+    shadowOffset: { height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
+    padding: 8,
   },
   gray: {
     backgroundColor: Themes.colors.darkGray,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   leftOfContainer: {
     flexDirection: "row",
@@ -111,7 +116,12 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontFamily: "Poppins-Bold",
-    color: "white"
+    color: "white",
+  },
+  textContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   currentText: {
     color: "white",
@@ -149,15 +159,14 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   createActivity: {
-    alignSelf: "center"
+    alignSelf: "center",
   },
   box: {
     flexDirection: "column",
     alignItems: "center",
     padding: 10,
-  }
+  },
 });
-

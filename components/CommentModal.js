@@ -58,6 +58,7 @@ export default function CommentModal({
   // const commentsTEST = posts[postIndex].comments;
 
   const handleAddComment = async () => {
+    console.log("Comment Pressed");
     let dataBaseName;
     if (profilePost) {
       dataBaseName = "posts";
@@ -115,7 +116,7 @@ export default function CommentModal({
               {comments !== null &&
                 comments.map((commentData, index) => {
                   return <Comment key={index} commentData={commentData} />;
-              })}
+                })}
             </View>
           </ScrollView>
           <View style={styles.inputContainer}>
@@ -132,11 +133,11 @@ export default function CommentModal({
               onChangeText={(text) => setNewComment(text)}
             />
             {newComment && (
-              <TouchableOpacity onPress={handleAddComment}>
+              <Pressable onPress={handleAddComment}>
                 <View style={styles.sendContainer}>
                   <FontAwesome5 name="arrow-up" size={20} color={"white"} />
                 </View>
-              </TouchableOpacity>
+              </Pressable>
             )}
           </View>
         </View>

@@ -2,32 +2,101 @@ import { View, Text, StyleSheet, ScrollView, Button } from "react-native";
 import ActivityCircle from "../ActivityCircle";
 import { Themes } from "../../assets/Themes";
 import SwipeButton from "../SwipeButton";
+import { useState } from "react";
+import ActivityCircleModal from "../ActivityCircleModal";
 
 export default function Journey() {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const handleActivityCirclePress = () => {
+    setModalVisible(true);
+  };
+
+  const rightPosition = [
+    70, 55, 25, -15, -50, -50, -25, 25, 60, 70, 70, 60, 25, 0, 0, 35, 70, 70,
+    55, 25, -15, -50, -50, -25, 25, 60, 70, 70, 60, 25, 0, 0, 35, 70, 70, 55,
+    25, -15, -50, -50, -25, 25, 60, 70, 70, 60, 25, 0, 0, 35, 70,
+  ];
+  const status = [
+    "complete",
+    "complete",
+    "complete",
+    "complete",
+    "complete",
+    "complete",
+    "complete",
+    "in progress",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+    "incomplete",
+  ];
+  const topPosition = 70;
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentOffset={{ x: 0, y: 300 }}
     >
-      <ActivityCircle right={70} status="complete" top={70} index={0} />
-      <ActivityCircle right={55} status="complete" top={70} index={1} />
-      <ActivityCircle right={25} status="complete" top={70} index={3} />
-      <ActivityCircle right={-15} status="complete" top={60} index={4} />
-      <ActivityCircle right={-50} status="complete" top={70} index={1} />
-      <ActivityCircle right={-50} status="complete" top={70} index={5} />
-      <ActivityCircle right={-25} status="complete" top={70} index={0} />
-      <ActivityCircle right={25} status="in progress" top={30} />
+      {rightPosition.map((circle, index) => (
+        <ActivityCircle
+          key={index} // Ensure a unique key for each component
+          right={circle} // Assuming 'circle' represents the right position
+          status={status[index]}
+          top={topPosition}
+          index={index} // Set the index if needed, otherwise remove it
+        />
+      ))}
 
-      <ActivityCircle right={60} status="incomplete" top={95} />
-      <ActivityCircle right={70} status="incomplete" top={50} />
-      <ActivityCircle right={70} status="incomplete" top={100} />
-      <ActivityCircle right={60} status="incomplete" top={50} />
-      <ActivityCircle right={25} status="incomplete" top={90} />
-      <ActivityCircle right={0} status="incomplete" top={50} />
-      <ActivityCircle right={0} status="incomplete" top={100} />
-      <ActivityCircle right={35} status="incomplete" top={30} />
+      <ActivityCircle
+        right={rightPosition[7]}
+        status="in progress"
+        top={topPosition}
+        onPress={handleActivityCirclePress}
+      />
 
-      <ActivityCircle right={70} status="incomplete" top={100} />
+      <ActivityCircleModal
+        isModalVisible={isModalVisible}
+        closeModal={() => setModalVisible(false)}
+      />
     </ScrollView>
   );
 }

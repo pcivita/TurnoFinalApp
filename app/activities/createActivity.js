@@ -11,6 +11,8 @@ import { Link, Stack } from "expo-router";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { Themes } from "../../assets/Themes";
 import Category from "../../components/Category";
+import Header from "../../components/Header";
+
 
 export default function Page() {
   const [activityName, setActivityName] = useState("");
@@ -48,7 +50,7 @@ export default function Page() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
-        <Stack.Screen
+        {/* <Stack.Screen
           options={{
             title: "",
             headerStyle: {
@@ -56,10 +58,14 @@ export default function Page() {
             },
             headerTintColor: "white",
           }}
+        /> */}
+        <Stack.Screen
+          options={{headerShown: false }}
         />
-        <View style={styles.titleContainer}>
+        {/* <View style={styles.titleContainer}>
           <Text style={styles.title}> Create Activity </Text>
-        </View>
+        </View> */}
+        <Header title="Create Activity"/>
         <View style={styles.activityNameContainer}>
           <Text style={styles.subtitle}>
             Activity Name <Text style={styles.asterick}>*</Text>

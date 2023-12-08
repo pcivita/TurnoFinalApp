@@ -17,7 +17,10 @@ export default function ActvityRollled({ diceNum, activityName }) {
         <Image source={icons[diceNum]} style={styles.image} />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.text}> {activityName} </Text>
+        <Text style={styles.text} numberOfLines={3} ellipsizeMode="tail">
+          {" "}
+          {activityName}{" "}
+        </Text>
       </View>
     </View>
   );
@@ -35,6 +38,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     gap: 12,
     top: -16,
+    paddingHorizontal: 12,
 
     shadowOpacity: 0.3,
     shadowOffset: {
@@ -57,10 +61,12 @@ const styles = StyleSheet.create({
   textContainer: {
     justifyContent: "center",
     alignItems: "center",
+    flex: 1,
+    borderWidth: 2,
   },
   text: {
     fontFamily: "Poppins-Bold",
     color: Themes.colors.background,
-    fontSize: 32,
+    fontSize: 24,
   },
 });

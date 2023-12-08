@@ -36,7 +36,9 @@ export default function Page() {
           isYourProfile={false}
           profileName={profileName}
           handle={handle}
-          profilePic={profilePic}
+          // TO-DO: Using profile pic (a string isn't working so i passed in a # for now but fix)
+          profilePic={32}
+          // profilePic={profilePic}
         />
       </View>
     </View>
