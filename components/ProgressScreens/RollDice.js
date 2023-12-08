@@ -2,8 +2,7 @@ import { Text, View, StyleSheet } from "react-native";
 import { Themes } from "../../assets/Themes";
 import DiceComponent from "../DiceComponent";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { useState } from "react";
-import ActvityRollled from "../ActivityRolled";
+import { useContext, useState } from "react";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -14,8 +13,9 @@ import Animated, {
   runOnJS,
 } from "react-native-reanimated";
 import Header from "../Header";
+import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 
-export default function RollDice({ onData }) {
+export default function RollDice({ onData, canRoll }) {
   const [appearHeader, setAppearHeader] = useState(false);
   const handleData = (data) => {
     // Process the data
@@ -36,13 +36,24 @@ export default function RollDice({ onData }) {
     };
   }, []);
 
+  const { activities } = useContext(ActivitiesContext);
+  console.log("length " + activities.length);
+
   return (
     <View style={styles.screenContainer}>
       <Header title="Roll" />
-      <View styles={styles.upperTextContainer}>
-        <Text style={styles.upperText}> Roll the dice for an Activity! </Text>
-      </View>
-      <DiceComponent style={styles.Dice} onData={handleData} />
+      {canRoll ?
+        <View>
+          <View styles={styles.upperTextContainer}>
+            <Text style={styles.upperText}> Roll the dice for an Activity! </Text>
+          </View>
+          <DiceComponent style={styles.Dice} onData={handleData} />
+        </View>
+       :
+        <View styles={styles.upperTextContainer}>
+          <Text style={styles.upperText}> Add at least one more activity to get started! </Text>
+        </View>
+      }
     </View>
   );
 }
@@ -55,6 +66,7 @@ const styles = StyleSheet.create({
     backgroundColor: Themes.colors.background,
     gap: 30,
     width: "100%",
+    alignSelf: "center",
   },
   header: {
     width: "100%",
