@@ -9,18 +9,9 @@ export default function Page() {
   return (
     <View style={styles.container}>
       <Stack.Screen
-        options={{
-          title: "",
-          headerStyle: {
-            backgroundColor: Themes.colors.salmon,
-          },
-          headerTintColor: "white",
-          // header: () => <Header />
-        }}
+        options={{headerShown: false }}
       />
-     <View style={styles.titleContainer}>
-        <Text style={styles.title}> Settings </Text>
-      </View>
+      <Header title="Settings" />
       <View style={styles.activityNameContainer}>
         <Text style={styles.subtitle}>Your Name</Text>
         <TextInput

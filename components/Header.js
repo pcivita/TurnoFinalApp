@@ -1,23 +1,48 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { Link } from "expo-router";
+import { Link, useNavigation } from "expo-router";
 import { Themes } from "../assets/Themes";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Header({ title }) {
+  let iconName;
+  let backPath;
+  switch (title) {
+    case "Settings":
+      iconName = "arrow-left";
+      backPath = {pathname: "/profile"};
+      break;
+    case "Create Activity":
+      iconName = "arrow-left";
+      backPath = {pathname: "/activities/home"};
+      break;
+  }
+
+
   return (
     <View style={styles.container}>
-      <FontAwesome5
-        name="dice-five" 
-        size={25}
-        color={"white"}
-        transform={[{ rotate: "45deg" }]}
-        style={styles.leftIcon}
-      />
+      {(title === "Settings" || title === "Create Activity") ?
+        <Link href={ backPath }>
+          <FontAwesome5
+            name={iconName}
+            size={25}
+            color={"white"}
+            style={styles.leftIcon}
+          />
+        </Link>
+      :
+        <FontAwesome5
+          name="dice-five" 
+          size={25}
+          color={"white"}
+          transform={[{ rotate: "45deg" }]}
+          style={styles.leftIcon}
+        />
+      }
       <Text style={styles.title}>{title}</Text>
       {(title === "Profile" || title === "Feed") && (
         <Link 
-          href={ title === "Profile" ? {pathname: "/profile/settings"} : {pathname: "/feed/myFriends"}} 
+          href={ title === "Profile" ? {pathname: "/profile/settings"} : {pathname: "/feed/friends"}} 
           style={styles.rightIcon}
         >
           <FontAwesome5
