@@ -14,6 +14,7 @@ import Animated, {
 } from "react-native-reanimated";
 import Header from "../Header";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
+import { Link } from "expo-router";
 
 export default function RollDice({ onData, canRoll }) {
   const [appearHeader, setAppearHeader] = useState(false);
@@ -42,23 +43,52 @@ export default function RollDice({ onData, canRoll }) {
   return (
     <View style={styles.screenContainer}>
       <Header title="Roll" />
-      {canRoll ?
+      {canRoll ? (
         <View>
           <View styles={styles.upperTextContainer}>
-            <Text style={styles.upperText}> Roll the dice for an Activity! </Text>
+            <Text style={styles.upperText}>
+              {" "}
+              Roll the dice for an Activity!{" "}
+            </Text>
           </View>
           <DiceComponent style={styles.Dice} onData={handleData} />
         </View>
-       :
-        <View styles={styles.upperTextContainer}>
-          <Text style={styles.upperText}> Add at least one more activity to get started! </Text>
+      ) : (
+        <View style={styles.msg}>
+          <View>
+            <Text style={styles.upperText}>
+              Add at least one more activity to get started!
+            </Text>
+          </View>
+          <View style={styles.takeMeThere}>
+            <Link href={"/activities/createActivity"}>
+              <Text style={styles.takeMeText}>Create an Activity</Text>
+            </Link>
+          </View>
         </View>
-      }
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  msg: {
+    gap: 150,
+    zIndex: 10,
+  },
+  takeMeText: {
+    color: Themes.colors.background,
+    fontSize: 32,
+    fontFamily: "Poppins-Bold",
+    textAlign: "center",
+  },
+  takeMeThere: {
+    alignContent: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+    backgroundColor: Themes.colors.blue,
+  },
+
   screenContainer: {
     flex: 1,
     display: "flex",
@@ -93,7 +123,7 @@ const styles = StyleSheet.create({
   },
 
   upperTextContainer: {
-    width: 30,
+    width: "100%",
 
     borderWidth: 5,
   },

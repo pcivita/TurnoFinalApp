@@ -69,7 +69,7 @@ export default function CommentModal({
     const post_id = id;
     const new_comment = {
       user_handle: "@pcivita",
-      user_image: 31, //Pedro Profile IMG
+      user_image: "Pedro", //Pedro Profile IMG
       comment_text: newComment,
     };
 
@@ -122,7 +122,7 @@ export default function CommentModal({
           <View style={styles.inputContainer}>
             <View style={styles.imageContainer}>
               <Image
-                source={Images.profileImages.pedro}
+                source={require("../assets/Themes/Images/profileImages/IMG_9521.jpg")}
                 style={styles.profileImg}
               />
             </View>

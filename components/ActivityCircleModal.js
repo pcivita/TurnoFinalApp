@@ -3,7 +3,13 @@ import React, { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, Image, Switch, Pressable } from "react-native";
 import Themes from "../assets/Themes/themes.js";
 
-export default function ActivityCircleModal({ isModalVisible, closeModal }) {
+export default function ActivityCircleModal({
+  isModalVisible,
+  closeModal,
+  inProgress,
+}) {
+  //Provisory
+  let activityName = "Soccer";
   return (
     <Modal
       onBackdropPress={closeModal}
@@ -21,9 +27,14 @@ export default function ActivityCircleModal({ isModalVisible, closeModal }) {
     >
       <View style={styles.modalContent}>
         {/* <View style={styles.barIcon} /> */}
-        <Text style={styles.title}>In Progress</Text>
-      
-        
+        <Text style={styles.title}>
+          {!inProgress
+            ? "You Have an activity in progress:"
+            : "You completed: "}
+        </Text>
+
+        <Text>{activityName}</Text>
+
         <View style={styles.buttonsContainer}>
           <Pressable onPress={closeModal}>
             <View style={styles.buttonContainer}>
@@ -62,7 +73,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     marginVertical: 20,
+    marginHorizontal: 12,
     fontFamily: "Poppins-Bold",
+    textAlign: "center",
   },
   btnContainer: {
     display: "flex",

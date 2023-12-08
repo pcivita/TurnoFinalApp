@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     shadowOffset: { height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
-    padding: 8,
+    padding: 12,
   },
   gray: {
     backgroundColor: Themes.colors.darkGray,
@@ -117,10 +117,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "Poppins-Bold",
     color: "white",
+    textAlign: "center",
   },
   textContainer: {
     flex: 1,
-    alignItems: "center",
+    alignContent: "center",
     justifyContent: "center",
   },
   currentText: {

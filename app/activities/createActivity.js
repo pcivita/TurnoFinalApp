@@ -13,7 +13,6 @@ import { Themes } from "../../assets/Themes";
 import Category from "../../components/Category";
 import Header from "../../components/Header";
 
-
 export default function Page() {
   const [activityName, setActivityName] = useState("");
   const [description, setDescription] = useState("");
@@ -59,13 +58,11 @@ export default function Page() {
             headerTintColor: "white",
           }}
         /> */}
-        <Stack.Screen
-          options={{headerShown: false }}
-        />
+        <Stack.Screen options={{ headerShown: false }} />
         {/* <View style={styles.titleContainer}>
           <Text style={styles.title}> Create Activity </Text>
         </View> */}
-        <Header title="Create Activity"/>
+        <Header title="Create Activity" />
         <View style={styles.activityNameContainer}>
           <Text style={styles.subtitle}>
             Activity Name <Text style={styles.asterick}>*</Text>
@@ -123,7 +120,9 @@ export default function Page() {
             onPress={handleAddActivity}
           >
             <View
-              style={isFormFilled ? styles.buttonEnabled : styles.buttonDisabled}
+              style={
+                isFormFilled ? styles.buttonEnabled : styles.buttonDisabled
+              }
             >
               <Text style={styles.addToDice}>Add to Dice</Text>
             </View>
@@ -163,13 +162,12 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     marginHorizontal: 12,
-    padding: 10,
     fontSize: 16,
     borderRadius: 5,
-    borderWidth: 3,
+
     padding: 10,
-    borderWidth: 3,
-    borderColor: Themes.colors.mediumGray,
+    borderWidth: 0.5,
+    borderColor: "black",
     fontFamily: "Poppins-Regular",
   },
   activityNameContainer: {
@@ -200,8 +198,8 @@ const styles = StyleSheet.create({
   },
   addToDiceContainer: {
     height: "8%",
-    margin: 12,
-    justifyContent: "flex-end",
+    marginHorizontal: 12,
+
     alignItems: "flex-end",
   },
   buttonEnabled: {

@@ -18,6 +18,16 @@ export default function Comment({ commentData }) {
     return undefined;
   }
 
+  const imageDict = {
+    Pedro: require("../assets/Themes/Images/profileImages/IMG_9521.jpg"),
+    Malina: require("../assets/Themes/Images/profileImages/Malina.jpg"),
+    Naz: require("../assets/Themes/Images/profileImages/Naz.heic"),
+    Cecilia: require("../assets/Themes/Images/profileImages/Cecilia.jpg"),
+    Matt: require("../assets/Themes/Images/profileImages/Matt.jpg"),
+    Digo: require("../assets/Themes/Images/profileImages/Digo.jpeg"),
+    Luca: require("../assets/Themes/Images/profileImages/Luca.jpeg"),
+  };
+
   const username = commentData.user_handle;
   const profilePic = commentData.user_image;
   const comment = commentData.comment_text;
@@ -28,7 +38,7 @@ export default function Comment({ commentData }) {
     <View style={styles.container}>
       <View style={styles.ImageText}>
         <View style={styles.imageContainer}>
-          <Image source={profilePic} style={styles.profileImg} />
+          <Image source={imageDict[profilePic]} style={styles.profileImg} />
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.usernameText}>{username}</Text>

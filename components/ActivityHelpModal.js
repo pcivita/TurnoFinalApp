@@ -30,13 +30,27 @@ export default function ActivityHelpModal({ isModalVisible, closeHelpModal }) {
     >
       <View style={styles.modalContent}>
         <View style={styles.barIcon} />
-        <Text style={styles.title}>How to add or edit activities</Text>
-      
-        
+
+        <Text style={styles.title}>
+          Turno only allows you to have 6 activities at a time... So choose
+          wisely!
+        </Text>
+        <View style={styles.h1Container}>
+          <Text style={styles.h1}>
+            To add an activity, simply click on an empty slot's plus icon.
+          </Text>
+        </View>
+        <View style={styles.h1Container}>
+          <Text style={styles.h1}>
+            Clicking on an already made activity allows you to edit it and
+            delete it!
+          </Text>
+        </View>
+
         <View style={styles.buttonsContainer}>
           <Pressable onPress={closeHelpModal}>
             <View style={styles.buttonContainer}>
-              <Text style={styles.buttonText}>Done</Text>
+              <Text style={styles.buttonText}>Got it!</Text>
             </View>
           </Pressable>
         </View>
@@ -53,6 +67,7 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: "white",
     paddingTop: 12,
+    paddingHorizontal: 20,
     // paddingHorizontal: 12,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
@@ -74,54 +89,22 @@ const styles = StyleSheet.create({
     top: 5,
   },
   title: {
+    textAlign: "center",
     fontSize: 24,
     marginVertical: 20,
     fontFamily: "Poppins-Bold",
   },
-  statsContainer: {
-    width: "90%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flex: 1,
+  h1: {
+    fontSize: 17,
+    color: Themes.colors.background,
+    fontFamily: "Poppins-Bold",
   },
-  stat: {
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 15,
-    maxWidth: "50%",
+  h1Container: {
+    backgroundColor: Themes.colors.salmonLight,
+    padding: 12,
+    borderRadius: 16,
   },
-  circle: {
-    width: 150,
-    height: undefined,
-    aspectRatio: 1,
-    borderRadius: 90,
-    borderWidth: 6,
-    borderColor: Themes.colors.salmon,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  circleText: {
-    fontSize: 40,
-    fontFamily: "Poppins-Regular",
-  },
-  circleDescription: {
-    fontSize: 15,
-    // lineHeight: 30,
-    fontFamily: "Poppins-Regular",
-    textAlign: "center",
-  },
-  toggleContainer: {
-    width: "102%",
-    marginTop: 20,
-    padding: 25,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: Themes.colors.mediumGray,
-  },
+
   btnContainer: {
     display: "flex",
     alignItems: "center",

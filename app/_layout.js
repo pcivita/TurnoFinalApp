@@ -6,7 +6,11 @@ import Kudos from "../components/Icons/Kudos";
 import KudosIcon from "../components/Icons/Kudos";
 import { Themes } from "../assets/Themes";
 import { PostsProvider } from "../contexts/PostsContext";
-import { ActivitiesProvider, ActivitiesContext } from "../contexts/ActivitiesContext";
+import {
+  ActivitiesProvider,
+  ActivitiesContext,
+} from "../contexts/ActivitiesContext";
+import { InProgressProvider } from "../contexts/InProgressContext";
 import { useFonts } from "expo-font";
 import DiceSVG from "../components/Icons/Dice";
 
@@ -21,101 +25,108 @@ export default function AppLayout() {
   }
 
   return (
-    <ActivitiesProvider>
-    <PostsProvider>
-      <Tabs
-        screenOptions={{
-          headerShown: false,
-          tabBarActiveTintColor: Themes.colors.salmon,
-          tabBarInactiveTintColor: "black",
-          tabBarStyle: {
-            height: 80,
-            backgroundColor: Themes.colors.lightGray,
-          },
-          // tabBarShowLabel: false,
-          tabBarLabelStyle: {
-            display: "none",
-          },
-        }}
-      >
-        <Tabs.Screen
-          name="feed"
-          options={{
-            tabBarLabelStyle: styles.iconAndText,
-            tabBarLabel: "Feed",
-            tabBarIcon: ({ color }) => (
-              <KudosIcon size={27} color={color} notFilled={true} />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="activities"
-          options={{
-            tabBarLabelStyle: styles.iconAndText,
-            tabBarLabel: "Activities",
-            tabBarIcon: ({ size, color }) => (
-              <FontAwesome5 name="clipboard" size={size} color={color} />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="index"
-          options={{
-            tabBarIcon: ({ size, color }) => (
-              <View
-                style={{
-                  top: -4,
-                  height: 80,
-                  width: 80,
-                  borderRadius: 50,
-                  backgroundColor: Themes.colors.lightGray,
-                  justifyContent: "flex-start",
-                  paddingTop: 2,
-                  alignItems: "center",
-                }}
-              >
-                <DiceSVG width={70} color={color} rectSize={10}/>
-              </View>
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="progress/index"
-          options={{
-            tabBarLabelStyle: styles.iconAndText,
-            tabBarLabel: "Progress",
-            tabBarIcon: ({ size, color }) => (
-              <FontAwesome5 name="check-circle" size={size} color={color} />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="profile"
-          options={{
-            tabBarLabelStyle: styles.iconAndText,
-            tabBarLabel: "Profile",
-            tabBarIcon: ({ size, color }) => (
-              <FontAwesome5 name="user" size={size} color={color} />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="friendsPage"
-          options={{
-            href: null,
-          }}
-        />
-      </Tabs>
-    </PostsProvider>
-    </ActivitiesProvider>
+    <InProgressProvider>
+      <ActivitiesProvider>
+        <PostsProvider>
+          <Tabs
+            screenOptions={{
+              headerShown: false,
+              tabBarActiveTintColor: Themes.colors.salmon,
+              tabBarInactiveTintColor: "black",
+              tabBarStyle: {
+                height: 80,
+                backgroundColor: Themes.colors.lightGray,
+              },
+              // tabBarShowLabel: false,
+              tabBarLabelStyle: {
+                display: "none",
+              },
+            }}
+          >
+            <Tabs.Screen
+              name="feed"
+              options={{
+                tabBarLabelStyle: styles.iconAndText,
+                tabBarLabel: "Feed",
+                tabBarIcon: ({ color }) => (
+                  <KudosIcon size={27} color={color} notFilled={true} />
+                ),
+              }}
+            />
+            <Tabs.Screen
+              name="activities"
+              options={{
+                tabBarLabelStyle: styles.iconAndText,
+                tabBarLabel: "Activities",
+                tabBarIcon: ({ size, color }) => (
+                  <FontAwesome5 name="clipboard" size={size} color={color} />
+                ),
+              }}
+            />
+            <Tabs.Screen
+              name="index"
+              options={{
+                tabBarIcon: ({ size, color }) => (
+                  <View
+                    style={{
+                      top: -4,
+                      height: 80,
+                      width: 80,
+                      borderRadius: 50,
+                      backgroundColor: Themes.colors.lightGray,
+                      justifyContent: "flex-start",
+                      paddingTop: 2,
+                      alignItems: "center",
+                    }}
+                  >
+                    <DiceSVG width={70} color={color} rectSize={10} />
+                  </View>
+                ),
+              }}
+            />
+            <Tabs.Screen
+              name="progress/index"
+              options={{
+                tabBarLabelStyle: styles.iconAndText,
+                tabBarLabel: "Progress",
+                tabBarIcon: ({ size, color }) => (
+                  <FontAwesome5 name="check-circle" size={size} color={color} />
+                ),
+              }}
+            />
+            <Tabs.Screen
+              name="profile"
+              options={{
+                tabBarLabelStyle: styles.iconAndText,
+                tabBarLabel: "Profile",
+                tabBarIcon: ({ size, color }) => (
+                  <FontAwesome5 name="user" size={size} color={color} />
+                ),
+              }}
+            />
+            <Tabs.Screen
+              name="friendsPage"
+              options={{
+                href: null,
+              }}
+            />
+            <Tabs.Screen
+              name="friendProfile"
+              options={{
+                href: null,
+              }}
+            />
+          </Tabs>
+        </PostsProvider>
+      </ActivitiesProvider>
+    </InProgressProvider>
   );
 }
 
 const styles = StyleSheet.create({
   iconAndText: {
-    display: "flex", 
-    fontSize: 12, 
-    fontFamily: "Poppins-Regular", 
-    
+    display: "flex",
+    fontSize: 12,
+    fontFamily: "Poppins-Regular",
   },
 });

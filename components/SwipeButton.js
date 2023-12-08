@@ -1,3 +1,4 @@
+// THIS component is taken (and adapted) from Funcs IO: https://www.youtube.com/watch?v=rseiP75qn0Y
 import React from "react";
 import { StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -93,7 +94,7 @@ const SwipeButton = ({ onToggle }) => {
         opacity: interpolate(
           X.value,
           InterpolateXInput,
-          [0.7, 0],
+          [0.7, -0.5],
           Extrapolate.CLAMP
         ),
         transform: [

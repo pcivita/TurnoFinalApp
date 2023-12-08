@@ -1,21 +1,31 @@
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { Themes } from "../assets/Themes";
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5 } from "@expo/vector-icons";
 
-export default function Category({ id, isSelected, onSelect, categoryName, iconName }) {
+export default function Category({
+  id,
+  isSelected,
+  onSelect,
+  categoryName,
+  iconName,
+}) {
   return (
     <TouchableOpacity
       style={[styles.container, isSelected ? styles.selectedContainer : null]}
       onPress={() => onSelect(id)}
     >
-      <FontAwesome5 
-        style={styles.icon} 
-        name={iconName} 
-        size={40} 
-        color={isSelected ? Themes.colors.lightGray : Themes.colors.salmon }
+      <FontAwesome5
+        style={styles.icon}
+        name={iconName}
+        size={40}
+        color={isSelected ? Themes.colors.background : Themes.colors.salmon}
       />
-      <Text style={[styles.categoryText, isSelected ? styles.selectedText : null]}>{categoryName}</Text>
+      <Text
+        style={[styles.categoryText, isSelected ? styles.selectedText : null]}
+      >
+        {categoryName}
+      </Text>
     </TouchableOpacity>
   );
 }
@@ -29,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: Themes.colors.lightGray,
     borderColor: Themes.colors.mediumGray,
     borderRadius: 20,
-    borderWidth: 3,
+
     paddingVertical: 14,
   },
 
@@ -39,9 +49,9 @@ const styles = StyleSheet.create({
   categoryText: {
     fontSize: 14,
     color: Themes.colors.salmon,
-    fontFamily: "Poppins-Regular"
+    fontFamily: "Poppins-Regular",
   },
   selectedText: {
     color: "white",
-  }
+  },
 });

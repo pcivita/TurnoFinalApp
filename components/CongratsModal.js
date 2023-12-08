@@ -6,11 +6,12 @@ import { useFonts } from "expo-font";
 import PostPreview from "./PostPreview.js";
 import Themes from "../assets/Themes/themes.js";
 import Fire from "./Icons/Fire";
+import { router } from "expo-router";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Supabase from "../Supabase.js";
 import { PostsContext } from "../contexts/PostsContext.js";
 import { ActivitiesContext } from "../contexts/ActivitiesContext.js";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 // import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function CongratsModal({
@@ -45,7 +46,7 @@ export default function CongratsModal({
           is_profile_post: true,
           user_handle: "@pcivita",
           user_name: "Pedro Civita",
-          user_profile_pic: Images.profileImages.pedro,
+          user_profile_pic: "Pedro",
           post_text: activityName,
           comments: [],
         },
@@ -59,7 +60,9 @@ export default function CongratsModal({
       "New Post",
       true
     );
+
     onExitModal();
+    router.replace("/profile");
   };
 
   return (
@@ -120,14 +123,22 @@ export default function CongratsModal({
           <Pressable onPress={postActivity}>
             <View style={styles.buttonContainer}>
               <Text style={styles.buttonText}>Post</Text>
-              <MaterialCommunityIcons name="send-circle-outline" size={30} color="white" />
+              <MaterialCommunityIcons
+                name="send-circle-outline"
+                size={30}
+                color="white"
+              />
             </View>
           </Pressable>
 
           <Pressable onPress={onExitModal}>
             <View style={styles.buttonContainer}>
               <Text style={styles.buttonText}>Done</Text>
-              <MaterialCommunityIcons name="check-circle-outline" size={30} color="white" />
+              <MaterialCommunityIcons
+                name="check-circle-outline"
+                size={30}
+                color="white"
+              />
             </View>
           </Pressable>
         </View>

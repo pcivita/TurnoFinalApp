@@ -2,13 +2,18 @@ import { View, Text, StyleSheet, ScrollView, Button } from "react-native";
 import ActivityCircle from "../ActivityCircle";
 import { Themes } from "../../assets/Themes";
 import SwipeButton from "../SwipeButton";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ActivityCircleModal from "../ActivityCircleModal";
+import { InProgressContext } from "../../contexts/InProgressContext";
 
 export default function Journey() {
+  const { inProgress } = useContext(InProgressContext);
   const [isModalVisible, setModalVisible] = useState(false);
-  const handleActivityCirclePress = () => {
-    setModalVisible(true);
+
+  const handleActivityCirclePress = (status) => {
+    if (status !== "incomplete") {
+      setModalVisible(true);
+    }
   };
 
   const rightPosition = [
@@ -83,15 +88,18 @@ export default function Journey() {
           status={status[index]}
           top={topPosition}
           index={index} // Set the index if needed, otherwise remove it
+          onPress={() => handleActivityCirclePress(status[index])}
         />
       ))}
 
-      <ActivityCircle
-        right={rightPosition[7]}
-        status="in progress"
-        top={topPosition}
-        onPress={handleActivityCirclePress}
-      />
+      {inProgress && (
+        <ActivityCircle
+          right={rightPosition[7]}
+          status="in progress"
+          top={topPosition}
+          onPress={handleActivityCirclePress}
+        />
+      )}
 
       <ActivityCircleModal
         isModalVisible={isModalVisible}

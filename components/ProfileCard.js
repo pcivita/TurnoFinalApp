@@ -39,7 +39,7 @@ export default function ProfileCard({
         >
           <View>
             <View style={styles.friendsBox}>
-              <Text style={styles.handle}> 3 friends </Text>
+              <Text style={styles.handle}> 4 friends </Text>
             </View>
           </View>
         </Link>

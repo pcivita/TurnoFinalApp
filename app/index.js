@@ -6,6 +6,7 @@ import { ActivitiesContext } from "../contexts/ActivitiesContext";
 import RollDice from "../components/ProgressScreens/RollDice";
 import CompleteDice from "../components/ProgressScreens/CompleteDice";
 import ActvityRollled from "../components/ActivityRolled";
+import { InProgressContext } from "../contexts/InProgressContext";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -14,10 +15,11 @@ import Animated, {
   runOnJS,
 } from "react-native-reanimated";
 import { CommentsProvider } from "../contexts/CommentsContext";
+import { InProgressProvider } from "../contexts/InProgressContext";
 
 export default function Page() {
   const { activities, canRoll } = useContext(ActivitiesContext);
-  
+
   const [appearHeader, setAppearHeader] = useState(false);
   const progress1 = useSharedValue(1);
   const rStyle = useAnimatedStyle(() => {
@@ -25,6 +27,8 @@ export default function Page() {
       opacity: progress1.value,
     };
   }, []);
+
+  const { flipProgress } = useContext(InProgressContext);
 
   const [activeScreen, setActiveScreen] = useState("RollDice");
   const [diceNum, setDiceNum] = useState(-1);
@@ -38,11 +42,12 @@ export default function Page() {
           duration: 500, // Animation duration
         },
         (isFinished) => {
+          runOnJS(setActiveScreen)("CompleteDice");
           if (isFinished) {
-            runOnJS(setActiveScreen)("CompleteDice");
             progress1.value = withTiming(1, {
-              duration: 500, // Animation duration
+              duration: 1000, // Animation duration
             });
+            runOnJS(flipProgress)(); //Sets Activity in Progress
           }
         }
       );
@@ -66,26 +71,22 @@ export default function Page() {
     setDiceNum(data[0]);
     setActivityName(data[1][0]);
     setAppearHeader(true);
-    headerBounce();
     startAnimation();
+    headerBounce();
   };
 
   //TODO: Dice shouldn't be clickable after rolling
   return (
-    <CommentsProvider>
-     
+    <InProgressProvider>
       {appearHeader && (
         <Animated.View style={[styles.square, rStyle2]}>
           <ActvityRollled diceNum={diceNum} activityName={activityName} />
         </Animated.View>
       )}
       <Animated.View style={[styles.container, rStyle]}>
-        {activeScreen === "RollDice" && 
-          <RollDice 
-            onData={handleData}
-            canRoll={canRoll} 
-          />
-        }
+        {activeScreen === "RollDice" && (
+          <RollDice onData={handleData} canRoll={canRoll} />
+        )}
         {activeScreen === "CompleteDice" && (
           <CompleteDice
             setActiveScreen={setActiveScreen}
@@ -95,7 +96,7 @@ export default function Page() {
           />
         )}
       </Animated.View>
-    </CommentsProvider>
+    </InProgressProvider>
   );
 }
 

@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { Stack } from "expo-router";
 import { Themes } from "../../assets/Themes";
 import { useState, useContext } from "react";
@@ -6,14 +12,14 @@ import Activity from "../../components/Activity";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { useFonts } from "expo-font";
 import Header from "../../components/Header";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ActivityHelpModal from "../../components/ActivityHelpModal";
 
 export default function Page() {
   const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);
   const { activities } = useContext(ActivitiesContext);
   const currentActivities = activities;
-  console.log(activities); 
+  console.log(activities);
 
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
@@ -24,34 +30,36 @@ export default function Page() {
   }
 
   const closeHelpModal = () => {
-    setIsHelpModalVisible(false)
-  }
-  
+    setIsHelpModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
-      <Stack.Screen
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen options={{ headerShown: false }} />
       <Header title="Activities" />
       <View style={styles.helpButton}>
+        <Text style={styles.headerText}>My Current Activities</Text>
         <TouchableOpacity onPress={() => setIsHelpModalVisible(true)}>
-          <MaterialCommunityIcons 
-            name="help-circle" 
-            size={30} 
+          <MaterialCommunityIcons
+            name="help-circle"
+            size={30}
             color={Themes.colors.darkGray}
           />
-          <ActivityHelpModal isModalVisible={isHelpModalVisible} closeHelpModal={closeHelpModal} />
+          <ActivityHelpModal
+            isModalVisible={isHelpModalVisible}
+            closeHelpModal={closeHelpModal}
+          />
         </TouchableOpacity>
       </View>
-      {currentActivities == [] &&
+      {currentActivities == [] && (
         <View style={styles.noActivitiesContainer}>
           <Text style={styles.noActivitesMessage}>
             {section.noActivitiesMessage}
           </Text>
         </View>
-      }
-      {currentActivities &&
-        <View style={styles.activitiesContainer}>
+      )}
+      {currentActivities && (
+        <ScrollView style={styles.activitiesContainer}>
           <View style={styles.activitiesRow}>
             <Activity activityObject={currentActivities[0]} index={1} />
             <Activity activityObject={currentActivities[1]} index={2} />
@@ -64,8 +72,8 @@ export default function Page() {
             <Activity activityObject={currentActivities[4]} index={5} />
             <Activity activityObject={currentActivities[5]} index={6} />
           </View>
-        </View>
-      }
+        </ScrollView>
+      )}
     </View>
   );
 }
@@ -136,33 +144,40 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
     elevation: 5,
   },
   activitiesContainer: {
     width: "100%",
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 4,
     flexDirection: "space-between",
-    gap: 20,
+    gap: 100,
   },
   activitiesRow: {
     width: "100%",
+    marginBottom: 20,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   helpButton: {
     width: "100%",
     paddingHorizontal: 20,
-    paddingTop: 10,
+    paddingTop: 64,
+    marginBottom: 12,
     flexDirection: "row",
-    justifyContent: "flex-end"
-  }
+    justifyContent: "space-between",
+  },
+  headerText: {
+    fontFamily: "Poppins-Bold",
+    fontSize: 20,
+  },
 });

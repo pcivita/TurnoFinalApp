@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
 import { Themes } from "../../assets/Themes";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Journey from "../../components/ProgressScreens/Journey";
 import Stats from "../../components/ProgressScreens/Stats";
 import Header from "../../components/Header";
 import ProgressNavigation from "../../components/ProgressNavigation";
+import { InProgressContext } from "../../contexts/InProgressContext";
 
 export default function Page() {
   const [activeScreen, setActiveScreen] = useState("Stats"); // Initial state
@@ -71,8 +72,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
   },
-  headerDice: {
-  },
+  headerDice: {},
   title: {
     fontSize: 32,
     color: "white",

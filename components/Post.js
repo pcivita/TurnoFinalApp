@@ -55,11 +55,22 @@ export default function Post({
     setModalVisible(!isModalVisible);
   };
 
+  const imageDict = {
+    Pedro: require("../assets/Themes/Images/profileImages/IMG_9521.jpg"),
+    Malina: require("../assets/Themes/Images/profileImages/Malina.jpg"),
+    Naz: require("../assets/Themes/Images/profileImages/Naz.heic"),
+    Cecilia: require("../assets/Themes/Images/profileImages/Cecilia.jpg"),
+    Matt: require("../assets/Themes/Images/profileImages/Matt.jpg"),
+    Digo: require("../assets/Themes/Images/profileImages/Digo.jpeg"),
+    Luca: require("../assets/Themes/Images/profileImages/Luca.jpeg"),
+  };
+
+  // source={require("../assets/Themes/Images/profileImages/Malina.jpg")}
   return (
     <View style={styles.container}>
       <View style={styles.ImageText}>
         <View style={styles.imageContainer}>
-          <Image source={profilePic} style={styles.profileImg} />
+          <Image source={imageDict[profilePic]} style={styles.profileImg} />
         </View>
         <View style={styles.textContainer}>
           {isYourPost ? (
@@ -71,7 +82,7 @@ export default function Post({
             <Text style={styles.postText}>
               <Link
                 href={{
-                  pathname: "/feed/profileClicked",
+                  pathname: "/friendProfile",
                   params: {
                     profileName: profileName,
                     handle: handle,

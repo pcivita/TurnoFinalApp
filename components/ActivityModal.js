@@ -427,7 +427,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
-    borderWidth: 3,
+
     borderColor: Themes.colors.salmon,
   },
   buttonDisabled: {

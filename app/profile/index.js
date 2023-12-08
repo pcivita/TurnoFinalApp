@@ -97,7 +97,7 @@ export default function Page() {
                 isYourProfile={true}
                 profileName="Pedro Civita"
                 handle="@pcivita"
-                profilePic={Images.profileImages.pedro}
+                profilePic={require("../../assets/Themes/Images/profileImages/IMG_9521.jpg")}
               />
             </View>
             <View style={styles.postTextContainer}>
