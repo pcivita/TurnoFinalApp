@@ -93,12 +93,12 @@ export default function CommentModal({
       isVisible={isModalVisible}
       swipeDirection="down"
       onSwipeComplete={toggleModal}
-      animationIn="bounceInUp"
-      animationOut="bounceOutDown"
-      animationInTiming={900}
-      animationOutTiming={500}
-      backdropTransitionInTiming={1000}
-      backdropTransitionOutTiming={500}
+      // animationIn="fadeInUp"
+      // animationOut="fadeOutDown"
+      animationInTiming={400}
+      animationOutTiming={400}
+      backdropTransitionInTiming={600}
+      backdropTransitionOutTiming={600}
       avoidKeyboard
       propagateSwipe={true}
       style={styles.modal}

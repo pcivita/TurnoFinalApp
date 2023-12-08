@@ -164,7 +164,8 @@ const styles = StyleSheet.create({
     height: "40%",
     aspectRatio: 1,
     // borderWidth: 2,
-    right: -73,
+    right: -75,
+    top: 75,
     alignItems: "center",
   },
   imageContainer: {

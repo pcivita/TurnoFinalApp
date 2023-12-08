@@ -8,6 +8,7 @@ import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { useFonts } from "expo-font";
 import Header from "../../components/Header";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import ActivityHelpModal from "../../components/ActivityHelpModal";
 
 export default function Page() {
   const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);
@@ -23,6 +24,9 @@ export default function Page() {
     return undefined;
   }
 
+  const closeHelpModal = () => {
+    setIsHelpModalVisible(false)
+  }
   
   return (
     <View style={styles.container}>
@@ -31,12 +35,13 @@ export default function Page() {
       />
       <Header title="Activities" />
       <View style={styles.helpButton}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setIsHelpModalVisible(true)}>
           <MaterialCommunityIcons 
             name="help-circle" 
             size={30} 
             color={Themes.colors.darkGray}
           />
+          <ActivityHelpModal isModalVisible={isHelpModalVisible} closeHelpModal={closeHelpModal} />
         </TouchableOpacity>
       </View>
       {currentActivities == [] &&
@@ -149,15 +154,15 @@ const styles = StyleSheet.create({
   },
   activitiesContainer: {
     width: "100%",
-    height: "60%",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    // height: "60%",
+    padding: 20,
     flexDirection: "space-between",
-    gap: 30,
+    gap: 20,
   },
   activitiesRow: {
     width: "100%",
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between"
   },
   helpButton: {
