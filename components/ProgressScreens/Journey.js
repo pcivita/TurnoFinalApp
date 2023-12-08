@@ -2,8 +2,15 @@ import { View, Text, StyleSheet, ScrollView, Button } from "react-native";
 import ActivityCircle from "../ActivityCircle";
 import { Themes } from "../../assets/Themes";
 import SwipeButton from "../SwipeButton";
+import { useState } from "react";
+import ActivityCircleModal from "../ActivityCircleModal";
 
 export default function Journey() {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const handleActivityCirclePress = () => {
+    setModalVisible(true);
+  };
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -16,7 +23,7 @@ export default function Journey() {
       <ActivityCircle right={-50} status="complete" top={70} index={1} />
       <ActivityCircle right={-50} status="complete" top={70} index={5} />
       <ActivityCircle right={-25} status="complete" top={70} index={0} />
-      <ActivityCircle right={25} status="in progress" top={30} />
+      <ActivityCircle right={25} status="in progress" top={30} onPress={handleActivityCirclePress}/>
 
       <ActivityCircle right={60} status="incomplete" top={95} />
       <ActivityCircle right={70} status="incomplete" top={50} />
@@ -28,6 +35,7 @@ export default function Journey() {
       <ActivityCircle right={35} status="incomplete" top={30} />
 
       <ActivityCircle right={70} status="incomplete" top={100} />
+      <ActivityCircleModal isModalVisible={isModalVisible} closeModal={() => setModalVisible(false)} />
     </ScrollView>
   );
 }

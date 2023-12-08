@@ -16,7 +16,7 @@ import Animated, {
 
 import { useEffect, useState } from "react";
 
-export default function ActivityCircle({ right, top, status, index }) {
+export default function ActivityCircle({ right, top, status, index, onPress }) {
   const categories = [
     "running",
     "cat",
@@ -55,13 +55,30 @@ export default function ActivityCircle({ right, top, status, index }) {
     colorStyle = styles.progressColor;
   }
 
+  // useEffect(() => {
+  //   scale.value = withRepeat(withTiming(1.1, { duration: 1000 }), -1, true);
+  //   rotation.value = withRepeat(withTiming(1.5, { duration: 1000 }), -1, true);
+  // });
   useEffect(() => {
-    scale.value = withRepeat(withTiming(1.1, { duration: 1000 }), -1, true);
-    rotation.value = withRepeat(withTiming(1.5, { duration: 1000 }), -1, true);
-  });
+    const scaleAnimation = withRepeat(withTiming(1.1, { duration: 1000 }), -1, true);
+    const rotationAnimation = withRepeat(withTiming(1.5, { duration: 1000 }), -1, true);
+
+    scale.value = scaleAnimation;
+    rotation.value = rotationAnimation;
+
+    return () => {
+      // Cleanup animations when the component unmounts
+      scale.value = withTiming(1);
+      rotation.value = withTiming(1);
+    };
+  }, []);
+
+  // console.log('onPress prop:', onPress);
 
   return (
+    
     <View style={[styles.container, { height: top }]}>
+      <TouchableOpacity onPress={onPress}>
       <Animated.View
         style={[
           [styles.circle, colorStyle],
@@ -88,7 +105,9 @@ export default function ActivityCircle({ right, top, status, index }) {
           />
         )}
       </Animated.View>
+      </TouchableOpacity>
     </View>
+    
   );
 }
 
