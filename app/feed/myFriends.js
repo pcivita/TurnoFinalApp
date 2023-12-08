@@ -1,22 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Stack } from "expo-router";
 import { Themes } from "../../assets/Themes";
+import Header from "../../components/Header";
 
 export default function Page() {
   return (
     <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          title: "",
-          headerStyle: {
-            backgroundColor: Themes.colors.salmon,
-          },
-          headerTintColor: "white",
-        }}
-      />
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}> Add Friends </Text>
-      </View>
+      <Stack.Screen options={{ headerShown: false }} />
+      <Header title="Friends" />
       <View style={styles.activityNameContainer}>
         <Text style={styles.subtitle}>
           Friend Name

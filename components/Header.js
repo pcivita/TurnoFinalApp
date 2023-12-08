@@ -5,26 +5,26 @@ import { Themes } from "../assets/Themes";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Header({ title }) {
-  let iconName;
   let backPath;
   switch (title) {
     case "Settings":
-      iconName = "arrow-left";
       backPath = {pathname: "/profile"};
       break;
     case "Create Activity":
-      iconName = "arrow-left";
       backPath = {pathname: "/activities/home"};
+      break;
+    case "Friends":
+      backPath = {pathname: "/feed/feedHome"};
       break;
   }
 
 
   return (
     <View style={styles.container}>
-      {(title === "Settings" || title === "Create Activity") ?
-        <Link href={ backPath }>
+      {(title === "Settings" || title === "Create Activity" || title === "Friends") ?
+        <Link href={backPath}>
           <FontAwesome5
-            name={iconName}
+            name="arrow-left"
             size={25}
             color={"white"}
             style={styles.leftIcon}
@@ -42,7 +42,7 @@ export default function Header({ title }) {
       <Text style={styles.title}>{title}</Text>
       {(title === "Profile" || title === "Feed") && (
         <Link 
-          href={ title === "Profile" ? {pathname: "/profile/settings"} : {pathname: "/feed/friends"}} 
+          href={ title === "Profile" ? {pathname: "/profile/settings"} : {pathname: "/feed/myFriends"}} 
           style={styles.rightIcon}
         >
           <FontAwesome5
