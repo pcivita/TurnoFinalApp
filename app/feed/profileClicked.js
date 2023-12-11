@@ -1,15 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Themes } from "../../assets/Themes";
-import { Link, Stack, useNavigation, useRouter, useLocalSearchParams } from "expo-router";
-import Post from "../../components/Post";
-import { useFonts } from "expo-font";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
+import {
+  Link,
+  Stack,
+  useNavigation,
+  useRouter,
+  useLocalSearchParams,
+} from "expo-router";
+
 import ProfileCard from "../../components/ProfileCard";
-import { useState } from "react";
-import Header from "../../components/Header";
-import Images from "../../assets/Themes/Images";
 
 export default function Page() {
   const navigation = useNavigation();
@@ -32,7 +31,7 @@ export default function Page() {
         <Text style={styles.title}>Profile</Text>
       </View>
       <View style={styles.profileCard}>
-        <ProfileCard 
+        <ProfileCard
           isYourProfile={false}
           profileName={profileName}
           handle={handle}
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
     backgroundColor: Themes.colors.salmon,
     borderColor: "black",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   title: {
     fontWeight: "bold",

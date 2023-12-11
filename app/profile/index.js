@@ -10,14 +10,13 @@ import ProfileCard from "../../components/ProfileCard";
 import { useState, useContext, useEffect } from "react";
 import { PostsContext, PostsProvider } from "../../contexts/PostsContext";
 import Header from "../../components/Header";
-import Images from "../../assets/Themes/Images";
 import Supabase from "../../Supabase";
 
 export default function Page() {
   const [data, setData] = useState();
 
+  // Handling Supabase logic taken from supabase website and CS147L Lecture 13
   const handleRecordUpdated = (payload) => {
-    console.log("UDPATE", payload);
     setData((oldData) =>
       oldData.map((item) => {
         if (item.id === payload.old.id) {
@@ -70,13 +69,6 @@ export default function Page() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    // CHECKING
-    // console.log(data);
-  }, [data]);
-
-  const { posts } = useContext(PostsContext);
-  // console.log(posts);
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
     "Poppins-Bold": require("../../assets/Poppins/Poppins-Bold.ttf"),

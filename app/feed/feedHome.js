@@ -11,6 +11,7 @@ import Supabase from "../../Supabase";
 export default function Page() {
   const [data, setData] = useState();
 
+  // Handling Supabase logic taken from supabase website and CS147L Lecture 13
   const handleRecordUpdated = (payload) => {
     console.log("UPDATE", payload);
     setData((oldData) =>
@@ -65,8 +66,8 @@ export default function Page() {
     };
     fetchData();
   }, []);
+  //End of Supabase Logic
 
-  const { posts } = useContext(PostsContext);
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
     "Poppins-Bold": require("../../assets/Poppins/Poppins-Bold.ttf"),
@@ -82,18 +83,21 @@ export default function Page() {
       <View style={styles.main}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {data !== undefined &&
-            data.map((post, index) => post.is_profile_post !== true && (
-            <Post
-              key={index}
-              id={post.id}
-              profilePost={post.is_profile_post}
-              postIndex={index}
-              handle={post.user_handle}
-              profilePic={post.user_profile_pic}
-              activityName={post.post_text}
-              comments={post.comments}
-            />
-         ))}
+            data.map(
+              (post, index) =>
+                post.is_profile_post !== true && (
+                  <Post
+                    key={index}
+                    id={post.id}
+                    profilePost={post.is_profile_post}
+                    postIndex={index}
+                    handle={post.user_handle}
+                    profilePic={post.user_profile_pic}
+                    activityName={post.post_text}
+                    comments={post.comments}
+                  />
+                )
+            )}
         </ScrollView>
       </View>
     </View>
