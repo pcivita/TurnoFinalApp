@@ -1,4 +1,4 @@
-# TurnoFinalApp
+# turno
 ![image](https://github.com/pcivita/TurnoFinalApp/assets/106632611/d86923c1-7a8c-4896-8a86-7f9647aa6975)
 
 Turno is an app designed to help busy individuals achieve their goals and lead more
