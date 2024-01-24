@@ -14,7 +14,7 @@ import ProgressNavigation from "../../components/ProgressNavigation";
 export default function Page() {
   //const [data, setData] = useState();
 
-  const [activeScreen, setActiveScreen] = useState("Stats"); // Initial state
+const [activeScreen, setActiveScreen] = useState("Stats"); // Initial state
   handleData = (data) => {
     setActiveScreen(data);
   };
