@@ -29,9 +29,10 @@ export default function Page() {
 
   return (
     // <PostsProvider>
-    //   <Stack.Screen options={{ headerShown: false }} />
+      
       
       <View style={styles.container}>
+        <Stack.Screen options={{ headerShown: false }} />
         <Header title="Profile" />
         {/* <View style={styles.main}> */}
           <View style={styles.profileCard}>
@@ -49,7 +50,7 @@ export default function Page() {
 
 
           <View style={styles.subscreenContainer}>
-            {activeScreen === "MyPosts" && <MyPosts />}
+            {activeScreen === "Posts" && <MyPosts />}
             {activeScreen === "Stats" && <Stats />}
           </View>
         {/* </View> */}
