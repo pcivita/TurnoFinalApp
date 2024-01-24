@@ -1,155 +1,159 @@
-import React, { useState, useContext } from "react";
-import { StyleSheet, View, Easing, Text } from "react-native";
-import { Themes } from "../assets/Themes";
-import { Stack } from "expo-router";
-import { ActivitiesContext } from "../contexts/ActivitiesContext";
-import RollDice from "../components/ProgressScreens/RollDice";
-import CompleteDice from "../components/ProgressScreens/CompleteDice";
-import ActvityRollled from "../components/ActivityRolled";
-import { InProgressContext } from "../contexts/InProgressContext";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  withSpring,
-  runOnJS,
-} from "react-native-reanimated";
-import { CommentsProvider } from "../contexts/CommentsContext";
-import { InProgressProvider } from "../contexts/InProgressContext";
+import { Link } from 'expo-router';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, Button, Dimensions, Image } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Themes } from '../assets/Themes';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { useFonts } from 'expo-font';
 
-export default function Page() {
-  const { activities, canRoll } = useContext(ActivitiesContext);
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+export default function Onboarding() {
+  const [currentScreen, setCurrentScreen] = useState('onboarding');
 
-  const [appearHeader, setAppearHeader] = useState(false);
-  const progress1 = useSharedValue(1);
-  const rStyle = useAnimatedStyle(() => {
-    return {
-      opacity: progress1.value,
-    };
-  }, []);
-
-  const { flipProgress } = useContext(InProgressContext);
-  const [activeScreen, setActiveScreen] = useState("RollDice");
-  const [diceNum, setDiceNum] = useState(-1);
-  const [activityName, setActivityName] = useState("");
-  const startAnimation = () => {
-    // Wait for 1.5 seconds (1500 milliseconds) before starting the animation
-    setTimeout(() => {
-      progress1.value = withTiming(
-        0,
-        {
-          duration: 500, // Animation duration
-        },
-        (isFinished) => {
-          runOnJS(setActiveScreen)("CompleteDice");
-          if (isFinished) {
-            progress1.value = withTiming(1, {
-              duration: 1000, // Animation duration
-            });
-            runOnJS(flipProgress)(); //Sets Activity in Progress
-          }
-        }
-      );
-    }, 1500);
+  const handleLogIn = () => {
+    // Placeholder for the login functionality
+    console.log('Log In');
   };
 
-  const headerBounce = () => {
-    progress.value = withSpring(130);
+  //import poppins
+  const [fontsLoaded] = useFonts({
+    'Poppins-Regular': require('../assets/Poppins/Poppins-Regular.ttf'),
+    'Poppins-Bold': require('../assets/Poppins/Poppins-Bold.ttf'),
+    });
+
+    if (!fontsLoaded) {
+        return undefined;
+    }
+
+  const handleSignUp = () => {
+    // Placeholder for the sign-up functionality
+    console.log('Sign Up');
   };
 
-  const progress = useSharedValue(0);
-
-  const rStyle2 = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateY: progress.value }],
-    };
-  }, []);
-
-  const handleData = (data) => {
-    console.log(data);
-    setDiceNum(data[0]);
-    setActivityName(data[1][0]);
-    setAppearHeader(true);
-    startAnimation();
-    headerBounce();
+  const renderOnboarding = () => {
+    return (
+      <View style={styles.container}>
+        <Image source={require('../assets/Themes/Images/DiceFaces/Dice-3.png')} style={styles.logo} />  
+        <Text style={styles.title}>Turno</Text>
+        <Text style={styles.subtitle}>Roll your way through the day</Text>
+        <TouchableOpacity onPress={() => setCurrentScreen('log in')} style={styles.onboardingBox}>
+            <Text style={styles.onBoardingButtonText}>Log In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity title="Sign Up" onPress={() => setCurrentScreen('sign up')} style={styles.onboardingBox}>
+            <Text style={styles.onBoardingButtonText}>Sign Up</Text>
+        </TouchableOpacity>
+      </View>
+    );
   };
 
-  //TODO: Dice shouldn't be clickable after rolling
-  return (
-    <InProgressProvider>
-      {appearHeader && (
-        <Animated.View style={[styles.square, rStyle2]}>
-          <ActvityRollled diceNum={diceNum} activityName={activityName} />
-        </Animated.View>
-      )}
-      <Animated.View style={[styles.container, rStyle]}>
-        {activeScreen === "RollDice" && (
-          <RollDice onData={handleData} canRoll={canRoll} />
-        )}
-        {activeScreen === "CompleteDice" && (
-          <CompleteDice
-            setActiveScreen={setActiveScreen}
-            setAppearHeader={setAppearHeader}
-            activityName={activityName}
-            activityIndex={diceNum}
-          />
-        )}
-      </Animated.View>
-    </InProgressProvider>
-  );
+  const renderLogIn = () => {
+    return (
+        <>
+        <TouchableOpacity style={styles.backCaret}>
+            <FontAwesome5 name="arrow-left" size={24} color="black" onPress={() => setCurrentScreen('onboarding')} />
+        </TouchableOpacity>
+      <View style={styles.container}>
+        <Text style={styles.title}>Turno</Text>
+        <Text style={styles.subtitle}>Roll your way through the day</Text>
+        <TextInput style={styles.input} placeholder="Username or Email" />
+        <TextInput style={styles.input} placeholder="Password" secureTextEntry />
+        {/* <TouchableOpacity  onPress={handleLogIn}> */}
+            <Link
+            href={{
+                pathname: "/roll/index",
+            }}
+            >
+                <Text>Log In</Text>
+            </Link>
+        {/* </TouchableOpacity> */}
+      </View>
+      </>
+    );
+  };
+
+  const renderSignUp = () => {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Turno</Text>
+        <Text style={styles.subtitle}>Roll your way through the day</Text>
+        <TextInput style={styles.input} placeholder="Username" />
+        <TextInput style={styles.input} placeholder="Email" />
+        <TextInput style={styles.input} placeholder="Password" secureTextEntry />
+        <Button title="Create Account" onPress={handleSignUp} />
+        <Text style={styles.loginText} onPress={() => setCurrentScreen('log in')}>
+          Already have an account? Log In
+        </Text>
+      </View>
+    );
+  };
+
+  switch (currentScreen) {
+    case 'log in':
+      return renderLogIn();
+    case 'sign up':
+      return renderSignUp();
+    default:
+      return renderOnboarding();
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
-    // width: "100%",
-    // height: "100%",
-    // alignItems: "center",
-    // justifyContent: "flex-start",
-    // flex: 1,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+    // backgroundColor: Themes.colors.background,
+    zIndex: 1,
   },
-  header: {
-    width: "100%",
-    flexDirection: "row",
-    height: "14%",
-    alignItems: "flex-end",
-    justifyContent: "center",
-    backgroundColor: Themes.colors.salmon,
-  },
-  banner: {
-    paddingHorizontal: 20,
-    // borderWidth: 2,
-    // borderColor: "blue",
-    display: "flex",
-    width: "100%",
-    justifyContent: "space-between",
-    flexDirection: "row",
-  },
-  headerDice: {
-    // borderWidth: 2,
+  logo: {
+    width: 75,
+    height: 75,
+    marginBottom: 16,
   },
   title: {
-    fontSize: 32,
-    color: "white",
-    fontFamily: "Poppins-Bold",
+    fontSize: 30,
+    fontWeight: 'bold',
+    fontFamily: 'Poppins-Bold',
   },
-  container: {
-    flex: 1,
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: Themes.colors.background,
+  subtitle: {
+    fontSize: 16,
+    marginVertical: 8,
+    fontFamily: 'Poppins-Regular',
   },
-  subscreenContainer: {
-    alignItems: "center",
-    justifyContent: "center",
+  input: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: 'gray',
+    padding: 10,
+    marginVertical: 8,
   },
-  competeDice: {},
-  square: {
-    color: "red",
-    width: "100%",
-    height: 100,
-    position: "absolute",
-    top: 0,
-    right: 0,
-    zIndex: 10,
+  loginText: {
+    color: 'blue',
+    marginTop: 15,
+  },
+  onboardingBox: {
+    width: windowWidth * 0.8,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingVertical: 16,
+    shadowColor: 'rgba(0, 0, 0, 0.5)',
+    shadowOffset: { height: 4, width: 1 },
+    shadowOpacity: 0.75,
+    shadowRadius: 2,
+    marginTop: 16,
+    backgroundColor: 'white',
+  },
+  onBoardingButtonText: {
+    fontSize: 16,
+    fontFamily: 'Poppins-regular',
+  },
+  backCaret: {
+    position: 'absolute',
+    top: 65, // adjust this value to fit within your status bar
+    left: 20,
+    zIndex: 10, // ensures it is above other components
   },
 });

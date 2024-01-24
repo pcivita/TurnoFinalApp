@@ -29,6 +29,7 @@ export default function AppLayout() {
       <ActivitiesProvider>
         <PostsProvider>
           <Tabs
+            initialRouteName="feed"
             screenOptions={{
               headerShown: false,
               tabBarActiveTintColor: Themes.colors.salmon,
@@ -43,21 +44,19 @@ export default function AppLayout() {
               },
             }}
           >
-           
-            <Tabs.Screen
-              name="activities"
-              options={{
-                tabBarLabelStyle: styles.iconAndText,
-                tabBarLabel: "Activities",
-                tabBarIcon: ({ size, color }) => (
-                  <FontAwesome5 name="clipboard" size={size} color={color} />
-                ),
-                href: null,
-              }}
-            />
-           
             <Tabs.Screen
               name="index"
+              options={{
+                // no tab bar visible
+                href: null,
+                tabBarStyle: {
+                  display: "none",
+                }
+              }}
+            />
+          
+            <Tabs.Screen
+              name="roll/index"
               options={{
                 tabBarLabel: "Roll",
                 tabBarLabelStyle: styles.iconAndText,
@@ -68,6 +67,17 @@ export default function AppLayout() {
                 ),
               }}
             />
+              <Tabs.Screen
+                name="activities"
+                options={{
+                  tabBarLabelStyle: styles.iconAndText,
+                  tabBarLabel: "Activities",
+                  tabBarIcon: ({ size, color }) => (
+                    <FontAwesome5 name="clipboard" size={size} color={color} />
+                  ),
+                  href: null,
+                }}
+              />
              <Tabs.Screen
               name="feed"
               options={{
