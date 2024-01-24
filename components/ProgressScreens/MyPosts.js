@@ -2,7 +2,6 @@ import { View, StyleSheet, SafeAreaView, FlatList, Animated, ScrollView, Text } 
 import StatsCard from "../StatsCard"
 import { Themes } from "../../assets/Themes";
 import { useRef } from "react";
-import Supabase from "../../Supabase";
 import { useEffect } from "react";
 import Post from "../Post.js"
 

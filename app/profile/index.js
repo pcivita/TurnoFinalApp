@@ -6,7 +6,6 @@ import ProfileCard from "../../components/ProfileCard";
 import { useState,  useEffect } from "react";
 import { PostsProvider } from "../../contexts/PostsContext";
 import Header from "../../components/Header";
-import Supabase from "../../Supabase";
 import MyPosts from "../../components/ProgressScreens/MyPosts";
 import Stats from "../../components/ProgressScreens/Stats";
 import ProgressNavigation from "../../components/ProgressNavigation";
