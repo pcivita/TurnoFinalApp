@@ -65,7 +65,7 @@ export default function Stats({ index, statContent }) {
 const styles = StyleSheet.create({
   container: {
     // width: 310,
-    height: 420,
+    height: 400,
     alignItems: "center"
   },
   statCard: {
