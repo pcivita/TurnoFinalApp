@@ -79,7 +79,7 @@ export default function Stats() {
 const styles = StyleSheet.create({
   container: {
     height: "100%",
-    marginTop: 60,
+    marginTop: 20,
     flexDirection: "column",
     justifyContent: "center", 
     alignItems: "center",
