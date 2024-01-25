@@ -23,6 +23,7 @@ export default function CongratsModal({
   setSwitchEnabled,
   setDiceRolled,
   setSwipeComplete,
+  diceName,
 }) {
   const { deleteActivity } = useContext(ActivitiesContext);
 
@@ -64,7 +65,7 @@ export default function CongratsModal({
         <View style={styles.barIcon} />
         <Image source={Images.confetti} style={styles.confetti} />
         <Text style={styles.title}>Congrats!</Text>
-        <PostPreview activityName={activityName} />
+        <PostPreview activityName={activityName} diceName={diceName}/>
         <View style={styles.stat}>
           <View style={styles.circle}>
             <Fire width={44} height={57} />
@@ -74,7 +75,7 @@ export default function CongratsModal({
             You've completed 3 activities on your dice!
           </Text>
         </View>
-        <View style={styles.toggleContainer}>
+        {/* <View style={styles.toggleContainer}>
           <Text> Add "{activityName}" back to Activities List?</Text>
           <Switch
             trackColor={{ true: Themes.colors.salmon }}
@@ -83,7 +84,7 @@ export default function CongratsModal({
             onValueChange={() => setSwitchEnabled(!switchEnabled)}
             value={switchEnabled}
           />
-        </View>
+        </View> */}
         <View style={styles.buttonsContainer}>
           <Pressable onPress={postActivity}>
             <View style={styles.buttonContainer}>
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     // minHeight: 600,
-    height: 600,
+    height: 550,
     paddingBottom: 20,
     display: "flex",
     alignItems: "center",
@@ -204,6 +205,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 50,
     padding: 10,
+    marginTop: 30,
   },
   buttonContainer: {
     backgroundColor: Themes.colors.salmon,

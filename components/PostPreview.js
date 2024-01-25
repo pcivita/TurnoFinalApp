@@ -16,7 +16,7 @@ import CommentModal from "./CommentModal";
 import { useState } from "react";
 import { Themes } from "../assets/Themes";
 
-export default function PostPreview({ postId, activityName }) {
+export default function PostPreview({ postId, activityName, diceName }) {
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
     "Poppins-Bold": require("../assets/Poppins/Poppins-Bold.ttf"),
@@ -33,9 +33,9 @@ export default function PostPreview({ postId, activityName }) {
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.postText1}>
-          You completed <Text>{activityName} </Text>
+          You chose <Text>{activityName}!</Text>
         </Text>
-        <Text style={styles.postText2}>Night Time Activities</Text>
+        <Text style={styles.postText2}>{diceName}</Text>
       </View>
     </View>
   );

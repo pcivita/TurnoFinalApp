@@ -8,6 +8,22 @@ import Header from "../../components/Header";
 import { PostsContext } from "../../contexts/PostsContext";
 
 
+const POST_DATA = [
+  {
+    id: 1,
+    handle: "@pcivita",
+    profile_pic: require("../../assets/Themes/Images/profileImages/IMG_9521.jpg"),
+    post_text: "I'm so happy to be here!",
+    comments: [
+      {
+        user_handle: "@pcivita",
+        user_profile_pic: "Pedro",
+      }
+    ],
+    is_profile_post: true,
+  }
+]
+
 export default function Page() {
   const [data, setData] = useState();
 
@@ -26,8 +42,8 @@ export default function Page() {
       <Header title="Feed" />
       <View style={styles.main}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {data !== undefined &&
-            data.map(
+          {POST_DATA !== undefined &&
+            POST_DATA.map(
               (post, index) =>
                 post.is_profile_post !== true && (
                   <Post
