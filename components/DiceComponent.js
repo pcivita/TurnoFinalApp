@@ -24,7 +24,7 @@ const imageSources = [
   Images.diceFaces.six,
 ];
 
-const DiceComponent = ({ onData, isInteractive }) => {
+const DiceComponent = ({ onData, isInteractive, triggerAnimation }) => {
   const progress = useSharedValue(1);
   const scale = useSharedValue(1);
   const diceTransform = useSharedValue(0);
@@ -34,7 +34,7 @@ const DiceComponent = ({ onData, isInteractive }) => {
       // borderRadius: (progress.value * SIZE) / 2,
       transform: [
         // { scale: scale.value },
-        // { rotate: `${progress.value * 2 * Math.PI}rad` },
+        { rotate: `${progress.value * 2 * Math.PI}rad` },
         { translateX: diceTransform.value * 5 },
         { translateY: diceTransform.value * 2 },
       ],
@@ -152,6 +152,43 @@ const DiceComponent = ({ onData, isInteractive }) => {
     };
   });
 
+
+
+  useEffect(() => {
+    if (!isInteractive) {
+      translateX.value = withTiming(0, { duration: 500, easing: Easing.linear });
+      translateY.value = withTiming(0, { duration: 500, easing: Easing.linear });
+      scale.value = withTiming(1, { duration: 500, easing: Easing.linear });
+    } else {
+      progress.value = withRepeat(withSpring(1.5, { duration: 3000 }), -1, true);
+      scale.value = withRepeat(withSpring(1), -1, true);
+      translateX.value = withRepeat(
+        withTiming(5, { duration: 3000, easing: Easing.elastic(10) }),
+        -1,
+        true
+      );
+      translateY.value = withRepeat(
+        withTiming(2, { duration: 3000, easing: Easing.elastic(10) }),
+        -1,
+        true
+      );
+      }
+  }, [isInteractive]);
+
+  // const resetAndStartAnimations = () => {
+  //   // Reset and start your animations here
+  //   translateX.value = 0;
+  //   translateY.value = 0;
+  //   scale.value = withSpring(1); // Or any initial value for scale
+  //   // Add other animations reset logic if needed
+  // };
+
+  // useEffect(() => {
+  //   if (triggerAnimation) {
+  //     resetAndStartAnimations();
+  //   }
+  // }, [triggerAnimation]);
+
   //TODO: REMEMBER rStyle vs reanimatedStyle
   return (
     <View style={styles.container}>
@@ -162,9 +199,11 @@ const DiceComponent = ({ onData, isInteractive }) => {
           </Animated.View>
         </PanGestureHandler>
       ) : (
-        <Animated.View style={[styles.square, reanimatedStyle]}>
-          <Image source={imageSources[currentImageIndex]} style={styles.image} />
-        </Animated.View>
+        <PanGestureHandler enabled={false}>
+          <Animated.View style={[styles.square, rStyle]}>
+            <Image source={imageSources[currentImageIndex]} style={styles.image} />
+          </Animated.View>
+        </PanGestureHandler>
       )}
     </View>
   );

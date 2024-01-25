@@ -17,6 +17,7 @@ export default function Page() {
   const { canRoll } = useContext(ActivitiesContext);
 
   const [diceRolled, setDiceRolled] = useState(false);
+  // const [diceKey, setDiceKey] = useState(0);
 
   const handleRoll = (data) => {
     setDiceNum(data[0]);
@@ -30,7 +31,8 @@ export default function Page() {
     headerBounce();
     swipeButtonBounce();
     setModalVisible(false);
-
+    console.log("Roll handled, isInteractive should change");
+    // setDiceKey(prevKey => prevKey + 1);
   };
 
 
@@ -92,17 +94,6 @@ export default function Page() {
   const [switchEnabled, setSwitchEnabled] = useState(false);
   // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-  // const onSwipe = () => {
-  //   setSwipeComplete((prevSwipeComplete) => {
-  //     //console.log("before: " + prevSwipeComplete);
-  //     if (!prevSwipeComplete) {
-  //       // Only setModalVisible if the swipe was incomplete
-  //       setModalVisible(true);
-  //     }
-  //     //console.log(prevSwipeComplete);
-  //     return !prevSwipeComplete; // Toggle the state
-  //   });
-  // };
 
   const onSwipe = () => {
     if (diceRolled && !isModalVisible) {
@@ -114,7 +105,6 @@ export default function Page() {
     setModalVisible(true);
     // setSwipeComplete(false);
   }
-
 
 
 
@@ -134,7 +124,10 @@ export default function Page() {
         <Text style={styles.heading1}>an activity!</Text>
         <Text style={styles.heading2}>Dice: Night Time Activities</Text>
       
-        <DiceComponent onData={handleRoll} isInteractive={!diceRolled}/>
+        <DiceComponent 
+          onData={handleRoll} 
+          isInteractive={!diceRolled} 
+        />
       </View>
 
       {diceRolled && (

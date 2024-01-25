@@ -35,7 +35,7 @@ export default function CongratsModal({
     setModalVisible(false);
     setDiceRolled(false);
     setSwipeComplete(false);
-
+    setSwitchEnabled(false);
   };
 
   const { addPost } = useContext(PostsContext);
