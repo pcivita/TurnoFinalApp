@@ -24,7 +24,7 @@ const imageSources = [
   Images.diceFaces.six,
 ];
 
-const DiceComponent = ({ onData }) => {
+const DiceComponent = ({ onData, isInteractive }) => {
   const progress = useSharedValue(1);
   const scale = useSharedValue(1);
   const diceTransform = useSharedValue(0);
@@ -155,20 +155,17 @@ const DiceComponent = ({ onData }) => {
   //TODO: REMEMBER rStyle vs reanimatedStyle
   return (
     <View style={styles.container}>
-      <PanGestureHandler onGestureEvent={panGestureEvent}>
-        <Animated.View style={[styles.square, rStyle]}>
-          {/* <Pressable
-            style={styles.imageContainer}
-            onPress={startCycling}
-            disabled={isCycling}
-          > */}
-          <Image
-            source={imageSources[currentImageIndex]}
-            style={styles.image}
-          />
-          {/* </Pressable> */}
+      {isInteractive ? (
+        <PanGestureHandler onGestureEvent={panGestureEvent}>
+          <Animated.View style={[styles.square, rStyle]}>
+            <Image source={imageSources[currentImageIndex]} style={styles.image} />
+          </Animated.View>
+        </PanGestureHandler>
+      ) : (
+        <Animated.View style={[styles.square, reanimatedStyle]}>
+          <Image source={imageSources[currentImageIndex]} style={styles.image} />
         </Animated.View>
-      </PanGestureHandler>
+      )}
     </View>
   );
 };
@@ -177,24 +174,25 @@ export default DiceComponent;
 
 const styles = StyleSheet.create({
   container: {
-    width: "30%",
-    height: "40%",
+    height: "65%",
     aspectRatio: 1,
-    // borderWidth: 2,
-    right: -75,
-    top: 75,
     alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    marginTop: 20,
   },
   imageContainer: {
     width: "100%",
     height: "100%",
-    // borderWidth: 2,
   },
   image: {
     resizeMode: "contain",
     width: "100%",
     height: "100%",
   },
+  // disabled: {
+  //   tintColor: Themes.colors.salmonLight
+  // },
   square: {
     width: 200,
     height: 200,

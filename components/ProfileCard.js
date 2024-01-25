@@ -11,7 +11,7 @@ export default function ProfileCard({
   profilePic,
 }) {
   const handleFriends = () => {
-    console.log("Pressed");
+    //console.log("Pressed");
   };
 
   const imageDict = {

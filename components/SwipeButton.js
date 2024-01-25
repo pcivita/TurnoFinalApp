@@ -36,6 +36,8 @@ const SwipeButton = ({ onToggle }) => {
     if (isToggled !== toggled) {
       setToggled(isToggled);
       onToggle(isToggled);
+
+      // onToggle();
     }
   };
 
@@ -140,6 +142,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
+
+    shadowOpacity: 0.3,
+    shadowOffset: {
+      height: 3,
+    },
+
+    position: "absolute",
+    alignSelf: "center",
+    zIndex: 10,
+    borderRadius: 20,
+    gap: 12,
+    top: 16,
 
     shadowOpacity: 0.3,
     shadowOffset: {
