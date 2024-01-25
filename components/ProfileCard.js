@@ -72,7 +72,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    padding: 15,
+    paddingHorizontal: 15,
+    paddingTop: 15,
     // backgroundColor: "green"
   },
   imageContainer: {

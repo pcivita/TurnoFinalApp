@@ -65,12 +65,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 200,
   },
-  // main: {
-  //   flex: 1,
-  //   justifyContent: "center",
-  //   width: "100%",
-  //   marginHorizontal: "auto",
-  // },
   buttonContainer: {
     display: "flex",
     flexDirection: "row",
@@ -78,6 +72,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   profileCard: {
-    
   }
 });
