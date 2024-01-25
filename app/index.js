@@ -1,19 +1,34 @@
-import { Link } from 'expo-router';
-import React, { useState } from 'react';
+import { Link, router } from 'expo-router';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Dimensions, Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Themes } from '../assets/Themes';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
+import ProfileCard from '../components/ProfileCard';
+import { Profile } from '../components/Profile';
+import * as ImagePicker from 'expo-image-picker';
+import { FirebaseContext } from '../contexts/FirebaseContext';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default function Onboarding() {
-  const [currentScreen, setCurrentScreen] = useState('onboarding');
+    const [currentScreen, setCurrentScreen] = useState('onboarding');
+    const [profilePicUri, setProfilePicUri] = useState(null);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const {user, logIn, logoutUser, signUp, initializeUserDatabaseEntry} = useContext(FirebaseContext);
+    useEffect(() => {
+        if (user) {
+            router.replace('/roll');
+        }
+    }, [user]);
 
   const handleLogIn = () => {
-    // Placeholder for the login functionality
-    console.log('Log In');
+    setCurrentScreen('onboarding');
+    logIn(email, password);
   };
 
   //import poppins
@@ -26,10 +41,23 @@ export default function Onboarding() {
         return undefined;
     }
 
-  const handleSignUp = () => {
-    // Placeholder for the sign-up functionality
-    console.log('Sign Up');
-  };
+    const handleSignUp = async () => {
+        setLoading(true);   
+        if (email && password) {
+            try {
+                const user = await signUp(email, password, profilePicUri);
+            if (user) {
+                setCurrentScreen('onboarding');   
+              
+            }
+            
+          } catch (error) {
+            console.error("Error in sign-up process: ", error);
+            // Handle the error appropriately here (e.g., show a message to the user)
+          }
+        }
+        setLoading(false);
+      };
 
   const renderOnboarding = () => {
     return (
@@ -41,8 +69,14 @@ export default function Onboarding() {
         <TouchableOpacity onPress={() => setCurrentScreen('log in')} style={styles.loginButton}>
             <Text style={styles.onBoardingButtonText}>Log In</Text>
         </TouchableOpacity>
-        <TouchableOpacity title="Sign Up" onPress={() => setCurrentScreen('sign up')} style={styles.signUpButton}>
-            <Text style={styles.onBoardingButtonText}>Sign Up</Text>
+        <TouchableOpacity onPress={() => setCurrentScreen('sign up')} style={styles.signUpButton}>
+            {loading ? 
+                <ActivityIndicator size="small" color="white" />
+            : <Text style={styles.onBoardingButtonText}>Sign Up</Text>}
+        </TouchableOpacity>
+        {/* FOR TESTING */}
+        <TouchableOpacity onPress={() => router.replace('/roll')} style={styles.loginButton}>
+            <Text style={{color: 'white', fontWeight: 'bold'}}>Bypass Auth (for testing will delete later)</Text>
         </TouchableOpacity>
       </View>
     );
@@ -60,36 +94,61 @@ export default function Onboarding() {
         <Text style={styles.subtitle}>Roll your way through the day</Text>
         <TextInput style={styles.input} placeholder="Email" />
         <TextInput style={styles.input} placeholder="Password" secureTextEntry />
-            <Link
+        <View style={{height: 32}}/>
+        {/* <Link
             href={{
                 pathname: "/roll",
             }}
-            >
-        <TouchableOpacity  onPress={handleLogIn} style={styles.loginButton}>
-                
-                <Text style={styles.loginText}>Log In</Text>
-        </TouchableOpacity>
-        </Link>
+        > */}
+            <TouchableOpacity  onPress={handleLogIn} style={styles.loginButton}>
+                    <Text style={styles.loginText}>Log In</Text>
+            </TouchableOpacity>
+        {/* </Link> */}
       </View>
     );
   };
 
   const renderSignUp = () => {
+
+    const selectPhoto = async () => {
+        try {
+            const response = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+            });
+            if (!response.cancelled) {
+                setProfilePicUri(response.uri);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return (
       <View style={styles.container}>
          <TouchableOpacity onPress={() => setCurrentScreen('onboarding')} style={styles.backCaret}>
             <FontAwesome5 name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
+        <View style={styles.spacing}/>
         <Text style={styles.title}>Turno</Text>
-        <Text style={styles.subtitle}>Roll your way through the day</Text>
-        <TextInput style={styles.input} placeholder="Username" />
-        <TextInput style={styles.input} placeholder="Email" />
-        <TextInput style={styles.input} placeholder="Password" secureTextEntry />
-        <Link href={{ pathname: '/roll' }}>
+        <TouchableOpacity style={styles.profileUploader} onPress={() => selectPhoto()}>
+            <Image source={require('../assets/Vectors/EditPencil.png')} style={{position: 'absolute', zIndex: 99, right: -5, top: -5}} />
+            {
+                profilePicUri ? (
+                    <Image source={{uri: profilePicUri}} style={{width: 100, height: 100, borderRadius: 50}} />
+                ) : (
+                    <Profile width={100} height={100} />
+                )
+            }
+        </TouchableOpacity>
+
+        <TextInput style={styles.input} placeholder="Email" onChangeText={setEmail} />
+        <TextInput style={styles.input} placeholder="Password" secureTextEntry onChangeText={setPassword} />
+        <View style={{height: 32}}/>
+        {/* <Link href={{ pathname: '/roll' }}> */}
         <TouchableOpacity onPress={handleSignUp} style={styles.signUpButton}>
             <Text style={styles.loginText}>Sign Up</Text>
         </TouchableOpacity>
-        </Link>
+        {/* </Link> */}
         <Text style={styles.loginText} onPress={() => setCurrentScreen('log in')}>
           Already have an account? Log In
         </Text>
@@ -119,7 +178,6 @@ const styles = StyleSheet.create({
   logo: {
     width: 75,
     height: 75,
-    marginBottom: 16,
   },
   title: {
     fontSize: 30,
@@ -199,5 +257,8 @@ const styles = StyleSheet.create({
   onboardingSpacing: {
     height: windowHeight * 0.25 
   },
+  profileUploader: {
+    marginTop: 16
+  }
  
 });

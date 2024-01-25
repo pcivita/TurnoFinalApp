@@ -13,6 +13,7 @@ import {
 import { InProgressProvider } from "../contexts/InProgressContext";
 import { useFonts } from "expo-font";
 import DiceSVG from "../components/Icons/Dice";
+import { FirebaseProvider } from "../contexts/FirebaseContext";
 
 export default function AppLayout() {
   const [fontsLoaded] = useFonts({
@@ -25,6 +26,7 @@ export default function AppLayout() {
   }
 
   return (
+    <FirebaseProvider>
     <InProgressProvider>
       <ActivitiesProvider>
         <PostsProvider>
@@ -140,6 +142,7 @@ export default function AppLayout() {
         </PostsProvider>
       </ActivitiesProvider>
     </InProgressProvider>
+    </FirebaseProvider>
   );
 }
 
