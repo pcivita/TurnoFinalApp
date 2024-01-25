@@ -9,6 +9,7 @@ import Animated, {
   withTiming,
   withSpring,
   withRepeat,
+  withSequence,
   useAnimatedGestureHandler,
   runOnJS,
   Easing,
@@ -28,6 +29,7 @@ const DiceComponent = ({ onData, isInteractive, triggerAnimation }) => {
   const progress = useSharedValue(1);
   const scale = useSharedValue(1);
   const diceTransform = useSharedValue(0);
+  const shadowOpacity = useSharedValue(0);
 
   const reanimatedStyle = useAnimatedStyle(() => {
     return {
@@ -125,43 +127,69 @@ const DiceComponent = ({ onData, isInteractive, triggerAnimation }) => {
   const panGestureEvent = useAnimatedGestureHandler({
     onStart: (event) => {
       runOnJS(setDice);
-      scale.value = withSpring(1.5);
+      scale.value = withSpring(1.4);
+      shadowOpacity.value = withTiming(1);
+
       contextTranslateX.value = translateX.value;
       contextTranslateY.value = translateY.value;
     },
     onActive: (event) => {
+      // TODO: add rotation?
       translateX.value = event.translationX + contextTranslateX.value;
       translateY.value = event.translationY + contextTranslateY.value;
     },
     onEnd: (event) => {
       scale.value = withSpring(0.5);
       runOnJS(startCycling)();
+
+      progress.value = withSpring(0);
     },
   });
+
   const rStyle = useAnimatedStyle(() => {
     return {
       transform: [
         { scale: scale.value },
-        {
-          translateX: translateX.value,
-        },
-        {
-          translateY: translateY.value,
-        },
+        { translateX: translateX.value },
+        { translateY: translateY.value },
+        { rotate: "0rad" },
       ],
     };
   });
+  
 
+  const shadowStyle = useAnimatedStyle(() => {
+    return {
+      opacity: shadowOpacity.value,
+      shadowOpacity: shadowOpacity.value,
 
+      position: 'absolute',
+      width: 200,
+      height: 200,
+      left: 5,
+      borderRadius: 20,
+      backgroundColor: "black",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 20,
+      },
+      shadowRadius: 15,
+      elevation: 24,
+    };
+  });
+  
 
   useEffect(() => {
     if (!isInteractive) {
-      translateX.value = withTiming(0, { duration: 500, easing: Easing.linear });
-      translateY.value = withTiming(0, { duration: 500, easing: Easing.linear });
-      scale.value = withTiming(1, { duration: 500, easing: Easing.linear });
+      translateX.value = withTiming(0, { duration: 1000, easing: Easing.linear });
+      translateY.value = withTiming(0, { duration: 1000, easing: Easing.linear });
+      scale.value = withTiming(1, { duration: 1000, easing: Easing.linear });
+      // shadowOpacity.value = withTiming(0, { duration: 2000 }); // Reset to no opacity
     } else {
       progress.value = withRepeat(withSpring(1.5, { duration: 3000 }), -1, true);
-      scale.value = withRepeat(withSpring(1), -1, true);
+      // scale.value = withRepeat(withSpring(1), -1, true);
+  
       translateX.value = withRepeat(
         withTiming(5, { duration: 3000, easing: Easing.elastic(10) }),
         -1,
@@ -173,38 +201,44 @@ const DiceComponent = ({ onData, isInteractive, triggerAnimation }) => {
         true
       );
       }
+      // scale.value = withRepeat(
+      //   // withSequence(
+      //     withTiming(1, { duration: 3000, easing: Easing.elastic(1) }),
+      //     withTiming(0.9, { duration: 3000, easing: Easing.elastic(1) })
+      //   // ),
+      //   -1,
+      //   true
+      // );
+      // shadowOpacity.value = withRepeat(
+      //   // withSequence(
+      //     withTiming(0.7, { duration: 3000, easing: Easing.elastic(1) }),
+      //     withTiming(0, { duration: 3000, easing: Easing.elastic(1) })
+      //   // ),
+      //   -1,
+      //   true
+      // );
   }, [isInteractive]);
 
-  // const resetAndStartAnimations = () => {
-  //   // Reset and start your animations here
-  //   translateX.value = 0;
-  //   translateY.value = 0;
-  //   scale.value = withSpring(1); // Or any initial value for scale
-  //   // Add other animations reset logic if needed
-  // };
+  useEffect(() => {
+    if (isCycling) {
+      // Animate the shadow opacity to full as the dice rolls
+      shadowOpacity.value = withTiming(0, { duration: 900 });
+    } else {
+      // Reset the shadow opacity when the dice stops rolling
+      shadowOpacity.value = withTiming(0.8, { duration: 900 });
+    }
+  }, [isCycling]);
 
-  // useEffect(() => {
-  //   if (triggerAnimation) {
-  //     resetAndStartAnimations();
-  //   }
-  // }, [triggerAnimation]);
 
   //TODO: REMEMBER rStyle vs reanimatedStyle
   return (
-    <View style={styles.container}>
-      {isInteractive ? (
-        <PanGestureHandler onGestureEvent={panGestureEvent}>
-          <Animated.View style={[styles.square, rStyle]}>
-            <Image source={imageSources[currentImageIndex]} style={styles.image} />
-          </Animated.View>
-        </PanGestureHandler>
-      ) : (
-        <PanGestureHandler enabled={false}>
-          <Animated.View style={[styles.square, rStyle]}>
-            <Image source={imageSources[currentImageIndex]} style={styles.image} />
-          </Animated.View>
-        </PanGestureHandler>
-      )}
+    <View style={[styles.container]}>
+      <PanGestureHandler onGestureEvent={panGestureEvent} enabled={isInteractive ? true : false}>
+        <Animated.View style={[styles.square, rStyle]}>
+          <Animated.View style={[styles.square, shadowStyle]} />
+          <Image source={imageSources[currentImageIndex]} style={styles.image} />
+        </Animated.View>
+      </PanGestureHandler>
     </View>
   );
 };
@@ -233,7 +267,10 @@ const styles = StyleSheet.create({
   //   tintColor: Themes.colors.salmonLight
   // },
   square: {
-    width: 200,
-    height: 200,
+    width: 210,
+    height: 210,
   },
+  shadow: {
+    backgroundColor: "black"
+  }
 });
