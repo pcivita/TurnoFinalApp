@@ -7,41 +7,53 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import DiceImage from '../../assets/Themes/Images/DiceFaces/Dice-1.png'
 import DiceCard from "../../components/DiceCard";
 import { useState } from "react";
+import Images from "../../assets/Themes/Images";
+import { useLocalSearchParams, router } from 'expo-router'
 
 export default function Page() {
+    const params = useLocalSearchParams()
 
     const [filtersVisible, setFiltersVisible] = useState(false)
     const [activeFilter, setActiveFilter] = useState('')
-  const [fontsLoaded] = useFonts({
-    "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
-    "Poppins-Bold": require("../../assets/Poppins/Poppins-Bold.ttf"),
-  });
-  if (!fontsLoaded) {
-    return undefined;
-  }
+    const [fontsLoaded] = useFonts({
+        "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
+        "Poppins-Bold": require("../../assets/Poppins/Poppins-Bold.ttf"),
+    });
+    if (!fontsLoaded) {
+        return undefined;
+    }
 
  
 
   const DATA = [
     {
-        img: require("../../assets/Themes/Images/DiceFaces/Dice-1.png"),
+        img: Images.banners.tapas,
+        id: 1,
         title: "Tapas in Barcelona",
+        numRolled: 201,
+        numSaved: 40,
         user: {
-            username: "username",
+            username: "malina123",
             profilePic: require("../../assets/Themes/Images/profileImages/Malina.jpg"),
         },
     },
     {
-        img: require("../../assets/Themes/Images/DiceFaces/Dice-1.png"),
+        img: Images.banners.museum,
+        id: 2,
         title: "Museums in the Bay",
+        numRolled: 12,
+        numSaved: 3,
         user: {
-            username: "username",
+            username: "karinali",
             profilePic: require("../../assets/Themes/Images/profileImages/Malina.jpg"),
         },
     },
     {
-        img: require("../../assets/Themes/Images/DiceFaces/Dice-1.png"),
+        img: Images.banners.library,
+        id: 3,
         title: "Stanford Study Spots",
+        numRolled: 54,
+        numSaved: 13,
         user: {
             username: "cliu18",
             profilePic: require("../../assets/Themes/Images/profileImages/Digo.jpeg"),
@@ -50,8 +62,7 @@ export default function Page() {
   ]
   return (
     <>
-    <View style={styles.container}>
-        
+    <View style={styles.container}> 
       <Stack.Screen options={{ headerShown: false }} />
       <Header title="Browse" />
       <Text style={styles.headerText}>Community Dice</Text>
@@ -91,17 +102,19 @@ export default function Page() {
         }
         <View style={{marginTop: 12}}/>
       <FlatList 
-        
         data={DATA}
         numColumns={2}
         renderItem={({item, index}) => 
-        <TouchableOpacity style={{margin: 5}}>
-            <Link href={{pathname: '/browse/DicePage', params: {item: item}}}>
+        <TouchableOpacity 
+            style={{margin: 5}}
+        >
+            <Link href={{pathname: '/browse/DicePage?itemId=${itemTitle}', params: {item: item}}}>
             <DiceCard 
                 img={item.img}
-   
                 title={item.title}
                 user={item.user}
+                numRolled={item.numRolled}
+                numSaved={item.numSaved}
             />
             </Link>
             </TouchableOpacity>
@@ -125,7 +138,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginTop: 30,
     marginBottom: 24,
-
   },
     searchBarContainer: {
         flexDirection: 'row',
