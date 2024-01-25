@@ -44,6 +44,12 @@ export default function AppLayout() {
               },
             }}
           >
+            <Tabs.Screen 
+              name="progress/index"
+              options={{
+                href: null,
+              }}
+            />
             <Tabs.Screen
               name="index"
               options={{
@@ -58,6 +64,7 @@ export default function AppLayout() {
             <Tabs.Screen
               name="roll/index"
               options={{
+                
                 tabBarLabel: "Roll",
                 tabBarLabelStyle: styles.iconAndText,
                 tabBarIcon: ({ size, color }) => (
@@ -70,6 +77,7 @@ export default function AppLayout() {
               <Tabs.Screen
                 name="activities"
                 options={{
+                  
                   tabBarLabelStyle: styles.iconAndText,
                   tabBarLabel: "Activities",
                   tabBarIcon: ({ size, color }) => (
@@ -81,6 +89,7 @@ export default function AppLayout() {
              <Tabs.Screen
               name="feed"
               options={{
+                
                 tabBarLabelStyle: styles.iconAndText,
                 tabBarLabel: "Feed",
                 tabBarIcon: ({ color }) => (
