@@ -57,7 +57,7 @@ export default function CommentModal({
   // const commentsTEST = posts[postIndex].comments;
 
   const handleAddComment = async () => {
-    console.log("Comment Pressed", newComment);
+    //console.log("Comment Pressed", newComment);
     
   };
 

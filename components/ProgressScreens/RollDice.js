@@ -17,42 +17,44 @@ import Header from "../Header";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { Link } from "expo-router";
 
-export default function RollDice({ onData, canRoll }) {
+export default function RollDice({ onData, canRoll, diceRolled, setDiceRolled }) {
   const [appearHeader, setAppearHeader] = useState(false);
+  
   const handleData = (data) => {
     // Process the data
     onData(data);
     setAppearHeader(true);
-    headerBounce();
+    setDiceRolled(true);
+    // headerBounce();
+    
     //setActiveScreen("CompleteDice"); TODO IMPORTANT
   };
-  const headerBounce = () => {
-    progress.value = withSpring(130);
-  };
+  // const headerBounce = () => {
+  //   progress.value = withSpring(130);
+  // };
 
-  const progress = useSharedValue(0);
+  // const progress = useSharedValue(0);
 
-  const rStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateY: progress.value }],
-    };
-  }, []);
+  // const rStyle = useAnimatedStyle(() => {
+  //   return {
+  //     transform: [{ translateY: progress.value }],
+  //   };
+  // }, []);
 
   const { activities } = useContext(ActivitiesContext);
-  console.log("length " + activities.length);
+  // console.log("length " + activities.length);
 
   return (
     <View style={styles.screenContainer}>
-      <Header title="Roll" />
+      {/* <Header title="Roll" /> */}
       {canRoll ? (
         <View>
           <View styles={styles.upperTextContainer}>
             <Text style={styles.upperText}>
-              {" "}
-              Roll the dice for an Activity!{" "}
+              {" "}Roll the dice for an Activity!{" "}
             </Text>
           </View>
-          <DiceComponent style={styles.Dice} onData={handleData} />
+          <DiceComponent style={styles.Dice} onData={handleData} isInteractive={!diceRolled}/>
         </View>
       ) : (
         <View style={styles.msg}>

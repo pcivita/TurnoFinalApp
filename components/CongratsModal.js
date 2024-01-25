@@ -14,32 +14,35 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 // import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function CongratsModal({
+  exitModal,
   activityName,
   activityIndex,
   isModalVisible,
   setModalVisible,
   switchEnabled,
   setSwitchEnabled,
-  setActiveScreen,
-  setAppearHeader,
+  setDiceRolled,
+  setSwipeComplete,
 }) {
   const { deleteActivity } = useContext(ActivitiesContext);
 
   const onExitModal = () => {
+    console.log("exiting modal")
     if (!switchEnabled) {
-      console.log("deletingActivity of index: " + activityIndex);
+      console.log("deleting activity of index: " + activityIndex);
       deleteActivity(activityIndex);
     }
     setModalVisible(false);
-    setActiveScreen("RollDice");
-    setAppearHeader(false);
+    setDiceRolled(false);
+    setSwipeComplete(false);
+    setSwitchEnabled(false);
   };
 
   const { addPost } = useContext(PostsContext);
   const { posts } = useContext(PostsContext);
 
   const postActivity = async () => {
-    console.log(activityName)
+    //(activityName)
   };
 
   return (
@@ -62,29 +65,14 @@ export default function CongratsModal({
         <Image source={Images.confetti} style={styles.confetti} />
         <Text style={styles.title}>Congrats!</Text>
         <PostPreview activityName={activityName} />
-        <View style={styles.statsContainer}>
-          <View style={styles.stat}>
-            <View style={styles.circle}>
-              <FontAwesome5
-                name="dice-two"
-                size={50}
-                color={Themes.colors.salmon}
-              />
-              <Text style={styles.circleText}>x34</Text>
-            </View>
-            <Text style={styles.circleDescription}>
-              You have rolled the dice 34 times
-            </Text>
+        <View style={styles.stat}>
+          <View style={styles.circle}>
+            <Fire width={44} height={57} />
+            <Text style={styles.circleText}>x3</Text>
           </View>
-          <View style={styles.stat}>
-            <View style={styles.circle}>
-              <Fire width={44} height={57} />
-              <Text style={styles.circleText}>x10</Text>
-            </View>
-            <Text style={styles.circleDescription}>
-              Congrats on your 10 day streak
-            </Text>
-          </View>
+          <Text style={styles.circleDescription}>
+            You've completed 3 activities on your dice!
+          </Text>
         </View>
         <View style={styles.toggleContainer}>
           <Text> Add "{activityName}" back to Activities List?</Text>
@@ -157,13 +145,6 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     fontFamily: "Poppins-Bold",
   },
-  statsContainer: {
-    width: "90%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flex: 1,
-  },
   stat: {
     flexDirection: "column",
     alignItems: "center",
@@ -194,7 +175,8 @@ const styles = StyleSheet.create({
   toggleContainer: {
     width: "102%",
     marginTop: 20,
-    padding: 25,
+    paddingHorizontal: 25,
+    paddingVertical: 15,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
