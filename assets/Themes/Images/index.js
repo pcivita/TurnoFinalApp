@@ -24,5 +24,14 @@ export default Images = {
     digo: require("./profileImages/Digo.jpeg"),
     naz: require("./profileImages/Naz.heic"),
   },
+  banners: {
+    hikes: require("./banners/hikes.jpg"),
+    museum: require("./banners/museum.jpg"),
+    tapas: require("./banners/tapas.jpg"),
+    beach: require("./banners/beach.jpg"),
+    cafe: require("./banners/cafe.jpg"),
+    park: require("./banners/park.jpg"),
+    library: require("./banners/library.jpg"),
+  },
   confetti: require("./other/Confetti.png"),
 };
