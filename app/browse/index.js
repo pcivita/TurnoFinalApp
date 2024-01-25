@@ -108,7 +108,7 @@ export default function Page() {
         <TouchableOpacity 
             style={{margin: 5}}
         >
-            <Link href={{pathname: '/browse/DicePage?itemId=${itemTitle}', params: {item: item}}}>
+            <Link href={{pathname: `/browse/DicePage?itemId=${item.id}`, params: {item: item}}}>
             <DiceCard 
                 img={item.img}
                 title={item.title}
