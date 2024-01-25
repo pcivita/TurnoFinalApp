@@ -14,14 +14,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 // import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function CongratsModal({
+  exitModal,
   activityName,
   activityIndex,
   isModalVisible,
   setModalVisible,
   switchEnabled,
   setSwitchEnabled,
-  setActiveScreen,
-  setAppearHeader,
   setDiceRolled,
   setSwipeComplete,
 }) {
@@ -34,10 +33,9 @@ export default function CongratsModal({
       deleteActivity(activityIndex);
     }
     setModalVisible(false);
-    // setActiveScreen("RollDice");
-    setAppearHeader(false);
     setDiceRolled(false);
     setSwipeComplete(false);
+
   };
 
   const { addPost } = useContext(PostsContext);

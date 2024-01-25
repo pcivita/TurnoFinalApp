@@ -19,14 +19,18 @@ export default function Page() {
   const [diceRolled, setDiceRolled] = useState(false);
 
   const handleRoll = (data) => {
-    console.log(data);
     setDiceNum(data[0]);
     setActivityName(data[1][0]);
+
+    bannerProgress.value = 0;
+    swipeProgress.value = 0;
     
     setDiceRolled(true);
     //startAnimation();
     headerBounce();
     swipeButtonBounce();
+    setModalVisible(false);
+
   };
 
 
@@ -55,32 +59,31 @@ export default function Page() {
             progress.value = withTiming(1, {
               duration: 1000, // Animation duration
             });
-            runOnJS(flipProgress)(); //Sets Activity in Progress
+            runOnJS(flipProgress)(); // Sets Activity in Progress
           }
         }
       );
     }, 1500);
   };
 
-
+  let bannerProgress = useSharedValue(0);
   const headerBounce = () => {
-    progress2.value = withSpring(130);
+    bannerProgress.value = withSpring(130);
   };
-  const progress2 = useSharedValue(0);
-  const rStyle2 = useAnimatedStyle(() => {
+  const bannerAnimation = useAnimatedStyle(() => {
     return {
-      transform: [{ translateY: progress2.value }],
+      transform: [{ translateY: bannerProgress.value }],
     };
   }, []);
 
 
+  let swipeProgress = useSharedValue(0);
   const swipeButtonBounce = () => {
-    progress3.value = withSpring(-130);
+    swipeProgress.value = withSpring(-130);
   };
-  const progress3 = useSharedValue(0);
-  const rStyle3 = useAnimatedStyle(() => {
+  const swipeAnimation = useAnimatedStyle(() => {
     return {
-      transform: [{ translateY: progress3.value }],
+      transform: [{ translateY: swipeProgress.value }],
     };
   }, []);
 
@@ -102,14 +105,17 @@ export default function Page() {
   // };
 
   const onSwipe = () => {
-    setModalVisible(!isModalVisible);
+    if (diceRolled && !isModalVisible) {
+      setModalVisible(true);
+    }
   }
-  
 
   const toggleModal = () => {
     setModalVisible(true);
-    setSwipeComplete(false);
+    // setSwipeComplete(false);
   }
+
+
 
 
   //TODO: Dice shouldn't be clickable after rolling
@@ -118,31 +124,21 @@ export default function Page() {
       <Header title="Roll" />
 
       {diceRolled && (
-        <Animated.View style={[styles.square, rStyle2]}>
+        <Animated.View style={[styles.square, bannerAnimation]}>
           <ActivityRolled diceNum={diceNum} activityName={activityName} />
         </Animated.View>
       )}
-     
-      {/* <Animated.View style={styles.container}> */}
 
-        {/* <RollDice 
-          onData={handleRoll} 
-          canRoll={canRoll} 
-          diceRolled={diceRolled} 
-          setDiceRolled={setDiceRolled} 
-
-        /> */}
-        <View style={styles.upperTextContainer}>
-          <Text style={styles.heading1}>Roll the dice for</Text>
-          <Text style={styles.heading1}>an activity!</Text>
-          <Text style={styles.heading2}>Dice: Night Time Activities</Text>
-       
-          <DiceComponent onData={handleRoll} isInteractive={!diceRolled}/>
-        </View>
-      {/* </Animated.View> */}
+      <View style={styles.upperTextContainer}>
+        <Text style={styles.heading1}>Roll the dice for</Text>
+        <Text style={styles.heading1}>an activity!</Text>
+        <Text style={styles.heading2}>Dice: Night Time Activities</Text>
+      
+        <DiceComponent onData={handleRoll} isInteractive={!diceRolled}/>
+      </View>
 
       {diceRolled && (
-        <Animated.View style={[styles.square2, rStyle3]}>
+        <Animated.View style={[styles.square2, swipeAnimation]}>
           <SwipeButton onToggle={onSwipe}/>
           <CongratsModal
             activityName={activityName}
@@ -151,8 +147,6 @@ export default function Page() {
             setModalVisible={toggleModal}
             switchEnabled={switchEnabled}
             setSwitchEnabled={setSwitchEnabled}
-            setActiveScreen={setActiveScreen}
-            setAppearHeader={setDiceRolled}
             setDiceRolled={setDiceRolled}
             setSwipeComplete={setSwipeComplete}
           />
@@ -163,13 +157,6 @@ export default function Page() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // width: "100%",
-    // height: "100%",
-    // alignItems: "center",
-    // justifyContent: "flex-start",
-    // flex: 1,
-  },
   header: {
     width: "100%",
     flexDirection: "row",

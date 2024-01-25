@@ -33,11 +33,20 @@ const SwipeButton = ({ onToggle }) => {
 
   // Fires when animation ends
   const handleComplete = (isToggled) => {
+    // if (isToggled !== toggled) {
+    //   setToggled(isToggled);
+    //   onToggle(isToggled);
+
+    //   // onToggle();
+    // }
+
     if (isToggled !== toggled) {
       setToggled(isToggled);
-      onToggle(isToggled);
 
-      // onToggle();
+      // Only trigger onToggle if the swipe was successful
+      if (isToggled) {
+        runOnJS(onToggle)(isToggled);
+      }
     }
   };
 
@@ -86,7 +95,7 @@ const SwipeButton = ({ onToggle }) => {
         backgroundColor: interpolateColor(
           X.value,
           [0, BUTTON_WIDTH - SWIPEABLE_DIMENSIONS - BUTTON_PADDING],
-          [Themes.colors.salmon, "#fff"]
+          [Themes.colors.salmon, "white"]
         ),
         transform: [{ translateX: X.value }],
       };
@@ -142,19 +151,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-
-    shadowOpacity: 0.3,
-    shadowOffset: {
-      height: 3,
-    },
-
-    position: "absolute",
     alignSelf: "center",
-    zIndex: 10,
-    borderRadius: 20,
-    gap: 12,
-    top: 16,
-
+    top: 30,
     shadowOpacity: 0.3,
     shadowOffset: {
       height: 3,
@@ -179,7 +177,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     zIndex: 2,
-    color: Themes.colors.salmon,
+    color: Themes.colors.blue,
     paddingLeft: 40,
   },
 });
