@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   },
   profileName: {
     fontSize: 20,
-    fontFamily: "Poppins-SemiBold",
+    // fontFamily: "Poppins-SemiBold",
   },
   handle: {
     fontFamily: "Poppins-Regular",
