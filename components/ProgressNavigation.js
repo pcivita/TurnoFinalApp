@@ -4,7 +4,7 @@ import { Themes } from "../assets/Themes";
 import KudosIcon from "./Icons/Kudos";
 
 const ProgressNavigation = ({ onData }) => {
-  const [activeTab, setActiveTab] = useState("Stats"); // Default active tab
+  const [activeTab, setActiveTab] = useState("Stats"); // Defaults to Stats (todo: change to Posts (seems to be a problem when i try))
 
   const tabs = ["Posts", "Stats"];
 
@@ -46,10 +46,9 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 24,
     borderRadius: 20,
-    // Add additional styling to match the screenshot
   },
   activeTab: {
-    backgroundColor: Themes.colors.background, // Active tab background color
+    backgroundColor: Themes.colors.background, 
   },
   tabContent: {
     display: "flex",
@@ -58,9 +57,8 @@ const styles = StyleSheet.create({
   },
   tabText: {
     // fontWeight: "bold",
-    fontFamily: "Poppins-SemiBold",
+    // fontFamily: "Poppins-SemiBold",
     fontSize: 12,
-    // Add additional text styling
   },
 });
 
