@@ -3,7 +3,8 @@ import StatsCard from "../StatsCard"
 import { Themes } from "../../assets/Themes";
 import { useRef } from "react";
 import { useEffect } from "react";
-import Post from "../Post.js"
+import Post from "../Post.js";
+import Images from "../../assets/Themes/Images";
 
 export default function MyPosts() {
 
@@ -16,8 +17,41 @@ export default function MyPosts() {
         postIndex={1}
         profilePost={true}
         handle={"pcivita"}
-        // profilePic={post.user_profile_pic}
-        activityName={"went on a runnnn"}
+        profilePic={"Pedro"}
+        activityName={"Go on a run"}
+        comments={["first comment"]}
+      />
+      <Post
+        isYourPost={true}
+        key={2}
+        id={2}
+        postIndex={2}
+        profilePost={true}
+        handle={"pcivita"}
+        profilePic={"Pedro"}
+        activityName={"Eat at Zareens"}
+        comments={["first comment"]}
+      />
+      <Post
+        isYourPost={true}
+        key={3}
+        id={3}
+        postIndex={3}
+        profilePost={true}
+        handle={"pcivita"}
+        profilePic={"Pedro"}
+        activityName={"Dish hike"}
+        comments={["first comment"]}
+      />
+      <Post
+        isYourPost={true}
+        key={4}
+        id={4}
+        postIndex={4}
+        profilePost={true}
+        handle={"pcivita"}
+        profilePic={"Pedro"}
+        activityName={"Read my book"}
         comments={["first comment"]}
       />
     </ScrollView>

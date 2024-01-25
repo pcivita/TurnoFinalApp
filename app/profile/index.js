@@ -27,34 +27,28 @@ const [activeScreen, setActiveScreen] = useState("Stats"); // Initial state
   }
 
   return (
-    // <PostsProvider>
-      
-      
-      <View style={styles.container}>
-        <Stack.Screen options={{ headerShown: false }} />
-        <Header title="Profile" />
-        {/* <View style={styles.main}> */}
-          <View style={styles.profileCard}>
-            <ProfileCard
-              isYourProfile={true}
-              profileName="Pedro Civita"
-              handle="@pcivita"
-              profilePic={"Pedro"}
-            />
-          </View>
+    <View style={styles.container}>
+      <Stack.Screen options={{ headerShown: false }} />
+      <Header title="Profile" />
 
-          <View style={styles.buttonContainer}>
-            <ProgressNavigation onData={handleData} />
-          </View>
-
-
-          <View style={styles.subscreenContainer}>
-            {activeScreen === "Posts" && <MyPosts />}
-            {activeScreen === "Stats" && <Stats />}
-          </View>
-        {/* </View> */}
+      <View style={styles.profileCard}>
+        <ProfileCard
+          isYourProfile={true}
+          profileName="Pedro Civita"
+          handle="@pcivita"
+          profilePic={"Pedro"}
+        />
       </View>
-    // </PostsProvider>
+
+      <View style={styles.buttonContainer}>
+        <ProgressNavigation onData={handleData} />
+      </View>
+
+      <View style={styles.subscreenContainer}>
+        {activeScreen === "Posts" && <MyPosts />}
+        {activeScreen === "Stats" && <Stats />}
+      </View>
+    </View>
   );
 }
 
@@ -63,7 +57,8 @@ const styles = StyleSheet.create({
     // flex: 1,
     display: "flex",
     height: "100%",
-    justifyContent: "center",
+    justifyContent: "flex-end",
+    alignItems: "center",
     backgroundColor: Themes.colors.background,
   },
   subscreenContainer: {
@@ -83,7 +78,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   profileCard: {
-    // position: "absolute",
-    // top: 10
+    
   }
 });
