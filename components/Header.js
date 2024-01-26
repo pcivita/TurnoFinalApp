@@ -20,7 +20,7 @@ export default function Header({ title, dice }) {
     "Friends from Feed": "/feed",
     "Friends from Profile": "/profile",
     "Roll": "/roll",
-    "Activities": "/roll/roll"
+    "Activities": "/roll"
   };
 
   const backPath = { pathname: titleToPath[title] || "/" };
