@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-Regular",
     backgroundColor: Themes.colors.lightGray,
     borderRadius: 5,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: Themes.colors.lightGray,
     padding: 10,
   },
@@ -318,8 +318,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Poppins-Regular",
     borderRadius: 5,
-    borderWidth: 2,
-    borderColor: Themes.colors.mediumGray,
+    borderWidth: 1,
+    borderColor: Themes.colors.darkGray,
     padding: 10,
   },
   activityName: {
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: Themes.colors.salmon,
   },
   buttonSecondary: {
@@ -429,7 +429,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: Themes.colors.salmon,
   },
   buttonDisabled: {

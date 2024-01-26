@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: Themes.colors.background,
   },
   createDiceContainer: {
     width: (windowWidth / 2) - (windowWidth * 0.05),

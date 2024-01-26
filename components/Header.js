@@ -14,13 +14,14 @@ export default function Header({ title, dice }) {
 
   console.log(dice);
 
-  const titleToPath = {
+const titleToPath = {
     "Settings": "/profile",
     "Create Activity": "/activities/home",
     "Friends from Feed": "/feed",
     "Friends from Profile": "/profile",
     "Roll": "/roll",
-    "Activities": "/roll"
+    "Activities": "/roll",
+    "Create New Dice": "/roll",
   };
 
   const backPath = { pathname: titleToPath[title] || "/" };

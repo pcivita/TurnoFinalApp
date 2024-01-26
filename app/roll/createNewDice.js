@@ -121,8 +121,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderRadius: 5,
     padding: 10,
-    borderWidth: 0.5,
-    borderColor: "black",
+    borderWidth: 1,
+    borderColor: Themes.colors.darkGray,
     fontFamily: "Poppins-Regular",
   },
   activityNameContainer: {
