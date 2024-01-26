@@ -63,19 +63,22 @@ export default function Page() {
           "CCRMA Lounge",
           "Huang Basement",
         ]
-    }
+    },
   ]
+  
+  const addDice = [{}];
+  const dataList = [...DICE_DATA, ...addDice];
+
   return (
     <View style={styles.container}>
       <Header title="My Dice" />
       <View style={{height: 24}} />
       <FlatList 
-        data={DICE_DATA}
+        data={dataList}
         numColumns={2}
         renderItem={({item, index}) => 
-        <TouchableOpacity 
-            style={{margin: 5}}
-        >
+        <TouchableOpacity style={{margin: 5}}>
+          {index !== dataList.length - 1 ? (
             <Link href={{
                 pathname: `/roll/roll`, 
                 params: {
@@ -90,13 +93,20 @@ export default function Page() {
                 }
               }}>
               <PersonalDiceCard 
-                  img={item.img}
-                  title={item.title}
-                  user={item.user}
-                  numRolled={item.numRolled}
-                  numSaved={item.numSaved}
+                img={item.img}
+                title={item.title}
+                user={item.user}
+                numRolled={item.numRolled}
+                numSaved={item.numSaved}
               />
             </Link>
+          ) : ( 
+            <Link href={{
+              pathname: `/roll/createNewDice`, 
+            }}>
+            <Text>hi</Text>
+            </Link>
+          )}
           </TouchableOpacity>
         }
         keyExtractor={(item) => item.id}
