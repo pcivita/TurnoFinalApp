@@ -19,6 +19,7 @@ import {
 import Themes from "../assets/Themes/themes.js";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { PostsContext } from "../contexts/PostsContext";
+import Supabase from "../Supabase.js";
 
 export default function CommentModal({
   profilePost,
@@ -57,8 +58,33 @@ export default function CommentModal({
   // const commentsTEST = posts[postIndex].comments;
 
   const handleAddComment = async () => {
-    //console.log("Comment Pressed", newComment);
-    
+    console.log("Comment Pressed");
+    let dataBaseName;
+    if (profilePost) {
+      dataBaseName = "posts";
+    } else {
+      dataBaseName = "posts_feed";
+    }
+    console.log("ID:", id);
+    const post_id = id;
+    const new_comment = {
+      user_handle: "@pcivita",
+      user_image: "Pedro", //Pedro Profile IMG
+      comment_text: newComment,
+    };
+
+    const { data: post, error } = await Supabase.from(dataBaseName)
+      .select("comments")
+      .eq("id", post_id)
+      .single();
+
+    if (post) {
+      const updated_comments = [...post.comments, new_comment];
+      await Supabase.from(dataBaseName)
+        .update({ comments: updated_comments })
+        .eq("id", post_id);
+    }
+    setNewComment("");
   };
 
   return (
