@@ -68,8 +68,8 @@ export default function Activity({ activityObject, index, section }) {
             <View style={styles.createActivityContainer}>
               <FontAwesome5
                 name="plus"
-                size={40}
-                color="white"
+                size={45}
+                color={Themes.colors.salmon}
                 style={styles.createActivity}
               />
             </View>
@@ -82,20 +82,23 @@ export default function Activity({ activityObject, index, section }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Themes.colors.salmonLight,
+    backgroundColor: Themes.colors.salmonMedium,
     height: 150,
     width: 170,
     borderRadius: 10,
-    justifyContent: "space-around",
+    justifyContent: "center",
+    gap: 10,
     alignItems: "center",
     shadowColor: "rgba(0, 0, 0, 0.5)",
     shadowOffset: { height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
-    padding: 12,
+    // paddingTop: 30,
   },
   gray: {
-    backgroundColor: Themes.colors.darkGray,
+    borderWidth: 0.5,
+    borderColor: Themes.colors.darkGray,
+    backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -114,15 +117,15 @@ const styles = StyleSheet.create({
     backgroundColor: Themes.colors.salmonLight,
   },
   text: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: "Poppins-Bold",
     color: "white",
     textAlign: "center",
   },
   textContainer: {
-    flex: 1,
     alignContent: "center",
     justifyContent: "center",
+
   },
   currentText: {
     color: "white",
@@ -131,13 +134,11 @@ const styles = StyleSheet.create({
     color: "black",
   },
   diceContainer: {
-    backgroundColor: "white",
     width: 40,
     height: 40,
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
   },
   diceNumberIcon: {
     flex: 1,

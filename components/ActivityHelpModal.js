@@ -104,11 +104,11 @@ const styles = StyleSheet.create({
   h1: {
     fontSize: 17,
     color: Themes.colors.background,
-    fontFamily: "Poppins-Bold",
+    fontFamily: "Poppins-Regular",
   },
   h1Container: {
-    width: "80%",
-    backgroundColor: Themes.colors.salmonLight,
+    width: "100%",
+    backgroundColor: Themes.colors.salmonMedium,
     padding: 12,
     borderRadius: 16,
     gap: 12,

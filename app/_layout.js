@@ -144,6 +144,12 @@ export default function AppLayout() {
                 href: null,
               }}
             />
+            <Tabs.Screen
+              name="roll/createNewDice"
+              options={{
+                href: null,
+              }}
+            />
           </Tabs>
         </PostsProvider>
       </ActivitiesProvider>

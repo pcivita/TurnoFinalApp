@@ -12,6 +12,7 @@ import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { Themes } from "../../assets/Themes";
 import Category from "../../components/Category";
 import Header from "../../components/Header";
+import Activity from "../../components/Activity";
 
 export default function Page() {
   const [activityName, setActivityName] = useState("");
@@ -44,10 +45,10 @@ export default function Page() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
         <Stack.Screen options={{ headerShown: false }} />
-        <Header title="Create Activity" />
+        <Header title="Create New Dice" />
         <View style={styles.activityNameContainer}>
           <Text style={styles.title}>
-            Activity Name <Text style={styles.asterick}>*</Text>
+            Dice Name <Text style={styles.asterick}>*</Text>
           </Text>
           <TextInput
             style={styles.input}
@@ -57,7 +58,7 @@ export default function Page() {
           />
         </View>
         <View style={styles.descriptionContainer}>
-          <Text style={styles.title}> Description</Text>
+          <Text style={styles.title}> Activities (0/6)</Text>
           <TextInput
             editable
             multiline
@@ -72,6 +73,12 @@ export default function Page() {
             onChangeText={setDescription}
           />
         </View>
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.title}> Description</Text>
+          <View style={styles.addActivityContainer}>
+            <Activity style={styles.addActivity}/>
+          </View>
+        </View>
         
         <View>
           <Link
@@ -85,7 +92,7 @@ export default function Page() {
             onPress={handleAddActivity}
           >
             <View style={[styles.button, isFormFilled ? styles.buttonEnabled : styles.buttonDisabled]}>
-              <Text style={styles.buttonText}>Add to Dice</Text>
+              <Text style={styles.buttonText}>Create Dice</Text>
             </View>
           </Link>
         </View>
@@ -127,7 +134,6 @@ const styles = StyleSheet.create({
     height: "20%",
     width: "100%",
     gap: 10,
-    marginBottom: 15
   },
   buttonContainer: {
     height: "10%",
@@ -158,4 +164,9 @@ const styles = StyleSheet.create({
   asterick: {
     color: Themes.colors.salmon,
   },
+  addActivityContainer: {
+    marginLeft: 15,
+    height: "100%",
+    flex: 1,
+  }
 });

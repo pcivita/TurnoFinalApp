@@ -7,15 +7,28 @@ import {
 } from "react-native";
 import { Stack } from "expo-router";
 import { Themes } from "../../assets/Themes";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Activity from "../../components/Activity";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { useFonts } from "expo-font";
 import Header from "../../components/Header";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ActivityHelpModal from "../../components/ActivityHelpModal";
+import { useLocalSearchParams } from "expo-router";
 
 export default function Page() {
+  // const [activities, setActivities] = useState([]);
+
+  // const params = useLocalSearchParams();
+  // useEffect(() => {
+  //   if (params) {
+  //     console.log(params);
+  //     const arr = params.activities.split(',')
+  //     setActivities(arr);
+  //   }
+  // }, [params])
+
+
   const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);
   const { activities } = useContext(ActivitiesContext);
   const currentActivities = activities;
@@ -38,12 +51,12 @@ export default function Page() {
       <Stack.Screen options={{ headerShown: false }} />
       <Header title="Activities" />
       <View style={styles.helpButton}>
-        <Text style={styles.headerText}>My Current Activities</Text>
+        <Text style={styles.headerText}>Stanford Study Spots</Text>
         <TouchableOpacity onPress={() => setIsHelpModalVisible(true)}>
           <MaterialCommunityIcons
-            name="help-circle"
-            size={30}
-            color={Themes.colors.darkGray}
+            name="help-circle-outline"
+            size={28}
+            color="black"
           />
           <ActivityHelpModal
             isModalVisible={isHelpModalVisible}
@@ -171,13 +184,13 @@ const styles = StyleSheet.create({
   helpButton: {
     width: "100%",
     paddingHorizontal: 20,
-    paddingTop: 64,
+    paddingTop: 20,
     marginBottom: 12,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   headerText: {
-    fontFamily: "Poppins-Bold",
+    fontFamily: "Poppins-Regular",
     fontSize: 20,
   },
 });

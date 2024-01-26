@@ -16,17 +16,16 @@ import { useLocalSearchParams, useSearchParams } from "expo-router";
 
 export default function Page() {
   const { canRoll } = useContext(ActivitiesContext);
-    const [currentDice, setCurrentDice] = useState(null)
-    const [activities, setActivities] = useState([])
+  const [currentDice, setCurrentDice] = useState(null)
+  const [activities, setActivities] = useState([])
 
   const params = useLocalSearchParams()
 
   useEffect(() => {
     if (params) {
-        // convert string to array
-        const arr = params.activities.split(',')
+      // console.log(params);
+      const arr = params.activities.split(',')
       setActivities(arr)
-        
     }
   }, [params])
 
@@ -123,12 +122,9 @@ export default function Page() {
     // setSwipeComplete(false);
   }
 
-
-
-  //TODO: Dice shouldn't be clickable after rolling
   return (
     <InProgressProvider>
-      <Header title="Roll" />
+      <Header title="Roll" dice={params} />
 
       {diceRolled && (
         <Animated.View style={[styles.square, bannerAnimation]}>

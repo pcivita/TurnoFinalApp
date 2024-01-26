@@ -42,7 +42,6 @@ export default function RollDice({ onData, canRoll, diceRolled, setDiceRolled })
   // }, []);
 
   const { activities } = useContext(ActivitiesContext);
-  // console.log("length " + activities.length);
 
   return (
     <View style={styles.screenContainer}>

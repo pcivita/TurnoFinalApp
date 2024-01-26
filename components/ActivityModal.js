@@ -24,19 +24,19 @@ export default function ActivityModal({
 
   const [name, setName] = useState(activity[0]);
   const [description, setDescription] = useState(activity[1]);
-  const [selectedId, setSelectedId] = useState(
-    Themes.categories.findIndex(
-      (currentCategory) => currentCategory[0] === activity[2]
-    ) + 1
-  );
+  // const [selectedId, setSelectedId] = useState(
+  //   Themes.categories.findIndex(
+  //     (currentCategory) => currentCategory[0] === activity[2]
+  //   ) + 1
+  // );
 
   const [newName, setNewName] = useState(name);
   const [newDescription, setNewDescription] = useState(description);
-  const [newSelectedId, setNewSelectedId] = useState(selectedId);
+  // const [newSelectedId, setNewSelectedId] = useState(selectedId);
 
-  const handleSelect = (id) => {
-    setNewSelectedId(id);
-  };
+  // const handleSelect = (id) => {
+  //   setNewSelectedId(id);
+  // };
 
   const [editMode, setEditMode] = useState(false);
   const [isFormChanged, setIsFormChanged] = useState(false);
@@ -46,14 +46,14 @@ export default function ActivityModal({
       // Check if any of the values are different from the original
       const formChanged =
         newName !== name ||
-        newDescription !== description ||
-        newSelectedId !== selectedId;
+        newDescription !== description
+        // newSelectedId !== selectedId;
       setIsFormChanged(formChanged);
     } else {
       // Reset formChanged state when exiting edit mode
       setIsFormChanged(false);
     }
-  }, [editMode, newName, newDescription, newSelectedId]);
+  }, [editMode, newName, newDescription]);
 
   useEffect(() => {
     if (!isVisible) {
@@ -64,11 +64,11 @@ export default function ActivityModal({
   const handleSave = () => {
     setName(newName);
     setDescription(newDescription);
-    setSelectedId(newSelectedId);
+    // setSelectedId(newSelectedId);
 
-    let newCategory = Themes.categories[newSelectedId - 1][0];
+    // let newCategory = Themes.categories[newSelectedId - 1][0];
 
-    editActivity(indexInSection, newName, newDescription, newCategory);
+    editActivity(indexInSection, newName, newDescription);
     setEditMode(false);
   };
 
@@ -76,7 +76,7 @@ export default function ActivityModal({
     // Revert everything back to how it was before
     setNewName(name);
     setNewDescription(description);
-    setNewSelectedId(selectedId);
+    // setNewSelectedId(selectedId);
 
     setEditMode(false);
   };
@@ -156,7 +156,7 @@ export default function ActivityModal({
             />
           )}
         </View>
-        {!editMode && (
+        {/* {!editMode && (
           <View style={styles.categoriesContainer}>
             <CategoryDisabled
               isSelected="true"
@@ -178,7 +178,7 @@ export default function ActivityModal({
               />
             ))}
           </View>
-        )}
+        )} */}
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
             {!editMode && (
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-Regular",
     backgroundColor: Themes.colors.lightGray,
     borderRadius: 5,
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: Themes.colors.lightGray,
     padding: 10,
   },
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Poppins-Regular",
     borderRadius: 5,
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: Themes.colors.mediumGray,
     padding: 10,
   },
@@ -399,11 +399,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "95%",
-    //paddingTop: 90,
     paddingBottom: 40,
+    position: "absolute",
+    bottom: 10,
   },
   buttonContainer: {
-    flexDirection: "column",
+    // paddingTop: 20,
+    // flexDirection: "column",
   },
   button: {
     backgroundColor: Themes.colors.salmon,
@@ -415,7 +417,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: Themes.colors.salmon,
   },
   buttonSecondary: {
@@ -427,7 +429,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
-
+    borderWidth: 2,
     borderColor: Themes.colors.salmon,
   },
   buttonDisabled: {
