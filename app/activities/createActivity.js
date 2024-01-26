@@ -18,24 +18,18 @@ export default function Page() {
   const [description, setDescription] = useState("");
   const { addActivity } = useContext(ActivitiesContext);
 
-  const [selectedId, setSelectedId] = useState(null);
 
   const handleAddActivity = () => {
     if (isFormFilled) {
-      let category = categories[selectedId - 1][0];
-      addActivity(activityName, description, category);
+      addActivity(activityName, description);
     }
-  };
-
-  const handleSelect = (id) => {
-    setSelectedId(id);
   };
 
   const [isFormFilled, setIsFormFilled] = useState(false);
 
   useEffect(() => {
-    setIsFormFilled(activityName.trim().length > 0 && selectedId !== null);
-  }, [activityName, selectedId]);
+    setIsFormFilled(activityName.trim().length > 0);
+  }, [activityName]);
 
   const categories = [
     ["Exercise", "running"],
@@ -49,22 +43,10 @@ export default function Page() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
-        {/* <Stack.Screen
-          options={{
-            title: "",
-            headerStyle: {
-              backgroundColor: Themes.colors.salmon,
-            },
-            headerTintColor: "white",
-          }}
-        /> */}
         <Stack.Screen options={{ headerShown: false }} />
-        {/* <View style={styles.titleContainer}>
-          <Text style={styles.title}> Create Activity </Text>
-        </View> */}
         <Header title="Create Activity" />
         <View style={styles.activityNameContainer}>
-          <Text style={styles.subtitle}>
+          <Text style={styles.title}>
             Activity Name <Text style={styles.asterick}>*</Text>
           </Text>
           <TextInput
@@ -75,7 +57,7 @@ export default function Page() {
           />
         </View>
         <View style={styles.descriptionContainer}>
-          <Text style={styles.subtitle}> Description</Text>
+          <Text style={styles.title}> Description</Text>
           <TextInput
             editable
             multiline
@@ -90,25 +72,8 @@ export default function Page() {
             onChangeText={setDescription}
           />
         </View>
-        <View style={styles.categoriesContainer}>
-          <Text style={styles.subtitle}>
-            Category <Text style={styles.asterick}>*</Text>
-          </Text>
-          <View style={styles.categories}>
-            {[1, 2, 3, 4, 5, 6].map((id) => (
-              <Category
-                key={id}
-                id={id}
-                isSelected={id === selectedId}
-                onSelect={handleSelect}
-                categoryName={categories[id - 1][0]}
-                iconName={categories[id - 1][1]}
-              />
-            ))}
-          </View>
-        </View>
-
-        <View style={styles.addToDiceContainer}>
+        
+        <View>
           <Link
             disabled={!isFormFilled}
             href={{
@@ -119,12 +84,8 @@ export default function Page() {
             }}
             onPress={handleAddActivity}
           >
-            <View
-              style={
-                isFormFilled ? styles.buttonEnabled : styles.buttonDisabled
-              }
-            >
-              <Text style={styles.addToDice}>Add to Dice</Text>
+            <View style={[styles.button, isFormFilled ? styles.buttonEnabled : styles.buttonDisabled]}>
+              <Text style={styles.buttonText}>Add to Dice</Text>
             </View>
           </Link>
         </View>
@@ -135,95 +96,62 @@ export default function Page() {
 
 const styles = StyleSheet.create({
   container: {
+    height: "100%",
     display: "flex",
-    flex: 1,
-    gap: 5,
-    backgroundColor: "white",
-  },
-  titleContainer: {
-    height: "10%",
-    backgroundColor: Themes.colors.salmon,
-    borderColor: "black",
-    justifyContent: "center",
+    alignItems: "center",
+    // flex: 1,
+    gap: 10,
+    backgroundColor: Themes.colors.background
   },
   title: {
-    fontWeight: "bold",
-    fontSize: 32,
-    color: "white",
-    alignSelf: "center",
-    fontFamily: "Poppins-Bold",
-  },
-  subtitle: {
     marginHorizontal: 12,
-    fontSize: 20,
-    fontWeight: "bold",
-    fontFamily: "Poppins-Bold",
+    fontSize: 18,
+    fontFamily: "Poppins-Regular",
   },
   input: {
     flex: 1,
     marginHorizontal: 12,
     fontSize: 16,
     borderRadius: 5,
-
     padding: 10,
     borderWidth: 0.5,
     borderColor: "black",
     fontFamily: "Poppins-Regular",
   },
   activityNameContainer: {
-    paddingTop: "3%",
-    height: "14%",
-    gap: "10%",
+    height: "10%",
+    width: "100%",
+    gap: 10,
   },
   descriptionContainer: {
-    paddingTop: "2%",
-    height: "23%",
-    gap: "10%",
-  },
-  categoriesContainer: {
-    paddingTop: "2%",
-    paddingBottom: 0,
-    height: "37%",
-    gap: "10%",
-  },
-  categories: {
+    height: "20%",
+    width: "100%",
     gap: 10,
-    margin: 12,
-    marginTop: 0,
-    flex: 1,
-    height: "40%",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
+    marginBottom: 15
   },
-  addToDiceContainer: {
-    height: "8%",
-    marginHorizontal: 12,
-
-    alignItems: "flex-end",
+  buttonContainer: {
+    height: "10%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    width: 340,
+    height: 40,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: 'center',
+    borderRadius: 30,
   },
   buttonEnabled: {
     backgroundColor: Themes.colors.salmon,
-    padding: 10,
-    width: "100%",
-    flex: 1,
-    alignContent: "center",
-    justifyContent: "center",
-    borderRadius: 20,
   },
   buttonDisabled: {
     backgroundColor: Themes.colors.salmonTransparent,
-    padding: 10,
-    width: "100%",
-    flex: 1,
-    alignContent: "center",
-    justifyContent: "center",
-    borderRadius: 20,
   },
-  addToDice: {
-    alignSelf: "center",
-    fontSize: 20,
-    fontWeight: "bold",
+  buttonText: {
+    fontSize: 16,
     color: "white",
     fontFamily: "Poppins-Bold",
   },

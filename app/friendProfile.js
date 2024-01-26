@@ -10,7 +10,7 @@ export default function Page() {
   const params = useLocalSearchParams();
   const { previousPage } = params;
 
-  console.log(params);
+  // console.log(params);
 
   return (
     <View style={styles.container}>
