@@ -4,7 +4,7 @@ import { Themes } from "../assets/Themes";
 import KudosIcon from "./Icons/Kudos";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
-const ProgressNavigation = ({ onData }) => {
+const ProfileNavigation = ({ onData }) => {
   const [activeTab, setActiveTab] = useState("Stats"); 
   const tabs = ["Posts", "Stats"];
   const overlayPosition = useSharedValue(0);
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProgressNavigation;
+export default ProfileNavigation;

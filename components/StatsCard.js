@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   circleText: {
     fontSize: 30,
-    fontFamily: "Poppins-SemiBold"
+    fontFamily: "Poppins-Bold"
   },
   description1: {
     fontSize: 16,
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     // marginTop: 10,
-    fontFamily: "Poppins-SemiBold"
+    fontFamily: "Poppins-Bold"
   },
   description2: {
     fontSize: 14,

@@ -8,7 +8,7 @@ import { PostsProvider } from "../../contexts/PostsContext";
 import Header from "../../components/Header";
 import MyPosts from "../../components/ProgressScreens/MyPosts";
 import Stats from "../../components/ProgressScreens/Stats";
-import ProgressNavigation from "../../components/ProgressNavigation";
+import ProfileNavigation from "../../components/ProfileNavigation";
 
 export default function Page() {
   //const [data, setData] = useState();
@@ -41,7 +41,7 @@ const [activeScreen, setActiveScreen] = useState("Stats"); // Initial state
       </View>
 
       <View style={styles.buttonContainer}>
-        <ProgressNavigation onData={handleData} />
+        <ProfileNavigation onData={handleData} />
       </View>
 
       <View style={styles.subscreenContainer}>
