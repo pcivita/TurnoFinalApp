@@ -6,9 +6,9 @@ export const ActivitiesContext = createContext();
 // Create a provider component
 export const ActivitiesProvider = ({ children }) => {
   const [activities, setActivities] = useState([
-    ["Soccer", "I want to play soccer", "Exercise"],
-    ["Read", "I want to read", "Academic"],
-    ["Write", "Write a chapter in my novel", "Work"],
+    ["Green Library", "Quiet and beautiful spot to study", "Exercise"],
+    ["Tresidder", "Can grab a coffee while working", "Academic"],
+    ["Coupa Cafe", "Great lattes", "Work"],
     // ["Meditate", "Medidate for 10 minutes outside", "Relax"],
   ]);
 
