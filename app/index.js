@@ -9,6 +9,7 @@ import ProfileCard from '../components/ProfileCard';
 import { Profile } from '../components/Profile';
 import * as ImagePicker from 'expo-image-picker';
 import { FirebaseContext } from '../contexts/FirebaseContext';
+import { ActivityIndicator } from 'react-native-paper';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;

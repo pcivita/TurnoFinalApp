@@ -9,6 +9,7 @@ import DiceCard from "../../components/DiceCard";
 import { useState } from "react";
 import Images from "../../assets/Themes/Images";
 import { useLocalSearchParams, router } from 'expo-router'
+import { DICE_DATA } from "../../assets/Themes/Dice";
 
 export default function Page() {
     const params = useLocalSearchParams()
@@ -24,42 +25,6 @@ export default function Page() {
     }
 
  
-
-  const DATA = [
-    {
-        img: Images.banners.tapas,
-        id: 1,
-        title: "Tapas in Barcelona",
-        numRolled: 201,
-        numSaved: 40,
-        user: {
-            username: "malina123",
-            profilePic: require("../../assets/Themes/Images/profileImages/Malina.jpg"),
-        },
-    },
-    {
-        img: Images.banners.museum,
-        id: 2,
-        title: "Museums in the Bay",
-        numRolled: 12,
-        numSaved: 3,
-        user: {
-            username: "karinali",
-            profilePic: require("../../assets/Themes/Images/profileImages/Malina.jpg"),
-        },
-    },
-    {
-        img: Images.banners.library,
-        id: 3,
-        title: "Stanford Study Spots",
-        numRolled: 54,
-        numSaved: 13,
-        user: {
-            username: "cliu18",
-            profilePic: require("../../assets/Themes/Images/profileImages/Digo.jpeg"),
-        }
-    }
-  ]
   return (
     <>
     <View style={styles.container}> 
@@ -102,13 +67,21 @@ export default function Page() {
         }
         <View style={{marginTop: 12}}/>
       <FlatList 
-        data={DATA}
+        data={DICE_DATA}
         numColumns={2}
         renderItem={({item, index}) => 
         <TouchableOpacity 
             style={{margin: 5}}
         >
-            <Link href={{pathname: `/browse/DicePage?itemId=${item.id}`, params: {item: item}}}>
+            <Link href={{pathname: `/browse/DicePage`, params: {
+                activities: item.activities,
+                title: item.title,
+                img: item.img,
+                 id: item.id,
+                    username: item.user.username,
+                    profilePic: item.user.profilePic,
+
+            }}}>
             <DiceCard 
                 img={item.img}
                 title={item.title}
