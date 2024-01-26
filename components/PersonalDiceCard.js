@@ -1,5 +1,6 @@
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { Themes } from '../assets/Themes';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         height: 250,
         borderWidth: 1,
-        borderColor: '#E2E2E2',
+        borderColor: Themes.colors.mediumGray,
     },
     image: {
         width: "100%",

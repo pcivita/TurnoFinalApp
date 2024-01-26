@@ -1,9 +1,13 @@
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native'
 import React from 'react'
 import Header from '../../components/Header'
 import { Link } from 'expo-router'
 import DiceCard from '../../components/DiceCard'
 import PersonalDiceCard from '../../components/PersonalDiceCard'
+import { FontAwesome5 } from '@expo/vector-icons'
+import { Themes } from '../../assets/Themes'
+
+const windowWidth = Dimensions.get('window').width;
 
 export default function Page() {
   const DICE_DATA = [
@@ -104,7 +108,13 @@ export default function Page() {
             <Link href={{
               pathname: `/roll/createNewDice`, 
             }}>
-            <Text>hi</Text>
+              <View style={styles.createDiceContainer}>
+                <FontAwesome5
+                  name="plus"
+                  size={45}
+                  color={Themes.colors.salmon}
+                />
+              </View>
             </Link>
           )}
           </TouchableOpacity>
@@ -119,5 +129,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+  },
+  createDiceContainer: {
+    width: (windowWidth / 2) - (windowWidth * 0.05),
+    borderRadius: 20,
+    height: 250,
+    borderWidth: 1,
+    borderColor: Themes.colors.mediumGray,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   }
 })
