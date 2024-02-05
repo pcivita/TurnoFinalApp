@@ -6,10 +6,7 @@ import Kudos from "../components/Icons/Kudos";
 import KudosIcon from "../components/Icons/Kudos";
 import { Themes } from "../assets/Themes";
 import { PostsProvider } from "../contexts/PostsContext";
-import {
-  ActivitiesProvider,
-  ActivitiesContext,
-} from "../contexts/ActivitiesContext";
+import { ActivitiesProvider, ActivitiesContext } from "../contexts/ActivitiesContext";
 import { InProgressProvider } from "../contexts/InProgressContext";
 import { useFonts } from "expo-font";
 import Dice from "../components/Icons/Dice";
