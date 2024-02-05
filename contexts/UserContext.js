@@ -5,9 +5,9 @@ import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase
 import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db, storage } from '../firebase';
 
-const FirebaseContext = createContext(null)
+const UserContext = createContext(null)
 
-const FirebaseProvider = ({ children }) => {
+const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
 
@@ -23,18 +23,27 @@ const FirebaseProvider = ({ children }) => {
     }
   }
 
+  
 
   const initializeUserDatabaseEntry = async (email, profilePicUri, uid) => {
+    // create an entry in supabase for the user
+    console.log("initializing user database entry", uid)
     try {
-       const userDocRef = doc(db, "users", uid);
-        console.log("userDocRef: ", userDocRef);
-    //    await setDoc(userDocRef, {
-    //     email: email,
-    //     profilePicUri: profilePicUri,
-    //    }, { merge: true });
-    } catch (error) {
-        console.error("Error initializing user database entry: ", error);
-    }
+      // Insert a new record into the 'users' table
+      const { data, error } = await supabase
+          .from('users')
+          .insert([
+              { email: email, profile_pic_uri: profilePicUri, uid: uid }
+          ]);
+
+      // Handle any errors
+      if (error) throw error;
+
+      // Return the inserted data
+      return data;
+  } catch (err) {
+      console.error('Error inserting data: ', err.message);
+  }
   }
 
   const logIn = async (email, password) => {
@@ -87,7 +96,7 @@ const FirebaseProvider = ({ children }) => {
   }, []);
 
   return (
-    <FirebaseContext.Provider
+    <UserContext.Provider
       value={{
         user,
         signUp,
@@ -99,8 +108,8 @@ const FirebaseProvider = ({ children }) => {
       }}
     >
       {children}
-    </FirebaseContext.Provider>
+    </UserContext.Provider>
   );
 };
 
-export { FirebaseProvider, FirebaseContext };
+export { UserContext, UserContextProvider };

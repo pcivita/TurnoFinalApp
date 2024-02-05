@@ -6,14 +6,14 @@ import { Link, Stack, router } from "expo-router";
 import { Themes } from "../../assets/Themes";
 import Category from "../../components/Category";
 import Header from "../../components/Header";
-import { FirebaseContext } from "../../contexts/FirebaseContext";
 import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 export default function Page() {
-  const {logoutUser, user} = useContext(FirebaseContext);
+  const {logoutUser, user} = useContext(UserContext);
   const [uid, setUid] = useState(null);
   useEffect(() => {
     if (user) {

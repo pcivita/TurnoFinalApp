@@ -8,7 +8,7 @@ import { useFonts } from 'expo-font';
 import ProfileCard from '../components/ProfileCard';
 import { Profile } from '../components/Profile';
 import * as ImagePicker from 'expo-image-picker';
-import { FirebaseContext } from '../contexts/FirebaseContext';
+import { UserContext } from '../contexts/UserContext';
 import { ActivityIndicator } from 'react-native-paper';
 
 const windowWidth = Dimensions.get('window').width;
@@ -20,7 +20,7 @@ export default function Onboarding() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const {user, logIn, logoutUser, signUp, initializeUserDatabaseEntry} = useContext(FirebaseContext);
+    const {user, logIn, logoutUser, signUp, initializeUserDatabaseEntry} = useContext(UserContext);
     useEffect(() => {
         if (user) {
             router.replace('/roll');
@@ -46,11 +46,11 @@ export default function Onboarding() {
         setLoading(true);   
         if (email && password) {
             try {
-                const user = await signUp(email, password, profilePicUri);
-            if (user) {
-                setCurrentScreen('onboarding');   
-              
-            }
+              const user = await signUp(email, password, profilePicUri);
+              if (user) {
+                await initializeUserDatabaseEntry(email, profilePicUri, user.uid);
+                setCurrentScreen('onboarding');
+              }
             
           } catch (error) {
             console.error("Error in sign-up process: ", error);
