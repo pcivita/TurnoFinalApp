@@ -111,7 +111,8 @@ export default function AppLayout() {
                 tabBarLabel: "Browse",
                 
                 tabBarIcon: ({ size, color }) => (
-                  <FontAwesome5 name="search" size={size} color={color} />
+                  // <FontAwesome5 name="search" size={size} color={color} />
+                  <Ionicons name="search-sharp" size={size + 4} color={color} />
                 ),
               }}
             />
@@ -121,7 +122,8 @@ export default function AppLayout() {
                 tabBarLabelStyle: styles.iconAndText,
                 tabBarLabel: "Profile",
                 tabBarIcon: ({ size, color }) => (
-                  <FontAwesome5 name="user" size={size} color={color} />
+                  <FontAwesome5 name="user-circle" size={size + 3} color={color} />
+                  // <Ionicons name="person-outline" size={size + 5} color={color} />
                 ),
               }}
             />
