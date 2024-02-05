@@ -1,6 +1,6 @@
 import { Tabs } from "expo-router/tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { StyleSheet, View } from "react-native";
 import Kudos from "../components/Icons/Kudos";
 import KudosIcon from "../components/Icons/Kudos";
@@ -12,12 +12,11 @@ import {
 } from "../contexts/ActivitiesContext";
 import { InProgressProvider } from "../contexts/InProgressContext";
 import { useFonts } from "expo-font";
-import DiceSVG from "../components/Icons/Dice";
+import Dice from "../components/Icons/Dice";
 import { FirebaseProvider } from "../contexts/FirebaseContext";
 
 export default function AppLayout() {
   const [fontsLoaded] = useFonts({
-    "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
     "Poppins-Bold": require("../assets/Poppins/Poppins-Bold.ttf"),
   });
 
@@ -70,8 +69,8 @@ export default function AppLayout() {
                 tabBarLabel: "Roll",
                 tabBarLabelStyle: styles.iconAndText,
                 tabBarIcon: ({ size, color }) => (
-                  <View style={{transform: [{ rotate: "45deg" }]}}>
-                   <FontAwesome5 name="dice-five" size={size} color={color} />
+                  <View>
+                   <Dice size={35} color={color} notFilled={true}/>
                   </View>
                 ),
               }}
