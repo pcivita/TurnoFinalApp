@@ -5,7 +5,7 @@ import KudosIcon from "./Icons/Kudos";
 import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 const ProfileNavigation = ({ onData }) => {
-  const [activeTab, setActiveTab] = useState("Stats"); 
+  const [activeTab, setActiveTab] = useState("Posts"); 
   const tabs = ["Posts", "Stats"];
   const overlayPosition = useSharedValue(0);
 
@@ -31,7 +31,7 @@ const ProfileNavigation = ({ onData }) => {
           style={styles.tab}
           onPress={() => handleTabChange(tab)}
         >
-          <KudosIcon size={20} color={activeTab === tab ? "black" : "gray"} notFilled={true} />
+          <KudosIcon size={18} color={activeTab === tab ? "black" : "gray"} notFilled={true} />
           <Text style={[styles.tabText, activeTab === tab && styles.activeTabText]}>{tab}</Text>
         </TouchableOpacity>
       ))}
@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
     backgroundColor: Themes.colors.mediumGray,
     borderRadius: 30,
     position: 'relative',
-    marginVertical: 8,
   },
   overlay: {
     position: 'absolute',
@@ -60,15 +59,17 @@ const styles = StyleSheet.create({
     top: 5,
   },
   tab: {
+    flexDirection: "row",
     paddingVertical: 8,
     paddingHorizontal: 24,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-  },
+    gap: 5,
+  },  
   tabText: {
     color: 'gray',
-    fontSize: 12,
+    fontSize: 14,
   },
   activeTabText: {
     color: 'black',

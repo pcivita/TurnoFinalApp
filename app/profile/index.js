@@ -13,7 +13,7 @@ import ProfileNavigation from "../../components/ProfileNavigation";
 export default function Page() {
   //const [data, setData] = useState();
 
-const [activeScreen, setActiveScreen] = useState("Stats"); // Initial state
+const [activeScreen, setActiveScreen] = useState("Posts"); // Initial state
   handleData = (data) => {
     setActiveScreen(data);
   };
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     height: 200,
   },
   buttonContainer: {
+    marginTop: 20,
     display: "flex",
     flexDirection: "row",
     width: "100%",
