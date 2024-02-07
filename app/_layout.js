@@ -9,9 +9,8 @@ import { PostsProvider } from "../contexts/PostsContext";
 import { ActivitiesProvider, ActivitiesContext } from "../contexts/ActivitiesContext";
 import { InProgressProvider } from "../contexts/InProgressContext";
 import { useFonts } from "expo-font";
-import DiceSVG from "../components/Icons/Dice";
+import Dice from "../components/Icons/Dice";
 import { UserContextProvider } from "../contexts/UserContext";
-
 export default function AppLayout() {
   const [fontsLoaded] = useFonts({
     "Poppins-Bold": require("../assets/Poppins/Poppins-Bold.ttf"),
