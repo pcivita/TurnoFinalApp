@@ -1,9 +1,9 @@
 import React, { useState, useEffect, createContext } from 'react';
 
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { addDoc, collection, doc, getDoc, setDoc } from 'firebase/firestore';
-import { auth, db, storage } from '../firebase';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase';
+import { Alert } from 'react-native';
 
 const UserContext = createContext(null)
 
@@ -11,7 +11,7 @@ const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
 
-  const signUp = async (email, password, profilePicUri) => {
+  const signUp = async (email, password) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       setUser(userCredential.user);
@@ -19,13 +19,16 @@ const UserContextProvider = ({ children }) => {
     //   await initializeUserDatabaseEntry(email, profilePicUri, userCredential.user.uid);
     } catch (error) {
       console.error("Error signing up: ", error);
-      throw error; // rethrow the error to be caught in handleSignUp
+      Alert.alert("Error signing up", error.message)
+      throw error; 
     }
   }
 
   
 
-  const initializeUserDatabaseEntry = async (email, profilePicUri, uid) => {
+  
+
+  const initializeUserDatabaseEntry = async (email, profilePicUri, uid, username, fullName) => {
     // create an entry in supabase for the user
     console.log("initializing user database entry", uid)
     try {
@@ -33,7 +36,15 @@ const UserContextProvider = ({ children }) => {
       const { data, error } = await supabase
           .from('users')
           .insert([
-              { email: email, profile_pic_uri: profilePicUri, uid: uid }
+              { 
+                email: email, 
+                profilePicUri: profilePicUri, 
+                uid: uid,
+                fullName, fullName,
+                username: username,
+                savedDice: [],
+                rollHistory: [] 
+              }
           ]);
 
       // Handle any errors
@@ -46,6 +57,20 @@ const UserContextProvider = ({ children }) => {
   }
   }
 
+  const fetchUserFromUid = async (uid) => {
+    try {
+      const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('uid', uid)
+        .single();
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error("Error fetching user from uid: ", error);
+    }
+  }
+
   const logIn = async (email, password) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -56,17 +81,21 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
-  const uploadImage = async (imageFile) => {
-    if (!user) return;
+  // const uploadImage = async (imageFile, user) => {  
 
-    const storageRef = ref(storage, `images/${user.uid}/${imageFile.name}`);
-    try {
-      await uploadBytesResumable(storageRef, imageFile);
-      return await getDownloadURL(storageRef);
-    } catch (error) {
-      console.error("Error uploading image: ", error);
-    }
-  };
+  //   if (!user) return;
+
+  //   console.log(user)
+  //   console.log(imageFile)
+
+  //   const storageRef = ref(storage, `images/${user.uid}/${imageFile.name}`);
+  //   try {
+  //     await uploadBytesResumable(storageRef, imageFile);
+  //     return await getDownloadURL(storageRef);
+  //   } catch (error) {
+  //     console.error("Error uploading image: ", error);
+  //   }
+  // };
 
   const logoutUser = async () => {
     try {
@@ -101,10 +130,11 @@ const UserContextProvider = ({ children }) => {
         user,
         signUp,
         logIn,
-        uploadImage,
+        // uploadImage,
         writeToDatabase,
         initializeUserDatabaseEntry,
-        logoutUser
+        logoutUser,
+        fetchUserFromUid
       }}
     >
       {children}

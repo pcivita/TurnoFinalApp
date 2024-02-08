@@ -3,17 +3,32 @@ import { Themes } from "../../assets/Themes";
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import ProfileCard from "../../components/ProfileCard";
-import { useState,  useEffect } from "react";
+import { useState,  useEffect, useContext } from "react";
 import { PostsProvider } from "../../contexts/PostsContext";
 import Header from "../../components/Header";
 import MyPosts from "../../components/ProgressScreens/MyPosts";
 import Stats from "../../components/ProgressScreens/Stats";
 import ProfileNavigation from "../../components/ProfileNavigation";
+import { UserContext } from "../../contexts/UserContext";
 
 export default function Page() {
   //const [data, setData] = useState();
 
 const [activeScreen, setActiveScreen] = useState("Posts"); // Initial state
+
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      let result = await fetchUserFromUid(user.uid);
+      setUserData(result);
+    }
+    if (user) {
+      fetchUserData();
+    }
+  }, [user])
+  
+const {fetchUserFromUid, user} = useContext(UserContext)
   handleData = (data) => {
     setActiveScreen(data);
   };
@@ -25,8 +40,11 @@ const [activeScreen, setActiveScreen] = useState("Posts"); // Initial state
   if (!fontsLoaded) {
     return undefined;
   }
+  
 
   return (
+    <>
+    {userData &&
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
       <Header title="Profile" />
@@ -34,9 +52,9 @@ const [activeScreen, setActiveScreen] = useState("Posts"); // Initial state
       <View style={styles.profileCard}>
         <ProfileCard
           isYourProfile={true}
-          profileName="Pedro Civita"
-          handle="@pcivita"
-          profilePic={"Pedro"}
+          profileName={userData.fullName}
+          handle={"@" + userData.username}
+          profilePic={userData.profilePicUri}
         />
       </View>
 
@@ -49,6 +67,8 @@ const [activeScreen, setActiveScreen] = useState("Posts"); // Initial state
         {activeScreen === "Stats" && <Stats />}
       </View>
     </View>
+    }
+    </>
   );
 }
 

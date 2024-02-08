@@ -10,6 +10,8 @@ import { Profile } from '../components/Profile';
 import * as ImagePicker from 'expo-image-picker';
 import { UserContext } from '../contexts/UserContext';
 import { ActivityIndicator } from 'react-native-paper';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { storage } from '../firebase';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -19,6 +21,9 @@ export default function Onboarding() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [username, setUsername] = useState('');
+    const [downloadUrl, setDownloadUrl] = useState('');
+    const [fullName, setFullName] = useState('');
 
     const {user, logIn, logoutUser, signUp, initializeUserDatabaseEntry} = useContext(UserContext);
     useEffect(() => {
@@ -31,6 +36,35 @@ export default function Onboarding() {
     setCurrentScreen('onboarding');
     logIn(email, password);
   };
+
+  const uploadImage = async (imageUri) => {
+    try {
+        const response = await fetch(imageUri);
+        const blob = await response.blob();
+
+        // Check the size of the image
+        if (blob.size > 32000000) { // 32 MB limit
+            Alert.alert("Image size exceeds the maximum limit of 32 MB. Please select another image.");
+            // Optionally, compress the image or inform the user
+            return null;
+        }
+
+        const uniqueFileName = `${Date.now()}_${Math.floor(Math.random() * 10000)}`;
+        const fileName = `profile_pictures/${uniqueFileName}`;
+        const storageRef = ref(storage, fileName);
+
+        const snapshot = await uploadBytesResumable(storageRef, blob);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+
+        return downloadURL;
+    } catch (error) {
+        console.error("Error uploading image: ", error);
+        // Handle the error appropriately
+        return null;
+    }
+};
+
+
 
   //import poppins
   const [fontsLoaded] = useFonts({
@@ -46,9 +80,15 @@ export default function Onboarding() {
         setLoading(true);   
         if (email && password) {
             try {
-              const user = await signUp(email, password, profilePicUri);
+              const user = await signUp(email, password);
               if (user) {
-                await initializeUserDatabaseEntry(email, profilePicUri, user.uid);
+                await initializeUserDatabaseEntry(email, downloadUrl, user.uid, username, fullName);
+                
+                setEmail('');
+                setPassword('');
+                setUsername('');
+                setProfilePicUri(null);
+
                 setCurrentScreen('onboarding');
               }
             
@@ -110,26 +150,32 @@ export default function Onboarding() {
   };
 
   const renderSignUp = () => {
-
     const selectPhoto = async () => {
-        try {
-            const response = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                allowsEditing: true,
-            });
-            if (!response.cancelled) {
-                setProfilePicUri(response.uri);
-            }
-        } catch (error) {
-            console.log(error);
+      try {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 0.5, // Lower quality for testing
+        });
+        
+        if (!result.canceled) {
+            setProfilePicUri(result.assets[0].uri);
+            const downloadURL = await uploadImage(result.assets[0].uri);
+            setDownloadUrl(downloadURL);
         }
+    } catch (error) {
+        console.error("Error picking image: ", error);
+        // Handle the error (e.g., show an alert to the user)
     }
+    }
+
     return (
       <View style={styles.container}>
          <TouchableOpacity onPress={() => setCurrentScreen('onboarding')} style={styles.backCaret}>
             <FontAwesome5 name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
-        <View style={styles.spacing}/>
+        {/* <View style={styles.spacing}/> */}
         <Text style={styles.title}>Turno</Text>
         <TouchableOpacity style={styles.profileUploader} onPress={() => selectPhoto()}>
             <Image source={require('../assets/Vectors/EditPencil.png')} style={{position: 'absolute', zIndex: 99, right: -5, top: -5}} />
@@ -142,8 +188,11 @@ export default function Onboarding() {
             }
         </TouchableOpacity>
 
-        <TextInput style={styles.input} placeholder="Email" onChangeText={setEmail} />
-        <TextInput style={styles.input} placeholder="Password" secureTextEntry onChangeText={setPassword} />
+        <TextInput style={styles.input} placeholder="Email" onChangeText={(text) => setEmail(text.toLowerCase())} value={email}/>
+        <TextInput style={styles.input} placeholder="Full Name (ex: Caleb Liu)" onChangeText={(text) => setFullName(text)} value={fullName}/>
+        <TextInput style={styles.input} placeholder='Username' onChangeText={(text) => setUsername(text.toLowerCase())} value={username}/>
+        <TextInput style={styles.input} placeholder="Password" secureTextEntry onChangeText={(text) => setPassword(text.toLowerCase())} value={password}/>
+
         <View style={{height: 32}}/>
         {/* <Link href={{ pathname: '/roll' }}> */}
         <TouchableOpacity onPress={handleSignUp} style={styles.signUpButton}>

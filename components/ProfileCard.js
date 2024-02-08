@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import Images from "../assets/Themes/Images";
 import { useFonts } from "expo-font";
 import { Themes } from "../assets/Themes";
+import { Profile } from "./Profile";
 
 export default function ProfileCard({
   isYourProfile,
@@ -35,9 +36,13 @@ export default function ProfileCard({
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image source={imageDict[profilePic]} style={styles.profileImg} />
-      </View>
+      {profilePic ? 
+        <View style={styles.imageContainer}>
+          <Image source={{uri: profilePic && profilePic}} style={styles.profileImg} />
+        </View>
+      :
+        <Profile width={100} height={100}/>
+      }
       <Text style={styles.profileName}>{profileName}</Text>
 
       <Text style={styles.handle}>{handle}</Text>
@@ -48,11 +53,11 @@ export default function ProfileCard({
             params: { previousPage: "Profile" },
           }}
         >
-          <View>
+          {/* <View>
             <View style={styles.friendsBox}>
               <Text style={styles.handle}> 4 friends </Text>
             </View>
-          </View>
+          </View> */}
         </Link>
       ) : (
         <View style={styles.addFriendBox}>
@@ -77,7 +82,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "green"
   },
   imageContainer: {
-    width: "25%",
+    width: 100,
     height: undefined,
     aspectRatio: 1,
     borderRadius: 100,

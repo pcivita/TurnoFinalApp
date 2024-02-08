@@ -11,6 +11,7 @@ import { InProgressProvider } from "../contexts/InProgressContext";
 import { useFonts } from "expo-font";
 import DiceSVG from "../components/Icons/Dice";
 import { UserContextProvider } from "../contexts/UserContext";
+import Dice from "../components/Icons/Dice";
 
 export default function AppLayout() {
   const [fontsLoaded] = useFonts({
