@@ -1,11 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableWithoutFeedback } from "react-native";
 import { Themes } from "../../assets/Themes";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import RollDice from "../../components/ProgressScreens/RollDice";
 import ActivityRolled from "../../components/ActivityRolled";
 import { InProgressContext } from "../../contexts/InProgressContext";
-import Animated, { useSharedValue, useAnimatedStyle, withTiming, withSpring, runOnJS } from "react-native-reanimated";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withSpring,
+  runOnJS,
+} from "react-native-reanimated";
 import { InProgressProvider } from "../../contexts/InProgressContext";
 import Header from "../../components/Header";
 import SwipeButton from "../../components/SwipeButton";
@@ -13,23 +19,23 @@ import CongratsModal from "../../components/CongratsModal";
 import DiceComponent from "../../components/DiceComponent";
 import { createMultiStyleIconSet } from "@expo/vector-icons";
 import { useLocalSearchParams, useSearchParams } from "expo-router";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import ZigZagArrow from "../../components/Icons/ZigZagArrow";
 
 export default function Page() {
   const { canRoll } = useContext(ActivitiesContext);
-  const [currentDice, setCurrentDice] = useState(null)
-  const [activities, setActivities] = useState([])
+  const [currentDice, setCurrentDice] = useState(null);
+  const [activities, setActivities] = useState([]);
 
-  const params = useLocalSearchParams()
+  const params = useLocalSearchParams();
 
   useEffect(() => {
     if (params) {
       // console.log(params);
-      const arr = params.activities.split(',')
-      setActivities(arr)
+      const arr = params.activities.split(",");
+      setActivities(arr);
     }
-  }, [params])
-
-  
+  }, [params]);
 
   const [diceRolled, setDiceRolled] = useState(false);
   // const [diceKey, setDiceKey] = useState(0);
@@ -37,11 +43,11 @@ export default function Page() {
   const handleRoll = (data) => {
     setDiceNum(data[0]);
     const random1to6 = Math.floor(Math.random() * 6) + 1;
-    setActivityName(activities[random1to6])
+    setActivityName(activities[random1to6]);
 
     bannerProgress.value = 0;
     swipeProgress.value = 0;
-    
+
     setDiceRolled(true);
     //startAnimation();
     headerBounce();
@@ -50,7 +56,6 @@ export default function Page() {
     console.log("Roll handled, isInteractive should change");
     // setDiceKey(prevKey => prevKey + 1);
   };
-
 
   const progress = useSharedValue(1);
   const rStyle = useAnimatedStyle(() => {
@@ -94,7 +99,6 @@ export default function Page() {
     };
   }, []);
 
-
   let swipeProgress = useSharedValue(0);
   const swipeButtonBounce = () => {
     swipeProgress.value = withSpring(-130);
@@ -110,20 +114,39 @@ export default function Page() {
   const [switchEnabled, setSwitchEnabled] = useState(false);
   // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-
   const onSwipe = () => {
     if (diceRolled && !isModalVisible) {
       setModalVisible(true);
     }
-  }
+  };
 
   const toggleModal = () => {
     setModalVisible(true);
     // setSwipeComplete(false);
-  }
+  };
+
+  const [showOverlay, setShowOverlay] = useState(true);
 
   return (
     <InProgressProvider>
+      {showOverlay && (
+        <TouchableWithoutFeedback onPress={() => setShowOverlay(false)}>
+          <View style={styles.overlayContainer}>
+            <View style={styles.overlayContent}>
+              <ZigZagArrow />
+              <MaterialCommunityIcons
+                name="cursor-pointer"
+                size={50}
+                color="white"
+              />
+            </View>
+            <Text style={styles.overlayText}>
+              Tap anywhere to continue
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
+      )}
+
       <Header title="Roll" dice={params} />
 
       {diceRolled && (
@@ -136,16 +159,13 @@ export default function Page() {
         <Text style={styles.heading1}>Roll the dice for</Text>
         <Text style={styles.heading1}>an activity!</Text>
         <Text style={styles.heading2}>Dice: {params && params.title}</Text>
-      
-        <DiceComponent 
-          onData={handleRoll} 
-          isInteractive={!diceRolled} 
-        />
+
+        <DiceComponent onData={handleRoll} isInteractive={!diceRolled} />
       </View>
 
       {diceRolled && (
         <Animated.View style={[styles.square2, swipeAnimation]}>
-          <SwipeButton onToggle={onSwipe}/>
+          <SwipeButton onToggle={onSwipe} />
           <CongratsModal
             activityName={activityName}
             activityIndex={diceNum}
@@ -155,6 +175,7 @@ export default function Page() {
             setSwitchEnabled={setSwitchEnabled}
             setDiceRolled={setDiceRolled}
             setSwipeComplete={setSwipeComplete}
+            setShowOverlay={setShowOverlay}
             diceName={params && params.title}
           />
         </Animated.View>
@@ -229,4 +250,24 @@ const styles = StyleSheet.create({
     textAlign: "center",
     // zIndex: -100,
   },
+  overlayContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 100,
+  },
+  overlayContent: {
+    alignItems: "center",
+    top: 120,
+  },
+  overlayText: {
+    color: "white",
+    textAlign: "center",
+    top: 280,
+  }
 });

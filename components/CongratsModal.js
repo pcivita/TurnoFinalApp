@@ -23,6 +23,7 @@ export default function CongratsModal({
   setSwitchEnabled,
   setDiceRolled,
   setSwipeComplete,
+  setShowOverlay,
   diceName,
 }) {
   const { deleteActivity } = useContext(ActivitiesContext);
@@ -37,6 +38,7 @@ export default function CongratsModal({
     setDiceRolled(false);
     setSwipeComplete(false);
     setSwitchEnabled(false);
+    setShowOverlay(true);
   };
 
   const { addPost } = useContext(PostsContext);
