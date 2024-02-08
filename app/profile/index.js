@@ -14,7 +14,7 @@ import { UserContext } from "../../contexts/UserContext";
 export default function Page() {
   //const [data, setData] = useState();
 
-const [activeScreen, setActiveScreen] = useState("Posts"); // Initial state
+  const [activeScreen, setActiveScreen] = useState("Posts"); // Initial state
 
   const [userData, setUserData] = useState({});
 
@@ -25,10 +25,12 @@ const [activeScreen, setActiveScreen] = useState("Posts"); // Initial state
     }
     if (user) {
       fetchUserData();
+      console.log(userData);
     }
   }, [user])
   
-const {fetchUserFromUid, user} = useContext(UserContext)
+  const {fetchUserFromUid, user} = useContext(UserContext);
+
   handleData = (data) => {
     setActiveScreen(data);
   };

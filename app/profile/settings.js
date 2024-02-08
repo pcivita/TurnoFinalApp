@@ -13,11 +13,24 @@ import { UserContext } from "../../contexts/UserContext";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 export default function Page() {
-  const {logoutUser, user} = useContext(UserContext);
+  const {logoutUser, user, fetchUserFromUid} = useContext(UserContext);
+
   const [uid, setUid] = useState(null);
   useEffect(() => {
     if (user) {
       setUid(user.uid);
+    }
+  }, [user])
+
+  const [userData, setUserData] = useState({});
+  useEffect(() => {
+    const fetchUserData = async () => {
+      let result = await fetchUserFromUid(user.uid);
+      setUserData(result);
+    }
+    if (user) {
+      fetchUserData();
+      console.log(userData.password);
     }
   }, [user])
 
@@ -46,7 +59,7 @@ export default function Page() {
         <TextInput
           editable={false}
           style={styles.input}
-          value="pcivita"
+          value={userData.username}
           // onChangeText={setActivityName}
         />
       </View>

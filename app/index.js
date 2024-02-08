@@ -34,7 +34,7 @@ export default function Onboarding() {
 
   const handleLogIn = () => {
     setCurrentScreen('onboarding');
-    logIn(email, password);
+    logIn(email.toLowerCase(), password);
   };
 
   const uploadImage = async (imageUri) => {
