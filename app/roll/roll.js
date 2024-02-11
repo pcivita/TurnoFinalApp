@@ -133,16 +133,17 @@ export default function Page() {
         <TouchableWithoutFeedback onPress={() => setShowOverlay(false)}>
           <View style={styles.overlayContainer}>
             <View style={styles.overlayContent}>
-              <ZigZagArrow />
-              <MaterialCommunityIcons
-                name="cursor-pointer"
-                size={50}
-                color="white"
-              />
+              <Text style={styles.overlayTopText}>Swipe to roll the dice</Text>
+              <View style={styles.overlaySwipe}>
+                <ZigZagArrow />
+                <MaterialCommunityIcons
+                  name="cursor-pointer"
+                  size={50}
+                  color="white"
+                />
+              </View>
+              <Text style={styles.overlayBottomText}>Tap anywhere to continue</Text>
             </View>
-            <Text style={styles.overlayText}>
-              Tap anywhere to continue
-            </Text>
           </View>
         </TouchableWithoutFeedback>
       )}
@@ -263,11 +264,28 @@ const styles = StyleSheet.create({
   },
   overlayContent: {
     alignItems: "center",
-    top: 120,
+    width: "60%",
+    height: "100%",
+    // backgroundColor: "green"
   },
-  overlayText: {
+  overlayTopText: {
+    color: "white",
+    fontFamily: "Poppins-SemiBold",
+    fontSize: 32,
+    textAlign: "center",
+    position: "absolute",
+    top: 225,
+  },
+  overlaySwipe: {
+    alignItems: "center",
+    position: "absolute",
+    top: 400,
+  },
+  overlayBottomText: {
     color: "white",
     textAlign: "center",
-    top: 280,
-  }
+    fontFamily: "Poppins-Regular",
+    position: "absolute",
+    bottom: 15,
+  },
 });
