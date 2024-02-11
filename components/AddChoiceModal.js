@@ -11,7 +11,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ActivitiesContext } from "../contexts/ActivitiesContext";
 import { Themes } from "../assets/Themes";
 
-export default function CreateChoiceModal({
+export default function AddChoiceModal({
   isVisible,
   closeModal,
   indexInSection,
@@ -55,7 +55,9 @@ export default function CreateChoiceModal({
           <Text style={styles.title}>Add a Choice</Text>
         </View>
         <View style={styles.activityNameContainer}>
-          <Text style={styles.subtitle}>Choice Name <Text style={styles.asterick}>*</Text></Text>
+          <Text style={styles.subtitle}>
+            Choice Name <Text style={styles.asterick}>*</Text>
+          </Text>
           <TextInput
             style={styles.editableInput}
             value={name}
@@ -63,27 +65,17 @@ export default function CreateChoiceModal({
             onChangeText={setName}
           />
         </View>
-        <View style={styles.buttonsContainer}>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              disabled={!isFormChanged}
-              onPress={handleSave}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity disabled={!isFormChanged} onPress={handleSave}>
+            <View
+              style={[
+                styles.button,
+                isFormChanged ? null : styles.buttonDisabled,
+              ]}
             >
-              <View
-                style={[
-                  styles.button,
-                  isFormChanged ? null : styles.buttonDisabled,
-                ]}
-              >
-                <Text style={styles.buttonText}>Save Activity</Text>
-                <MaterialCommunityIcons
-                  name="content-save"
-                  size={20}
-                  color="white"
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
+              <Text style={styles.buttonText}>Add to Dice</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>
@@ -100,7 +92,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    // minHeight: 600,
     height: 300,
     paddingBottom: 20,
     display: "flex",
@@ -212,43 +203,19 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 17,
   },
-  buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "95%",
-    paddingBottom: 40,
-    position: "absolute",
-    bottom: 10,
-  },
   buttonContainer: {
-    // paddingTop: 20,
-    // flexDirection: "column",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
   },
   button: {
     backgroundColor: Themes.colors.salmon,
-    padding: 10,
-    borderRadius: 30,
-    width: 170,
     alignItems: "center",
-    flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center",
-    gap: 10,
-    borderWidth: 1,
-    borderColor: Themes.colors.salmon,
-  },
-  buttonSecondary: {
+    width: 350,
     padding: 10,
-    borderRadius: 30,
-    width: 170,
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 10,
-    borderWidth: 1,
-    borderColor: Themes.colors.salmon,
+    borderRadius: 40,
   },
   buttonDisabled: {
     backgroundColor: Themes.colors.salmonTransparent,

@@ -3,7 +3,7 @@ import { Themes } from "../assets/Themes";
 import { useState } from "react";
 import Images from "../assets/Themes/Images";
 import ActivityModal from "./ActivityModal";
-import CreateChoiceModal from "./CreateChoiceModal";
+import AddChoiceModal from "./AddChoiceModal";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Activity({ activityObject, index, section }) {
@@ -56,7 +56,7 @@ export default function Activity({ activityObject, index, section }) {
               style={styles.createActivity}
             />
           </View>
-          <CreateChoiceModal
+          <AddChoiceModal
             isVisible={isModalVisible}
             closeModal={closeModal}
             indexInSection={index - 1}
