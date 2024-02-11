@@ -18,8 +18,6 @@ export default function AddChoiceModal({
   setName
 }) {
   const { addActivity } = useContext(ActivitiesContext);
-
-  // const [name, setName] = useState("");
   const [isFormChanged, setIsFormChanged] = useState(false);
 
   useEffect(() => {

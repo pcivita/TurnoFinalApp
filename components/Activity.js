@@ -2,7 +2,7 @@ import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { Themes } from "../assets/Themes";
 import { useState } from "react";
 import Images from "../assets/Themes/Images";
-import ActivityModal from "./ActivityModal";
+import EditChoiceModal from "./EditChoiceModal";
 import AddChoiceModal from "./AddChoiceModal";
 import { FontAwesome5 } from "@expo/vector-icons";
 
@@ -42,7 +42,7 @@ export default function Activity({ activityObject, index, section }) {
               {activityName}
             </Text>
           </View>
-          <ActivityModal
+          <EditChoiceModal
             isVisible={isModalVisible}
             closeModal={closeModal}
             activity={activityObject}

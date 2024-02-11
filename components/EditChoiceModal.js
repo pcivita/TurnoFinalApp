@@ -11,7 +11,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ActivitiesContext } from "../contexts/ActivitiesContext";
 import { Themes } from "../assets/Themes";
 
-export default function ActivityModal({
+export default function EditChoiceModal({
   isVisible,
   closeModal,
   activity,
