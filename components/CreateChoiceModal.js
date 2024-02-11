@@ -11,51 +11,24 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ActivitiesContext } from "../contexts/ActivitiesContext";
 import { Themes } from "../assets/Themes";
 
-export default function ActivityModal({
+export default function CreateChoiceModal({
   isVisible,
   closeModal,
-  activity,
   indexInSection,
 }) {
-  const { editActivity, deleteActivity } = useContext(ActivitiesContext);
+  const { addActivity } = useContext(ActivitiesContext);
 
-  const [name, setName] = useState(activity[0]);
-  const [newName, setNewName] = useState(name);
-
-  const [editMode, setEditMode] = useState(false);
+  const [name, setName] = useState("");
   const [isFormChanged, setIsFormChanged] = useState(false);
 
   useEffect(() => {
-    if (editMode) {
-      const formChanged = newName !== name;
-      setIsFormChanged(formChanged);
-    } else {
-      setIsFormChanged(false);
-    }
-  }, [editMode, newName]);
-
-  useEffect(() => {
-    if (!isVisible) {
-      setEditMode(false);
-    }
-  }, [isVisible]);
+    const formChanged = name !== "";
+    setIsFormChanged(formChanged);
+  }, [name]);
 
   const handleSave = () => {
-    setName(newName);
-    editActivity(indexInSection, newName);
-    setEditMode(false);
-  };
-
-  const handleCancel = () => {
-    // Revert everything back to how it was before
-    setNewName(name);
-    setEditMode(false);
-  };
-
-  const handleDelete = () => {
-    deleteActivity(indexInSection);
-    setEditMode(false);
-    closeModal();
+    setName(name);
+    addActivity(name);
   };
 
   return (
@@ -65,8 +38,6 @@ export default function ActivityModal({
       isVisible={isVisible}
       swipeDirection="down"
       onSwipeComplete={() => closeModal()}
-      // animationIn="bounceInUp"
-      // animationOut="bounceOutDown"
       animationInTiming={400}
       animationOutTiming={400}
       backdropTransitionInTiming={600}
@@ -81,82 +52,37 @@ export default function ActivityModal({
           <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
             <MaterialCommunityIcons name="close" size={30} color="white" />
           </TouchableOpacity>
-          <Text style={styles.title}>Edit Choice</Text>
+          <Text style={styles.title}>Add a Choice</Text>
         </View>
         <View style={styles.activityNameContainer}>
           <Text style={styles.subtitle}>Choice Name <Text style={styles.asterick}>*</Text></Text>
-          {!editMode && (
-            <TextInput style={styles.input} value={newName} editable={false} />
-          )}
-          {editMode && (
-            <TextInput
-              style={styles.editableInput}
-              value={newName}
-              editable
-              onChangeText={setNewName}
-            />
-          )}
+          <TextInput
+            style={styles.editableInput}
+            value={name}
+            editable
+            onChangeText={setName}
+          />
         </View>
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
-            {!editMode && (
-              <TouchableOpacity style={styles.button} onPress={handleDelete}>
-                <Text style={styles.buttonText}>Delete Activity</Text>
+            <TouchableOpacity
+              disabled={!isFormChanged}
+              onPress={handleSave}
+            >
+              <View
+                style={[
+                  styles.button,
+                  isFormChanged ? null : styles.buttonDisabled,
+                ]}
+              >
+                <Text style={styles.buttonText}>Save Activity</Text>
                 <MaterialCommunityIcons
-                  name="trash-can-outline"
+                  name="content-save"
                   size={20}
                   color="white"
                 />
-              </TouchableOpacity>
-            )}
-            {editMode && (
-              <TouchableOpacity
-                style={styles.buttonSecondary}
-                onPress={handleCancel}
-              >
-                <Text style={styles.buttonTextSecondary}>Cancel</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-
-          <View style={styles.buttonContainer}>
-            {!editMode && (
-              <TouchableOpacity
-                //disabled={editMode && !isFormChanged}
-                onPress={() => {
-                  setEditMode(true);
-                }}
-              >
-                <View style={styles.button}>
-                  <Text style={styles.buttonText}>Edit Activity</Text>
-                  <MaterialCommunityIcons
-                    name="pencil"
-                    size={20}
-                    color="white"
-                  />
-                </View>
-              </TouchableOpacity>
-            )}
-            {editMode && (
-              <TouchableOpacity
-                disabled={editMode && !isFormChanged}
-                onPress={handleSave}
-              >
-                <View
-                  style={[
-                    styles.button,
-                    isFormChanged ? null : styles.buttonDisabled,
-                  ]}
-                >
-                  <Text style={styles.buttonText}>Save Activity</Text>
-                  <MaterialCommunityIcons
-                    name="content-save"
-                    size={20}
-                    color="white"
-                  />
-                </View>
-              </TouchableOpacity>
-            )}
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

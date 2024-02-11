@@ -1,22 +1,12 @@
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { Themes } from "../assets/Themes";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import Images from "../assets/Themes/Images";
 import ActivityModal from "./ActivityModal";
-import { useFonts } from "expo-font";
-import { Link } from "expo-router";
+import CreateChoiceModal from "./CreateChoiceModal";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Activity({ activityObject, index, section }) {
-  const sectionColor =
-    section === "Current Activities"
-      ? styles.currentActivity
-      : styles.pendingActivity;
-  const textColor =
-    section === "Current Activities" ? styles.currentText : styles.pendingText;
-  const iconColor = section === "Current Activities" ? "white" : "black";
-
   const [isModalVisible, setModalVisible] = useState(false);
   const openModal = () => {
     setModalVisible(true);
@@ -38,44 +28,42 @@ export default function Activity({ activityObject, index, section }) {
 
   return (
     <View>
+      <TouchableOpacity onPress={openModal}>
       {activityObject ? (
-        <TouchableOpacity onPress={activityObject ? openModal : null}>
-          <View style={styles.container}>
-            <View style={styles.diceContainer}>
-              <Image source={diceImages[index]} style={styles.diceNumberIcon} />
-            </View>
-            <View style={styles.textContainer}>
-              <Text style={styles.text} numberOfLines={3} ellipsizeMode="tail">
-                {activityName}
-              </Text>
-            </View>
-            <ActivityModal
-              isVisible={isModalVisible}
-              closeModal={closeModal}
-              activity={activityObject}
-              indexInSection={index - 1}
-              section="Current Activities"
+        <View style={styles.container}>
+          <View style={styles.diceContainer}>
+            <Image source={diceImages[index]} style={styles.diceNumberIcon} />
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.text} numberOfLines={3} ellipsizeMode="tail">
+              {activityName}
+            </Text>
+          </View>
+          <ActivityModal
+            isVisible={isModalVisible}
+            closeModal={closeModal}
+            activity={activityObject}
+            indexInSection={index - 1}
+          />
+        </View>
+      ) : (
+        <View style={[styles.container, styles.gray]}>
+          <View style={styles.createActivityContainer}>
+            <FontAwesome5
+              name="plus"
+              size={45}
+              color={Themes.colors.salmon}
+              style={styles.createActivity}
             />
           </View>
-        </TouchableOpacity>
-      ) : (
-        <Link
-          href={{
-            pathname: "/activities/createActivity",
-          }}
-        >
-          <View style={[styles.container, styles.gray]}>
-            <View style={styles.createActivityContainer}>
-              <FontAwesome5
-                name="plus"
-                size={45}
-                color={Themes.colors.salmon}
-                style={styles.createActivity}
-              />
-            </View>
-          </View>
-        </Link>
+          <CreateChoiceModal
+            isVisible={isModalVisible}
+            closeModal={closeModal}
+            indexInSection={index - 1}
+          />
+        </View>
       )}
+      </TouchableOpacity>
     </View>
   );
 }
@@ -89,11 +77,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 10,
     alignItems: "center",
-    shadowColor: "rgba(0, 0, 0, 0.5)",
-    shadowOffset: { height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    // paddingTop: 30,
+    // shadowColor: "rgba(0, 0, 0, 0.5)",
+    // shadowOffset: { height: 2 },
+    // shadowOpacity: 0.3,
+    // shadowRadius: 2,
   },
   gray: {
     borderWidth: 0.5,
