@@ -8,10 +8,13 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Activity({ activityObject, index, section }) {
   const [isModalVisible, setModalVisible] = useState(false);
+  const [name, setName] = useState("");
+
   const openModal = () => {
     setModalVisible(true);
   };
   const closeModal = () => {
+    setName("");
     setModalVisible(false);
   };
 
@@ -59,7 +62,8 @@ export default function Activity({ activityObject, index, section }) {
           <AddChoiceModal
             isVisible={isModalVisible}
             closeModal={closeModal}
-            indexInSection={index - 1}
+            name={name}
+            setName={setName}
           />
         </View>
       )}

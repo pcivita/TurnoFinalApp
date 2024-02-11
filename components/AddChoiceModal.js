@@ -14,11 +14,12 @@ import { Themes } from "../assets/Themes";
 export default function AddChoiceModal({
   isVisible,
   closeModal,
-  indexInSection,
+  name,
+  setName
 }) {
   const { addActivity } = useContext(ActivitiesContext);
 
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
   const [isFormChanged, setIsFormChanged] = useState(false);
 
   useEffect(() => {
@@ -28,7 +29,10 @@ export default function AddChoiceModal({
 
   const handleSave = () => {
     setName(name);
-    addActivity(name);
+    // TODO: Connect to backend
+    console.log("New choice added: " + name);
+    closeModal();
+    // addActivity(name);
   };
 
   return (
@@ -66,7 +70,7 @@ export default function AddChoiceModal({
           />
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity disabled={!isFormChanged} onPress={handleSave}>
+          <TouchableOpacity onPress={handleSave}>
             <View
               style={[
                 styles.button,
