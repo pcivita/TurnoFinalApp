@@ -78,8 +78,25 @@ const UserContextProvider = ({ children }) => {
       // Additional setup can go here
     } catch (error) {
       console.error("Error logging in: ", error);
+      Alert.alert(parseLoginError(error));
     }
   };
+
+  const parseLoginError = (error) => {
+    if (error.code === 'auth/user-not-found') {
+      return 'No user found with that email address.';
+    }
+    if (error.code === 'auth/wrong-password') {
+      return 'Incorrect password. Please try again.';
+    }
+    if (error.code === 'auth/invalid-email') {
+      return 'Invalid email address. Please make sure the email was entered correclty or try using a new email.';
+    }
+    return error.message;
+  }
+
+
+
 
   // const uploadImage = async (imageFile, user) => {  
 

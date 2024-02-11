@@ -14,16 +14,44 @@ import { Themes } from "../../assets/Themes";
 import Category from "../../components/Category";
 import Header from "../../components/Header";
 import Activity from "../../components/Activity";
+import { UserContext } from "../../contexts/UserContext";
 
 export default function Page() {
   const [activityName, setActivityName] = useState("");
   const [description, setDescription] = useState("");
-  const { addActivity } = useContext(ActivitiesContext);
+  const [name, setName] = useState("");
+  const [choices, setChoices] = useState([]);
+  const [category, setCategory] = useState("")
 
-  const handleCreateDice = () => {
-    if (isFormFilled) {
-      console.log("created dice!!");
+  const { addActivity } = useContext(ActivitiesContext);
+  const { user } = useContext(UserContext);
+
+  const handleCreateDice =  async () => {
+    const diceId = Math.random().toString(36).substring(7);
+    const creator = user.uid;
+    
+    try {
+      const {data, error} = await supabase 
+        .from('dice')
+        .insert([
+          {
+            diceId: diceId,
+            creator: creator,
+            choices: choices,
+            community: switchEnabled,
+            name: name,
+            rollHistory: [],
+            name: activityName,
+            saves: 0,
+            description: description,
+            category: category,
+          }
+        ]);
+    } catch (error) {
+
     }
+    // add to dice table in supabase
+
   };
 
   const [isFormFilled, setIsFormFilled] = useState(false);
@@ -32,7 +60,7 @@ export default function Page() {
     setIsFormFilled(activityName.trim().length > 0 && selectedId !== null);
   }, [activityName]);
 
-  const categories = [
+  const CATEGORY_LIST = [
     ["Exercise", "running"],
     ["Work", "briefcase"],
     ["Academic", "graduation-cap"],
@@ -42,7 +70,8 @@ export default function Page() {
   ];
   const [selectedId, setSelectedId] = useState(null);
   const handleSelect = (id) => {
-    setSelectedId(id);
+    setCategory(CATEGORY_LIST[id][0])
+    console.log(CATEGORY_LIST[id][0])
     setIsFormFilled(activityName.trim().length > 0);
   };
 
@@ -62,25 +91,13 @@ export default function Page() {
             // numberOfLines={1}
             style={styles.input}
             placeholder="Dice Name"
-            value={activityName}
-            onChangeText={setActivityName}
+            value={name}
+            onChangeText={setName}
           />
         </View>
         <View style={styles.descriptionContainer}>
           <Text style={styles.sectionTitle}>Description</Text>
-          {/* <TextInput
-            editable
-            multiline
-            blurOnSubmit={true}
-            onSubmitEditing={() => {
-              Keyboard.dismiss();
-            }}
-            numberOfLines={4}
-            style={styles.input}
-            placeholder="Description"
-            value={description}
-            onChangeText={setDescription}
-          /> */}
+        
           <TextInput
             style={styles.input}
             placeholder="Description"
@@ -108,8 +125,8 @@ export default function Page() {
                 id={id}
                 isSelected={id === selectedId}
                 onSelect={handleSelect}
-                categoryName={categories[id - 1][0]}
-                iconName={categories[id - 1][1]}
+                categoryName={CATEGORY_LIST[id - 1][0]}
+                iconName={CATEGORY_LIST[id - 1][1]}
               />
             ))}
           </View>

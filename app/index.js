@@ -33,7 +33,6 @@ export default function Onboarding() {
     }, [user]);
 
   const handleLogIn = () => {
-    setCurrentScreen('onboarding');
     logIn(email.toLowerCase(), password);
   };
 
@@ -116,9 +115,9 @@ export default function Onboarding() {
             : <Text style={styles.onBoardingButtonText}>Sign Up</Text>}
         </TouchableOpacity>
         {/* FOR TESTING */}
-        <TouchableOpacity onPress={() => router.replace('/roll')} style={styles.loginButton}>
+        {/* <TouchableOpacity onPress={() => router.replace('/roll')} style={styles.loginButton}>
             <Text style={{color: 'white', fontWeight: 'bold'}}>Bypass Auth (for testing will delete later)</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   };
@@ -199,7 +198,7 @@ export default function Onboarding() {
             <Text style={styles.loginText}>Sign Up</Text>
         </TouchableOpacity>
         {/* </Link> */}
-        <Text style={styles.loginText} onPress={() => setCurrentScreen('log in')}>
+        <Text style={styles.submessageText} onPress={() => setCurrentScreen('log in')}>
           Already have an account? Log In
         </Text>
       </View>
@@ -261,6 +260,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'Poppins-Bold',
         color: 'white',
+    },
+    submessageText: {
+        fontSize: 16,
+        fontFamily: 'Poppins-Regular',
+        color: 'black',
+        marginTop: 12,
     },
   signUpButton: {
     width: windowWidth * 0.8,
