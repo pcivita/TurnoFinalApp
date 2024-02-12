@@ -17,6 +17,7 @@ import { Themes } from "../../assets/Themes";
 import Category from "../../components/Category";
 import Header from "../../components/Header";
 import Activity from "../../components/Activity";
+import { UserContext } from "../../contexts/UserContext";
 import { FontAwesome5 } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
@@ -29,10 +30,11 @@ export default function Page() {
   const [categoryID, setCategoryID] = useState(null);
   const [switchEnabled, setSwitchEnabled] = useState(false);
 
+
   const [isFormFilled, setIsFormFilled] = useState(false);
   const { addActivity } = useContext(ActivitiesContext);
 
-  const categories = [
+  const CATEGORY_LIST = [
     ["Exercise", "running"],
     ["Work", "briefcase"],
     ["Academic", "graduation-cap"],
@@ -40,6 +42,7 @@ export default function Page() {
     ["Social", "user-friends"],
     ["Food & Drink", "utensils"],
   ];
+
 
   const chunkChoices = (choices, size) => {
     return choices.reduce((acc, curr, i) => {
