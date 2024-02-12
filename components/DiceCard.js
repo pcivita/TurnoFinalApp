@@ -26,13 +26,13 @@ const styles = StyleSheet.create({
     container: {
         width: (windowWidth / 2) - (windowWidth * 0.05),
         borderRadius: 20,
-        height: 250,
+        height: 200,
         borderWidth: 1,
         borderColor: '#E2E2E2',
     },
     image: {
         width: "100%",
-        height: 120,
+        height: 100,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
     },
