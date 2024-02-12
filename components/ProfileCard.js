@@ -27,7 +27,6 @@ export default function ProfileCard({
 
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
-    "Poppins-SemiBold": require("../assets/Poppins/Poppins-SemiBold.ttf"),
   });
 
   if (!fontsLoaded) {
@@ -36,13 +35,16 @@ export default function ProfileCard({
 
   return (
     <View style={styles.container}>
-      {profilePic ? 
+      {profilePic ? (
         <View style={styles.imageContainer}>
-          <Image source={{uri: profilePic && profilePic}} style={styles.profileImg} />
+          <Image
+            source={{ uri: profilePic && profilePic }}
+            style={styles.profileImg}
+          />
         </View>
-      :
-        <Profile width={100} height={100}/>
-      }
+      ) : (
+        <Profile width={100} height={100} />
+      )}
       <Text style={styles.profileName}>{profileName}</Text>
 
       <Text style={styles.handle}>{handle}</Text>
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
   },
   profileName: {
     fontSize: 20,
-    // fontFamily: "Poppins-SemiBold",
+    // fontFamily: "Poppins-Medium",
   },
   handle: {
     fontFamily: "Poppins-Regular",

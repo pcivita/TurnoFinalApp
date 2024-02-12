@@ -17,10 +17,10 @@ import Header from "../../components/Header";
 import SwipeButton from "../../components/SwipeButton";
 import CongratsModal from "../../components/CongratsModal";
 import DiceComponent from "../../components/DiceComponent";
-import { createMultiStyleIconSet } from "@expo/vector-icons";
 import { useLocalSearchParams, useSearchParams } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ZigZagArrow from "../../components/Icons/ZigZagArrow";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Page() {
   const { canRoll } = useContext(ActivitiesContext);
@@ -142,7 +142,9 @@ export default function Page() {
                   color="white"
                 />
               </View>
-              <Text style={styles.overlayBottomText}>Tap anywhere to continue</Text>
+              <Text style={styles.overlayBottomText}>
+                Tap anywhere to continue
+              </Text>
             </View>
           </View>
         </TouchableWithoutFeedback>
@@ -157,9 +159,12 @@ export default function Page() {
       )}
 
       <View style={styles.upperTextContainer}>
-        <Text style={styles.heading1}>Roll the dice for</Text>
-        <Text style={styles.heading1}>an activity!</Text>
-        <Text style={styles.heading2}>Dice: {params && params.title}</Text>
+        <Text style={styles.heading1}>Roll the dice to</Text>
+        <Text style={styles.heading1}>make a choice!</Text>
+        <View style={styles.subtitle}>
+          <FontAwesome5 name="dice-d6" size={18} color="black" />
+          <Text style={styles.heading2}>Dice: {params && params.title}</Text>
+        </View>
 
         <DiceComponent onData={handleRoll} isInteractive={!diceRolled} />
       </View>
@@ -233,11 +238,11 @@ const styles = StyleSheet.create({
   },
   upperTextContainer: {
     width: "100%",
-    marginVertical: 20,
+    marginVertical: 30,
   },
   heading1: {
     color: "black",
-    fontSize: 26,
+    fontSize: 24,
     lineHeight: 30,
     fontFamily: "Poppins-Bold",
     textAlign: "center",
@@ -250,6 +255,14 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-Regular",
     textAlign: "center",
     // zIndex: -100,
+  },
+  subtitle: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 5,
+    paddingTop: 5,
   },
   overlayContainer: {
     position: "absolute",
@@ -270,16 +283,16 @@ const styles = StyleSheet.create({
   },
   overlayTopText: {
     color: "white",
-    fontFamily: "Poppins-SemiBold",
+    fontFamily: "Poppins-Regular",
     fontSize: 32,
     textAlign: "center",
     position: "absolute",
-    top: 225,
+    top: 240,
   },
   overlaySwipe: {
     alignItems: "center",
     position: "absolute",
-    top: 400,
+    top: 415,
   },
   overlayBottomText: {
     color: "white",

@@ -17,22 +17,11 @@ import ActivityHelpModal from "../../components/ActivityHelpModal";
 import { useLocalSearchParams } from "expo-router";
 
 export default function Page() {
-  // const [activities, setActivities] = useState([]);
-
-  // const params = useLocalSearchParams();
-  // useEffect(() => {
-  //   if (params) {
-  //     console.log(params);
-  //     const arr = params.activities.split(',')
-  //     setActivities(arr);
-  //   }
-  // }, [params])
-
-
   const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);
+
+  // TODO: replace with non hard-coded activities
   const { activities } = useContext(ActivitiesContext);
-  const currentActivities = activities;
-  console.log(activities);
+  const currentActivities = [...activities, null];
 
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
@@ -46,13 +35,27 @@ export default function Page() {
     setIsHelpModalVisible(false);
   };
 
+  // Function to chunk the activities into pairs
+  const chunkActivities = (activities, size) => {
+    return activities.reduce((acc, curr, i) => {
+      if (!(i % size)) {
+        acc.push([curr]); // Start a new chunk
+      } else {
+        acc[acc.length - 1].push(curr); // Add to the last chunk
+      }
+      return acc;
+    }, []);
+  };
+
+  const activitiesPairs = chunkActivities(currentActivities, 2);
+
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
       <Header title="Activities" />
       <View style={styles.helpButton}>
         <Text style={styles.headerText}>Stanford Study Spots</Text>
-        <TouchableOpacity onPress={() => setIsHelpModalVisible(true)}>
+        {/* <TouchableOpacity onPress={() => setIsHelpModalVisible(true)}>
           <MaterialCommunityIcons
             name="help-circle-outline"
             size={28}
@@ -62,31 +65,21 @@ export default function Page() {
             isModalVisible={isHelpModalVisible}
             closeHelpModal={closeHelpModal}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
-      {currentActivities == [] && (
-        <View style={styles.noActivitiesContainer}>
-          <Text style={styles.noActivitesMessage}>
-            {section.noActivitiesMessage}
-          </Text>
-        </View>
-      )}
-      {currentActivities && (
-        <ScrollView style={styles.activitiesContainer}>
-          <View style={styles.activitiesRow}>
-            <Activity activityObject={currentActivities[0]} index={1} />
-            <Activity activityObject={currentActivities[1]} index={2} />
+      <ScrollView style={styles.activitiesContainer}>
+        {activitiesPairs.map((pair, index) => (
+          <View key={index} style={styles.activitiesRow}>
+            {pair.map((activity, idx) => (
+              <Activity
+                key={idx}
+                activityObject={activity}
+                index={idx + 1 + index * 2}
+              />
+            ))}
           </View>
-          <View style={styles.activitiesRow}>
-            <Activity activityObject={currentActivities[2]} index={3} />
-            <Activity activityObject={currentActivities[3]} index={4} />
-          </View>
-          <View style={styles.activitiesRow}>
-            <Activity activityObject={currentActivities[4]} index={5} />
-            <Activity activityObject={currentActivities[5]} index={6} />
-          </View>
-        </ScrollView>
-      )}
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -176,7 +169,7 @@ const styles = StyleSheet.create({
   },
   activitiesRow: {
     width: "100%",
-    marginBottom: 20,
+    marginBottom: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
