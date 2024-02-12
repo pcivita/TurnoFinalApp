@@ -8,6 +8,8 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Switch,
+  TouchableOpacity,
+  Image
 } from "react-native";
 import { Link, Stack } from "expo-router";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
@@ -15,6 +17,8 @@ import { Themes } from "../../assets/Themes";
 import Category from "../../components/Category";
 import Header from "../../components/Header";
 import Activity from "../../components/Activity";
+import { FontAwesome5 } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 
 export default function Page() {
   const [diceName, setDiceName] = useState("");
@@ -51,7 +55,7 @@ export default function Page() {
   const addToChoices = (name) => {
     console.log("Adding to list of choices: " + name);
     const newChoices = [name, ...choices];
-    
+
     if (newChoices.length === 7) {
       newChoices.pop();
     }
@@ -61,7 +65,7 @@ export default function Page() {
 
   const handleCreateDice = () => {
     if (isFormFilled) {
-      // TODO: Needs backend 
+      // TODO: Needs backend
       console.log("Created dice!!");
     }
   };
@@ -77,7 +81,9 @@ export default function Page() {
   };
 
   useEffect(() => {
-    setIsFormFilled(diceName.trim().length > 0 && categoryID !== null && choices.length > 1);
+    setIsFormFilled(
+      diceName.trim().length > 0 && categoryID !== null && choices.length > 1
+    );
   }, [diceName]);
 
   const handleCategorySelect = (id) => {
@@ -85,11 +91,68 @@ export default function Page() {
     setIsFormFilled(diceName.trim().length > 0 && choices.length > 1);
   };
 
+  // Image picking functions
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+    })();
+  }, []);
+
+  const [imageUri, setImageUri] = useState(null); // Add this state to your component
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    console.log(result);
+    if (!result.canceled) {
+      setImageUri(result.uri);
+      // Optionally, upload the image here or set it to be uploaded later
+    }
+  };
+
+  const uploadImage = async () => {
+    if (!imageUri) return;
+  
+    let formData = new FormData();
+    formData.append('image', {
+      uri: imageUri,
+      name: 'photo.jpg',
+      type: 'image/jpeg',
+    });
+  
+    try {
+      const response = await fetch('YOUR_BACKEND_ENDPOINT', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+  
+      const result = await response.json();
+      console.log(result);
+      // Handle response...
+    } catch (error) {
+      console.error(error);
+      // Handle error...
+    }
+  };
+  
+
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
         <Stack.Screen options={{ headerShown: false }} />
-        <Header title="Create New Dice"/>
+        <Header title="Create New Dice" />
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.diceNameContainer}>
             <Text style={styles.sectionTitle}>
@@ -163,6 +226,23 @@ export default function Page() {
               ))}
             </View>
           </View>
+          <View style={styles.diceBannerContainer}>
+            <Text style={styles.sectionTitle}>Dice Banner</Text>
+            {imageUri ? (
+              <TouchableOpacity style={styles.diceBannerUploadedImage} onPress={pickImage}>
+                <Image source={{ uri: imageUri }} style={styles.diceBannerImage} />
+              </TouchableOpacity>
+             ) : (
+              <TouchableOpacity style={styles.diceBannerUploadPrompt} onPress={pickImage}>
+                <FontAwesome5
+                  name="camera"
+                  size={24}
+                  color={Themes.colors.darkGray}
+                />
+                <Text style={styles.diceBannerUploadText}>Upload an image</Text>
+              </TouchableOpacity>
+            )}
+          </View>
           <View style={styles.switchContainer}>
             <Text style={styles.postDiceText}>Post dice to the community</Text>
             <Switch
@@ -185,14 +265,14 @@ export default function Page() {
             }}
             onPress={handleCreateDice}
           >
-          <View
-            style={[
-              styles.button,
-              isFormFilled ? styles.buttonEnabled : styles.buttonDisabled,
-            ]}
-          >
-            <Text style={styles.buttonText}>Create Dice</Text>
-          </View>
+            <View
+              style={[
+                styles.button,
+                isFormFilled ? styles.buttonEnabled : styles.buttonDisabled,
+              ]}
+            >
+              <Text style={styles.buttonText}>Create Dice</Text>
+            </View>
           </Link>
         </View>
       </View>
@@ -268,6 +348,42 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
+  },
+  diceBannerContainer: {
+    // height: 110,
+    width: "95%",
+    gap: 5,
+  },
+  diceBannerUploadPrompt: {
+    fontSize: 16,
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1.5,
+    borderStyle: "dashed",
+    borderColor: Themes.colors.darkGray,
+    height: 70,
+    fontFamily: "Poppins-Regular",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  diceBannerUploadedImage: {
+    fontSize: 16,
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1.5,
+    borderStyle: "dashed",
+    borderColor: Themes.colors.darkGray,
+    fontFamily: "Poppins-Regular",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  diceBannerImage: {
+    width: 100,
+    height: 100
+  },
+  diceBannerUploadText: {
+    color: Themes.colors.darkGray,
+    fontFamily: "Poppins-Regular",
   },
   switchContainer: {
     borderTopWidth: 1,
