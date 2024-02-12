@@ -51,6 +51,10 @@ export default function Page() {
   const addToChoices = (name) => {
     console.log("Adding to list of choices: " + name);
     const newChoices = [name, ...choices];
+    
+    if (newChoices.length === 7) {
+      newChoices.pop();
+    }
     setChoices(newChoices);
   };
 
