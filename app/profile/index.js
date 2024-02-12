@@ -3,7 +3,7 @@ import { Themes } from "../../assets/Themes";
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import ProfileCard from "../../components/ProfileCard";
-import { useState,  useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { PostsProvider } from "../../contexts/PostsContext";
 import Header from "../../components/Header";
 import MyPosts from "../../components/ProgressScreens/MyPosts";
@@ -22,14 +22,14 @@ export default function Page() {
     const fetchUserData = async () => {
       let result = await fetchUserFromUid(user.uid);
       setUserData(result);
-    }
+    };
     if (user) {
       fetchUserData();
       console.log(userData);
     }
-  }, [user])
-  
-  const {fetchUserFromUid, user} = useContext(UserContext);
+  }, [user]);
+
+  const { fetchUserFromUid, user } = useContext(UserContext);
 
   handleData = (data) => {
     setActiveScreen(data);
@@ -37,39 +37,39 @@ export default function Page() {
 
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
+    // "Poppins-Medium": require("./assets/Poppins/Poppins-Medium.ttf"),
     "Poppins-Bold": require("../../assets/Poppins/Poppins-Bold.ttf"),
   });
   if (!fontsLoaded) {
     return undefined;
   }
-  
 
   return (
     <>
-    {userData &&
-    <View style={styles.container}>
-      <Stack.Screen options={{ headerShown: false }} />
-      <Header title="Profile" />
+      {userData && (
+        <View style={styles.container}>
+          <Stack.Screen options={{ headerShown: false }} />
+          <Header title="Profile" />
 
-      <View style={styles.profileCard}>
-        <ProfileCard
-          isYourProfile={true}
-          profileName={userData.fullName}
-          handle={"@" + userData.username}
-          profilePic={userData.profilePicUri}
-        />
-      </View>
+          <View style={styles.profileCard}>
+            <ProfileCard
+              isYourProfile={true}
+              profileName={userData.fullName}
+              handle={"@" + userData.username}
+              profilePic={userData.profilePicUri}
+            />
+          </View>
 
-      <View style={styles.buttonContainer}>
-        <ProfileNavigation onData={handleData} />
-      </View>
+          <View style={styles.buttonContainer}>
+            <ProfileNavigation onData={handleData} />
+          </View>
 
-      <View style={styles.subscreenContainer}>
-        {activeScreen === "Posts" && <MyPosts />}
-        {activeScreen === "Stats" && <Stats />}
-      </View>
-    </View>
-    }
+          <View style={styles.subscreenContainer}>
+            {activeScreen === "Posts" && <MyPosts />}
+            {activeScreen === "Stats" && <Stats />}
+          </View>
+        </View>
+      )}
     </>
   );
 }
@@ -94,6 +94,5 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
   },
-  profileCard: {
-  }
+  profileCard: {},
 });

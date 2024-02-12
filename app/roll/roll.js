@@ -20,7 +20,7 @@ import DiceComponent from "../../components/DiceComponent";
 import { useLocalSearchParams, useSearchParams } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ZigZagArrow from "../../components/Icons/ZigZagArrow";
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Page() {
   const { canRoll } = useContext(ActivitiesContext);
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
   },
   overlayTopText: {
     color: "white",
-    fontFamily: "Poppins-SemiBold",
+    fontFamily: "Poppins-Medium",
     fontSize: 32,
     textAlign: "center",
     position: "absolute",
