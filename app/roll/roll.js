@@ -283,16 +283,16 @@ const styles = StyleSheet.create({
   },
   overlayTopText: {
     color: "white",
-    // fontFamily: "Poppins-SemiBold",
+    fontFamily: "Poppins-SemiBold",
     fontSize: 32,
     textAlign: "center",
     position: "absolute",
-    top: 225,
+    top: 240,
   },
   overlaySwipe: {
     alignItems: "center",
     position: "absolute",
-    top: 400,
+    top: 415,
   },
   overlayBottomText: {
     color: "white",
