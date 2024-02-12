@@ -113,6 +113,7 @@ export default function DicePage() {
                 key={idx}
                 activityObject={activity}
                 index={idx + 1 + index * 2}
+                notMyDice={true} // make noninteractive
               />
             ))}
           </View>
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     width: "90%",
-    height: 60,
+    height: 80,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -174,9 +175,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  profileText: { 
+  profileText: {
     fontSize: 12,
-    fontFamily: "Poppins-Regular"
+    fontFamily: "Poppins-Regular",
   },
   boxText: {
     fontFamily: "Poppins-Bold",
@@ -215,12 +216,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 4,
     flexDirection: "space-between",
-    gap: 100,
+    // gap: 100,
   },
 
   activitiesRow: {
     width: "100%",
-    marginBottom: 20,
+    marginBottom: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",

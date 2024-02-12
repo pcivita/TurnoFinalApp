@@ -53,7 +53,7 @@ export default function Page() {
       <Header title="Activities" />
       <View style={styles.helpButton}>
         <Text style={styles.headerText}>Stanford Study Spots</Text>
-        <TouchableOpacity onPress={() => setIsHelpModalVisible(true)}>
+        {/* <TouchableOpacity onPress={() => setIsHelpModalVisible(true)}>
           <MaterialCommunityIcons
             name="help-circle-outline"
             size={28}
@@ -63,7 +63,7 @@ export default function Page() {
             isModalVisible={isHelpModalVisible}
             closeHelpModal={closeHelpModal}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <ScrollView style={styles.activitiesContainer}>
         {activitiesPairs.map((pair, index) => (
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   },
   activitiesRow: {
     width: "100%",
-    marginBottom: 20,
+    marginBottom: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",

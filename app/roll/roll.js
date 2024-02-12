@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
   },
   overlayTopText: {
     color: "white",
-    fontFamily: "Poppins-Medium",
+    fontFamily: "Poppins-Regular",
     fontSize: 32,
     textAlign: "center",
     position: "absolute",

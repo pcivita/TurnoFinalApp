@@ -6,7 +6,7 @@ import EditChoiceModal from "./EditChoiceModal";
 import AddChoiceModal from "./AddChoiceModal";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-export default function Activity({ activityObject, index, addToChoices }) {
+export default function Activity({ activityObject, index, addToChoices, notMyDice }) {
   const [isModalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState("");
 
@@ -42,43 +42,43 @@ export default function Activity({ activityObject, index, addToChoices }) {
 
   return (
     <View>
-      <TouchableOpacity onPress={openModal}>
-      {activityObject ? (
-        <View style={styles.container}>
-          <View style={styles.diceContainer}>
-            <Image source={diceImages[index]} style={styles.diceNumberIcon} />
-          </View>
-          <View style={styles.textContainer}>
-            <Text style={styles.text} numberOfLines={3} ellipsizeMode="tail">
-              {activityName}
-            </Text>
-          </View>
-          <EditChoiceModal
-            isVisible={isModalVisible}
-            closeModal={closeModal}
-            activity={activityObject}
-            indexInSection={index - 1}
-          />
-        </View>
-      ) : (
-        <View style={[styles.container, styles.gray]}>
-          <View style={styles.createActivityContainer}>
-            <FontAwesome5
-              name="plus"
-              size={45}
-              color={Themes.colors.salmon}
-              style={styles.createActivity}
+      <TouchableOpacity onPress={notMyDice ? null : openModal}>
+        {activityObject ? (
+          <View style={styles.container}>
+            <View style={styles.diceContainer}>
+              <Image source={diceImages[index]} style={styles.diceNumberIcon} />
+            </View>
+            <View style={styles.textContainer}>
+              <Text style={styles.text} numberOfLines={3} ellipsizeMode="tail">
+                {activityName}
+              </Text>
+            </View>
+            <EditChoiceModal
+              isVisible={isModalVisible}
+              closeModal={closeModal}
+              activity={activityObject}
+              indexInSection={index - 1}
             />
           </View>
-          <AddChoiceModal
-            isVisible={isModalVisible}
-            closeModal={closeModal}
-            name={name}
-            setName={setName}
-            handleSave={handleSave}
-          />
-        </View>
-      )}
+        ) : (
+          <View style={[styles.container, styles.gray]}>
+            <View style={styles.createActivityContainer}>
+              <FontAwesome5
+                name="plus"
+                size={45}
+                color={Themes.colors.salmon}
+                style={styles.createActivity}
+              />
+            </View>
+            <AddChoiceModal
+              isVisible={isModalVisible}
+              closeModal={closeModal}
+              name={name}
+              setName={setName}
+              handleSave={handleSave}
+            />
+          </View>
+        )}
       </TouchableOpacity>
     </View>
   );
