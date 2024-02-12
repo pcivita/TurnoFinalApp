@@ -17,22 +17,9 @@ import ActivityHelpModal from "../../components/ActivityHelpModal";
 import { useLocalSearchParams } from "expo-router";
 
 export default function Page() {
-  // const [activities, setActivities] = useState([]);
-
-  // const params = useLocalSearchParams();
-  // useEffect(() => {
-  //   if (params) {
-  //     console.log(params);
-  //     const arr = params.activities.split(',')
-  //     setActivities(arr);
-  //   }
-  // }, [params])
-
-
   const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);
   const { activities } = useContext(ActivitiesContext);
   const currentActivities = activities;
-  console.log(activities);
 
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
@@ -45,6 +32,20 @@ export default function Page() {
   const closeHelpModal = () => {
     setIsHelpModalVisible(false);
   };
+
+   // Function to chunk the activities into pairs
+   const chunkActivities = (activities, size) => {
+    return activities.reduce((acc, curr, i) => {
+      if (!(i % size)) {
+        acc.push([curr]); // Start a new chunk
+      } else {
+        acc[acc.length - 1].push(curr); // Add to the last chunk
+      }
+      return acc;
+    }, []);
+  };
+
+  const activitiesPairs = chunkActivities(currentActivities, 2);
 
   return (
     <View style={styles.container}>
@@ -64,29 +65,27 @@ export default function Page() {
           />
         </TouchableOpacity>
       </View>
-      {currentActivities == [] && (
-        <View style={styles.noActivitiesContainer}>
-          <Text style={styles.noActivitesMessage}>
-            {section.noActivitiesMessage}
-          </Text>
+      <ScrollView style={styles.activitiesContainer}>
+        {/* <View style={styles.activitiesRow}>
+          <Activity activityObject={currentActivities[0]} index={1} />
+          <Activity activityObject={currentActivities[1]} index={2} />
         </View>
-      )}
-      {currentActivities && (
-        <ScrollView style={styles.activitiesContainer}>
-          <View style={styles.activitiesRow}>
-            <Activity activityObject={currentActivities[0]} index={1} />
-            <Activity activityObject={currentActivities[1]} index={2} />
+        <View style={styles.activitiesRow}>
+          <Activity activityObject={currentActivities[2]} index={3} />
+          <Activity activityObject={currentActivities[3]} index={4} />
+        </View>
+        <View style={styles.activitiesRow}>
+          <Activity activityObject={currentActivities[4]} index={5} />
+          <Activity activityObject={currentActivities[5]} index={6} />
+        </View> */}
+        {activitiesPairs.map((pair, index) => (
+          <View key={index} style={styles.activitiesRow}>
+            {pair.map((activity, idx) => (
+              <Activity key={idx} activityObject={activity} index={idx + 1 + index * 2} />
+            ))}
           </View>
-          <View style={styles.activitiesRow}>
-            <Activity activityObject={currentActivities[2]} index={3} />
-            <Activity activityObject={currentActivities[3]} index={4} />
-          </View>
-          <View style={styles.activitiesRow}>
-            <Activity activityObject={currentActivities[4]} index={5} />
-            <Activity activityObject={currentActivities[5]} index={6} />
-          </View>
-        </ScrollView>
-      )}
+        ))}
+      </ScrollView>
     </View>
   );
 }

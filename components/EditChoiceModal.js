@@ -10,50 +10,29 @@ import Modal from "react-native-modal";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ActivitiesContext } from "../contexts/ActivitiesContext";
 import { Themes } from "../assets/Themes";
-import Category from "./Category";
-import CategoryDisabled from "./CategoryDisabled";
 
-export default function ActivityModal({
+export default function EditChoiceModal({
   isVisible,
   closeModal,
   activity,
-  section,
   indexInSection,
 }) {
   const { editActivity, deleteActivity } = useContext(ActivitiesContext);
 
   const [name, setName] = useState(activity[0]);
-  const [description, setDescription] = useState(activity[1]);
-  // const [selectedId, setSelectedId] = useState(
-  //   Themes.categories.findIndex(
-  //     (currentCategory) => currentCategory[0] === activity[2]
-  //   ) + 1
-  // );
-
   const [newName, setNewName] = useState(name);
-  const [newDescription, setNewDescription] = useState(description);
-  // const [newSelectedId, setNewSelectedId] = useState(selectedId);
-
-  // const handleSelect = (id) => {
-  //   setNewSelectedId(id);
-  // };
 
   const [editMode, setEditMode] = useState(false);
   const [isFormChanged, setIsFormChanged] = useState(false);
 
   useEffect(() => {
     if (editMode) {
-      // Check if any of the values are different from the original
-      const formChanged =
-        newName !== name ||
-        newDescription !== description
-        // newSelectedId !== selectedId;
+      const formChanged = newName !== name;
       setIsFormChanged(formChanged);
     } else {
-      // Reset formChanged state when exiting edit mode
       setIsFormChanged(false);
     }
-  }, [editMode, newName, newDescription]);
+  }, [editMode, newName]);
 
   useEffect(() => {
     if (!isVisible) {
@@ -63,21 +42,13 @@ export default function ActivityModal({
 
   const handleSave = () => {
     setName(newName);
-    setDescription(newDescription);
-    // setSelectedId(newSelectedId);
-
-    // let newCategory = Themes.categories[newSelectedId - 1][0];
-
-    editActivity(indexInSection, newName, newDescription);
+    editActivity(indexInSection, newName);
     setEditMode(false);
   };
 
   const handleCancel = () => {
     // Revert everything back to how it was before
     setNewName(name);
-    setNewDescription(description);
-    // setNewSelectedId(selectedId);
-
     setEditMode(false);
   };
 
@@ -110,10 +81,10 @@ export default function ActivityModal({
           <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
             <MaterialCommunityIcons name="close" size={30} color="white" />
           </TouchableOpacity>
-          <Text style={styles.title}>Activity {indexInSection + 1}</Text>
+          <Text style={styles.title}>Edit Choice</Text>
         </View>
         <View style={styles.activityNameContainer}>
-          <Text style={styles.subtitle}> Activity Name </Text>
+          <Text style={styles.subtitle}>Choice Name <Text style={styles.asterick}>*</Text></Text>
           {!editMode && (
             <TextInput style={styles.input} value={newName} editable={false} />
           )}
@@ -122,63 +93,10 @@ export default function ActivityModal({
               style={styles.editableInput}
               value={newName}
               editable
-              onChangeText={setNewName} // Update the state variable with the input
+              onChangeText={setNewName}
             />
           )}
         </View>
-        <View style={styles.descriptionContainer}>
-          <Text style={styles.subtitle}> Description </Text>
-          {!editMode && (
-            <TextInput
-              multiline
-              editable={false}
-              blurOnSubmit={true}
-              onSubmitEditing={() => {
-                Keyboard.dismiss();
-              }}
-              numberOfLines={4}
-              style={styles.input}
-              value={newDescription}
-            />
-          )}
-          {editMode && (
-            <TextInput
-              multiline
-              editable
-              blurOnSubmit={true}
-              onSubmitEditing={() => {
-                Keyboard.dismiss();
-              }}
-              numberOfLines={4}
-              style={styles.editableInput}
-              value={newDescription}
-              onChangeText={setNewDescription}
-            />
-          )}
-        </View>
-        {/* {!editMode && (
-          <View style={styles.categoriesContainer}>
-            <CategoryDisabled
-              isSelected="true"
-              id={newSelectedId}
-              categories={Themes.categories}
-            />
-          </View>
-        )}
-        {editMode && (
-          <View style={styles.categoriesContainer}>
-            {[1, 2, 3, 4, 5, 6].map((id) => (
-              <Category
-                key={id}
-                id={id}
-                isSelected={id === newSelectedId}
-                onSelect={handleSelect}
-                categoryName={Themes.categories[id - 1][0]}
-                iconName={Themes.categories[id - 1][1]}
-              />
-            ))}
-          </View>
-        )} */}
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
             {!editMode && (
@@ -253,12 +171,11 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: "white",
-    paddingTop: 12,
-    // paddingHorizontal: 12,
+    paddingTop: 10,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     // minHeight: 600,
-    height: 730,
+    height: 300,
     paddingBottom: 20,
     display: "flex",
     alignItems: "center",
@@ -271,7 +188,8 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   titleContainer: {
-    height: 70,
+    top: 10,
+    // height: 60,
     width: "100%",
     borderColor: "black",
     justifyContent: "center",
@@ -279,15 +197,15 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
-    fontSize: 28,
+    fontSize: 24,
     alignSelf: "center",
     fontFamily: "Poppins-Bold",
   },
   subtitle: {
-    marginHorizontal: 12,
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
-    fontFamily: "Poppins-Bold",
+    fontFamily: "Poppins-Regular",
+    paddingHorizontal: 0,
   },
   closeButton: {
     position: "absolute",
@@ -296,57 +214,31 @@ const styles = StyleSheet.create({
   },
   activityNameContainer: {
     paddingTop: "5%",
-    //height: "15%",
     height: 100,
-    width: "100%",
+    width: "92.5%",
     gap: "10%",
   },
   input: {
-    flex: 1,
-    marginHorizontal: 12,
     fontSize: 16,
+    padding: 8,
     fontFamily: "Poppins-Regular",
-    backgroundColor: Themes.colors.lightGray,
-    borderRadius: 5,
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: Themes.colors.lightGray,
-    padding: 10,
+    backgroundColor: Themes.colors.lightGray,
   },
   editableInput: {
-    flex: 1,
-    marginHorizontal: 12,
     fontSize: 16,
+    padding: 8,
     fontFamily: "Poppins-Regular",
-    borderRadius: 5,
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: Themes.colors.darkGray,
-    padding: 10,
   },
   activityName: {
     marginHorizontal: 12,
     fontSize: 24,
     fontWeight: "bold",
-  },
-  descriptionContainer: {
-    paddingTop: "5%",
-    //height: "25%",
-    height: 200,
-    width: "100%",
-    gap: "10%",
-  },
-  description: {
-    color: "white",
-    fontSize: 15,
-    paddingTop: 10,
-  },
-  categoriesContainer: {
-    margin: 15,
-    gap: 10,
-    flex: 1,
-    height: "40%",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
   },
   topSection: {
     width: "100%",
@@ -445,5 +337,8 @@ const styles = StyleSheet.create({
     color: Themes.colors.salmon,
     fontSize: 17,
     fontWeight: "bold",
+  },
+  asterick: {
+    color: Themes.colors.salmon,
   },
 });
