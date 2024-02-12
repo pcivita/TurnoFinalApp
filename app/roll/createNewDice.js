@@ -9,7 +9,7 @@ import {
   TouchableWithoutFeedback,
   Switch,
   TouchableOpacity,
-  Image
+  Image,
 } from "react-native";
 import { Link, Stack } from "expo-router";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
@@ -19,6 +19,8 @@ import Header from "../../components/Header";
 import Activity from "../../components/Activity";
 import { FontAwesome5 } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function Page() {
   const [diceName, setDiceName] = useState("");
@@ -95,9 +97,10 @@ export default function Page() {
 
   useEffect(() => {
     (async () => {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== 'granted') {
-        alert('Sorry, we need camera roll permissions to make this work!');
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
       }
     })();
   }, []);
@@ -114,39 +117,41 @@ export default function Page() {
     console.log(result);
     if (!result.canceled) {
       setImageUri(result.uri);
-      // Optionally, upload the image here or set it to be uploaded later
     }
   };
 
-  const uploadImage = async () => {
-    if (!imageUri) return;
-  
-    let formData = new FormData();
-    formData.append('image', {
-      uri: imageUri,
-      name: 'photo.jpg',
-      type: 'image/jpeg',
-    });
-  
-    try {
-      const response = await fetch('YOUR_BACKEND_ENDPOINT', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-  
-      const result = await response.json();
-      console.log(result);
-      // Handle response...
-    } catch (error) {
-      console.error(error);
-      // Handle error...
-    }
+  const deleteImage = async () => {
+    setImageUri(null);
   };
-  
 
+  // const uploadImage = async () => {
+  //   if (!imageUri) return;
+
+  //   let formData = new FormData();
+  //   formData.append("image", {
+  //     uri: imageUri,
+  //     name: "photo.jpg",
+  //     type: "image/jpeg",
+  //   });
+
+  //   try {
+  //     const response = await fetch("YOUR_BACKEND_ENDPOINT", {
+  //       method: "POST",
+  //       body: formData,
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     });
+
+  //     const result = await response.json();
+  //     console.log(result);
+  //     // Handle response...
+  //   } catch (error) {
+  //     console.error(error);
+  //     // Handle error...
+  //   }
+  // };
+  
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -229,11 +234,25 @@ export default function Page() {
           <View style={styles.diceBannerContainer}>
             <Text style={styles.sectionTitle}>Dice Banner</Text>
             {imageUri ? (
-              <TouchableOpacity style={styles.diceBannerUploadedImage} onPress={pickImage}>
-                <Image source={{ uri: imageUri }} style={styles.diceBannerImage} />
-              </TouchableOpacity>
-             ) : (
-              <TouchableOpacity style={styles.diceBannerUploadPrompt} onPress={pickImage}>
+              <View style={styles.diceBannerUpload} onPress={pickImage}>
+                <TouchableOpacity style={styles.deleteImageWrapper} onPress={deleteImage}>
+                  <MaterialCommunityIcons
+                    name="plus-circle"
+                    size={28}
+                    color={Themes.colors.salmon}
+                    style={styles.deleteImageIcon}
+                  />
+                </TouchableOpacity>
+                <Image
+                  source={{ uri: imageUri }}
+                  style={styles.diceBannerImage}
+                />
+              </View>
+            ) : (
+              <TouchableOpacity
+                style={styles.diceBannerUpload}
+                onPress={pickImage}
+              >
                 <FontAwesome5
                   name="camera"
                   size={24}
@@ -354,32 +373,21 @@ const styles = StyleSheet.create({
     width: "95%",
     gap: 5,
   },
-  diceBannerUploadPrompt: {
+  diceBannerUpload: {
     fontSize: 16,
-    padding: 10,
+    padding: 5,
     borderRadius: 5,
     borderWidth: 1.5,
     borderStyle: "dashed",
     borderColor: Themes.colors.darkGray,
-    height: 70,
-    fontFamily: "Poppins-Regular",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  diceBannerUploadedImage: {
-    fontSize: 16,
-    padding: 10,
-    borderRadius: 5,
-    borderWidth: 1.5,
-    borderStyle: "dashed",
-    borderColor: Themes.colors.darkGray,
+    height: 90,
     fontFamily: "Poppins-Regular",
     alignItems: "center",
     justifyContent: "center",
   },
   diceBannerImage: {
-    width: 100,
-    height: 100
+    width: "70%",
+    height: "100%",
   },
   diceBannerUploadText: {
     color: Themes.colors.darkGray,
@@ -424,5 +432,22 @@ const styles = StyleSheet.create({
   },
   asterick: {
     color: Themes.colors.salmon,
+  },
+  deleteImageWrapper: {
+    backgroundColor: "white",
+    height: 25,
+    aspectRatio: 1,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute", // Position the icon absolutely
+    top: 0, // Adjust the top and right as needed to position the icon
+    right: 45,
+    zIndex: 1, // Ensure the icon is above the image
+  },
+  deleteImageIcon: {
+    transform: [{ rotate: '45deg' }],
+    bottom: 2,
+    left: 0.5
   },
 });
