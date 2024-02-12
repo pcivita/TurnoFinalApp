@@ -168,7 +168,7 @@ export default function Onboarding() {
         console.error("Error picking image: ", error);
         // Handle the error (e.g., show an alert to the user)
     }
-    }
+  }
 
     return (
       <View style={styles.container}>

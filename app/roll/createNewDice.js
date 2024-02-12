@@ -8,6 +8,8 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Switch,
+  TouchableOpacity,
+  Image,
 } from "react-native";
 import { Link, Stack } from "expo-router";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
@@ -15,6 +17,10 @@ import { Themes } from "../../assets/Themes";
 import Category from "../../components/Category";
 import Header from "../../components/Header";
 import Activity from "../../components/Activity";
+import { FontAwesome5 } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function Page() {
   const [diceName, setDiceName] = useState("");
@@ -51,7 +57,7 @@ export default function Page() {
   const addToChoices = (name) => {
     console.log("Adding to list of choices: " + name);
     const newChoices = [name, ...choices];
-    
+
     if (newChoices.length === 7) {
       newChoices.pop();
     }
@@ -61,7 +67,7 @@ export default function Page() {
 
   const handleCreateDice = () => {
     if (isFormFilled) {
-      // TODO: Needs backend 
+      // TODO: Needs backend
       console.log("Created dice!!");
     }
   };
@@ -77,7 +83,9 @@ export default function Page() {
   };
 
   useEffect(() => {
-    setIsFormFilled(diceName.trim().length > 0 && categoryID !== null && choices.length > 1);
+    setIsFormFilled(
+      diceName.trim().length > 0 && categoryID !== null && choices.length > 1
+    );
   }, [diceName]);
 
   const handleCategorySelect = (id) => {
@@ -85,11 +93,71 @@ export default function Page() {
     setIsFormFilled(diceName.trim().length > 0 && choices.length > 1);
   };
 
+  // Image picking functions
+
+  useEffect(() => {
+    (async () => {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert("Sorry, we need camera roll permissions to make this work!");
+      }
+    })();
+  }, []);
+
+  const [imageUri, setImageUri] = useState(null); // Add this state to your component
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    console.log(result);
+    if (!result.canceled) {
+      setImageUri(result.uri);
+    }
+  };
+
+  const deleteImage = async () => {
+    setImageUri(null);
+  };
+
+  // const uploadImage = async () => {
+  //   if (!imageUri) return;
+
+  //   let formData = new FormData();
+  //   formData.append("image", {
+  //     uri: imageUri,
+  //     name: "photo.jpg",
+  //     type: "image/jpeg",
+  //   });
+
+  //   try {
+  //     const response = await fetch("YOUR_BACKEND_ENDPOINT", {
+  //       method: "POST",
+  //       body: formData,
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     });
+
+  //     const result = await response.json();
+  //     console.log(result);
+  //     // Handle response...
+  //   } catch (error) {
+  //     console.error(error);
+  //     // Handle error...
+  //   }
+  // };
+  
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
         <Stack.Screen options={{ headerShown: false }} />
-        <Header title="Create New Dice"/>
+        <Header title="Create New Dice" />
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.diceNameContainer}>
             <Text style={styles.sectionTitle}>
@@ -163,6 +231,37 @@ export default function Page() {
               ))}
             </View>
           </View>
+          <View style={styles.diceBannerContainer}>
+            <Text style={styles.sectionTitle}>Dice Banner</Text>
+            {imageUri ? (
+              <View style={styles.diceBannerUpload} onPress={pickImage}>
+                <TouchableOpacity style={styles.deleteImageWrapper} onPress={deleteImage}>
+                  <MaterialCommunityIcons
+                    name="plus-circle"
+                    size={28}
+                    color={Themes.colors.salmon}
+                    style={styles.deleteImageIcon}
+                  />
+                </TouchableOpacity>
+                <Image
+                  source={{ uri: imageUri }}
+                  style={styles.diceBannerImage}
+                />
+              </View>
+            ) : (
+              <TouchableOpacity
+                style={styles.diceBannerUpload}
+                onPress={pickImage}
+              >
+                <FontAwesome5
+                  name="camera"
+                  size={24}
+                  color={Themes.colors.darkGray}
+                />
+                <Text style={styles.diceBannerUploadText}>Upload an image</Text>
+              </TouchableOpacity>
+            )}
+          </View>
           <View style={styles.switchContainer}>
             <Text style={styles.postDiceText}>Post dice to the community</Text>
             <Switch
@@ -185,14 +284,14 @@ export default function Page() {
             }}
             onPress={handleCreateDice}
           >
-          <View
-            style={[
-              styles.button,
-              isFormFilled ? styles.buttonEnabled : styles.buttonDisabled,
-            ]}
-          >
-            <Text style={styles.buttonText}>Create Dice</Text>
-          </View>
+            <View
+              style={[
+                styles.button,
+                isFormFilled ? styles.buttonEnabled : styles.buttonDisabled,
+              ]}
+            >
+              <Text style={styles.buttonText}>Create Dice</Text>
+            </View>
           </Link>
         </View>
       </View>
@@ -269,6 +368,31 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
   },
+  diceBannerContainer: {
+    // height: 110,
+    width: "95%",
+    gap: 5,
+  },
+  diceBannerUpload: {
+    fontSize: 16,
+    padding: 5,
+    borderRadius: 5,
+    borderWidth: 1.5,
+    borderStyle: "dashed",
+    borderColor: Themes.colors.darkGray,
+    height: 90,
+    fontFamily: "Poppins-Regular",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  diceBannerImage: {
+    width: "70%",
+    height: "100%",
+  },
+  diceBannerUploadText: {
+    color: Themes.colors.darkGray,
+    fontFamily: "Poppins-Regular",
+  },
   switchContainer: {
     borderTopWidth: 1,
     borderBottomWidth: 1,
@@ -308,5 +432,22 @@ const styles = StyleSheet.create({
   },
   asterick: {
     color: Themes.colors.salmon,
+  },
+  deleteImageWrapper: {
+    backgroundColor: "white",
+    height: 25,
+    aspectRatio: 1,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute", // Position the icon absolutely
+    top: 0, // Adjust the top and right as needed to position the icon
+    right: 45,
+    zIndex: 1, // Ensure the icon is above the image
+  },
+  deleteImageIcon: {
+    transform: [{ rotate: '45deg' }],
+    bottom: 2,
+    left: 0.5
   },
 });
