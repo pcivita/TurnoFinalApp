@@ -17,7 +17,7 @@ import Header from "../../components/Header";
 import Activity from "../../components/Activity";
 
 export default function Page() {
-  const [activityName, setActivityName] = useState("");
+  const [diceName, setDiceName] = useState("");
   const [description, setDescription] = useState("");
   const [choices, setChoices] = useState([null]);
   const [categoryID, setCategoryID] = useState(null);
@@ -56,6 +56,7 @@ export default function Page() {
       newChoices.pop();
     }
     setChoices(newChoices);
+    setIsFormFilled(diceName.trim().length > 0 && categoryID !== null);
   };
 
   const handleCreateDice = () => {
@@ -66,12 +67,12 @@ export default function Page() {
   };
 
   useEffect(() => {
-    setIsFormFilled(activityName.trim().length > 0 && categoryID !== null);
-  }, [activityName]);
+    setIsFormFilled(diceName.trim().length > 0 && categoryID !== null && choices.length > 1);
+  }, [diceName]);
 
   const handleCategorySelect = (id) => {
     setCategoryID(id);
-    setIsFormFilled(activityName.trim().length > 0);
+    setIsFormFilled(diceName.trim().length > 0 && choices.length > 1);
   };
 
   return (
@@ -80,15 +81,15 @@ export default function Page() {
         <Stack.Screen options={{ headerShown: false }} />
         <Header title="Create New Dice" />
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <View style={styles.activityNameContainer}>
+          <View style={styles.diceNameContainer}>
             <Text style={styles.sectionTitle}>
               Dice Name <Text style={styles.asterick}>*</Text>
             </Text>
             <TextInput
               style={styles.input}
               placeholder="Dice Name"
-              value={activityName}
-              onChangeText={setActivityName}
+              value={diceName}
+              onChangeText={setDiceName}
             />
           </View>
           <View style={styles.descriptionContainer}>
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
     height: 45,
     fontFamily: "Poppins-Regular",
   },
-  activityNameContainer: {
+  diceNameContainer: {
     height: 75,
     width: "95%",
     gap: 5,
