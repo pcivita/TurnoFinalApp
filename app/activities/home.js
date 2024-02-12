@@ -18,8 +18,10 @@ import { useLocalSearchParams } from "expo-router";
 
 export default function Page() {
   const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);
+
+  // TODO: replace with non hard-coded activities
   const { activities } = useContext(ActivitiesContext);
-  const currentActivities = activities;
+  const currentActivities = [...activities, null];
 
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
