@@ -17,15 +17,21 @@ export default function Page() {
   const [activeScreen, setActiveScreen] = useState("Posts"); // Initial state
 
   const [userData, setUserData] = useState({});
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const [profilePicUri, setProfilePicUri] = useState("");
+
 
   useEffect(() => {
     const fetchUserData = async () => {
       let result = await fetchUserFromUid(user.uid);
       setUserData(result);
+      setFullName(result.fullName);
+      setUsername(result.username);
+      if (result.profilePicUri) setProfilePicUri(result.profilePicUri);
     };
     if (user) {
       fetchUserData();
-      console.log(userData);
     }
   }, [user]);
 
@@ -54,9 +60,9 @@ export default function Page() {
           <View style={styles.profileCard}>
             <ProfileCard
               isYourProfile={true}
-              profileName={userData.fullName}
-              handle={"@" + userData.username}
-              profilePic={userData.profilePicUri}
+              profileName={fullName}
+              handle={"@" + username}
+              profilePic={profilePicUri}
             />
           </View>
 
