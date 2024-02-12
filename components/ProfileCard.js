@@ -38,7 +38,7 @@ export default function ProfileCard({
       {profilePic ? (
         <View style={styles.imageContainer}>
           <Image
-            source={{ uri: profilePic && profilePic }}
+            source={imageDict["Pedro"]}
             style={styles.profileImg}
           />
         </View>

@@ -62,11 +62,11 @@ export default function Page() {
           <Header title="Profile" />
 
           <View style={styles.profileCard}>
-            <ProfileCard
+           <ProfileCard
               isYourProfile={true}
-              profileName={fullName}
-              handle={"@" + username}
-              profilePic={profilePicUri}
+              profileName="Pedro Civita"
+              handle="@pcivita"
+              profilePic={"Pedro"}
             />
           </View>
 

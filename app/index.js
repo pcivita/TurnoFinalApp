@@ -172,7 +172,8 @@ export default function Onboarding() {
   }, [user]);
 
   const handleLogIn = () => {
-    logIn(email.toLowerCase(), password);
+    console.log("Logging in: ", email, password);
+    logIn(email, password);
   };
 
   const uploadImage = async (imageUri) => {
@@ -435,11 +436,13 @@ export default function Onboarding() {
         />
         <Text style={styles.title}>Turno</Text>
         <Text style={styles.subtitle}>Roll your way through the day</Text>
-        <TextInput style={styles.input} placeholder="Email" />
+        <TextInput style={styles.input} placeholder="Email" onChangeText={setEmail} value={email}/>
         <TextInput
           style={styles.input}
           placeholder="Password"
           secureTextEntry
+          onChangeText={setPassword}
+          value={password}
         />
         <View style={{ height: 32 }} />
         {/* <Link
