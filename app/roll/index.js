@@ -24,12 +24,11 @@ export default function Page() {
   return (
     <View style={styles.container}>
       <Header title="My Dice" />
-      <View style={styles.instructions}>
-        <Text style={styles.text}>
+      <View style={styles.instructionsContainer}>
+        <Text style={styles.instructionsText}>
           Choose a dice to roll and make a decision.
         </Text>
       </View>
-      {/* <View style={{height: 24}} /> */}
       <FlatList
         data={dataList}
         numColumns={2}
@@ -71,6 +70,7 @@ export default function Page() {
                     size={45}
                     color={Themes.colors.salmon}
                   />
+                  <Text style={styles.createDiceText}>Create new dice</Text>
                 </View>
               </Link>
             )}
@@ -88,14 +88,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Themes.colors.background,
   },
-  instructions: {
+  instructionsContainer: {
     height: 40,
     width: windowWidth - windowWidth * 0.1,
     marginTop: 15,
     alignItems: "left",
     justifyContent: "center",
   },
-  text: {
+  instructionsText: {
     fontFamily: "Poppins-Regular",
     fontSize: 14,
   },
@@ -110,4 +110,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  createDiceText: {
+    fontFamily: 'Poppins-Regular',
+    color: Themes.colors.darkGray,
+    fontSize: 14,
+    marginTop: 10,
+  }
 });
