@@ -66,6 +66,16 @@ export default function Page() {
     }
   };
 
+  // TODO: figure out how to reset everything when back arrow pressed (in header.js)
+  const resetState = () => {
+    setDiceName("");
+    setDescription("");
+    setChoices([null]);
+    setCategoryID(null);
+    setSwitchEnabled(false);
+    setIsFormFilled(false);
+  };
+
   useEffect(() => {
     setIsFormFilled(diceName.trim().length > 0 && categoryID !== null && choices.length > 1);
   }, [diceName]);
@@ -79,7 +89,7 @@ export default function Page() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
         <Stack.Screen options={{ headerShown: false }} />
-        <Header title="Create New Dice" />
+        <Header title="Create New Dice"/>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.diceNameContainer}>
             <Text style={styles.sectionTitle}>
