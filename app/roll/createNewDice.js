@@ -34,7 +34,7 @@ export default function Page() {
   const [isFormFilled, setIsFormFilled] = useState(false);
   const { addActivity } = useContext(ActivitiesContext);
 
-  const CATEGORY_LIST = [
+  const categories = [
     ["Exercise", "running"],
     ["Work", "briefcase"],
     ["Academic", "graduation-cap"],
@@ -126,34 +126,6 @@ export default function Page() {
   const deleteImage = async () => {
     setImageUri(null);
   };
-
-  // const uploadImage = async () => {
-  //   if (!imageUri) return;
-
-  //   let formData = new FormData();
-  //   formData.append("image", {
-  //     uri: imageUri,
-  //     name: "photo.jpg",
-  //     type: "image/jpeg",
-  //   });
-
-  //   try {
-  //     const response = await fetch("YOUR_BACKEND_ENDPOINT", {
-  //       method: "POST",
-  //       body: formData,
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //     });
-
-  //     const result = await response.json();
-  //     console.log(result);
-  //     // Handle response...
-  //   } catch (error) {
-  //     console.error(error);
-  //     // Handle error...
-  //   }
-  // };
   
 
   return (

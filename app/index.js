@@ -33,7 +33,137 @@ export default function Onboarding() {
   const [downloadUrl, setDownloadUrl] = useState("");
   const [fullName, setFullName] = useState("");
 
-  const { user, logIn, logoutUser, signUp, initializeUserDatabaseEntry } =
+  const [onboardingScreenNumber, setOnboardingScreenNumber] = useState(0);
+
+
+  const ONBOARDING_HEADERS = [
+    "Create your custom dice",
+    "Roll your dice to make decision-making fun",
+    "Explore community dice to find new things to do.",
+    "Celebrate all the choices being made"
+
+  ]
+
+  const ONBOARDING_DESCRIPTIONS = [
+    "Whether it’s deciding what to eat, which run to go on, or how to unwind, customize the dice with tailored choices to fit your life.",
+    "No more endless pondering or decision fatigue throughout the day.",
+    "Discover a wide range of activities in your area and see what’s popular around you.",
+    "Engage with your friends on Turno to learn about their lives."
+
+  ]
+
+  // const ONBOARDING_SCREENS = [
+  //   {header: "Create your custom dice", description: "Whether it’s deciding what to eat, which run to go on, or how to unwind, customize the dice with tailored choices to fit your life."},
+  //   {header: "Roll your dice to make decision-making fun", description: "No more endless pondering or decision fatigue throughout the day."},
+  //   {header: "Explore community dice to find new things to do.", description: "Discover a wide range of activities in your area and see what’s popular around you."},
+  //   {header: "Celebrate all the choices being made", description: "Engage with your friends on Turno to learn about their lives."}
+  // ]
+
+  const DOTS = [1, 2, 3, 4]
+  const renderOnboardingModal = () => {
+    switch (onboardingScreenNumber) {
+      case 1:
+        return (
+          <View style={{alignItems: 'center'}}>
+            <Text style={{
+              fontSize: 24,
+              fontWeight: '600',
+              marginTop: 36,
+            }}>Create your custom dice</Text>
+            <Text style={{
+              fontSize: 16,
+              width: windowWidth * 0.8,
+              textAlign: 'center',
+              marginTop: 16,
+            }}>Whether it’s deciding what to eat, which run to go on, or how to unwind, customize the dice with tailored choices to fit your life. </Text>
+           </View>
+           
+        )
+      case 2:
+        return (
+          <View>
+            <Text>Roll the dice</Text>
+            <Text>Give your phone a shake to roll the dice and let the app make the decision for you. </Text>
+            {/* dots indicator 1-4 as condesne as possible*/}
+          </View>
+        )
+      default:
+        return (
+          <View>
+            <Text>Roll the dice</Text>
+            <Text>Give your phone a shake to roll the dice and let the app make the decision for you. </Text>
+            {/* dots indicator 1-4 as condesne as possible*/}
+          </View>
+        )
+    }
+  }
+  const renderOnboardingImage = () => {
+    switch (onboardingScreenNumber) {
+      case 0:
+        return (
+          <Image
+            source={require("../assets/Themes/Images/onboarding/diceZigZag.png")}
+            style={{
+              width: windowWidth,
+             resizeMode: 'contain',
+            }}
+          />
+        );
+        case 1:
+          return (
+            <Image
+            source={require("../assets/Themes/Images/onboarding/campusLunchSpots.png")}
+            style={{
+              width: windowWidth,
+              resizeMode: 'contain',
+            }}
+            />
+            );
+        case 2:
+          return (
+            <Image
+              source={require("../assets/Themes/Images/onboarding/diceShake.png")}
+              style={{
+                width: windowWidth * 0.8,  
+                resizeMode: 'contain',   
+                
+              }}
+            />
+          );
+        case 3:
+          return (
+            <Image
+              source={require("../assets/Themes/Images/onboarding/browsePreview.png")}
+              style={{
+                width: windowWidth * 0.8,
+                resizeMode: 'contain',  
+              }}
+            />
+          );
+        case 4:
+          return (
+            <Image
+              source={require("../assets/Themes/Images/onboarding/feedPreview.png")}
+              style={{
+                width: windowWidth * 0.8,
+                resizeMode: 'contain',    
+              }}
+            />
+          );
+      default:
+        return (
+          <Image
+            source={require("../assets/Themes/Images/onboarding/diceZigZag.png")}
+            style={{
+              width: windowWidth,
+             resizeMode: 'contain',     
+            }}
+          />
+        );
+    }
+  }
+
+  const { user, logIn, logoutUser, signUp, initializeUserDatabaseEntry,} =
     useContext(UserContext);
   useEffect(() => {
     if (user) {
@@ -121,39 +251,177 @@ export default function Onboarding() {
     return (
       <View style={styles.container}>
         <View style={styles.onboardingSpacing} />
-        <Image
-          source={require("../assets/Themes/Images/DiceFaces/Dice-3.png")}
-          style={styles.logo}
-        />
-        <Text style={styles.title}>Turno</Text>
-        <Text style={styles.subtitle}>Roll your way through the day</Text>
-        <TouchableOpacity
-          onPress={() => setCurrentScreen("log in")}
-          style={styles.loginButton}
+
+       
+        {onboardingScreenNumber !== 0 && 
+        <Text style={{
+          fontSize: 36,
+          fontWeight: 'bold',
+          fontFamily: 'Poppins-Bold',
+          color: 'white',
+          marginBottom: 24,
+        }}
         >
-          <Text style={styles.onBoardingButtonText}>Log In</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => setCurrentScreen("sign up")}
-          style={styles.signUpButton}
-        >
-          {loading ? (
-            <ActivityIndicator size="small" color="white" />
-          ) : (
-            <Text style={styles.onBoardingButtonText}>Sign Up</Text>
-          )}
-        </TouchableOpacity>
-        {/* FOR TESTING */}
-        {/* <TouchableOpacity onPress={() => router.replace('/roll')} style={styles.loginButton}>
-            <Text style={{color: 'white', fontWeight: 'bold'}}>Bypass Auth (for testing will delete later)</Text>
-        </TouchableOpacity> */}
+          turno
+        </Text>
+       }
+        {renderOnboardingImage()}
+
+        <View style={{
+          position: 'absolute', 
+          bottom: 0, 
+          backgroundColor: '#fff',
+          alignItems: 'center',
+          width: windowWidth,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          height: windowHeight * 0.45,
+        }}>
+          {onboardingScreenNumber === 0 ? <>
+            <Text style={styles.title}>turno</Text>
+          <Text style={styles.subtitle}>Get rolling on making hard decisions</Text>
+          <TouchableOpacity style={{
+            backgroundColor: Themes.colors.salmon,
+            padding: 12,
+            borderRadius: 999,
+            width: windowWidth * 0.8,
+            alignItems: 'center',
+            marginTop: 48,
+            marginBottom: 36
+
+          }}
+          onPress={() => setOnboardingScreenNumber(onboardingScreenNumber + 1)}
+          >
+            <Text style={{
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: 16,
+            }}>Let's roll</Text>
+          </TouchableOpacity>
+          </>
+          :
+            <>
+        <View style={{alignItems: 'center'}}>
+            <Text style={{
+              fontSize: 24,
+              fontWeight: '600',
+              marginTop: 36,
+              width: windowWidth * 0.8,
+            }}>{ONBOARDING_HEADERS[onboardingScreenNumber - 1]}</Text>
+            <Text style={{
+              fontSize: 16,
+              width: windowWidth * 0.8,
+              marginTop: 16,
+            }}>{ONBOARDING_DESCRIPTIONS[onboardingScreenNumber - 1]}</Text>
+           </View>
+           
+           {onboardingScreenNumber < 5 ?
+           <>
+          <View style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 48,
+            }}>
+              {DOTS.map((dot, index) => {
+                return (
+                  <View
+                    key={index}
+                    style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: 4,
+                      backgroundColor: index + 1 === onboardingScreenNumber ? Themes.colors.blue : 'lightgrey',
+                      marginHorizontal: 4,
+                    }}
+                  />
+                )
+              })}
+            </View>
+            <TouchableOpacity style={{
+              backgroundColor: Themes.colors.salmon,
+              padding: 12,
+              borderRadius: 999,
+              width: windowWidth * 0.8,
+              alignItems: 'center',
+              marginTop: 24,
+              marginBottom: 36
+
+            }}
+            onPress={() => setOnboardingScreenNumber(onboardingScreenNumber + 1)}
+            >
+              <Text style={{
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: 16,
+              }}>Continue</Text>
+            </TouchableOpacity>
+            </>
+            :
+            <View style={{
+              alignItems: 'center',
+            }}>
+              <Text style={{
+                fontSize: 30,
+                fontWeight: 'bold',
+                fontFamily: 'Poppins-Bold',
+                color: 'black', 
+                textAlign: 'center',
+              }}>turno</Text>
+              <Text style={{
+                fontSize: 24,
+                fontFamily: 'Poppins-Regular',
+                color: 'black',
+                marginTop: 12,
+                textAlign: 'center',
+              }}>
+                Roll your way through the day
+              </Text>
+              <TouchableOpacity style={{
+                borderColor: Themes.colors.salmon,
+                padding: 12,
+                borderRadius: 999,
+                width: windowWidth * 0.8,
+                alignItems: 'center',
+                marginTop: 24,
+                borderWidth: 1,
+              }}
+              onPress={() => setCurrentScreen('log in')}
+              >
+                <Text style={{
+                  color: 'black',
+                  fontWeight: '600',
+                  fontSize: 16,
+                }}>Log in</Text>
+              </TouchableOpacity>
+                <TouchableOpacity style={{
+                backgroundColor: Themes.colors.salmon,
+                padding: 12,
+                borderRadius: 999,
+                width: windowWidth * 0.8,
+                alignItems: 'center', 
+                marginTop: 12,
+              }}
+              onPress={() => setCurrentScreen('sign up')}
+              >
+                <Text style={{
+                  color: 'white',
+                  fontWeight: '600',
+                  fontSize: 16,
+                }}>Sign up</Text>
+              </TouchableOpacity>
+            </View>
+          }
+          </>
+          }
+        </View>
       </View>
     );
   };
 
   const renderLogIn = () => {
     return (
-      <View style={styles.container}>
+      <View style={styles.whiteContainer}>
         <TouchableOpacity
           onPress={() => setCurrentScreen("onboarding")}
           style={styles.backCaret}
@@ -209,7 +477,7 @@ export default function Onboarding() {
     };
 
     return (
-      <View style={styles.container}>
+      <View style={styles.whiteContainer}>
         <TouchableOpacity
           onPress={() => setCurrentScreen("onboarding")}
           style={styles.backCaret}
@@ -292,22 +560,39 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     padding: 20,
-    backgroundColor: Themes.colors.background,
+    backgroundColor: Themes.colors.blue,
     zIndex: 1,
   },
+  whiteContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    padding: 20,
+    backgroundColor: "white",
+  },
+  // onboardingContainer: {
+  //   flex: 1,
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   padding: 20,
+  //   backgroundColor: Themes.colors.blue,
+  // },
   logo: {
-    width: 75,
+    width:  75,
     height: 75,
   },
   title: {
-    fontSize: 30,
+    fontSize: 36,
     fontWeight: "bold",
     fontFamily: "Poppins-Bold",
+    marginTop: 36
   },
   subtitle: {
-    fontSize: 16,
-    marginVertical: 8,
+    fontSize: 24,
+    marginTop: 20,
     fontFamily: "Poppins-Regular",
+    width: windowWidth * 0.7,
+    textAlign: "center",
   },
   input: {
     width: "100%",
@@ -380,7 +665,7 @@ const styles = StyleSheet.create({
     height: windowHeight * 0.25 - 100,
   },
   onboardingSpacing: {
-    height: windowHeight * 0.25,
+    height: windowHeight * 0.05,
   },
   profileUploader: {
     marginTop: 16,

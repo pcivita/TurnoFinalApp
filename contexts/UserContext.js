@@ -43,7 +43,8 @@ const UserContextProvider = ({ children }) => {
                 fullName, fullName,
                 username: username,
                 savedDice: [],
-                rollHistory: [] 
+                rollHistory: [],
+                onboardingCompleted: false
               }
           ]);
 
