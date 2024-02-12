@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   TextInput,
   Keyboard,
   TouchableWithoutFeedback,
@@ -18,19 +19,12 @@ import Activity from "../../components/Activity";
 export default function Page() {
   const [activityName, setActivityName] = useState("");
   const [description, setDescription] = useState("");
-  const { addActivity } = useContext(ActivitiesContext);
-
-  const handleCreateDice = () => {
-    if (isFormFilled) {
-      console.log("created dice!!");
-    }
-  };
+  const [choices, setChoices] = useState([null]);
+  const [categoryID, setCategoryID] = useState(null);
+  const [switchEnabled, setSwitchEnabled] = useState(false);
 
   const [isFormFilled, setIsFormFilled] = useState(false);
-
-  useEffect(() => {
-    setIsFormFilled(activityName.trim().length > 0 && selectedId !== null);
-  }, [activityName]);
+  const { addActivity } = useContext(ActivitiesContext);
 
   const categories = [
     ["Exercise", "running"],
@@ -38,110 +32,134 @@ export default function Page() {
     ["Academic", "graduation-cap"],
     ["Relax", "cat"],
     ["Social", "user-friends"],
-    ["Food & Drink", "broom"],
+    ["Food & Drink", "utensils"],
   ];
-  const [selectedId, setSelectedId] = useState(null);
-  const handleSelect = (id) => {
-    setSelectedId(id);
-    setIsFormFilled(activityName.trim().length > 0);
+
+  const chunkChoices = (choices, size) => {
+    return choices.reduce((acc, curr, i) => {
+      if (!(i % size)) {
+        acc.push([curr]);
+      } else {
+        acc[acc.length - 1].push(curr);
+      }
+      return acc;
+    }, []);
   };
 
-  const [switchEnabled, setSwitchEnabled] = useState(false);
+  const choicesPairs = chunkChoices(choices, 2);
+
+  const addToChoices = (name) => {
+    console.log("Adding to list of choices: " + name);
+    const newChoices = [name, ...choices];
+    setChoices(newChoices);
+  };
+
+  const handleCreateDice = () => {
+    if (isFormFilled) {
+      // TODO: Needs backend 
+      console.log("Created dice!!");
+    }
+  };
+
+  useEffect(() => {
+    setIsFormFilled(activityName.trim().length > 0 && categoryID !== null);
+  }, [activityName]);
+
+  const handleCategorySelect = (id) => {
+    setCategoryID(id);
+    setIsFormFilled(activityName.trim().length > 0);
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
         <Stack.Screen options={{ headerShown: false }} />
         <Header title="Create New Dice" />
-        <View style={styles.activityNameContainer}>
-          <Text style={styles.sectionTitle}>
-            Dice Name <Text style={styles.asterick}>*</Text>
-          </Text>
-          <TextInput
-            // multiline
-            // numberOfLines={1}
-            style={styles.input}
-            placeholder="Dice Name"
-            value={activityName}
-            onChangeText={setActivityName}
-          />
-        </View>
-        <View style={styles.descriptionContainer}>
-          <Text style={styles.sectionTitle}>Description</Text>
-          {/* <TextInput
-            editable
-            multiline
-            blurOnSubmit={true}
-            onSubmitEditing={() => {
-              Keyboard.dismiss();
-            }}
-            numberOfLines={4}
-            style={styles.input}
-            placeholder="Description"
-            value={description}
-            onChangeText={setDescription}
-          /> */}
-          <TextInput
-            style={styles.input}
-            placeholder="Description"
-            value={description}
-            onChangeText={setDescription}
-          />
-        </View>
-        <View style={styles.choicesContainer}>
-          <Text style={styles.sectionTitle}>
-            Choices <Text style={styles.asterick}>*</Text>
-          </Text>
-          <Text style={styles.sectionSubtitle}>
-            Add up to 6 choices, each representing a face of the dice!
-          </Text>
-          <Activity style={styles.addActivity} />
-        </View>
-        <View style={styles.categoriesContainer}>
-          <Text style={styles.sectionTitle}>
-            Category<Text style={styles.asterick}>*</Text>
-          </Text>
-          <View style={styles.categories}>
-            {[1, 2, 3, 4, 5, 6].map((id) => (
-              <Category
-                key={id}
-                id={id}
-                isSelected={id === selectedId}
-                onSelect={handleSelect}
-                categoryName={categories[id - 1][0]}
-                iconName={categories[id - 1][1]}
-              />
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.activityNameContainer}>
+            <Text style={styles.sectionTitle}>
+              Dice Name <Text style={styles.asterick}>*</Text>
+            </Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Dice Name"
+              value={activityName}
+              onChangeText={setActivityName}
+            />
+          </View>
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.sectionTitle}>Description</Text>
+            {/* <TextInput
+              editable
+              multiline
+              blurOnSubmit={true}
+              onSubmitEditing={() => {
+                Keyboard.dismiss();
+              }}
+              numberOfLines={4}
+              style={styles.input}
+              placeholder="Description"
+              value={description}
+              onChangeText={setDescription}
+            /> */}
+            <TextInput
+              style={styles.input}
+              placeholder="Description"
+              value={description}
+              onChangeText={setDescription}
+            />
+          </View>
+          <View style={styles.choicesContainer}>
+            <Text style={styles.sectionTitle}>
+              Choices <Text style={styles.asterick}>*</Text>
+            </Text>
+            <Text style={styles.sectionSubtitle}>
+              Add up to 6 choices, each representing a face of the dice!
+            </Text>
+            {/* <Activity style={styles.addActivity} /> */}
+            {choicesPairs.map((pair, index) => (
+              <View key={index} style={styles.choicesRow}>
+                {pair.map((choice, index) => (
+                  <Activity
+                    key={index}
+                    activityObject={choice}
+                    index={index + 1 + index * 2}
+                    addToChoices={addToChoices}
+                    // handleAddChoice={handleAddChoice}
+                  />
+                ))}
+              </View>
             ))}
           </View>
-        </View>
-        <View style={styles.switchContainer}>
-          <Text style={styles.postDiceText}>Post dice to the community</Text>
-          <Switch
-            trackColor={{ true: Themes.colors.salmon }}
-            thumbColor={"white"}
-            ios_backgroundColor={Themes.colors.mediumGray}
-            onValueChange={() => setSwitchEnabled(!switchEnabled)}
-            value={switchEnabled}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          {/* <Link
-            disabled={!isFormFilled}
-            href={{
-              pathname: "/activities/home",
-              params: {
-                name: "Alan",
-              },
-            }}
-            onPress={handleCreateDice}
-          > */}
-            <View style={[styles.button, isFormFilled ? styles.buttonEnabled : styles.buttonDisabled]}>
-              <Text style={styles.buttonText}>Create Dice</Text>
+          <View style={styles.categoriesContainer}>
+            <Text style={styles.sectionTitle}>
+              Category <Text style={styles.asterick}>*</Text>
+            </Text>
+            <View style={styles.categories}>
+              {[1, 2, 3, 4, 5, 6].map((id) => (
+                <Category
+                  key={id}
+                  id={id}
+                  isSelected={id === categoryID}
+                  onSelect={handleCategorySelect}
+                  categoryName={categories[id - 1][0]}
+                  iconName={categories[id - 1][1]}
+                />
+              ))}
             </View>
-          {/* </Link> */}
-        </View>
-
-        {/* <View style={styles.buttonContainer}>
+          </View>
+          <View style={styles.switchContainer}>
+            <Text style={styles.postDiceText}>Post dice to the community</Text>
+            <Switch
+              trackColor={{ true: Themes.colors.salmon }}
+              thumbColor={"white"}
+              ios_backgroundColor={Themes.colors.mediumGray}
+              onValueChange={() => setSwitchEnabled(!switchEnabled)}
+              value={switchEnabled}
+            />
+          </View>
+        </ScrollView>
+        <View style={styles.buttonContainer}>
           <Link
             disabled={!isFormFilled}
             href={{
@@ -152,11 +170,16 @@ export default function Page() {
             }}
             onPress={handleCreateDice}
           >
-            <View style={[styles.button, isFormFilled ? styles.buttonEnabled : styles.buttonDisabled]}>
-              <Text style={styles.buttonText}>Create Dice</Text>
-            </View>
+          <View
+            style={[
+              styles.button,
+              isFormFilled ? styles.buttonEnabled : styles.buttonDisabled,
+            ]}
+          >
+            <Text style={styles.buttonText}>Create Dice</Text>
+          </View>
           </Link>
-        </View> */}
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -165,9 +188,16 @@ export default function Page() {
 const styles = StyleSheet.create({
   container: {
     height: "100%",
+    width: "100%",
+    flex: 1,
+    backgroundColor: Themes.colors.background,
+  },
+  scrollContainer: {
+    width: "100%",
     display: "flex",
     alignItems: "center",
     gap: 10,
+    paddingVertical: 10,
     backgroundColor: Themes.colors.background,
   },
   sectionTitle: {
@@ -203,8 +233,15 @@ const styles = StyleSheet.create({
   },
   choicesContainer: {
     width: "95%",
-    height: 200,
     gap: 5,
+  },
+  choicesRow: {
+    alignSelf: "center",
+    width: "97.5%",
+    marginBottom: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   categoriesContainer: {
     width: "95%",
@@ -220,7 +257,7 @@ const styles = StyleSheet.create({
   switchContainer: {
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: Themes.colors.darkGray,
+    borderColor: Themes.colors.mediumGray,
     height: 60,
     width: "100%",
     gap: 5,
@@ -231,14 +268,14 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: "95%",
-    height: 45,
-    // backgroundColor: "green",
+    height: 60,
     alignItems: "center",
+    alignSelf: "center",
     justifyContent: "center",
   },
   button: {
     height: 40,
-    width: "90%",
+    width: 360,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 20,

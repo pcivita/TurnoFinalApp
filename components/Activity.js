@@ -6,7 +6,7 @@ import EditChoiceModal from "./EditChoiceModal";
 import AddChoiceModal from "./AddChoiceModal";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-export default function Activity({ activityObject, index, section }) {
+export default function Activity({ activityObject, index, addToChoices }) {
   const [isModalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState("");
 
@@ -27,7 +27,18 @@ export default function Activity({ activityObject, index, section }) {
     6: Images.diceIcons.six,
   };
 
-  let activityName = activityObject ? activityObject[0] : null;
+  let activityName = activityObject ? activityObject : null;
+
+  // TODO: Connect this to backend
+  const handleSave = () => {
+    // Save name
+    setName(name);
+    console.log("New choice added: " + name);
+
+    // Add name to list of choices 
+    addToChoices(name)
+    closeModal();
+  };
 
   return (
     <View>
@@ -64,6 +75,7 @@ export default function Activity({ activityObject, index, section }) {
             closeModal={closeModal}
             name={name}
             setName={setName}
+            handleSave={handleSave}
           />
         </View>
       )}

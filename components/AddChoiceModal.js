@@ -15,7 +15,8 @@ export default function AddChoiceModal({
   isVisible,
   closeModal,
   name,
-  setName
+  setName,
+  handleSave
 }) {
   const { addActivity } = useContext(ActivitiesContext);
   const [isFormChanged, setIsFormChanged] = useState(false);
@@ -25,13 +26,14 @@ export default function AddChoiceModal({
     setIsFormChanged(formChanged);
   }, [name]);
 
-  const handleSave = () => {
-    setName(name);
-    // TODO: Connect to backend
-    console.log("New choice added: " + name);
-    closeModal();
-    // addActivity(name);
-  };
+  // const handleAdd = () => {
+  //   setName(name);
+  //   // TODO: Connect to backend
+  //   console.log("New choice added: " + name);
+
+  //   closeModal();
+  //   // addActivity(name);
+  // };
 
   return (
     <Modal

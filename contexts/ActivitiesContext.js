@@ -6,9 +6,9 @@ export const ActivitiesContext = createContext();
 // Create a provider component
 export const ActivitiesProvider = ({ children }) => {
   const [activities, setActivities] = useState([
-    ["Green Library"],
-    ["Tresidder"],
-    ["Coupa Cafe"],
+    "Green Library",
+    "Tresidder",
+    "Coupa Cafe",
   ]);
 
   const [canRoll, setCanRoll] = useState(true);
@@ -16,7 +16,7 @@ export const ActivitiesProvider = ({ children }) => {
   // Function to add a new activity
   const addActivity = (name) => {
     setActivities((activities) => {
-      let newActivity = [name];
+      let newActivity = name;
       activities.push(newActivity);
 
       if (activities.length >= 2) {
@@ -31,7 +31,7 @@ export const ActivitiesProvider = ({ children }) => {
     setActivities((prevActivities) => {
       // Create a new array with the updated activity
       const updatedActivities = [...prevActivities];
-      updatedActivities[activityIndex] = [newName];
+      updatedActivities[activityIndex] = newName;
   
       return updatedActivities;
     });
