@@ -16,7 +16,11 @@ export default function Page() {
 
   const [activeScreen, setActiveScreen] = useState("Posts"); // Initial state
 
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({
+    fullName: "",
+    username: "",
+    profilePicUri: "",
+  });
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [profilePicUri, setProfilePicUri] = useState("");
