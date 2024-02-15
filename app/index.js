@@ -1,5 +1,5 @@
 import { Link, router } from "expo-router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,6 +8,8 @@ import {
   Button,
   Dimensions,
   Image,
+  ScrollView,
+  FlatList,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Themes } from "../assets/Themes";
@@ -34,6 +36,7 @@ export default function Onboarding() {
   const [fullName, setFullName] = useState("");
 
   const [onboardingScreenNumber, setOnboardingScreenNumber] = useState(0);
+  const flatListRef = useRef(null);
 
 
   const ONBOARDING_HEADERS = [
@@ -52,6 +55,25 @@ export default function Onboarding() {
 
   ]
 
+  const ONBOARDING_SCREENS = [
+    {
+      title: "Create your custom dice",
+      description: "Whether it’s deciding what to eat, which run to go on, or how to unwind, customize the dice with tailored choices to fit your life.",
+    },
+    {
+      title: "Roll your dice to make decision-making fun",
+      description: "No more endless pondering or decision fatigue throughout the day.",
+    },
+    {
+      title: "Explore community dice to find new things to do.",
+      description: "Discover a wide range of activities in your area and see what’s popular around you.",
+    },
+    {
+      title: "Celebrate all the choices being made",
+      description: "Engage with your friends on Turno to learn about their lives.",
+    },
+  ]
+
   // const ONBOARDING_SCREENS = [
   //   {header: "Create your custom dice", description: "Whether it’s deciding what to eat, which run to go on, or how to unwind, customize the dice with tailored choices to fit your life."},
   //   {header: "Roll your dice to make decision-making fun", description: "No more endless pondering or decision fatigue throughout the day."},
@@ -60,43 +82,7 @@ export default function Onboarding() {
   // ]
 
   const DOTS = [1, 2, 3, 4]
-  const renderOnboardingModal = () => {
-    switch (onboardingScreenNumber) {
-      case 1:
-        return (
-          <View style={{alignItems: 'center'}}>
-            <Text style={{
-              fontSize: 24,
-              fontWeight: '600',
-              marginTop: 36,
-            }}>Create your custom dice</Text>
-            <Text style={{
-              fontSize: 16,
-              width: windowWidth * 0.8,
-              textAlign: 'center',
-              marginTop: 16,
-            }}>Whether it’s deciding what to eat, which run to go on, or how to unwind, customize the dice with tailored choices to fit your life. </Text>
-           </View>
-           
-        )
-      case 2:
-        return (
-          <View>
-            <Text>Roll the dice</Text>
-            <Text>Give your phone a shake to roll the dice and let the app make the decision for you. </Text>
-            {/* dots indicator 1-4 as condesne as possible*/}
-          </View>
-        )
-      default:
-        return (
-          <View>
-            <Text>Roll the dice</Text>
-            <Text>Give your phone a shake to roll the dice and let the app make the decision for you. </Text>
-            {/* dots indicator 1-4 as condesne as possible*/}
-          </View>
-        )
-    }
-  }
+  
   const renderOnboardingImage = () => {
     switch (onboardingScreenNumber) {
       case 0:
@@ -249,6 +235,7 @@ export default function Onboarding() {
   };
 
   const renderOnboarding = () => {
+    
     return (
       <View style={styles.container}>
         <View style={styles.onboardingSpacing} />
@@ -302,19 +289,51 @@ export default function Onboarding() {
           </>
           :
             <>
-        <View style={{alignItems: 'center'}}>
-            <Text style={{
-              fontSize: 24,
-              fontWeight: '600',
-              marginTop: 36,
+        {/* <View style={{alignItems: 'center'}}> */}
+        {onboardingScreenNumber < 5 &&
+          <FlatList
+            data={ONBOARDING_SCREENS}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal
+            // snapToAlignment="center"
+            decelerationRate="fast"
+            showsHorizontalScrollIndicator={false}
+            ref={flatListRef}
+            pagingEnabled
+            snapToInterval={windowWidth * 0.8}
+            scrollEventThrottle={16}
+            onScroll={event => {
+              const contentOffsetX = event.nativeEvent.contentOffset.x;
+              const currentIndex = Math.round(contentOffsetX / (windowWidth * 0.8));
+              setOnboardingScreenNumber(currentIndex + 1);
+            }}
+            renderItem={({ item }) => {
+              return (
+                <View style={{
+                  width: windowWidth * 0.8,
+                  alignItems: 'center',
+                }}>
+                  <Text style={{
+                    fontSize: 24,
+                    fontWeight: '600',
+                    marginTop: 36,
+                    width: windowWidth * 0.8,
+                  }}>{item.title}</Text>
+                  <Text style={{
+                    fontSize: 16,
+                    width: windowWidth * 0.8,
+                    marginTop: 16,
+                  }}>{item.description}</Text>
+                </View>
+              )
+            }}
+            style={{
               width: windowWidth * 0.8,
-            }}>{ONBOARDING_HEADERS[onboardingScreenNumber - 1]}</Text>
-            <Text style={{
-              fontSize: 16,
-              width: windowWidth * 0.8,
-              marginTop: 16,
-            }}>{ONBOARDING_DESCRIPTIONS[onboardingScreenNumber - 1]}</Text>
-           </View>
+              marginTop: 48,
+            }}
+          />
+          }
+           {/* </View> */}
            
            {onboardingScreenNumber < 5 ?
            <>
@@ -349,7 +368,16 @@ export default function Onboarding() {
               marginBottom: 36
 
             }}
-            onPress={() => setOnboardingScreenNumber(onboardingScreenNumber + 1)}
+            onPress={() => {
+              if (onboardingScreenNumber === 4) {
+                setOnboardingScreenNumber(5)
+              } else {
+                const nextIndex = onboardingScreenNumber; // Already incremented in onScroll
+                if (nextIndex < ONBOARDING_SCREENS.length) {
+                  flatListRef.current.scrollToIndex({index: nextIndex, animated: true});
+                }
+              }
+            }}
             >
               <Text style={{
                 color: 'white',
@@ -368,12 +396,13 @@ export default function Onboarding() {
                 fontFamily: 'Poppins-Bold',
                 color: 'black', 
                 textAlign: 'center',
+                marginTop: 36,
               }}>turno</Text>
               <Text style={{
                 fontSize: 24,
                 fontFamily: 'Poppins-Regular',
                 color: 'black',
-                marginTop: 12,
+                marginTop: 24,
                 textAlign: 'center',
               }}>
                 Roll your way through the day
@@ -384,7 +413,7 @@ export default function Onboarding() {
                 borderRadius: 999,
                 width: windowWidth * 0.8,
                 alignItems: 'center',
-                marginTop: 24,
+                marginTop: 48,
                 borderWidth: 1,
               }}
               onPress={() => setCurrentScreen('log in')}
