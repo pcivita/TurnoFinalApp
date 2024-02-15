@@ -33,6 +33,7 @@ export default function Page() {
 
   const [isFormFilled, setIsFormFilled] = useState(false);
   const { addActivity } = useContext(ActivitiesContext);
+  const {userData } = useContext(UserContext);
 
   const categories = [
     ["Exercise", "running"],
@@ -68,11 +69,24 @@ export default function Page() {
     setIsFormFilled(diceName.trim().length > 0 && categoryID !== null);
   };
 
-  const handleCreateDice = () => {
-    if (isFormFilled) {
-      // TODO: Needs backend
-      console.log("Created dice!!");
-    }
+  const handleCreateDice = () => {  
+    // create random alphanumeric string for dicdId
+    const diceId = Math.random().toString(36).substring(15);
+    const creator = userData.uid;
+    const community = switchEnabled;
+     
+    
+    const newDice = {
+      diceId,
+      name: diceName,
+      description,
+      choices,
+      categoryID,
+      creator,
+      community,
+    };
+
+    
   };
 
   // TODO: figure out how to reset everything when back arrow pressed (in header.js)
@@ -147,19 +161,6 @@ export default function Page() {
           </View>
           <View style={styles.descriptionContainer}>
             <Text style={styles.sectionTitle}>Description</Text>
-            {/* <TextInput
-              editable
-              multiline
-              blurOnSubmit={true}
-              onSubmitEditing={() => {
-                Keyboard.dismiss();
-              }}
-              numberOfLines={4}
-              style={styles.input}
-              placeholder="Description"
-              value={description}
-              onChangeText={setDescription}
-            /> */}
             <TextInput
               style={styles.input}
               placeholder="Description"

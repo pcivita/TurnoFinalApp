@@ -29,6 +29,7 @@ export default function Page() {
   useEffect(() => {
     const fetchUserData = async () => {
       let result = await fetchUserFromUid(user.uid);
+      console.log(result)
       setUserData(result);
       setFullName(result.fullName);
       setUsername(result.username);
@@ -64,9 +65,9 @@ export default function Page() {
           <View style={styles.profileCard}>
            <ProfileCard
               isYourProfile={true}
-              profileName="Pedro Civita"
-              handle="@pcivita"
-              profilePic={"Pedro"}
+              profileName={fullName}
+              handle={"@" + username}
+              profilePic={profilePicUri}
             />
           </View>
 
