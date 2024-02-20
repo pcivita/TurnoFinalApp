@@ -24,23 +24,28 @@ export default function Page() {
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [profilePicUri, setProfilePicUri] = useState("");
-
+  const { fetchUserFromUid, user } = useContext(UserContext);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      let result = await fetchUserFromUid(user.uid);
-      console.log(result)
-      setUserData(result);
-      setFullName(result.fullName);
-      setUsername(result.username);
-      if (result.profilePicUri) setProfilePicUri(result.profilePicUri);
-    };
     if (user) {
+
+      const fetchUserData = async () => {
+        try {
+          let result = await fetchUserFromUid(user.uid);
+          console.log(result);
+          // setUserData(result);
+          setFullName(result.fullName);
+          setUsername(result.username);
+          if (result.profilePicUri) setProfilePicUri(result.profilePicUri);
+        } catch (error) {
+          console.error('Failed to fetch user data:', error);
+        }
+      };
+
       fetchUserData();
     }
   }, [user]);
 
-  const { fetchUserFromUid, user } = useContext(UserContext);
 
   handleData = (data) => {
     setActiveScreen(data);
