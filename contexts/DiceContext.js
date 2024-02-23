@@ -1,18 +1,19 @@
 import React, { useState, useEffect, createContext } from "react";
+import { useContext } from "react";
+import { UserContext } from "./UserContext";
 
 const DiceContext = createContext(null);
 
 const DiceContextProvider = ({ children }) => {
   // const [dice, setDice] = useState(null);
 
-  const initializeDiceDatabaseEntry = async (
-    newDice,
-  ) => {
+  const initializeDiceDatabaseEntry = async (newDice) => {
     console.log("initializing dice database entry", newDice.diceId);
     try {
       // Insert new record into the dice table
       const { data, error } = await supabase.from("Dice").insert([
         {
+          diceId: newDice.diceId,
           name: newDice.name,
           description: newDice.description,
           choices: newDice.choices,
@@ -26,19 +27,21 @@ const DiceContextProvider = ({ children }) => {
       ]);
       if (error) throw error;
 
-      console.log("adding dice to creator's dice");
-      try {
-        const { data, error } = await supabase
-          .from('users')
-          .select('savedDice')
-          .eq('uid', newDice.creator)
-          .single();
-        if (error) throw error;
-        data.savedDice.push(newDice.diceId);
-        return data;
-      } catch (error) {
-        console.error("Error fetching user from uid: ", error);
-      }
+      // console.log("adding dice to creator's dice");
+      // try {
+      //   const { data, error } = await supabase
+      //     .from("users")
+      //     .select("savedDice")
+      //     .eq("uid", newDice.creator)
+      //     .single();
+      //   if (error) throw error;
+      //   console.log("SAVED DICE::BEFORE::: ", data.savedDice);
+      //   data.savedDice.push(newDice.diceId);
+      //   console.log("SAVED DICE::AFTER::: ", data.savedDice);
+      //   return data;
+      // } catch (error) {
+      //   console.error("Error fetching user from uid: ", error);
+      // }
 
       // Return the new dice
       return data;
@@ -55,13 +58,14 @@ const DiceContextProvider = ({ children }) => {
         .eq("diceId", diceId)
         .single();
       if (error) throw error;
+      // console.log("DICE DATA: ", data);
       return data;
     } catch (error) {
       console.error("Error fetching dice from diceId: ", error);
+      return null;
     }
   };
-
-
+  
   return (
     <DiceContext.Provider
       value={{

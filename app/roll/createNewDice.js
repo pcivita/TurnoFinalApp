@@ -35,7 +35,7 @@ export default function Page() {
 
   const [isFormFilled, setIsFormFilled] = useState(false);
   const { addActivity } = useContext(ActivitiesContext);
-  const { user } = useContext(UserContext);
+  const { user, addDiceToUser } = useContext(UserContext);
 
   const { initializeDiceDatabaseEntry, fetchDiceFromDiceId } =
     useContext(DiceContext);
@@ -73,14 +73,10 @@ export default function Page() {
   };
 
   const handleCreateDice = () => {
-    // create random alphanumeric string for diceId
-    // const diceId = Math.random().toString(36).substring(15);
-
-    // use uuidv4 for creating random id
+    // uuidv4 for creating random diceId
     const diceId = uuidv4();
 
     const newDice = {
-      // create random alphanumeric string for dicdId
       diceId: diceId,
       name: diceName,
       description,
@@ -89,8 +85,9 @@ export default function Page() {
       creator: user.uid,
       community: switchEnabled,
     };
-
+    
     initializeDiceDatabaseEntry(newDice);
+    addDiceToUser(user.uid, newDice.diceId)
   };
 
   // TODO: figure out how to reset everything when back arrow pressed (in header.js)

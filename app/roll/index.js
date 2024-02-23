@@ -6,7 +6,7 @@ import {
   View,
   Dimensions,
 } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Header from "../../components/Header";
 import { Link } from "expo-router";
 import DiceCard from "../../components/DiceCard";
@@ -14,18 +14,73 @@ import PersonalDiceCard from "../../components/PersonalDiceCard";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Themes } from "../../assets/Themes";
 import { DICE_DATA } from "../../assets/Themes/Dice";
+import { UserContext } from "../../contexts/UserContext";
 import { DiceContext } from "../../contexts/DiceContext";
 
 const windowWidth = Dimensions.get("window").width;
 
 export default function Page() {
-  const addDice = [{}];
-  const dataList = [...DICE_DATA, ...addDice];
+  const { user, fetchSavedDiceFromUid, fetchUserFromUid } = useContext(UserContext);
+  const { fetchDiceFromDiceId } = useContext(DiceContext);
 
-  const { 
-    initializeDiceDatabaseEntry,
-    fetchDiceFromDiceId 
-  } = useContext(DiceContext);
+  const [diceIds, setDiceIds] = useState([]);
+  const [diceData, setDiceData] = useState([]);
+
+  useEffect(() => {
+    if (user) {
+      const fetchDiceIds = async () => {
+        try {
+          let result = await fetchSavedDiceFromUid(user.uid);
+          console.log("result: ", result);
+          if (result) {
+            setDiceIds(result);
+          }
+        } catch (error) {
+          console.error('Failed to fetch saved dice:', error);
+        }
+      };
+      fetchDiceIds();
+      // if (diceIds) {
+      //   const fetchDiceData = async () => {
+      //     // let fetchedDiceData = [];
+      //     // for (let i = 0; i < diceIds.length; i++) {
+      //     //   console.log("diceIds[i] ", diceIds[i]);
+      //     //   const dice = await fetchDiceFromDiceId(diceIds[i]);
+      //     //   console.log("DICE ", i, ": ", dice);
+      //     // }
+
+      //     const fetchedDiceData = await Promise.all(
+      //       diceIds.map(async (diceId) => {
+      //         const dice = await fetchDiceFromDiceId(diceId);
+      //         return dice;
+      //       })
+      //     );
+      //     setDiceData(fetchedDiceData);
+      //   };
+      //   fetchDiceData().catch(console.error);
+      // }
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (diceIds) {
+      const fetchDiceData = async () => {
+        const fetchedDiceData = await Promise.all(
+          diceIds.map(async (diceId) => {
+            const dice = await fetchDiceFromDiceId(diceId);
+            return dice;
+          })
+        );
+        console.log("fetched dice data: ", fetchedDiceData);
+        setDiceData(fetchedDiceData);
+      };
+      fetchDiceData().catch(console.error);
+    }
+  }, [diceIds]);
+
+  const addDice = [{}];
+  const dataList = [...diceData, ...addDice];
+  // const dataList = [...DICE_DATA, ...addDice];
 
   return (
     <View style={styles.container}>
@@ -38,6 +93,8 @@ export default function Page() {
       <FlatList
         data={dataList}
         numColumns={2}
+        // keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => item.id || String(index)}
         renderItem={({ item, index }) => (
           <TouchableOpacity style={{ margin: 5 }}>
             {index !== dataList.length - 1 ? (
@@ -45,23 +102,20 @@ export default function Page() {
                 href={{
                   pathname: `/roll/roll`,
                   params: {
-                    title: item.title,
-                    numRolled: item.numRolled,
-                    numSaved: item.numSaved,
-                    username: item.user.username,
-                    profilePic: item.user.profilePic,
-                    img: item.img,
-                    id: item.id,
-                    activities: item.activities,
+                    title: item.name,
+                    numRolled: item.rollHistory,
+                    numSaved: item.saves,
+                    username: item.creator,
+                    // profilePic: item.imageUri,
+                    img: item.imageUri,
+                    id: item.id,  // or item.diceId ?? which one
+                    activities: item.choices,
                   },
                 }}
               >
                 <PersonalDiceCard
-                  img={item.img}
-                  title={item.title}
-                  user={item.user}
-                  numRolled={item.numRolled}
-                  numSaved={item.numSaved}
+                  img={item.imageUri}
+                  title={item.name}
                 />
               </Link>
             ) : (
@@ -82,7 +136,6 @@ export default function Page() {
             )}
           </TouchableOpacity>
         )}
-        keyExtractor={(item) => item.id}
       />
     </View>
   );
@@ -118,9 +171,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   createDiceText: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: "Poppins-Regular",
     color: Themes.colors.darkGray,
     fontSize: 14,
     marginTop: 10,
-  }
+  },
 });
