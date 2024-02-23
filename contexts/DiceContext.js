@@ -1,13 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
 
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../firebase";
-import { Alert } from "react-native";
-
 const DiceContext = createContext(null);
 
 const DiceContextProvider = ({ children }) => {
@@ -47,7 +39,7 @@ const DiceContextProvider = ({ children }) => {
       } catch (error) {
         console.error("Error fetching user from uid: ", error);
       }
-      
+
       // Return the new dice
       return data;
     } catch (err) {
@@ -69,23 +61,6 @@ const DiceContextProvider = ({ children }) => {
     }
   };
 
-  // const writeToDatabase = async (data) => {
-  //   if (!user) return;
-
-  //   try {
-  //     await setDoc(doc(db, "users", user.uid), data);
-  //   } catch (error) {
-  //     console.error("Error writing to Firestore: ", error);
-  //   }
-  // };
-
-  // Auth State Changes
-  // useEffect(() => {
-  //   const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-  //     setUser(currentUser);
-  //   });
-  //   return unsubscribe;
-  // }, []);
 
   return (
     <DiceContext.Provider
