@@ -30,7 +30,7 @@ export default function Page() {
     }
     if (user) {
       fetchUserData();
-      console.log(userData.password);
+      // console.log(userData.password);
     }
   }, [user])
 

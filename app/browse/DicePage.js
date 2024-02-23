@@ -47,7 +47,7 @@ export default function DicePage() {
   };
   useEffect(() => {
     if (params) {
-      console.log("dice page", params);
+      // console.log("dice page", params);
       const arr = params.activities.split(",");
       setActivities(arr);
 

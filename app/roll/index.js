@@ -71,7 +71,7 @@ export default function Page() {
             return dice;
           })
         );
-        console.log("fetched dice data: ", fetchedDiceData);
+        // console.log("fetched dice data: ", fetchedDiceData);
         setDiceData(fetchedDiceData);
       };
       fetchDiceData().catch(console.error);
@@ -80,7 +80,6 @@ export default function Page() {
 
   const addDice = [{}];
   const dataList = [...diceData, ...addDice];
-  // const dataList = [...DICE_DATA, ...addDice];
 
   return (
     <View style={styles.container}>
@@ -102,19 +101,21 @@ export default function Page() {
                 href={{
                   pathname: `/roll/roll`,
                   params: {
-                    title: item.name,
+                    // dice: item,
+                    name: item.name,
+                    choices: item.choices,
+
                     numRolled: item.rollHistory,
                     numSaved: item.saves,
                     username: item.creator,
                     // profilePic: item.imageUri,
                     img: item.imageUri,
                     id: item.id,  // or item.diceId ?? which one
-                    activities: item.choices,
                   },
                 }}
               >
                 <PersonalDiceCard
-                  img={item.imageUri}
+                  // img={item.imageUri}
                   title={item.name}
                 />
               </Link>

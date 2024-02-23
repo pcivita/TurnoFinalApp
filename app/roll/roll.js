@@ -21,21 +21,38 @@ import { useLocalSearchParams, useSearchParams } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ZigZagArrow from "../../components/Icons/ZigZagArrow";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Link } from "expo-router";
 
 export default function Page() {
-  const { canRoll } = useContext(ActivitiesContext);
   const [currentDice, setCurrentDice] = useState(null);
-  const [activities, setActivities] = useState([]);
+
+  const [choices, setChoices] = useState([]);
+  const [canRoll, setCanRoll] = useState(true);
 
   const params = useLocalSearchParams();
 
   useEffect(() => {
     if (params) {
-      // console.log(params);
-      const arr = params.activities.split(",");
-      setActivities(arr);
+      const arr = params.choices.split(",");
+      console.log(arr);
+      setChoices(arr);
+      console.log(arr.length)
+      if (arr.length < 2) {
+        setCanRoll(false);
+      } else {
+        setCanRoll(true);
+      }
     }
   }, [params]);
+
+  // TODO: function isn't working for some reason
+  // useEffect(() => {
+  //   if (!choices || choices.size < 2) {
+  //     setCanRoll(false);
+  //   } else {
+  //     setCanRoll(true);
+  //   }
+  // });
 
   const [diceRolled, setDiceRolled] = useState(false);
   // const [diceKey, setDiceKey] = useState(0);
@@ -43,7 +60,7 @@ export default function Page() {
   const handleRoll = (data) => {
     setDiceNum(data[0]);
     const random1to6 = Math.floor(Math.random() * 6) + 1;
-    setActivityName(activities[random1to6]);
+    setChoiceName(choices[random1to6]);
 
     bannerProgress.value = 0;
     swipeProgress.value = 0;
@@ -53,7 +70,8 @@ export default function Page() {
     headerBounce();
     swipeButtonBounce();
     setModalVisible(false);
-    console.log("Roll handled, isInteractive should change");
+    // console.log("Roll handled, isInteractive should change");
+
     // setDiceKey(prevKey => prevKey + 1);
   };
 
@@ -67,7 +85,7 @@ export default function Page() {
   const { flipProgress } = useContext(InProgressContext);
   const [activeScreen, setActiveScreen] = useState("RollDice");
   const [diceNum, setDiceNum] = useState(-1);
-  const [activityName, setActivityName] = useState("");
+  const [choiceName, setChoiceName] = useState("");
   const startAnimation = () => {
     // Wait for 1.5 seconds (1500 milliseconds) before starting the animation
     setTimeout(() => {
@@ -129,7 +147,7 @@ export default function Page() {
 
   return (
     <InProgressProvider>
-      {showOverlay && (
+      {showOverlay && canRoll && (
         <TouchableWithoutFeedback onPress={() => setShowOverlay(false)}>
           <View style={styles.overlayContainer}>
             <View style={styles.overlayContent}>
@@ -154,26 +172,58 @@ export default function Page() {
 
       {diceRolled && (
         <Animated.View style={[styles.square, bannerAnimation]}>
-          <ActivityRolled diceNum={diceNum} activityName={activityName} />
+          <ActivityRolled diceNum={diceNum} activityName={choiceName} />
         </Animated.View>
       )}
-
-      <View style={styles.upperTextContainer}>
-        <Text style={styles.heading1}>Roll the dice to</Text>
-        <Text style={styles.heading1}>make a choice!</Text>
-        <View style={styles.subtitle}>
-          <FontAwesome5 name="dice-d6" size={18} color="black" />
-          <Text style={styles.heading2}>Dice: {params && params.title}</Text>
+      {canRoll ? ( 
+        <View style={styles.upperTextContainer}>
+          <Text style={styles.heading1}>Roll the dice to</Text>
+          <Text style={styles.heading1}>make a choice!</Text>
+          <View style={styles.subtitle}>
+            <FontAwesome5 name="dice-d6" size={18} color="black" />
+            <Text style={styles.heading2}>{params && params.name}</Text>
+          </View>
+          <DiceComponent onData={handleRoll} isInteractive={!diceRolled} />
         </View>
-
-        <DiceComponent onData={handleRoll} isInteractive={!diceRolled} />
-      </View>
-
+      ) : (
+        <View style={styles.upperTextContainer}>
+          <Text style={styles.heading1}>You don't have enough</Text>
+          <Text style={styles.heading1}>choices on your dice.</Text>
+          <Text style={styles.heading1}>Add more to roll!</Text>
+          <View style={styles.subtitle}>
+            <FontAwesome5 name="dice-d6" size={18} color="black" />
+            <Text style={styles.heading2}>{params && params.name}</Text>
+          </View>
+          <View style={styles.editDiceContainer}>
+            <Link 
+              href={{ 
+                pathname: "/activities", 
+                params: {
+                  // diceItem: dice
+                  // title: dice.title,
+                  // numRolled: dice.numRolled,
+                  // numSaved: dice.numSaved,
+                  // user: dice.user,
+                  // username: dice.user.username,
+                  // profilePic: dice.user.profilePic,
+                  // img: dice.img,
+                  // id: dice.id,
+                  // activities: dice.activities,
+                }
+              }} 
+            >
+              <View style={styles.editDiceButton}>
+                <Text style={styles.editDiceText}>Edit dice</Text>
+              </View>
+            </Link>
+           </View>
+        </View>
+      )}
       {diceRolled && (
         <Animated.View style={[styles.square2, swipeAnimation]}>
           <SwipeButton onToggle={onSwipe} />
           <CongratsModal
-            activityName={activityName}
+            activityName={choiceName}
             activityIndex={diceNum}
             isModalVisible={isModalVisible}
             setModalVisible={toggleModal}
@@ -301,4 +351,23 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 15,
   },
+  // TODO: DESIGN THIS
+  editDiceContainer: {
+    height: "65%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  editDiceButton: {
+    backgroundColor: Themes.colors.salmon,
+    height: 50,
+    width: 300,
+    borderRadius: 30,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+    editDiceText: {
+      color: "white",
+      fontFamily: "Poppins-Bold",
+      fontSize: 18,
+  }
 });

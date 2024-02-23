@@ -29,9 +29,8 @@ export default function CongratsModal({
   const { deleteActivity } = useContext(ActivitiesContext);
 
   const onExitModal = () => {
-    console.log("exiting modal")
     if (!switchEnabled) {
-      console.log("deleting activity of index: " + activityIndex);
+      // console.log("deleting activity of index: " + activityIndex);
       deleteActivity(activityIndex);
     }
     setModalVisible(false);
