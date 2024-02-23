@@ -10,7 +10,6 @@ const UserContext = createContext(null)
 const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-
   const signUp = async (email, password) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -24,13 +23,9 @@ const UserContextProvider = ({ children }) => {
     }
   }
 
-  
-
-  
-
   const initializeUserDatabaseEntry = async (email, profilePicUri, uid, username, fullName) => {
     // create an entry in supabase for the user
-    console.log("initializing user database entry", uid)
+    // console.log("initializing user database entry", uid)
     try {
       // Insert a new record into the 'users' table
       const { data, error } = await supabase

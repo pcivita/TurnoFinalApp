@@ -6,7 +6,7 @@ import {
   View,
   Dimensions,
 } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import Header from "../../components/Header";
 import { Link } from "expo-router";
 import DiceCard from "../../components/DiceCard";
@@ -14,12 +14,18 @@ import PersonalDiceCard from "../../components/PersonalDiceCard";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Themes } from "../../assets/Themes";
 import { DICE_DATA } from "../../assets/Themes/Dice";
+import { DiceContext } from "../../contexts/DiceContext";
 
 const windowWidth = Dimensions.get("window").width;
 
 export default function Page() {
   const addDice = [{}];
   const dataList = [...DICE_DATA, ...addDice];
+
+  const { 
+    initializeDiceDatabaseEntry,
+    fetchDiceFromDiceId 
+  } = useContext(DiceContext);
 
   return (
     <View style={styles.container}>

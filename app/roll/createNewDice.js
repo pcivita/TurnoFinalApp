@@ -22,6 +22,9 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { DiceContext } from "../../contexts/DiceContext";
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Page() {
   const [diceName, setDiceName] = useState("");
@@ -30,10 +33,12 @@ export default function Page() {
   const [categoryID, setCategoryID] = useState(null);
   const [switchEnabled, setSwitchEnabled] = useState(false);
 
-
   const [isFormFilled, setIsFormFilled] = useState(false);
   const { addActivity } = useContext(ActivitiesContext);
-  const {userData } = useContext(UserContext);
+  const { user } = useContext(UserContext);
+
+  const { initializeDiceDatabaseEntry, fetchDiceFromDiceId } =
+    useContext(DiceContext);
 
   const categories = [
     ["Exercise", "running"],
@@ -43,7 +48,6 @@ export default function Page() {
     ["Social", "user-friends"],
     ["Food & Drink", "utensils"],
   ];
-
 
   const chunkChoices = (choices, size) => {
     return choices.reduce((acc, curr, i) => {
@@ -59,7 +63,6 @@ export default function Page() {
   const choicesPairs = chunkChoices(choices, 2);
 
   const addToChoices = (name) => {
-    console.log("Adding to list of choices: " + name);
     const newChoices = [name, ...choices];
 
     if (newChoices.length === 7) {
@@ -69,24 +72,25 @@ export default function Page() {
     setIsFormFilled(diceName.trim().length > 0 && categoryID !== null);
   };
 
-  const handleCreateDice = () => {  
-    // create random alphanumeric string for dicdId
-    const diceId = Math.random().toString(36).substring(15);
-    const creator = userData.uid;
-    const community = switchEnabled;
-     
-    
+  const handleCreateDice = () => {
+    // create random alphanumeric string for diceId
+    // const diceId = Math.random().toString(36).substring(15);
+
+    // use uuidv4 for creating random id
+    const diceId = uuidv4();
+
     const newDice = {
-      diceId,
+      // create random alphanumeric string for dicdId
+      diceId: diceId,
       name: diceName,
       description,
       choices,
       categoryID,
-      creator,
-      community,
+      creator: user.uid,
+      community: switchEnabled,
     };
 
-    
+    initializeDiceDatabaseEntry(newDice);
   };
 
   // TODO: figure out how to reset everything when back arrow pressed (in header.js)
@@ -131,7 +135,7 @@ export default function Page() {
       aspect: [4, 3],
       quality: 1,
     });
-    console.log(result);
+    // console.log(result);
     if (!result.canceled) {
       setImageUri(result.uri);
     }
@@ -140,7 +144,6 @@ export default function Page() {
   const deleteImage = async () => {
     setImageUri(null);
   };
-  
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -211,7 +214,10 @@ export default function Page() {
             <Text style={styles.sectionTitle}>Dice Banner</Text>
             {imageUri ? (
               <View style={styles.diceBannerUpload} onPress={pickImage}>
-                <TouchableOpacity style={styles.deleteImageWrapper} onPress={deleteImage}>
+                <TouchableOpacity
+                  style={styles.deleteImageWrapper}
+                  onPress={deleteImage}
+                >
                   <MaterialCommunityIcons
                     name="plus-circle"
                     size={28}
@@ -422,8 +428,8 @@ const styles = StyleSheet.create({
     zIndex: 1, // Ensure the icon is above the image
   },
   deleteImageIcon: {
-    transform: [{ rotate: '45deg' }],
+    transform: [{ rotate: "45deg" }],
     bottom: 2,
-    left: 0.5
+    left: 0.5,
   },
 });
