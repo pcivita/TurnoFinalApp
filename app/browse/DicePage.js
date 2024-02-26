@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   router,
   Stack,
@@ -17,12 +17,16 @@ import {
 import Header from "../../components/Header";
 import { Themes } from "../../assets/Themes";
 import Activity from "../../components/Activity";
+import { UserContext } from "../../contexts/UserContext";
 
 export default function DicePage() {
   const params = useLocalSearchParams();
+  const { fetchUserFromUid, user } = useContext(UserContext);
 
   const [currentDice, setCurrentDice] = useState(null);
   const [activities, setActivities] = useState([]);
+  const [creatorUsername, setCreatorUsername] = useState("");
+  const [creatorProfilePic, setCreatorProfilePic] = useState();
 
   const handleImageSource = (index) => {
     switch (index) {
@@ -45,13 +49,26 @@ export default function DicePage() {
   const handleAdd = () => {
     router.replace("/roll");
   };
+
   useEffect(() => {
     if (params) {
-      // console.log("dice page", params);
       const arr = params.activities.split(",");
       setActivities(arr);
 
-      // const currentDice = DATA.find(dice => dice.id === params.itemId)
+      if (params.creator) {
+        const fetchUserData = async () => {
+          try {
+            let result = await fetchUserFromUid(params.creator);
+            setCreatorUsername(result.username);
+            if (result.profilePicUri) {
+              setCreatorProfilePic(result.profilePicUri);
+            }
+          } catch (error) {
+            console.error('Failed to fetch user data:', error);
+          }
+        };
+        fetchUserData();
+      }
     }
   }, [params]);
 
@@ -79,32 +96,11 @@ export default function DicePage() {
           <Text style={styles.titleText}>{params.title}</Text>
           <View style={styles.profile}>
             <Image source={params.profilePic} style={styles.profilePic} />
-            <Text style={styles.profileText}>By @{params.username}</Text>
+            <Text style={styles.profileText}>By @{creatorUsername}</Text>
           </View>
         </View>
         // </View>
       )}
-      {/* <View style={{alignItems: 'center', width: '100%'}}> */}
-      {/* <FlatList
-        data={activities}
-        numColumns={2}
-        renderItem={({item, index}) => (
-          <View style={styles.activityWrapper}>
-            <Activity activityObject={item} index={index + 1} />
-          </View>
-          // <View style={styles.activityBox}>
-          //   <Image source={handleImageSource(index)} style={{width: 50, height: 50}} />
-          //   <Text style={styles.boxText}>{item}</Text>
-          // </View>
-        )}
-        keyExtractor={item => item}
-        contentContainerStyle={styles.listContentContainer}
-        ListFooterComponent={
-          <TouchableOpacity style={styles.addToDiceButton} onPress={handleAdd}>
-          <Text style={styles.addToDiceText}>Add to My Dice</Text>
-        </TouchableOpacity>
-        }
-      /> */}
       <ScrollView style={styles.listContentContainer}>
         {activitiesPairs.map((pair, index) => (
           <View key={index} style={styles.activitiesRow}>

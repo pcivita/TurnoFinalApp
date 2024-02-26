@@ -13,19 +13,16 @@ export default function Page() {
 
   // Handling Supabase logic taken from supabase website and CS147L Lecture 13
   const handleRecordUpdated = (payload) => {
-    console.log("UPDATE", payload);
     setData((oldData) =>
       oldData.map((item) => (item.id === payload.old.id ? payload.new : item))
     );
   };
 
   const handleRecordInserted = (payload) => {
-    console.log("INSERT", payload);
     setData((oldData) => [...oldData, payload.new]);
   };
 
   const handleRecordDeleted = (payload) => {
-    console.log("DELETE", payload);
     setData((oldData) => oldData.filter((item) => item.id !== payload.old.id));
   };
 

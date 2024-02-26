@@ -26,24 +26,6 @@ const DiceContextProvider = ({ children }) => {
         },
       ]);
       if (error) throw error;
-
-      // console.log("adding dice to creator's dice");
-      // try {
-      //   const { data, error } = await supabase
-      //     .from("users")
-      //     .select("savedDice")
-      //     .eq("uid", newDice.creator)
-      //     .single();
-      //   if (error) throw error;
-      //   console.log("SAVED DICE::BEFORE::: ", data.savedDice);
-      //   data.savedDice.push(newDice.diceId);
-      //   console.log("SAVED DICE::AFTER::: ", data.savedDice);
-      //   return data;
-      // } catch (error) {
-      //   console.error("Error fetching user from uid: ", error);
-      // }
-
-      // Return the new dice
       return data;
     } catch (err) {
       console.error("Error inserting data: ", err.message);
@@ -65,6 +47,22 @@ const DiceContextProvider = ({ children }) => {
       return null;
     }
   };
+
+  const fetchCommunityDice = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("Dice")
+        .select("*")
+        // .eq("diceId", diceId)
+        // .single();
+      if (error) throw error;
+      print(data);
+      return data;
+    } catch (error) {
+      console.error("Error fetching dice from diceId: ", error);
+      return null;
+    }
+  };
   
   return (
     <DiceContext.Provider
@@ -73,6 +71,7 @@ const DiceContextProvider = ({ children }) => {
         // writeToDatabase,
         initializeDiceDatabaseEntry,
         fetchDiceFromDiceId,
+        fetchCommunityDice
       }}
     >
       {children}
