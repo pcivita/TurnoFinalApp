@@ -13,23 +13,46 @@ import { useFonts } from "expo-font";
 import { FontAwesome5 } from "@expo/vector-icons";
 import DiceImage from "../../assets/Themes/Images/DiceFaces/Dice-1.png";
 import DiceCard from "../../components/DiceCard";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import Images from "../../assets/Themes/Images";
 import { useLocalSearchParams, router } from "expo-router";
 import { DICE_DATA } from "../../assets/Themes/Dice";
+import { DiceContext } from "../../contexts/DiceContext";
 
 export default function Page() {
   const params = useLocalSearchParams();
 
   const [filtersVisible, setFiltersVisible] = useState(false);
   const [activeFilter, setActiveFilter] = useState("");
-  const [fontsLoaded] = useFonts({
-    "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
-    "Poppins-Bold": require("../../assets/Poppins/Poppins-Bold.ttf"),
+  // const [fontsLoaded] = useFonts({
+  //   "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
+  //   "Poppins-Bold": require("../../assets/Poppins/Poppins-Bold.ttf"),
+  // });
+  // if (!fontsLoaded) {
+  //   return undefined;
+  // }
+
+  const { fetchCommunityDice } = useContext(DiceContext);
+  const [dataList, setDataList] = useState([]);
+  // const [dataList, setDataList] = useState([]);
+
+  useEffect(() => {
+    const fetchDice= async () => {
+      try {
+        let result = await fetchCommunityDice();
+        console.log("result: ", result);
+        if (result) {
+          setDataList(result);
+        }
+      } catch (error) {
+        console.error('Failed to fetch community dice:', error);
+      }
+    };
+    fetchDice();
   });
-  if (!fontsLoaded) {
-    return undefined;
-  }
+
+  // const addDice = [{}];
+  // const dataList = [...diceData, ...addDice];
 
   return (
     <>
@@ -177,7 +200,7 @@ export default function Page() {
         )}
         <View style={{ marginTop: 12 }} />
         <FlatList
-          data={DICE_DATA}
+          data={dataList}
           numColumns={2}
           renderItem={({ item, index }) => (
             <TouchableOpacity style={{ margin: 5 }}>
@@ -185,21 +208,22 @@ export default function Page() {
                 href={{
                   pathname: `/browse/DicePage`,
                   params: {
-                    activities: item.activities,
-                    title: item.title,
-                    img: item.img,
-                    id: item.id,
-                    username: item.user.username,
-                    profilePic: item.user.profilePic,
+                    activities: item.choices,
+                    title: item.name,
+                    img: item.imageUri,
+                    id: item.diceId,
+                    username: item.creator,
+                    // profilePic: item.user.profilePic,
                   },
                 }}
               >
                 <DiceCard
-                  img={item.img}
-                  title={item.title}
-                  user={item.user}
-                  numRolled={item.numRolled}
-                  numSaved={item.numSaved}
+                  img={item.imageUri}
+                  title={item.name}
+                  user={item.creator}
+                  // numRolled={item.numRolled}
+                  numRolled={0}
+                  numSaved={item.saves}
                 />
               </Link>
             </TouchableOpacity>
