@@ -201,6 +201,7 @@ export default function Page() {
         <FlatList
           data={dataList}
           numColumns={2}
+          keyExtractor={(item) => item.id}
           renderItem={({ item, index }) => (
             <TouchableOpacity style={{ margin: 5 }}>
               <Link
@@ -219,7 +220,7 @@ export default function Page() {
                 <DiceCard
                   img={item.imageUri}
                   title={item.name}
-                  user={item.creator}
+                  creator={item.creator}
                   // numRolled={item.numRolled}
                   numRolled={0}
                   numSaved={item.saves}
@@ -227,7 +228,6 @@ export default function Page() {
               </Link>
             </TouchableOpacity>
           )}
-          keyExtractor={(item) => item.id}
         />
         {filtersVisible && (
           <TouchableOpacity
