@@ -40,7 +40,6 @@ export default function Page() {
     const fetchDice= async () => {
       try {
         let result = await fetchCommunityDice();
-        console.log("result: ", result);
         if (result) {
           setDataList(result);
         }
@@ -212,7 +211,7 @@ export default function Page() {
                     title: item.name,
                     img: item.imageUri,
                     id: item.diceId,
-                    username: item.creator,
+                    creator: item.creator,
                     // profilePic: item.user.profilePic,
                   },
                 }}

@@ -7,7 +7,7 @@ import Images from '../assets/Themes/Images';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default function PersonalDiceCard({ img, title, user, numSaved, numRolled}) {
-  console.log(img);
+  // console.log(img);
   return (
     <View style={styles.container}>
       <Image source={img} style={styles.image}/>

@@ -158,7 +158,6 @@ export default function Onboarding() {
   }, [user]);
 
   const handleLogIn = () => {
-    console.log("Logging in: ", email, password);
     logIn(email, password);
   };
 
