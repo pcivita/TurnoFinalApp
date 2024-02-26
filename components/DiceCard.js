@@ -1,16 +1,40 @@
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { UserContext } from '../contexts/UserContext';
+import { useContext, useEffect, useState } from 'react';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-export default function DiceCard({ img, title, user, numSaved, numRolled}) {
+
+export default function DiceCard({ img, title, creator, numSaved, numRolled}) {
+    const { fetchUserFromUid, user } = useContext(UserContext);
+    const [creatorUsername, setCreatorUsername] = useState();
+    
+    useEffect(() => {
+        if (creator) {
+            // console.log("title: ", title, " creator: ", creator);
+            const fetchUserData = async () => {
+                try {
+                    let result = await fetchUserFromUid(creator);
+                    
+                    setCreatorUsername(result.username);
+                } catch (error) {
+                    console.error('Failed to fetch user data:', error);
+                }
+            };
+        fetchUserData();
+        }
+    })
+
+
+
   return (
     <View style={styles.container}>
       <Image source={img} style={styles.image}/>
         <Text style={styles.titleText}>{title}</Text>    
         <View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 2, marginLeft: 10}}>
             <Image source={user.profilePic} style={styles.profilePic}/>
-            <Text style={{fontSize: 12}}>By @{user.username}</Text>
+            <Text style={{fontSize: 12}}>By @{creatorUsername}</Text>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 10, marginTop: 8}}>
             <Image style={styles.bookmarkIcon} source={require('../assets/Themes/Images/other/bookmarkGrey.png')}/>

@@ -89,7 +89,7 @@ export default function Page() {
           Choose a dice to roll and make a decision.
         </Text>
       </View>
-      <FlatList
+      {/* <FlatList
         data={dataList}
         numColumns={2}
         // keyExtractor={(item) => item.id}
@@ -137,7 +137,7 @@ export default function Page() {
             )}
           </TouchableOpacity>
         )}
-      />
+      /> */}
     </View>
   );
 }
