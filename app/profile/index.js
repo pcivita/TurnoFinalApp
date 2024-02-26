@@ -32,7 +32,7 @@ export default function Page() {
       const fetchUserData = async () => {
         try {
           let result = await fetchUserFromUid(user.uid);
-          console.log(result);
+          // console.log(result);
           // setUserData(result);
           setFullName(result.fullName);
           setUsername(result.username);

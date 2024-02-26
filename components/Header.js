@@ -12,7 +12,7 @@ export default function Header({ title, dice }) {
     headerTitle="Friends";
   }
 
-  console.log(dice);
+  // console.log(dice);
 
 const titleToPath = {
     "Settings": "/profile",

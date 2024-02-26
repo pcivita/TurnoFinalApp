@@ -33,7 +33,7 @@ export default function Activity({ activityObject, index, addToChoices, notMyDic
   const handleSave = () => {
     // Save name
     setName(name);
-    console.log("New choice added: " + name);
+    // console.log("New choice added: " + name);
 
     // Add name to list of choices 
     addToChoices(name)
