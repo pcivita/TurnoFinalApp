@@ -25,6 +25,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { DiceContext } from "../../contexts/DiceContext";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../../firebase";
 
 export default function Page() {
   const [diceName, setDiceName] = useState("");
@@ -32,6 +34,7 @@ export default function Page() {
   const [choices, setChoices] = useState([null]);
   const [categoryID, setCategoryID] = useState(null);
   const [switchEnabled, setSwitchEnabled] = useState(false);
+  const [imageUri, setImageUri] = useState(null);
 
   const [isFormFilled, setIsFormFilled] = useState(false);
   const { addActivity } = useContext(ActivitiesContext);
@@ -72,18 +75,41 @@ export default function Page() {
     setIsFormFilled(diceName.trim().length > 0 && categoryID !== null);
   };
 
-  const handleCreateDice = () => {
+  const uploadImage = async (imageFile, diceId) => {
+    if (!user) return;
+    try {
+      const response = await fetch(imageFile)
+      const blob = await response.blob()
+      const storageRef = ref(storage, `images/${diceId}`);
+      await uploadBytesResumable(storageRef, blob);
+      return await getDownloadURL(storageRef);
+    } catch (error) {
+      console.error("Error uploading image: ", error);
+    }
+  }
+
+  const handleCreateDice = async () => {
     // uuidv4 for creating random diceId
     const diceId = uuidv4();
+
+    let downloadUrl;
+    if (imageUri) {
+      downloadUrl = await uploadImage(imageUri, diceId);
+    }
+
+    // if chocies array contains a null value, remove it
+    const filteredChoices = choices.filter((choice) => choice !== null);
+    
 
     const newDice = {
       diceId: diceId,
       name: diceName,
       description,
-      choices,
+      choices: filteredChoices,
       categoryID,
       creator: user.uid,
       community: switchEnabled,
+      imageUri: downloadUrl,
     };
     
     initializeDiceDatabaseEntry(newDice);
@@ -123,20 +149,20 @@ export default function Page() {
     })();
   }, []);
 
-  const [imageUri, setImageUri] = useState(null); // Add this state to your component
-
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.5,
     });
     // console.log(result);
     if (!result.canceled) {
-      setImageUri(result.uri);
+      setImageUri(result.assets[0].uri);
     }
   };
+
+  
 
   const deleteImage = async () => {
     setImageUri(null);
@@ -182,7 +208,7 @@ export default function Page() {
                   <Activity
                     key={index}
                     activityObject={choice}
-                    index={index + 1 + index * 2}
+                    index={index + 1}
                     addToChoices={addToChoices}
                     // handleAddChoice={handleAddChoice}
                   />

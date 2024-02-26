@@ -20,7 +20,7 @@ const DiceContextProvider = ({ children }) => {
           categoryID: newDice.categoryID,
           creator: newDice.creator,
           community: newDice.community,
-
+          imageUri: newDice.imageUri,
           rollHistory: [],
           saves: 0,
         },

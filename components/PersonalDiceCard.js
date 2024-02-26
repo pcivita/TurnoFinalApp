@@ -6,11 +6,11 @@ import Images from '../assets/Themes/Images';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-export default function PersonalDiceCard({ img, title, user, numSaved, numRolled}) {
-  console.log(img);
+export default function PersonalDiceCard({ imageUri, title, user, numSaved, numRolled}) {
+  console.log(imageUri)
   return (
     <View style={styles.container}>
-      <Image source={img} style={styles.image}/>
+      <Image source={{uri: imageUri}} style={styles.image}/>
       <View style={styles.row1}>
         <FontAwesome5 name="dice-d6" size={16} color="black" />
         <Text style={styles.titleText}>{title}</Text>    

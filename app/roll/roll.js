@@ -36,7 +36,6 @@ export default function Page() {
       const arr = params.choices.split(",");
       console.log(arr);
       setChoices(arr);
-      console.log(arr.length)
       if (arr.length < 2) {
         setCanRoll(false);
       } else {
@@ -45,22 +44,15 @@ export default function Page() {
     }
   }, [params]);
 
-  // TODO: function isn't working for some reason
-  // useEffect(() => {
-  //   if (!choices || choices.size < 2) {
-  //     setCanRoll(false);
-  //   } else {
-  //     setCanRoll(true);
-  //   }
-  // });
 
   const [diceRolled, setDiceRolled] = useState(false);
   // const [diceKey, setDiceKey] = useState(0);
 
   const handleRoll = (data) => {
     setDiceNum(data[0]);
-    const random1to6 = Math.floor(Math.random() * 6) + 1;
-    setChoiceName(choices[random1to6]);
+    const randomInt = Math.floor(Math.random() * arr.length);
+    // const random1to6 = Math.floor(Math.random() * 6) + 1;
+    setChoiceName(choices[randomInt]);
 
     bannerProgress.value = 0;
     swipeProgress.value = 0;
