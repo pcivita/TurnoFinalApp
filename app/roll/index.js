@@ -89,34 +89,33 @@ export default function Page() {
           Choose a dice to roll and make a decision.
         </Text>
       </View>
-      {/* <FlatList
+      <FlatList
+
         data={dataList}
         numColumns={2}
         // keyExtractor={(item) => item.id}
-        keyExtractor={(item, index) => item.id || String(index)}
+        keyExtractor={(item, index) => String(index)}
         renderItem={({ item, index }) => (
-          <TouchableOpacity style={{ margin: 5 }}>
-            {index !== dataList.length - 1 ? (
-              <Link
-                href={{
-                  pathname: `/roll/roll`,
-                  params: {
-                    // dice: item,
-                    name: item.name,
-                    choices: item.choices,
 
-                    numRolled: item.rollHistory,
-                    numSaved: item.saves,
-                    username: item.creator,
-                    // profilePic: item.imageUri,
-                    img: item.imageUri,
-                    id: item.id,  // or item.diceId ?? which one
-                  },
-                }}
-              >
+          <TouchableOpacity style={{ margin: 5 }}>
+            {(index !== dataList.length - 1) ? (
+               <Link
+               href={{
+                 pathname: `/roll/roll`,
+                 params: item ? { // Check if item.id exists
+                   name: item.name,
+                   choices: item.choices,
+                   numRolled: item.rollHistory,
+                   numSaved: item.saves,
+                   username: item.creator,
+                   img: item.imageUri,
+                   id: item.id,
+                 } : {},
+               }}
+             >
                 <PersonalDiceCard
-                  // img={item.imageUri}
-                  title={item.name}
+                  imageUri={item ? item.imageUri : ""}
+                  title={item ? item.name : ""}
                 />
               </Link>
             ) : (
@@ -137,7 +136,7 @@ export default function Page() {
             )}
           </TouchableOpacity>
         )}
-      /> */}
+      /> 
     </View>
   );
 }
