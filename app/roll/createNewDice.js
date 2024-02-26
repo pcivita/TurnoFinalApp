@@ -78,15 +78,15 @@ export default function Page() {
   const uploadImage = async (imageFile, diceId) => {
     if (!user) return;
     try {
-      const response = await fetch(imageFile)
-      const blob = await response.blob()
+      const response = await fetch(imageFile);
+      const blob = await response.blob();
       const storageRef = ref(storage, `images/${diceId}`);
       await uploadBytesResumable(storageRef, blob);
       return await getDownloadURL(storageRef);
     } catch (error) {
       console.error("Error uploading image: ", error);
     }
-  }
+  };
 
   const handleCreateDice = async () => {
     // uuidv4 for creating random diceId
@@ -99,7 +99,6 @@ export default function Page() {
 
     // if chocies array contains a null value, remove it
     const filteredChoices = choices.filter((choice) => choice !== null);
-    
 
     const newDice = {
       diceId: diceId,
@@ -111,17 +110,19 @@ export default function Page() {
       community: switchEnabled,
       imageUri: downloadUrl,
     };
-    
+
     initializeDiceDatabaseEntry(newDice);
-    addDiceToUser(user.uid, newDice.diceId)
+    addDiceToUser(user.uid, newDice.diceId);
+
+    resetState();
   };
 
-  // TODO: figure out how to reset everything when back arrow pressed (in header.js)
   const resetState = () => {
     setDiceName("");
     setDescription("");
     setChoices([null]);
     setCategoryID(null);
+    setImageUri(null);
     setSwitchEnabled(false);
     setIsFormFilled(false);
   };
@@ -161,8 +162,6 @@ export default function Page() {
       setImageUri(result.assets[0].uri);
     }
   };
-
-  
 
   const deleteImage = async () => {
     setImageUri(null);

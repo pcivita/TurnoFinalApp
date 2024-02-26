@@ -95,7 +95,7 @@ export default function DicePage() {
         <View style={styles.titleContainer}>
           <Text style={styles.titleText}>{params.title}</Text>
           <View style={styles.profile}>
-            <Image source={params.profilePic} style={styles.profilePic} />
+            <Image source={{ uri: creatorProfilePic}} style={styles.profilePic} />
             <Text style={styles.profileText}>By @{creatorUsername}</Text>
           </View>
         </View>
