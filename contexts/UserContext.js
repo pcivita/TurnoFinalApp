@@ -167,22 +167,15 @@ const UserContextProvider = ({ children }) => {
   }, []);
 
   const addDiceToUser = async (uid, diceId) => {
+    userData = await fetchUserFromUid(uid);
+    const updatedSavedDice = [...userData.savedDice, diceId];
+    console.log(uid, diceId)
     try {
-      // const { userData, userError } = await supabase
-      //   .from("users")
-      //   .select("savedDice")
-      //   .eq("uid", uid)
-      //   .single();
-      // if (userError) throw userError;
-      userData = fetchUserFromUid(uid);
-      const updatedSavedDice = [...userData.savedDice, diceId];
-
       const { updateError } = await supabase
         .from("users")
         .update({ savedDice: updatedSavedDice })
         .eq("uid", uid);
       if (updateError) throw updateError;
-    
       const updatedUser = await fetchUserFromUid(uid); // Re-fetch user data to update asap
       setUser(updatedUser);
       console.log("UPDATED USER!!! ", updatedUser);
