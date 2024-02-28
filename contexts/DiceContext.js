@@ -48,15 +48,15 @@ const DiceContextProvider = ({ children }) => {
     }
   };
 
-  const fetchCommunityDice = async () => {
+  const fetchCommunityDice = async (currentUid) => {
     try {
       const { data, error } = await supabase
         .from("Dice")
         .select("*")
-        // .eq("diceId", diceId)
+        .neq("creator", currentUid);
         // .single();
       if (error) throw error;
-      print(data);
+
       return data;
     } catch (error) {
       console.error("Error fetching dice from diceId: ", error);

@@ -17,6 +17,7 @@ import { useState, useEffect, useContext } from "react";
 import Images from "../../assets/Themes/Images";
 import { useLocalSearchParams, router } from "expo-router";
 import { DICE_DATA } from "../../assets/Themes/Dice";
+import { UserContext } from "../../contexts/UserContext";
 import { DiceContext } from "../../contexts/DiceContext";
 
 export default function Page() {
@@ -32,14 +33,15 @@ export default function Page() {
   //   return undefined;
   // }
 
+  const { user } = useContext(UserContext);
   const { fetchCommunityDice } = useContext(DiceContext);
   const [dataList, setDataList] = useState([]);
   // const [dataList, setDataList] = useState([]);
 
   useEffect(() => {
-    const fetchDice= async () => {
+    const fetchDice = async () => {
       try {
-        let result = await fetchCommunityDice();
+        let result = await fetchCommunityDice(user.uid);
         if (result) {
           setDataList(result);
         }

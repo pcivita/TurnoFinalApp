@@ -2,6 +2,7 @@ import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { UserContext } from "../contexts/UserContext";
 import { useContext, useEffect, useState } from "react";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -17,8 +18,10 @@ export default function DiceCard({ img, title, creator, numSaved, numRolled }) {
       const fetchUserData = async () => {
         try {
           let result = await fetchUserFromUid(creator);
-          setCreatorUsername(result.username);
-          if (result.profilePicUri) {
+          if (result && result.username) {
+            setCreatorUsername(result.username);
+          }
+          if (result && result.profilePicUri) {
             setCreatorProfilePic(result.profilePicUri);
           }
         } catch (error) {
@@ -41,7 +44,16 @@ export default function DiceCard({ img, title, creator, numSaved, numRolled }) {
           marginLeft: 10,
         }}
       >
-        <Image source={{ uri: creatorProfilePic }} style={styles.profilePic} />
+        {creatorProfilePic ?
+          <Image source={{ uri: creatorProfilePic }} style={styles.profilePic} />
+          :
+          <FontAwesome5
+            name="user-circle"
+            size={30}
+            color="black"
+            style={styles.profilePic}
+          />
+          }
         <Text style={{ fontSize: 12 }}>By @{creatorUsername}</Text>
       </View>
       <View

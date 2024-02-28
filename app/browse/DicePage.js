@@ -59,8 +59,10 @@ export default function DicePage() {
         const fetchUserData = async () => {
           try {
             let result = await fetchUserFromUid(params.creator);
-            setCreatorUsername(result.username);
-            if (result.profilePicUri) {
+            if (result && result.username) {
+              setCreatorUsername(result.username);
+            }
+            if (result && result.profilePicUri) {
               setCreatorProfilePic(result.profilePicUri);
             }
           } catch (error) {
