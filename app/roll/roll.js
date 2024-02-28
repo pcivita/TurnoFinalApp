@@ -22,19 +22,107 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ZigZagArrow from "../../components/Icons/ZigZagArrow";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import { UserContext } from "../../contexts/UserContext";
 
 export default function Page() {
   const [currentDice, setCurrentDice] = useState(null);
 
   const [choices, setChoices] = useState([]);
   const [canRoll, setCanRoll] = useState(true);
+  const {user, fetchUserFromUid} = useContext(UserContext)
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        let result = await fetchUserFromUid(user.uid);
+        setUserData(result);
+      } catch (error) {
+        console.error('Failed to fetch user data:', error);
+      }
+    };
+    if (user) {
+      fetchUserData();
+    }
+  }, [user])
+  
+
+
 
   const params = useLocalSearchParams();
+
+  const addToUserRollHistory = async (uid, diceId, choice) => {
+    // update the rollHistory array with the users table with uid: uid
+    const rollEntry = {
+      diceId: diceId,
+      choice: choice,
+      timestamp: new Date().toISOString(),
+    };
+
+    // fetch rollHistory from users table with uid and append roll entry to it
+    let rollHistory = userData.rollHistory;
+    rollHistory.push(rollEntry);
+
+    try {
+      const { data, error } = await supabase
+        .from("users")
+        .update({
+          rollHistory: rollHistory
+        })
+        .eq("uid", uid);
+      if (error) throw error;
+      console.log("Roll tracked: ", data);
+    }
+    catch (error) {
+      console.error('Failed to track roll:', error);
+    }
+  }
+
+  const updateDiceRollHistory = async (diceId, choice, uid) => {
+    const rollEntry = {
+      choice: choice,
+      timestamp: new Date().toISOString(),
+      user: uid,
+    }
+
+    // fetch current rollHsitory array from dice table in supabase with diceId
+
+    let rollHistory = []
+    try {
+      const { data, error } = await supabase
+        .from("Dice")
+        .select("rollHistory")
+        .eq("diceId", diceId);
+      if (error) throw error;
+      console.log("Roll history fetched: ", data);
+      rollHistory = data[0].rollHistory;
+      rollHistory.push(rollEntry);
+
+      // update rollHistory array in dice table with diceId
+      
+    } catch (error) {
+      console.error('Failed to fetch roll history:', error);
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from("Dice")
+        .update({
+          rollHistory: rollHistory
+        })
+        .eq("diceId", diceId);
+      if (error) throw error;
+      console.log("Roll history updated: ", data);
+    } catch (error) {
+      console.error('Failed to update roll history:', error);
+
+    }
+
+  }
 
   useEffect(() => {
     if (params) {
       const arr = params.choices.split(",");
-      console.log(arr);
       setChoices(arr);
       if (arr.length < 2) {
         setCanRoll(false);
@@ -50,12 +138,15 @@ export default function Page() {
 
   const handleRoll = (data) => {
     setDiceNum(data[0]);
-    const randomInt = Math.floor(Math.random() * arr.length);
+    const randomInt = Math.floor(Math.random() * choices.length);
     // const random1to6 = Math.floor(Math.random() * 6) + 1;
     setChoiceName(choices[randomInt]);
 
     bannerProgress.value = 0;
     swipeProgress.value = 0;
+
+    // addToUserRollHistory(userData.uid, params.diceId, choices[randomInt]);
+    // updateDiceRollHistory(params.diceId, choices[randomInt], userData.uid);
 
     setDiceRolled(true);
     //startAnimation();
@@ -225,6 +316,12 @@ export default function Page() {
             setSwipeComplete={setSwipeComplete}
             setShowOverlay={setShowOverlay}
             diceName={params && params.title}
+            trackData={
+              async () => {
+                await addToUserRollHistory(userData.uid, params.diceId, choiceName);
+                await updateDiceRollHistory(params.diceId, choiceName, userData.uid);
+              }
+            }
           />
         </Animated.View>
       )}

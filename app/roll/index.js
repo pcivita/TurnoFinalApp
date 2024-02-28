@@ -110,6 +110,7 @@ export default function Page() {
                    username: item.creator,
                    img: item.imageUri,
                    id: item.id,
+                   diceId: item.diceId,
                  } : {},
                }}
              >
