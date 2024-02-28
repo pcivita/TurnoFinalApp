@@ -464,7 +464,7 @@ export default function Onboarding() {
         />
         <Text style={styles.title}>Turno</Text>
         <Text style={styles.subtitle}>Roll your way through the day</Text>
-        <TextInput style={styles.input} placeholder="Email" onChangeText={setEmail} value={email}/>
+        <TextInput style={styles.input} placeholder="Email" onChangeText={(text) => setEmail(text.toLowerCase())} value={email}/>
         <TextInput
           style={styles.input}
           placeholder="Password"

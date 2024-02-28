@@ -25,19 +25,22 @@ export default function CongratsModal({
   setSwipeComplete,
   setShowOverlay,
   diceName,
+  trackData
 }) {
   const { deleteActivity } = useContext(ActivitiesContext);
 
-  const onExitModal = () => {
+  const onExitModal = async () => {
     if (!switchEnabled) {
       // console.log("deleting activity of index: " + activityIndex);
       deleteActivity(activityIndex);
     }
+    await trackData()
     setModalVisible(false);
     setDiceRolled(false);
     setSwipeComplete(false);
     setSwitchEnabled(false);
     setShowOverlay(true);
+
   };
 
   const { addPost } = useContext(PostsContext);
@@ -45,6 +48,7 @@ export default function CongratsModal({
 
   const postActivity = async () => {
     //(activityName)
+    await trackData()
   };
 
   return (
