@@ -59,7 +59,7 @@ export default function Page() {
     <>
       <View style={styles.container}>
         <Stack.Screen options={{ headerShown: false }} />
-        <Header title="Browse" />
+        <Header title="Community" />
         <Text style={styles.headerText}>Community Dice</Text>
         <View style={styles.searchBarContainer}>
           <TextInput style={styles.searchBar} placeholder="Search" />
