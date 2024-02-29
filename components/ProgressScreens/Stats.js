@@ -8,6 +8,7 @@ export default function Stats() {
   const {user, fetchUserFromUid} = useContext(UserContext)
   const [userData, setUserData] = useState({});
   const [stats, setStats] = useState({});
+  const [streak, setStreak] = useState(0);
 
 
   useEffect(() => {
@@ -28,12 +29,13 @@ export default function Stats() {
   }, [user])
 
   const calculateStreak = (rollHistory) => {
-    let streak = 0;
+    let streak = 5;
     let today = new Date();
     let yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
+    console.log("rollDate")
     for (let i = rollHistory.length - 1; i >= 0; i--) {
-      let rollDate = new Date(rollHistory[i].date);
+      let rollDate = new Date(rollHistory[i].timestamp);
       if (rollDate.toDateString() === today.toDateString()) {
         streak++;
         today.setDate(today.getDate() - 1);

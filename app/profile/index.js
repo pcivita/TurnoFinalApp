@@ -32,8 +32,6 @@ export default function Page() {
       const fetchUserData = async () => {
         try {
           let result = await fetchUserFromUid(user.uid);
-          // console.log(result);
-          // setUserData(result);
           setFullName(result.fullName);
           setUsername(result.username);
           if (result.profilePicUri) setProfilePicUri(result.profilePicUri);
