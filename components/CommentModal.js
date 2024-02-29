@@ -58,14 +58,14 @@ export default function CommentModal({
   // const commentsTEST = posts[postIndex].comments;
 
   const handleAddComment = async () => {
-    console.log("Comment Pressed");
+    // console.log("Comment Pressed");
     let dataBaseName;
     if (profilePost) {
       dataBaseName = "posts";
     } else {
       dataBaseName = "posts_feed";
     }
-    console.log("ID:", id);
+    // console.log("ID:", id);
     const post_id = id;
     const new_comment = {
       user_handle: "@pcivita",

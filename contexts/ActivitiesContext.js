@@ -6,18 +6,17 @@ export const ActivitiesContext = createContext();
 // Create a provider component
 export const ActivitiesProvider = ({ children }) => {
   const [activities, setActivities] = useState([
-    ["Soccer", "I want to play soccer", "Exercise"],
-    ["Read", "I want to read", "Academic"],
-    ["Write", "Write a chapter in my novel", "Work"],
-    // ["Meditate", "Medidate for 10 minutes outside", "Relax"],
+    "Green Library",
+    "Tresidder",
+    "Coupa Cafe",
   ]);
 
   const [canRoll, setCanRoll] = useState(true);
 
   // Function to add a new activity
-  const addActivity = (name, description, category) => {
+  const addActivity = (name) => {
     setActivities((activities) => {
-      let newActivity = [name, description, category];
+      let newActivity = name;
       activities.push(newActivity);
 
       if (activities.length >= 2) {
@@ -28,11 +27,11 @@ export const ActivitiesProvider = ({ children }) => {
     });
   };
 
-  const editActivity = (activityIndex, newName, newDescription, newCategory) => {
+  const editActivity = (activityIndex, newName) => {
     setActivities((prevActivities) => {
       // Create a new array with the updated activity
       const updatedActivities = [...prevActivities];
-      updatedActivities[activityIndex] = [newName, newDescription, newCategory];
+      updatedActivities[activityIndex] = newName;
   
       return updatedActivities;
     });
@@ -40,10 +39,7 @@ export const ActivitiesProvider = ({ children }) => {
 
   const deleteActivity = (activityIndex) => {
     setActivities((prevActivities) => {
-      console.log("DELETING ACTIVITY CALLED " + activityIndex);
       const updatedActivities = prevActivities.filter((activity, index) => index !== activityIndex);
-      console.log("updated: ");
-      console.log(updatedActivities);
 
       if (updatedActivities.length < 2) {
         setCanRoll(false);

@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import Journey from "../../components/ProgressScreens/Journey";
 import Stats from "../../components/ProgressScreens/Stats";
 import Header from "../../components/Header";
-import ProgressNavigation from "../../components/ProgressNavigation";
+import ProfileNavigation from "../../components/ProfileNavigation";
 import { InProgressContext } from "../../contexts/InProgressContext";
 
 export default function Page() {
@@ -16,7 +16,7 @@ export default function Page() {
     <View style={styles.container}>
       <Header title="Progress" />
       <View style={styles.buttonContainer}>
-        <ProgressNavigation onData={handleData} />
+        <ProfileNavigation onData={handleData} />
       </View>
       <View style={styles.subscreenContainer}>
         {activeScreen === "Journey" && <Journey />}

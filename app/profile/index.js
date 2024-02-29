@@ -3,24 +3,55 @@ import { Themes } from "../../assets/Themes";
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import ProfileCard from "../../components/ProfileCard";
-import { useState,  useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { PostsProvider } from "../../contexts/PostsContext";
 import Header from "../../components/Header";
-import Supabase from "../../Supabase";
 import MyPosts from "../../components/ProgressScreens/MyPosts";
 import Stats from "../../components/ProgressScreens/Stats";
-import ProgressNavigation from "../../components/ProgressNavigation";
+import ProfileNavigation from "../../components/ProfileNavigation";
+import { UserContext } from "../../contexts/UserContext";
 
 export default function Page() {
   //const [data, setData] = useState();
 
-  const [activeScreen, setActiveScreen] = useState("Stats"); // Initial state
+  const [activeScreen, setActiveScreen] = useState("Posts"); // Initial state
+
+  const [userData, setUserData] = useState({
+    fullName: "",
+    username: "",
+    profilePicUri: "",
+  });
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const [profilePicUri, setProfilePicUri] = useState("");
+  const { fetchUserFromUid, user } = useContext(UserContext);
+
+  useEffect(() => {
+    if (user) {
+
+      const fetchUserData = async () => {
+        try {
+          let result = await fetchUserFromUid(user.uid);
+          setFullName(result.fullName);
+          setUsername(result.username);
+          if (result.profilePicUri) setProfilePicUri(result.profilePicUri);
+        } catch (error) {
+          console.error('Failed to fetch user data:', error);
+        }
+      };
+
+      fetchUserData();
+    }
+  }, [user]);
+
+
   handleData = (data) => {
     setActiveScreen(data);
   };
 
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
+    // "Poppins-Medium": require("./assets/Poppins/Poppins-Medium.ttf"),
     "Poppins-Bold": require("../../assets/Poppins/Poppins-Bold.ttf"),
   });
   if (!fontsLoaded) {
@@ -28,34 +59,32 @@ export default function Page() {
   }
 
   return (
-    // <PostsProvider>
-      
-      
-      <View style={styles.container}>
-        <Stack.Screen options={{ headerShown: false }} />
-        <Header title="Profile" />
-        {/* <View style={styles.main}> */}
+    <>
+      {userData && (
+        <View style={styles.container}>
+          <Stack.Screen options={{ headerShown: false }} />
+          <Header title="Profile" />
+
           <View style={styles.profileCard}>
-            <ProfileCard
+           <ProfileCard
               isYourProfile={true}
-              profileName="Pedro Civita"
-              handle="@pcivita"
-              profilePic={"Pedro"}
+              profileName={fullName}
+              handle={"@" + username}
+              profilePic={profilePicUri}
             />
           </View>
 
           <View style={styles.buttonContainer}>
-            <ProgressNavigation onData={handleData} />
+            <ProfileNavigation onData={handleData} />
           </View>
-
 
           <View style={styles.subscreenContainer}>
             {activeScreen === "Posts" && <MyPosts />}
             {activeScreen === "Stats" && <Stats />}
           </View>
-        {/* </View> */}
-      </View>
-    // </PostsProvider>
+        </View>
+      )}
+    </>
   );
 }
 
@@ -64,27 +93,20 @@ const styles = StyleSheet.create({
     // flex: 1,
     display: "flex",
     height: "100%",
-    justifyContent: "center",
+    justifyContent: "flex-end",
+    alignItems: "center",
     backgroundColor: Themes.colors.background,
   },
   subscreenContainer: {
     flex: 1,
     height: 200,
   },
-  // main: {
-  //   flex: 1,
-  //   justifyContent: "center",
-  //   width: "100%",
-  //   marginHorizontal: "auto",
-  // },
   buttonContainer: {
+    marginTop: 20,
     display: "flex",
     flexDirection: "row",
     width: "100%",
     justifyContent: "center",
   },
-  profileCard: {
-    // position: "absolute",
-    // top: 10
-  }
+  profileCard: {},
 });

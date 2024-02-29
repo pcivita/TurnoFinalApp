@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import Images from "../assets/Themes/Images";
 import { useFonts } from "expo-font";
 import { Themes } from "../assets/Themes";
+import { Profile } from "./Profile";
 
 export default function ProfileCard({
   isYourProfile,
@@ -11,7 +12,7 @@ export default function ProfileCard({
   profilePic,
 }) {
   const handleFriends = () => {
-    console.log("Pressed");
+    //console.log("Pressed");
   };
 
   const imageDict = {
@@ -34,9 +35,16 @@ export default function ProfileCard({
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image source={imageDict[profilePic]} style={styles.profileImg} />
-      </View>
+      {profilePic ? (
+        <View style={styles.imageContainer}>
+          <Image
+            source={imageDict["Pedro"]}
+            style={styles.profileImg}
+          />
+        </View>
+      ) : (
+        <Profile width={100} height={100} />
+      )}
       <Text style={styles.profileName}>{profileName}</Text>
 
       <Text style={styles.handle}>{handle}</Text>
@@ -47,11 +55,11 @@ export default function ProfileCard({
             params: { previousPage: "Profile" },
           }}
         >
-          <View>
+          {/* <View>
             <View style={styles.friendsBox}>
               <Text style={styles.handle}> 4 friends </Text>
             </View>
-          </View>
+          </View> */}
         </Link>
       ) : (
         <View style={styles.addFriendBox}>
@@ -64,17 +72,19 @@ export default function ProfileCard({
 
 const styles = StyleSheet.create({
   container: {
-    height: 300, // Keep this Standard
-    gap: 4,
+    // height: 220,
+    gap: 1,
     width: "100%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    padding: 24,
+    paddingHorizontal: 15,
+    paddingTop: 15,
+    // backgroundColor: "green"
   },
   imageContainer: {
-    width: "30%",
+    width: 100,
     height: undefined,
     aspectRatio: 1,
     borderRadius: 100,
@@ -91,19 +101,19 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-Regular",
   },
   profileName: {
-    fontSize: 24,
-    fontFamily: "Poppins-Bold",
+    fontSize: 20,
+    // fontFamily: "Poppins-Medium",
   },
   handle: {
     fontFamily: "Poppins-Regular",
-    fontSize: 17,
+    fontSize: 14,
     textAlign: "center",
   },
   friendsBox: {
     marginTop: 8,
     borderRadius: 10,
     borderWidth: 0.5,
-    padding: 10,
+    padding: 5,
   },
   addFriendBox: {
     borderRadius: 10,
