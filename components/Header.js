@@ -9,12 +9,17 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 export default function Header({ title, dice }) {
   let headerTitle = title;
   if (title === "Friends from Feed" || title === "Friends from Profile") {
-    headerTitle="Friends";
+    headerTitle = "Friends";
   }
 
-  // console.log(dice);
+  const navBarTitles = [
+    "My Dice",
+    "Feed",
+    "Community",
+    "Profile"
+  ]
 
-const titleToPath = {
+  const backArrow = {
     "Settings": "/profile",
     "Create Activity": "/activities/home",
     "Friends from Feed": "/feed",
@@ -24,11 +29,18 @@ const titleToPath = {
     "Create New Dice": "/roll",
   };
 
-  const backPath = { pathname: titleToPath[title] || "/" };
+  const backPath = { pathname: backArrow[title] || "/" };
 
   return (
     <View style={styles.container}>
-      {(titleToPath[title]) ?
+      <View style={styles.containerStyle1}>
+        {navBarTitles.includes(title) &&
+          <Text style={styles.title}>{headerTitle}</Text>
+        }
+      </View>
+
+
+      {backArrow[title] &&
         <View style={styles.leftIcon}>
           <Link href={backPath}>
             <FontAwesome5
@@ -38,16 +50,8 @@ const titleToPath = {
             />
           </Link>
         </View>
-      :
-        <FontAwesome5
-          name="dice-five" 
-          size={25}
-          color={"white"}
-          transform={[{ rotate: "45deg" }]}
-          style={styles.leftIcon}
-        />
       }
-      <Text style={styles.title}>{headerTitle}</Text>
+      {/* <Text style={styles.title}>{headerTitle}</Text> */}
       {(title === "Profile" || title === "Feed") && (
         <Link 
           href={ title === "Profile" ? {pathname: "/profile/settings"} : {pathname: "friendsPage", previousPage: "Feed"}} 
@@ -93,21 +97,31 @@ const titleToPath = {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    flexDirection: "row",
-    height: 110,
+    flexDirection: "column",
+    height: 100,
     paddingTop: 45,
     alignItems: "center",
-    justifyContent: "space-around",
-    backgroundColor: Themes.colors.salmon,
+    justifyContent: "flex-end",
+    // backgroundColor: "green",
   },
+  containerStyle1: {
+    width: "100%",
+    paddingLeft: 20,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    // backgroundColor: "blue",
+  },
+
+
   leftIcon: {
     position: "absolute",
     left: 15,
     top: 65,
   },
   title: {
-    fontSize: 28,
-    color: "white",
+    fontSize: 26,
+    color: "black",
     fontFamily: "Poppins-Bold",
   },
   rightIcon: {
