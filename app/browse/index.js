@@ -59,8 +59,7 @@ export default function Page() {
     <>
       <View style={styles.container}>
         <Stack.Screen options={{ headerShown: false }} />
-        <Header title="Community" />
-        <Text style={styles.headerText}>Community Dice</Text>
+        <Header title="Community Dice" />
         <View style={styles.searchBarContainer}>
           <TextInput style={styles.searchBar} placeholder="Search" />
           <TouchableOpacity onPress={() => setFiltersVisible(!filtersVisible)}>
@@ -267,6 +266,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     width: "90%",
+    marginTop: 16,
   },
   searchBar: {
     width: "90%",

@@ -15,7 +15,7 @@ export default function Header({ title, dice }) {
   const navBarTitles = [
     "My Dice",
     "Feed",
-    "Community",
+    "Community Dice",
     "Profile"
   ]
 
@@ -46,7 +46,7 @@ export default function Header({ title, dice }) {
             <FontAwesome5
               name="arrow-left"
               size={25}
-              color={"white"}
+              color={"black"}
             />
           </Link>
         </View>
@@ -60,7 +60,7 @@ export default function Header({ title, dice }) {
           <FontAwesome5
             name={title === "Profile" ? "cog" : "user-friends"} 
             size={25}
-            color={"white"}
+            color={"black"}
           />
         </Link>
       )}
@@ -86,7 +86,7 @@ export default function Header({ title, dice }) {
           <MaterialCommunityIcons
             name={"pencil"}
             size={25}
-            color={"white"}
+            color={"black"}
           />
         </Link>
       )}
