@@ -27,6 +27,7 @@ export default function Page() {
   const [activeFilter, setActiveFilter] = useState("");
   // const [fontsLoaded] = useFonts({
   //   "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
+  //   "Poppins-SemiBold": require("../../assets/Poppins/Poppins-SemiBold.ttf"),
   //   "Poppins-Bold": require("../../assets/Poppins/Poppins-Bold.ttf"),
   // });
   // if (!fontsLoaded) {
