@@ -79,9 +79,6 @@ export default function Page() {
     }
   }, [diceIds]);
 
-  const addDice = [{}];
-  const dataList = [...diceData, ...addDice];
-
 
   return (
     <View style={styles.container}>
@@ -92,39 +89,39 @@ export default function Page() {
         </Text>
       </View>
       <FlatList
-        data={dataList}
+        data={diceData}
         numColumns={1}
         // keyExtractor={(item) => item.id}
         keyExtractor={(item, index) => String(index)}
         renderItem={({ item, index }) => (
-
-          <TouchableOpacity style={{ margin: 5 }}>
-               <Link
-               href={{
-                 pathname: `/roll/roll`,
-                 params: item ? { // Check if item.id exists
-                   name: item.name,
-                   choices: item.choices,
-                   numRolled: item.rollHistory,
-                   numSaved: item.saves,
-                   username: item.creator,
-                   img: item.imageUri,
-                   id: item.id,
-                   diceId: item.diceId,
-                 } : {},
-               }}
-             >
-                <PersonalDiceCard
-                  imageUri={item ? item.imageUri : ""}
-                  title={item ? item.name : ""}
-                  subText={item ? item.description : ""}
-                />
-              </Link>
-              
-          </TouchableOpacity>
+          // <TouchableOpacity style={{ margin: 5 }}>
+          //   <Link
+          //     href={{
+          //       pathname: `/roll/roll`,
+          //       params: item ? { // Check if item.id exists
+          //         name: item.name,
+          //         choices: item.choices,
+          //         numRolled: item.rollHistory,
+          //         numSaved: item.saves,
+          //         username: item.creator,
+          //         img: item.imageUri,
+          //         id: item.id,
+          //         diceId: item.diceId,
+          //       } : {},
+          //     }}
+          //   >
+            <View style={{ margin: 5 }}>
+              <PersonalDiceCard
+                item={item}
+                imageUri={item ? item.imageUri : ""}
+                title={item ? item.name : ""}
+                subText={item ? item.description : ""}
+              />
+            </View>
+            /* </Link>
+          </TouchableOpacity> */
         )}
       /> 
-      
       <View style={styles.shadowContainer}>
       {/* <Link
         href={{

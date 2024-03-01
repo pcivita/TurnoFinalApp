@@ -1,81 +1,135 @@
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { Themes } from '../assets/Themes';
-import { FontAwesome5 } from '@expo/vector-icons';
-import Images from '../assets/Themes/Images';
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { Themes } from "../assets/Themes";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Link } from "expo-router";
+import Images from "../assets/Themes/Images";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
-export default function PersonalDiceCard({ imageUri, title, subText}) {
+export default function PersonalDiceCard({ item, imageUri, title, subText }) {
+  const handleRollPress = (e) => {
+    e.stopPropagation();
+  };
+
   return (
-    <View style={styles.container}>
-      <Image source={{uri: imageUri}} style={styles.image}/>
-      <View style={styles.textCol}>
-        <Text style={styles.titleText}>{title}</Text>
-        {subText === "" ? 
-          <View style={{height: 16}} />
-        :
-          <Text style={styles.descText}>{subText}</Text>
-        }
-        <View style={styles.button}>
-          <FontAwesome5 name="dice-d6" size={16} color="white" />
-          <Text style={[styles.descText, {color: 'white'}]}>Roll</Text>
-        </View>
-        <View style={styles.menuDots}>
-          <FontAwesome5 name="ellipsis-h" size={12} color="black" />
+    <Link
+      href={{
+        pathname: `/activities`,
+        params: item
+          ? {
+              name: item.name,
+              choices: item.choices,
+              numRolled: item.rollHistory,
+              numSaved: item.saves,
+              username: item.creator,
+              img: item.imageUri,
+              id: item.id,
+              diceId: item.diceId,
+            }
+          : {},
+      }}
+    >
+      <View style={styles.container}>
+        <Image source={{ uri: imageUri }} style={styles.image} />
+        <View style={styles.textCol}>
+          <View style={styles.titleAndSubtitle}>
+            <Text style={styles.titleText} numberOfLines={2}>{title}</Text>
+            <Text style={styles.descText} numberOfLines={1}>
+              {subText ? subText : " "}
+            </Text>
+          </View>
+          
+          <Link
+            href={{
+              pathname: `/roll/roll`,
+              params: item
+                ? {
+                    name: item.name,
+                    choices: item.choices,
+                    numRolled: item.rollHistory,
+                    numSaved: item.saves,
+                    username: item.creator,
+                    img: item.imageUri,
+                    id: item.id,
+                    diceId: item.diceId,
+                  }
+                : {},
+            }}
+          >
+            <TouchableOpacity onPress={handleRollPress} style={styles.button}>
+              <FontAwesome5 name="dice-d6" size={16} color="white" />
+              <Text style={[styles.descText, { color: "white" }]}>Roll</Text>
+            </TouchableOpacity>
+          </Link>
+
+          <View style={styles.menuDots}>
+            <FontAwesome5 name="ellipsis-h" size={12} color="black" />
+          </View>
         </View>
       </View>
-    </View>
-  )
+    </Link>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // width: '100%',
     width: windowWidth * 0.95,
     borderRadius: 20,
-    // height: 150,
+    height: 140,
     borderWidth: 1,
     borderColor: Themes.colors.mediumGray,
     padding: 10,
-    flexDirection: 'row',
+    flexDirection: "row",
     alignItems: "center",
   },
   textCol: {
-    marginLeft: 10,
+    marginLeft: 5,
     padding: 10,
+    // width: "70%",
+    height: "90%",
     flex: 1,
+    // flexDirection: "column",
+    justifyContent: "space-between",
+    gap: 17,
   },
   button: {
-    marginTop: 8,
-    width: '100%',
+    // marginTop: 10,
+
+    width: 220,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Themes.colors.salmon,
     gap: 8,
     borderRadius: 30,
-    paddingVertical: 8,
+    paddingVertical: 6,
   },
   menuDots: {
-    position: 'absolute',
+    position: "absolute",
     right: 0,
     top: 0,
     padding: 10,
   },
   image: {
     width: 100,
-    height: 110,
+    // height: 110,
+    height: "90%",
     borderRadius: 10,
   },
+  titleAndSubtitle: {
+    height: 50,
+  },
   titleText: {
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: "Poppins-SemiBold",
     fontSize: 16,
     width: "90%",
+    lineHeight: 18,
   },
   descText: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: "Poppins-Regular",
     fontSize: 14,
   },
-})
+});
