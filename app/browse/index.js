@@ -37,7 +37,6 @@ export default function Page() {
   const { user } = useContext(UserContext);
   const { fetchCommunityDice } = useContext(DiceContext);
   const [dataList, setDataList] = useState([]);
-  // const [dataList, setDataList] = useState([]);
 
   useEffect(() => {
     const fetchDice = async () => {
@@ -215,6 +214,7 @@ export default function Page() {
                     img: item.imageUri,
                     id: item.diceId,
                     creator: item.creator,
+                    pageTitle: "Dice Page from Community"
                     // profilePic: item.user.profilePic,
                   },
                 }}

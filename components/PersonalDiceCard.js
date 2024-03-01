@@ -17,20 +17,17 @@ export default function PersonalDiceCard({ item, imageUri, title, subText }) {
   return (
     <Link
       href={{
-        pathname: `/activities`,
-        params: item
-          ? {
-              name: item.name,
-              choices: item.choices,
-              numRolled: item.rollHistory,
-              numSaved: item.saves,
-              username: item.creator,
-              img: item.imageUri,
-              id: item.id,
-              diceId: item.diceId,
-            }
-          : {},
-      }}
+        pathname: `/browse/DicePage`,
+        params: {
+          activities: item.choices,
+          title: item.name,
+          img: item.imageUri,
+          id: item.diceId,
+          creator: item.creator,
+          pageTitle: "Dice Page from My Dice"
+          // profilePic: item.user.profilePic,
+        },
+    }}
     >
       <View style={styles.container}>
         <Image source={{ uri: imageUri }} style={styles.image} />
