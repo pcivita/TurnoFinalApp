@@ -11,22 +11,22 @@ export default function Header({ title, dice }) {
   if (title === "Friends from Feed" || title === "Friends from Profile") {
     headerTitle = "Friends";
   }
-  if (title === "Dice Page from Community" || title === "Dice Page from My Dice") {
+  if (title === "My Dice Details" || title === "Community Dice Details") {
     headerTitle = "Dice Details";
   }
 
   const navBarTitles = ["My Dice", "Feed", "Community Dice", "Profile"];
 
   const backArrow = {
-    Settings: "/profile",
+    "Settings": "/profile",
     "Create Activity": "/activities/home",
     "Friends from Feed": "/feed",
     "Friends from Profile": "/profile",
-    Roll: "/roll",
-    Activities: "/roll",
+    "Roll": "/roll",
+    "Activities": "/roll",
     "Create New Dice": "/roll",
-    "Dice Page from Community": "/browse",
-    "Dice Page from My Dice": "/roll"
+    "My Dice Details": "/roll",
+    "Community Dice Details": "/browse"
   };
 
   const backPath = { pathname: backArrow[title] || "/" };

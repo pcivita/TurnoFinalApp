@@ -214,7 +214,7 @@ export default function Page() {
                     img: item.imageUri,
                     id: item.diceId,
                     creator: item.creator,
-                    pageTitle: "Dice Page from Community"
+                    pageTitle: "Community Dice Details"
                     // profilePic: item.user.profilePic,
                   },
                 }}

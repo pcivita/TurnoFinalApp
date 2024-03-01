@@ -17,14 +17,14 @@ export default function PersonalDiceCard({ item, imageUri, title, subText }) {
   return (
     <Link
       href={{
-        pathname: `/browse/CommunityDiceDetails`,
+        pathname: `/roll/MyDiceDetails`,
         params: {
           activities: item.choices,
           title: item.name,
           img: item.imageUri,
           id: item.diceId,
           creator: item.creator,
-          pageTitle: "Dice Page from My Dice"
+          pageTitle: "My Dice Details"
           // profilePic: item.user.profilePic,
         },
     }}
