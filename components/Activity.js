@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, TouchableWithoutFeedback, Image } from "react-native";
 import { Themes } from "../assets/Themes";
 import { useState } from "react";
 import Images from "../assets/Themes/Images";
@@ -42,7 +42,7 @@ export default function Activity({ activityObject, index, addToChoices, notMyDic
 
   return (
     <View>
-      <TouchableOpacity onPress={notMyDice ? null : openModal}>
+      <TouchableWithoutFeedback onPress={notMyDice ? null : openModal}>
         {activityObject ? (
           <View style={styles.container}>
             <View style={styles.diceContainer}>
@@ -79,7 +79,7 @@ export default function Activity({ activityObject, index, addToChoices, notMyDic
             />
           </View>
         )}
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     </View>
   );
 }

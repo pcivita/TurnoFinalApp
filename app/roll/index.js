@@ -94,22 +94,6 @@ export default function Page() {
         // keyExtractor={(item) => item.id}
         keyExtractor={(item, index) => String(index)}
         renderItem={({ item, index }) => (
-          // <TouchableOpacity style={{ margin: 5 }}>
-          //   <Link
-          //     href={{
-          //       pathname: `/roll/roll`,
-          //       params: item ? { // Check if item.id exists
-          //         name: item.name,
-          //         choices: item.choices,
-          //         numRolled: item.rollHistory,
-          //         numSaved: item.saves,
-          //         username: item.creator,
-          //         img: item.imageUri,
-          //         id: item.id,
-          //         diceId: item.diceId,
-          //       } : {},
-          //     }}
-          //   >
             <View style={{ margin: 5 }}>
               <PersonalDiceCard
                 item={item}
@@ -118,30 +102,30 @@ export default function Page() {
                 subText={item ? item.description : ""}
               />
             </View>
-            /* </Link>
-          </TouchableOpacity> */
         )}
       /> 
       <View style={styles.shadowContainer}>
-      {/* <Link
-        href={{
-          pathname: `/roll/createNewDice`,
-        }}
-      > */}
-        <LinearGradient 
-          colors={[Themes.colors.salmon, Themes.colors.mango]}
-          style={styles.createDiceContainer}
-          start={[0,0]}
-          end={[1,1]}
-          locations={[0.5,0.8]}
+        <Link
+          href={{
+            pathname: `/roll/createNewDice`,
+          }}
         >
+          <View>
+          <LinearGradient 
+            colors={[Themes.colors.salmon, Themes.colors.mango]}
+            style={styles.createDiceContainer}
+            start={[0,0]}
+            end={[1,1]}
+            locations={[0.5,0.8]}
+          >
             <FontAwesome5
               name="plus"
               size={45}
               color={'white'}
             />
-        </LinearGradient>
-        {/* </Link> */}
+          </LinearGradient>
+          </View>
+        </Link>
       </View>
       
       

@@ -30,7 +30,7 @@ export default function PersonalDiceCard({ item, imageUri, title, subText }) {
           creator: item.creator,
           headerTitle: "My Dice Details",
         },
-    }}
+      }}
     >
       <View style={styles.container}>
         <Image source={{ uri: imageUri }} style={styles.image} />
