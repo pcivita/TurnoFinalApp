@@ -4,15 +4,15 @@ import { Themes } from "../assets/Themes";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import Images from "../assets/Themes/Images";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function PersonalDiceCard({ item, imageUri, title, subText }) {
-  const handleRollPress = (e) => {
-    e.stopPropagation();
-  };
+  handleEllipsesPress = () => {
+    console.log("hi");
+  }
 
   return (
     <Link
@@ -59,15 +59,17 @@ export default function PersonalDiceCard({ item, imageUri, title, subText }) {
                 : {},
             }}
           >
-            <TouchableOpacity onPress={handleRollPress} style={styles.button}>
+            <TouchableOpacity style={styles.button}>
               <FontAwesome5 name="dice-d6" size={16} color="white" />
               <Text style={[styles.descText, { color: "white" }]}>Roll</Text>
             </TouchableOpacity>
           </Link>
-
-          <View style={styles.menuDots}>
-            <FontAwesome5 name="ellipsis-h" size={12} color="black" />
-          </View>
+          
+            <View style={styles.menuDots}>
+              <TouchableOpacity onPress={handleEllipsesPress}>
+                <FontAwesome5 name="ellipsis-h" size={12} color="black" />
+              </TouchableOpacity>
+            </View>
         </View>
       </View>
     </Link>
