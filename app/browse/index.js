@@ -37,7 +37,6 @@ export default function Page() {
   const { user } = useContext(UserContext);
   const { fetchCommunityDice } = useContext(DiceContext);
   const [dataList, setDataList] = useState([]);
-  // const [dataList, setDataList] = useState([]);
 
   useEffect(() => {
     const fetchDice = async () => {
@@ -208,13 +207,14 @@ export default function Page() {
             <TouchableOpacity style={{ margin: 5 }}>
               <Link
                 href={{
-                  pathname: `/browse/DicePage`,
+                  pathname: `/browse/CommunityDiceDetails`,
                   params: {
                     activities: item.choices,
                     title: item.name,
                     img: item.imageUri,
                     id: item.diceId,
                     creator: item.creator,
+                    pageTitle: "Community Dice Details"
                     // profilePic: item.user.profilePic,
                   },
                 }}

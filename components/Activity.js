@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, TouchableWithoutFeedback, Image } from "react-native";
 import { Themes } from "../assets/Themes";
 import { useState } from "react";
 import Images from "../assets/Themes/Images";
@@ -42,7 +42,7 @@ export default function Activity({ activityObject, index, addToChoices, notMyDic
 
   return (
     <View>
-      <TouchableOpacity onPress={notMyDice ? null : openModal}>
+      <TouchableWithoutFeedback onPress={notMyDice ? null : openModal}>
         {activityObject ? (
           <View style={styles.container}>
             <View style={styles.diceContainer}>
@@ -79,24 +79,23 @@ export default function Activity({ activityObject, index, addToChoices, notMyDic
             />
           </View>
         )}
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Themes.colors.salmonMedium,
+    backgroundColor: Themes.colors.salmonVeryLight,
     height: 150,
     width: 170,
     borderRadius: 10,
     justifyContent: "center",
     gap: 10,
     alignItems: "center",
-    // shadowColor: "rgba(0, 0, 0, 0.5)",
-    // shadowOffset: { height: 2 },
-    // shadowOpacity: 0.3,
-    // shadowRadius: 2,
+
+    borderColor: Themes.colors.salmon,
+    borderWidth: 1,
   },
   gray: {
     borderWidth: 0.5,
@@ -105,24 +104,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  leftOfContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    left: 10,
-  },
-  rightOfContainer: {
-    right: 10,
-  },
-  currentActivity: {
-    backgroundColor: Themes.colors.salmon,
-  },
-  pendingActivity: {
-    backgroundColor: Themes.colors.salmonLight,
-  },
   text: {
     fontSize: 18,
     fontFamily: "Poppins-Bold",
-    color: "white",
     textAlign: "center",
   },
   textContainer: {
@@ -132,9 +116,6 @@ const styles = StyleSheet.create({
   },
   currentText: {
     color: "white",
-  },
-  pendingText: {
-    color: "black",
   },
   diceContainer: {
     width: 40,
@@ -152,9 +133,6 @@ const styles = StyleSheet.create({
   currentDiceContainer: {
     backgroundColor: "white",
   },
-  pendingDiceContainer: {
-    backgroundColor: "transparent",
-  },
   currentDiceNumber: {
     color: Themes.colors.salmon,
     fontWeight: "bold",
@@ -168,10 +146,5 @@ const styles = StyleSheet.create({
   },
   createActivity: {
     alignSelf: "center",
-  },
-  box: {
-    flexDirection: "column",
-    alignItems: "center",
-    padding: 10,
   },
 });

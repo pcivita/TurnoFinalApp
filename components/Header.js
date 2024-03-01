@@ -11,13 +11,11 @@ export default function Header({ title, dice }) {
   if (title === "Friends from Feed" || title === "Friends from Profile") {
     headerTitle = "Friends";
   }
+  if (title === "My Dice Details" || title === "Community Dice Details") {
+    headerTitle = "Dice Details";
+  }
 
-  const navBarTitles = [
-    "My Dice",
-    "Feed",
-    "Community Dice",
-    "Profile"
-  ]
+  const navBarTitles = ["My Dice", "Feed", "Community Dice", "Profile"];
 
   const backArrow = {
     "Settings": "/profile",
@@ -27,68 +25,70 @@ export default function Header({ title, dice }) {
     "Roll": "/roll",
     "Activities": "/roll",
     "Create New Dice": "/roll",
+    "My Dice Details": "/roll",
+    "Community Dice Details": "/browse"
   };
 
   const backPath = { pathname: backArrow[title] || "/" };
 
   return (
     <View style={styles.container}>
-      <View style={styles.containerStyle1}>
-        {navBarTitles.includes(title) &&
-          <Text style={styles.title}>{headerTitle}</Text>
-        }
-      </View>
-
-
-      {backArrow[title] &&
+      {backArrow[title] && (
         <View style={styles.leftIcon}>
           <Link href={backPath}>
-            <FontAwesome5
-              name="arrow-left"
-              size={25}
-              color={"black"}
-            />
+            <FontAwesome5 name="arrow-left" size={25} color={"black"} />
           </Link>
         </View>
-      }
-      {/* <Text style={styles.title}>{headerTitle}</Text> */}
+      )}
+
+      {navBarTitles.includes(title) ? (
+        <View style={styles.containerStyle1}>
+          <Text style={styles.title}>{headerTitle}</Text>
+        </View>
+      ) : (
+        <Text style={styles.title2}>{headerTitle}</Text>
+      )}
+
       {(title === "Profile" || title === "Feed") && (
-        <Link 
-          href={ title === "Profile" ? {pathname: "/profile/settings"} : {pathname: "friendsPage", previousPage: "Feed"}} 
+        <Link
+          href={
+            title === "Profile"
+              ? { pathname: "/profile/settings" }
+              : { pathname: "friendsPage", previousPage: "Feed" }
+          }
           style={styles.rightIcon}
         >
           <FontAwesome5
-            name={title === "Profile" ? "cog" : "user-friends"} 
+            name={title === "Profile" ? "cog" : "user-friends"}
             size={25}
             color={"black"}
           />
         </Link>
       )}
+
       {(title === "Roll") && (
-        <Link 
-          href={{ 
-            pathname: "/activities", 
-            params: {
-              diceItem: dice
-              // title: dice.title,
-              // numRolled: dice.numRolled,
-              // numSaved: dice.numSaved,
-              // user: dice.user,
-              // username: dice.user.username,
-              // profilePic: dice.user.profilePic,
-              // img: dice.img,
-              // id: dice.id,
-              // activities: dice.activities,
-            }
-          }} 
+        <FontAwesome5
+          name={"question-circle"}
+          size={25}
+          color={"black"}
           style={styles.rightIcon}
-        >
-          <MaterialCommunityIcons
-            name={"pencil"}
-            size={25}
-            color={"black"}
-          />
-        </Link>
+        />
+      )}
+
+      {title === "My Dice Details" && (
+        // TODO: edit dice page
+
+        // <Link
+        //   href={{
+        //     pathname: "/activities",
+        //     params: {
+        //       diceItem: dice,
+        //     },
+        //   }}
+        //   style={styles.rightIcon}
+        // >
+          <MaterialCommunityIcons name={"pencil"} size={25} color={"black"} style={styles.rightIcon}/>
+        // </Link>
       )}
     </View>
   );
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
     paddingTop: 45,
     alignItems: "center",
     justifyContent: "flex-end",
-    // backgroundColor: "green",
   },
   containerStyle1: {
     width: "100%",
@@ -110,23 +109,27 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    // backgroundColor: "blue",
   },
-
 
   leftIcon: {
     position: "absolute",
     left: 15,
-    top: 65,
+    top: 60,
   },
   title: {
     fontSize: 26,
     color: "black",
     fontFamily: "Poppins-Bold",
   },
+  title2: {
+    fontSize: 20,
+    color: "black",
+    fontFamily: "Poppins-Bold",
+    marginBottom: 10,
+  },
   rightIcon: {
     position: "absolute",
     right: 15,
-    top: 65
+    top: 60,
   },
 });

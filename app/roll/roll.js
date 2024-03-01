@@ -264,7 +264,7 @@ export default function Page() {
           <Text style={styles.heading1}>make a choice!</Text>
           <View style={styles.subtitle}>
             <FontAwesome5 name="dice-d6" size={18} color="black" />
-            <Text style={styles.heading2}>{params && params.name}</Text>
+            <Text style={styles.heading2}>{params && params.diceName}</Text>
           </View>
           <DiceComponent onData={handleRoll} isInteractive={!diceRolled} />
         </View>
@@ -275,31 +275,19 @@ export default function Page() {
           <Text style={styles.heading1}>Add more to roll!</Text>
           <View style={styles.subtitle}>
             <FontAwesome5 name="dice-d6" size={18} color="black" />
-            <Text style={styles.heading2}>{params && params.name}</Text>
+            <Text style={styles.heading2}>{params && params.diceName}</Text>
           </View>
-          <View style={styles.editDiceContainer}>
+          {/* <View style={styles.editDiceContainer}>
             <Link 
               href={{ 
-                pathname: "/activities", 
-                params: {
-                  // diceItem: dice
-                  // title: dice.title,
-                  // numRolled: dice.numRolled,
-                  // numSaved: dice.numSaved,
-                  // user: dice.user,
-                  // username: dice.user.username,
-                  // profilePic: dice.user.profilePic,
-                  // img: dice.img,
-                  // id: dice.id,
-                  // activities: dice.activities,
-                }
+                pathname: "/activities"
               }} 
             >
               <View style={styles.editDiceButton}>
                 <Text style={styles.editDiceText}>Edit dice</Text>
               </View>
             </Link>
-           </View>
+           </View> */}
         </View>
       )}
       {diceRolled && (
@@ -315,7 +303,7 @@ export default function Page() {
             setDiceRolled={setDiceRolled}
             setSwipeComplete={setSwipeComplete}
             setShowOverlay={setShowOverlay}
-            diceName={params && params.title}
+            diceName={params && params.diceName}
             trackData={
               async () => {
                 await addToUserRollHistory(userData.uid, params.diceId, choiceName);

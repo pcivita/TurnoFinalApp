@@ -19,7 +19,7 @@ import { Themes } from "../../assets/Themes";
 import Activity from "../../components/Activity";
 import { UserContext } from "../../contexts/UserContext";
 
-export default function DicePage() {
+export default function CommunityDiceDetails() {
   const params = useLocalSearchParams();
   const { fetchUserFromUid, user } = useContext(UserContext);
 
@@ -27,6 +27,7 @@ export default function DicePage() {
   const [activities, setActivities] = useState([]);
   const [creatorUsername, setCreatorUsername] = useState("");
   const [creatorProfilePic, setCreatorProfilePic] = useState();
+  const [pageTitle, setPageTitle] = useState("");
 
   const handleImageSource = (index) => {
     switch (index) {
@@ -55,6 +56,8 @@ export default function DicePage() {
       const arr = params.activities.split(",");
       setActivities(arr);
 
+      setPageTitle(params.pageTitle);
+
       if (params.creator) {
         const fetchUserData = async () => {
           try {
@@ -74,6 +77,7 @@ export default function DicePage() {
     }
   }, [params]);
 
+
   // Function to chunk the activities into pairs
   const chunkActivities = (activities, size) => {
     return activities.reduce((acc, curr, i) => {
@@ -91,7 +95,7 @@ export default function DicePage() {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
-      <Header title="Browse" />
+      <Header title={pageTitle} />
       {params && (
         // <View style={styles.titleContainer}>
         <View style={styles.titleContainer}>

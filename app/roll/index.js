@@ -79,9 +79,6 @@ export default function Page() {
     }
   }, [diceIds]);
 
-  const addDice = [{}];
-  const dataList = [...diceData, ...addDice];
-
 
   return (
     <View style={styles.container}>
@@ -92,59 +89,43 @@ export default function Page() {
         </Text>
       </View>
       <FlatList
-        data={dataList}
+        data={diceData}
         numColumns={1}
         // keyExtractor={(item) => item.id}
         keyExtractor={(item, index) => String(index)}
         renderItem={({ item, index }) => (
-
-          <TouchableOpacity style={{ margin: 5 }}>
-               <Link
-               href={{
-                 pathname: `/roll/roll`,
-                 params: item ? { // Check if item.id exists
-                   name: item.name,
-                   choices: item.choices,
-                   numRolled: item.rollHistory,
-                   numSaved: item.saves,
-                   username: item.creator,
-                   img: item.imageUri,
-                   id: item.id,
-                   diceId: item.diceId,
-                 } : {},
-               }}
-             >
-                <PersonalDiceCard
-                  imageUri={item ? item.imageUri : ""}
-                  title={item ? item.name : ""}
-                  subText={item ? item.description : ""}
-                />
-              </Link>
-              
-          </TouchableOpacity>
+            <View style={{ margin: 5 }}>
+              <PersonalDiceCard
+                item={item}
+                imageUri={item ? item.imageUri : ""}
+                title={item ? item.name : ""}
+                subText={item ? item.description : ""}
+              />
+            </View>
         )}
       /> 
-      
       <View style={styles.shadowContainer}>
-      {/* <Link
-        href={{
-          pathname: `/roll/createNewDice`,
-        }}
-      > */}
-        <LinearGradient 
-          colors={[Themes.colors.salmon, Themes.colors.mango]}
-          style={styles.createDiceContainer}
-          start={[0,0]}
-          end={[1,1]}
-          locations={[0.5,0.8]}
+        <Link
+          href={{
+            pathname: `/roll/createNewDice`,
+          }}
         >
+          <View>
+          <LinearGradient 
+            colors={[Themes.colors.salmon, Themes.colors.mango]}
+            style={styles.createDiceContainer}
+            start={[0,0]}
+            end={[1,1]}
+            locations={[0.5,0.8]}
+          >
             <FontAwesome5
               name="plus"
               size={45}
               color={'white'}
             />
-        </LinearGradient>
-        {/* </Link> */}
+          </LinearGradient>
+          </View>
+        </Link>
       </View>
       
       
@@ -159,9 +140,10 @@ const styles = StyleSheet.create({
     backgroundColor: Themes.colors.background,
   },
   instructionsContainer: {
-    height: 40,
+
     width: windowWidth - windowWidth * 0.1,
-    marginTop: 15,
+    marginTop: 5,
+    marginBottom: 25,
     alignItems: "left",
     justifyContent: "center",
   },
