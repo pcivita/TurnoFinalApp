@@ -4,14 +4,11 @@ import {
   View,
   Image,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   ScrollView,
 } from "react-native";
 import React, { useEffect, useState, useContext } from "react";
-import {
-  router,
-  Stack,
-  useLocalSearchParams,
-} from "expo-router";
+import { router, Stack, useLocalSearchParams, Link } from "expo-router";
 import Header from "../../components/Header";
 import { Themes } from "../../assets/Themes";
 import Activity from "../../components/Activity";
@@ -22,21 +19,21 @@ export default function MyDiceDetails() {
   const { fetchUserFromUid, user } = useContext(UserContext);
 
   const [currentDice, setCurrentDice] = useState(null);
-  const [activities, setActivities] = useState([]);
+  const [choices, setChoices] = useState([]);
   const [creatorUsername, setCreatorUsername] = useState("");
   const [creatorProfilePic, setCreatorProfilePic] = useState();
-  const [pageTitle, setPageTitle] = useState("");
+  const [headerTitle, setHeaderTitle] = useState("");
 
-  const handleAdd = () => {
-    router.replace("/roll");
-  };
+  // const handleAdd = () => {
+  //   router.replace("/roll/roll");
+  // };
 
   useEffect(() => {
     if (params) {
-      const arr = params.activities.split(",");
-      setActivities(arr);
+      const arr = params.choices.split(",");
+      setChoices(arr);
 
-      setPageTitle(params.pageTitle);
+      setHeaderTitle(params.headerTitle);
 
       if (params.creator) {
         const fetchUserData = async () => {
@@ -49,7 +46,7 @@ export default function MyDiceDetails() {
               setCreatorProfilePic(result.profilePicUri);
             }
           } catch (error) {
-            console.error('Failed to fetch user data:', error);
+            console.error("Failed to fetch user data:", error);
           }
         };
         fetchUserData();
@@ -57,39 +54,49 @@ export default function MyDiceDetails() {
     }
   }, [params]);
 
-
-  // Function to chunk the activities into pairs
-  const chunkActivities = (activities, size) => {
-    return activities.reduce((acc, curr, i) => {
+  const chunkChoices = (choices, size) => {
+    return choices.reduce((acc, curr, i) => {
       if (!(i % size)) {
-        acc.push([curr]); // Start a new chunk
+        acc.push([curr]);
       } else {
-        acc[acc.length - 1].push(curr); // Add to the last chunk
+        acc[acc.length - 1].push(curr);
       }
       return acc;
     }, []);
   };
 
-  const activitiesPairs = chunkActivities(activities, 2);
+  const choicesPairs = chunkChoices(choices, 2);
 
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
-      <Header title={pageTitle} />
-      {params && (
-        // <View style={styles.titleContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>{params.title}</Text>
+      <Header title={headerTitle} />
+
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>{params.diceName}</Text>
+        {params.description &&
+          <Text style={styles.descriptionText}>{params.description}</Text>
+        }
+      </View>
+
+      <View style={styles.creatorAndCategory}>
+        <View style={styles.creatorContainer}>
           <View style={styles.profile}>
-            <Image source={{ uri: creatorProfilePic}} style={styles.profilePic} />
+            <Image
+              source={{ uri: creatorProfilePic }}
+              style={styles.profilePic}
+            />
             <Text style={styles.profileText}>By @{creatorUsername}</Text>
           </View>
         </View>
-        // </View>
-      )}
+        <View style={styles.category}>
+          <Text style={styles.profileText}>Food & Drink</Text>
+        </View>
+      </View>
+
       <ScrollView style={styles.listContentContainer}>
-        {activitiesPairs.map((pair, index) => (
-          <View key={index} style={styles.activitiesRow}>
+        {choicesPairs.map((pair, index) => (
+          <View key={index} style={styles.choicesRow}>
             {pair.map((activity, idx) => (
               <Activity
                 key={idx}
@@ -100,10 +107,27 @@ export default function MyDiceDetails() {
             ))}
           </View>
         ))}
-        <TouchableOpacity style={styles.addToDiceButton} onPress={handleAdd}>
-          <Text style={styles.addToDiceText}>Save Dice</Text>
-        </TouchableOpacity>
       </ScrollView>
+      <View style={styles.buttonContainer}>
+        <Link
+          href={{
+            pathname: "/roll/roll",
+            params: params && {
+              diceName: params.diceName,
+              choices: params.choices,
+              numRolled: params.numRolled,
+              numSaved: params.numSaved,
+              img: params.img,
+              diceId: params.diceId,
+              creator: params.creator,
+            },
+          }}
+        >
+          <View style={styles.button}>
+            <Text style={styles.buttonText}>Roll Dice</Text>
+          </View>
+        </Link>
+      </View>
     </View>
   );
 }
@@ -116,28 +140,50 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   titleContainer: {
+    marginTop: 20,
     width: "90%",
-    height: 80,
+    flexDirection: "column",
+    alignItems: "left",
+  },
+  creatorAndCategory: {
+    marginVertical: 10,
+    width: "90%",
+    // height: 30,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    // paddingTop: 20,
-    // marginBottom: 12,
   },
-  addToDiceButton: {
+  category: {
+    borderColor: Themes.colors.salmon,
+    borderWidth: 1,
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 5
+  },
+  buttonContainer: {
+    position: "absolute",
+    bottom: 20,
+    width: "100%",
+    height: 40,
+    alignItems: "center",
+    alignSelf: "center",
+    justifyContent: "center",
+  },
+  button: {
     backgroundColor: Themes.colors.salmon,
     width: 340,
     marginTop: 12,
-    height: 40,
+    height: 30,
     borderRadius: 999,
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
   },
-  addToDiceText: {
+  buttonText: {
     fontFamily: "Poppins-Bold",
     fontSize: 16,
     color: "white",
+    alignSelf: "center",
   },
   headerText: {
     fontFamily: "Poppins-Bold",
@@ -146,12 +192,16 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   titleText: {
-    fontFamily: "Poppins-Regular",
+    fontFamily: "Poppins-SemiBold",
     fontSize: 18,
-    marginTop: 10,
-    fontWeight: "700",
-    alignItems: "center",
-    textAlign: "center",
+    // alignItems: "center",
+    // textAlign: "center",
+  },
+  descriptionText: {
+    fontFamily: "Poppins-Regular",
+    fontSize: 14,
+    // alignItems: "center",
+    // textAlign: "center",
   },
   profile: {
     flexDirection: "row",
@@ -201,7 +251,7 @@ const styles = StyleSheet.create({
     // gap: 100,
   },
 
-  activitiesRow: {
+  choicesRow: {
     width: "100%",
     marginBottom: 10,
     flexDirection: "row",

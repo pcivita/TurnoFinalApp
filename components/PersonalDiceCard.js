@@ -19,13 +19,16 @@ export default function PersonalDiceCard({ item, imageUri, title, subText }) {
       href={{
         pathname: `/roll/MyDiceDetails`,
         params: {
-          activities: item.choices,
-          title: item.name,
+          diceName: item.name,
+          description: item.description,
+          choices: item.choices,
+          numRolled: item.rollHistory,
+          numSaved: item.saves,
           img: item.imageUri,
-          id: item.diceId,
+          // id: item.id,
+          diceId: item.diceId,
           creator: item.creator,
-          pageTitle: "My Dice Details"
-          // profilePic: item.user.profilePic,
+          headerTitle: "My Dice Details",
         },
     }}
     >
@@ -42,18 +45,17 @@ export default function PersonalDiceCard({ item, imageUri, title, subText }) {
           <Link
             href={{
               pathname: `/roll/roll`,
-              params: item
-                ? {
-                    name: item.name,
-                    choices: item.choices,
-                    numRolled: item.rollHistory,
-                    numSaved: item.saves,
-                    username: item.creator,
-                    img: item.imageUri,
-                    id: item.id,
-                    diceId: item.diceId,
-                  }
-                : {},
+              params: item ? {
+                  diceName: item.name,
+                  choices: item.choices,
+                  numRolled: item.rollHistory,
+                  numSaved: item.saves,
+                  img: item.imageUri,
+                  // id: item.id,
+                  diceId: item.diceId,
+                  creator: item.creator,
+                }
+              : {},
             }}
           >
             <TouchableOpacity style={styles.button}>

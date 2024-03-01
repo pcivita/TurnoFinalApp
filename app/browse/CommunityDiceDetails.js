@@ -121,11 +121,7 @@ export default function CommunityDiceDetails() {
           </View>
         ))}
         <TouchableOpacity style={styles.addToDiceButton} onPress={handleAdd}>
-          {pageTitle === "Dice Page from Community" ?
-            <Text style={styles.addToDiceText}>Add to My Dice</Text>
-            :
-            <Text style={styles.addToDiceText}>Save Dice</Text>
-          }
+          <Text style={styles.addToDiceText}>Add to My Dice</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>

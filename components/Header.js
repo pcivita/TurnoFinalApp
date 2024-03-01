@@ -75,27 +75,20 @@ export default function Header({ title, dice }) {
         />
       )}
 
-      {title === "Dice Details" && (
-        <Link
-          href={{
-            pathname: "/activities",
-            params: {
-              diceItem: dice,
-              // title: dice.title,
-              // numRolled: dice.numRolled,
-              // numSaved: dice.numSaved,
-              // user: dice.user,
-              // username: dice.user.username,
-              // profilePic: dice.user.profilePic,
-              // img: dice.img,
-              // id: dice.id,
-              // activities: dice.activities,
-            },
-          }}
-          style={styles.rightIcon}
-        >
-          <MaterialCommunityIcons name={"pencil"} size={25} color={"black"} />
-        </Link>
+      {title === "My Dice Details" && (
+        // TODO: edit dice page
+
+        // <Link
+        //   href={{
+        //     pathname: "/activities",
+        //     params: {
+        //       diceItem: dice,
+        //     },
+        //   }}
+        //   style={styles.rightIcon}
+        // >
+          <MaterialCommunityIcons name={"pencil"} size={25} color={"black"} style={styles.rightIcon}/>
+        // </Link>
       )}
     </View>
   );
