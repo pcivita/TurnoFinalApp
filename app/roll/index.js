@@ -16,6 +16,7 @@ import { Themes } from "../../assets/Themes";
 import { DICE_DATA } from "../../assets/Themes/Dice";
 import { UserContext } from "../../contexts/UserContext";
 import { DiceContext } from "../../contexts/DiceContext";
+import { LinearGradient } from 'expo-linear-gradient';
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -81,6 +82,7 @@ export default function Page() {
   const addDice = [{}];
   const dataList = [...diceData, ...addDice];
 
+
   return (
     <View style={styles.container}>
       <Header title="My Dice" />
@@ -90,15 +92,13 @@ export default function Page() {
         </Text>
       </View>
       <FlatList
-
         data={dataList}
-        numColumns={2}
+        numColumns={1}
         // keyExtractor={(item) => item.id}
         keyExtractor={(item, index) => String(index)}
         renderItem={({ item, index }) => (
 
           <TouchableOpacity style={{ margin: 5 }}>
-            {(index !== dataList.length - 1) ? (
                <Link
                href={{
                  pathname: `/roll/roll`,
@@ -117,27 +117,37 @@ export default function Page() {
                 <PersonalDiceCard
                   imageUri={item ? item.imageUri : ""}
                   title={item ? item.name : ""}
+                  subText={item ? item.description : ""}
                 />
               </Link>
-            ) : (
-              <Link
-                href={{
-                  pathname: `/roll/createNewDice`,
-                }}
-              >
-                <View style={styles.createDiceContainer}>
-                  <FontAwesome5
-                    name="plus"
-                    size={45}
-                    color={Themes.colors.salmon}
-                  />
-                  <Text style={styles.createDiceText}>Create new dice</Text>
-                </View>
-              </Link>
-            )}
+              
           </TouchableOpacity>
         )}
       /> 
+      
+      <View style={styles.shadowContainer}>
+      {/* <Link
+        href={{
+          pathname: `/roll/createNewDice`,
+        }}
+      > */}
+        <LinearGradient 
+          colors={[Themes.colors.salmon, Themes.colors.mango]}
+          style={styles.createDiceContainer}
+          start={[0,0]}
+          end={[1,1]}
+          locations={[0.5,0.8]}
+        >
+            <FontAwesome5
+              name="plus"
+              size={45}
+              color={'white'}
+            />
+        </LinearGradient>
+        {/* </Link> */}
+      </View>
+      
+      
     </View>
   );
 }
@@ -159,17 +169,22 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-Regular",
     fontSize: 14,
   },
+  shadowContainer: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,  
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+  },
   createDiceContainer: {
-    width: windowWidth / 2 - windowWidth * 0.05,
-    borderRadius: 20,
-    // height: 250,
-    height: 150,
-    borderWidth: 1,
-    borderColor: Themes.colors.mediumGray,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    borderRadius: 50,
+    flex: 1,
+    height: 80,
+    width: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   createDiceText: {
     fontFamily: "Poppins-Regular",

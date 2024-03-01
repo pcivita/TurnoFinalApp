@@ -6,15 +6,28 @@ import Images from '../assets/Themes/Images';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-export default function PersonalDiceCard({ imageUri, title, user, numSaved, numRolled}) {
+export default function PersonalDiceCard({ imageUri, title, subText}) {
   console.log(imageUri)
   return (
     <View style={styles.container}>
       <Image source={{uri: imageUri}} style={styles.image}/>
-      <View style={styles.row1}>
-        <FontAwesome5 name="dice-d6" size={16} color="black" />
-        <Text style={styles.titleText}>{title}</Text>    
+      <View style={styles.textCol}>
+        <Text style={styles.titleText}>{title}</Text>
+        {subText === "" ? 
+            <View style={{height: 16}}/> 
+        : 
+            <Text style={styles.descText}>{subText}</Text>
+        }
+        <View style={styles.button}>
+            <FontAwesome5 name="dice-d6" size={16} color="white" />
+            <Text style={[styles.descText, {color: 'white'}]}>Roll</Text>    
+        </View>
+        <View style={styles.menuDots}>
+            <FontAwesome5 name="ellipsis-h" size={12} color="black" />
+        </View>
+        
       </View>
+      
       {/* <View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 2, marginLeft: 10}}>
         <Image source={user.profilePic} style={styles.profilePic}/>
         <Text style={{fontSize: 12}}>By @{user.username}</Text>
@@ -31,26 +44,47 @@ export default function PersonalDiceCard({ imageUri, title, user, numSaved, numR
 
 const styles = StyleSheet.create({
   container: {
-    width: (windowWidth / 2) - (windowWidth * 0.05),
+    // width: '100%',
+    width: windowWidth*0.95,
     borderRadius: 20,
-    height: 150,
+    // height: 150,
     borderWidth: 1,
     borderColor: Themes.colors.mediumGray,
+    padding: 10,
+    flexDirection: 'row',
   },
-  row1: {
+  textCol: {
+    marginLeft: 10,
+    padding: 10,
+    flex: 1,
+  },
+  button: {
+    marginTop: 8,
+    width: '100%',
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 5,
-    flex: 1,
+    backgroundColor: Themes.colors.salmon,
+    gap: 8,
+    borderRadius: 30,
+    paddingVertical: 8,
+  },
+  menuDots: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    padding: 10,
   },
   image: {
-    width: "100%",
+    width: 100,
     height: 100,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderRadius: 10,
   },
   titleText: {
+    fontFamily: 'Poppins-Bold',
+    fontSize: 16,
+  },
+  descText: {
     fontFamily: 'Poppins-Regular',
     fontSize: 14,
     // marginTop: 10,
