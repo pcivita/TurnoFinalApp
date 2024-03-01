@@ -17,7 +17,7 @@ export default function PersonalDiceCard({ item, imageUri, title, subText }) {
   return (
     <Link
       href={{
-        pathname: `/browse/DicePage`,
+        pathname: `/browse/CommunityDiceDetails`,
         params: {
           activities: item.choices,
           title: item.name,

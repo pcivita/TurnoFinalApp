@@ -207,7 +207,7 @@ export default function Page() {
             <TouchableOpacity style={{ margin: 5 }}>
               <Link
                 href={{
-                  pathname: `/browse/DicePage`,
+                  pathname: `/browse/CommunityDiceDetails`,
                   params: {
                     activities: item.choices,
                     title: item.name,

@@ -19,7 +19,7 @@ import { Themes } from "../../assets/Themes";
 import Activity from "../../components/Activity";
 import { UserContext } from "../../contexts/UserContext";
 
-export default function DicePage() {
+export default function CommunityDiceDetails() {
   const params = useLocalSearchParams();
   const { fetchUserFromUid, user } = useContext(UserContext);
 
@@ -121,7 +121,11 @@ export default function DicePage() {
           </View>
         ))}
         <TouchableOpacity style={styles.addToDiceButton} onPress={handleAdd}>
-          <Text style={styles.addToDiceText}>Add to My Dice</Text>
+          {pageTitle === "Dice Page from Community" ?
+            <Text style={styles.addToDiceText}>Add to My Dice</Text>
+            :
+            <Text style={styles.addToDiceText}>Save Dice</Text>
+          }
         </TouchableOpacity>
       </ScrollView>
     </View>

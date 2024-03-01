@@ -100,7 +100,7 @@ export default function AppLayout() {
                   }}
                 />
                 <Tabs.Screen
-                  name="browse/DicePage"
+                  name="browse/CommunityDiceDetails"
                   options={{
                     href: null,
                   }}
