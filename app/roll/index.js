@@ -156,9 +156,10 @@ const styles = StyleSheet.create({
     backgroundColor: Themes.colors.background,
   },
   instructionsContainer: {
-    height: 40,
+
     width: windowWidth - windowWidth * 0.1,
-    marginTop: 15,
+    marginTop: 5,
+    marginBottom: 25,
     alignItems: "left",
     justifyContent: "center",
   },
