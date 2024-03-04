@@ -63,12 +63,27 @@ export default function PersonalDiceCard({ item, imageUri, title, subText }) {
               <Text style={[styles.descText, { color: "white" }]}>Roll</Text>
             </TouchableOpacity>
           </Link>
-          
-            <View style={styles.menuDots}>
-              <TouchableOpacity onPress={handleEllipsesPress}>
-                <FontAwesome5 name="ellipsis-h" size={12} color="black" />
-              </TouchableOpacity>
-            </View>
+
+          <Link
+            href={{
+              pathname: `/roll/roll`,
+              params: item ? {
+                  diceName: item.name,
+                  choices: item.choices,
+                  numRolled: item.rollHistory,
+                  numSaved: item.saves,
+                  img: item.imageUri,
+                  // id: item.id,
+                  diceId: item.diceId,
+                  creator: item.creator,
+                }
+              : {},
+            }}
+          >
+            <TouchableOpacity style={styles.menuDots}>
+              <FontAwesome5 name="ellipsis-h" size={12} color="black" />
+            </TouchableOpacity>
+          </Link>
         </View>
       </View>
     </Link>
@@ -108,11 +123,24 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingVertical: 6,
   },
+  // menuDots: {
+  //   position: "absolute",
+  //   right: 0,
+  //   top: 0,
+  //   padding: 10,
+  // },
   menuDots: {
+    // position: "absolute",
+    // right: 0,
+    // top: 0,
+    // padding: 10,
     position: "absolute",
-    right: 0,
-    top: 0,
-    padding: 10,
+    bottom: 120,
+    left: 200,
+    width: 40,
+    height: 20,
+    alignItems: "center",
+    justifyContent: "center",
   },
   image: {
     width: 100,
