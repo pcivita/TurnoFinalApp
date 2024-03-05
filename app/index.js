@@ -404,7 +404,7 @@ export default function Onboarding() {
                 marginTop: 24,
                 textAlign: 'center',
               }}>
-                Roll your way through the day
+                Get rolling on making hard decisions
               </Text>
               <TouchableOpacity style={{
                 borderColor: Themes.colors.salmon,
@@ -423,15 +423,8 @@ export default function Onboarding() {
                   fontSize: 16,
                 }}>Log in</Text>
               </TouchableOpacity>
-                <TouchableOpacity style={{
-                backgroundColor: Themes.colors.salmon,
-                padding: 12,
-                borderRadius: 999,
-                width: windowWidth * 0.8,
-                alignItems: 'center', 
-                marginTop: 12,
-              }}
-              onPress={() => setCurrentScreen('sign up')}
+              <TouchableOpacity style={styles.primaryButton}
+                onPress={() => setCurrentScreen('sign up')}
               >
                 <Text style={{
                   color: 'white',
@@ -462,8 +455,8 @@ export default function Onboarding() {
           source={require("../assets/Themes/Images/DiceFaces/Dice-3.png")}
           style={styles.logo}
         />
-        <Text style={styles.title}>Turno</Text>
-        <Text style={styles.subtitle}>Roll your way through the day</Text>
+        <Text style={styles.title}>turno</Text>
+        <Text style={styles.subtitle}>Get rolling on making hard decisions</Text>
         <TextInput style={styles.input} placeholder="Email" onChangeText={(text) => setEmail(text.toLowerCase())} value={email}/>
         <TextInput
           style={styles.input}
@@ -478,7 +471,7 @@ export default function Onboarding() {
                 pathname: "/roll",
             }}
         > */}
-        <TouchableOpacity onPress={handleLogIn} style={styles.loginButton}>
+        <TouchableOpacity onPress={handleLogIn} style={styles.secondaryButton}>
           <Text style={styles.loginText}>Log In</Text>
         </TouchableOpacity>
         {/* </Link> */}
@@ -516,7 +509,11 @@ export default function Onboarding() {
           <FontAwesome5 name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
         {/* <View style={styles.spacing}/> */}
-        <Text style={styles.title}>Turno</Text>
+        <Image
+          source={require("../assets/Themes/Images/DiceFaces/Dice-3.png")}
+          style={styles.logo}
+        />
+        <Text style={styles.title}>turno</Text>
         <TouchableOpacity
           style={styles.profileUploader}
           onPress={() => selectPhoto()}
@@ -563,13 +560,12 @@ export default function Onboarding() {
 
         <View style={{ height: 32 }} />
         {/* <Link href={{ pathname: '/roll' }}> */}
-        <TouchableOpacity onPress={handleSignUp} style={styles.signUpButton}>
-          <Text style={styles.loginText}>Sign Up</Text>
+        <TouchableOpacity onPress={handleSignUp} style={styles.primaryButton}>
+          <Text style={styles.loginText}>Create Account</Text>
         </TouchableOpacity>
         {/* </Link> */}
         <Text style={styles.submessageText} onPress={() => setCurrentScreen('log in')}>
-
-          Already have an account? Log In
+          Already have an account? <Text style={styles.blueText}>Log In</Text>
         </Text>
       </View>
     );
@@ -616,11 +612,11 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: "bold",
     fontFamily: "Poppins-Bold",
-    marginTop: 36
+    marginTop: 16
   },
   subtitle: {
     fontSize: 24,
-    marginTop: 20,
+    marginTop: 16,
     fontFamily: "Poppins-Regular",
     width: windowWidth * 0.7,
     textAlign: "center",
@@ -634,52 +630,33 @@ const styles = StyleSheet.create({
     color: "#000",
     fontFamily: "Poppins-Regular",
   },
-  loginButton: {
-    width: windowWidth * 0.6,
-    alignItems: "center",
-    paddingVertical: 12,
-    borderRadius: 5,
-    marginTop: 16,
-    backgroundColor: Themes.colors.salmon,    
-    },
-    loginText: {
-        fontSize: 16,
-        fontFamily: 'Poppins-Bold',
-        color: 'white',
-    },
-    submessageText: {
-        fontSize: 16,
-        fontFamily: 'Poppins-Regular',
-        color: 'black',
-        marginTop: 12,
-    },
-  signUpButton: {
-    width: windowWidth * 0.8,
-    alignItems: "center",
-    borderRadius: 5,
-    paddingVertical: 16,
-    shadowColor: "rgba(0, 0, 0, 0.5)",
-    shadowOffset: { height: 4, width: 1 },
-    shadowOpacity: 0.75,
-    shadowRadius: 2,
-    marginTop: 16,
+  loginText: {
+      fontSize: 16,
+      fontFamily: 'Poppins-Bold',
+      color: 'white',
+  },
+  submessageText: {
+      fontSize: 16,
+      fontFamily: 'Poppins-Regular',
+      color: 'black',
+      marginTop: 12,
+  },
+  primaryButton: {
     backgroundColor: Themes.colors.salmon,
-  },
-  loginButton: {
+    padding: 12,
+    borderRadius: 999,
     width: windowWidth * 0.8,
-    alignItems: "center",
-    width: windowWidth * 0.8,
-    alignItems: "center",
-    borderRadius: 5,
-    paddingVertical: 16,
-    shadowColor: "rgba(0, 0, 0, 0.5)",
-    shadowOffset: { height: 4, width: 1 },
-    shadowOpacity: 0.75,
-    shadowRadius: 2,
-    marginTop: 16,
-    backgroundColor: Themes.colors.blue,
+    alignItems: 'center', 
+    marginTop: 12,
   },
-
+  secondaryButton: {
+    backgroundColor: Themes.colors.salmon,
+    padding: 12,
+    borderRadius: 999,
+    width: windowWidth * 0.8,
+    alignItems: 'center', 
+    marginTop: 12,
+  },
   onBoardingButtonText: {
     fontSize: 16,
     fontFamily: "Poppins-Bold",
@@ -693,7 +670,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   spacing: {
-    height: windowHeight * 0.25 - 100,
+    height: windowHeight * 0.05,
   },
   onboardingSpacing: {
     height: windowHeight * 0.05,
@@ -701,4 +678,7 @@ const styles = StyleSheet.create({
   profileUploader: {
     marginTop: 16,
   },
+  blueText: {
+    color: Themes.colors.blue
+  }
 });
