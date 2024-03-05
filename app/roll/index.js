@@ -51,25 +51,6 @@ export default function Page() {
         }
       };
       fetchDiceIds();
-      // if (diceIds) {
-      //   const fetchDiceData = async () => {
-      //     // let fetchedDiceData = [];
-      //     // for (let i = 0; i < diceIds.length; i++) {
-      //     //   console.log("diceIds[i] ", diceIds[i]);
-      //     //   const dice = await fetchDiceFromDiceId(diceIds[i]);
-      //     //   console.log("DICE ", i, ": ", dice);
-      //     // }
-
-      //     const fetchedDiceData = await Promise.all(
-      //       diceIds.map(async (diceId) => {
-      //         const dice = await fetchDiceFromDiceId(diceId);
-      //         return dice;
-      //       })
-      //     );
-      //     setDiceData(fetchedDiceData);
-      //   };
-      //   fetchDiceData().catch(console.error);
-      // }
     }
   }, [user]);
 
@@ -82,7 +63,6 @@ export default function Page() {
             return dice;
           })
         );
-        // console.log("fetched dice data: ", fetchedDiceData);
         setDiceData(fetchedDiceData);
       };
       fetchDiceData().catch(console.error);
