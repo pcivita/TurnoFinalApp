@@ -1,5 +1,6 @@
 export const colors = {
-  background: "#FAF9F6",
+  // background: "#FAF9F6",
+  background: "white",
   salmon: "#FF7474",
   // salmon: '#4C5994',
   blue: "#4C5994",

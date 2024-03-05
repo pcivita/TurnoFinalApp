@@ -27,6 +27,7 @@ export default function Page() {
   const [diceIds, setDiceIds] = useState([]);
   const [diceData, setDiceData] = useState([]);
 
+
   useEffect(() => {
     if (user) {
       const fetchDiceIds = async () => {
