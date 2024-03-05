@@ -8,110 +8,134 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function PersonalDiceCard({ item, imageUri, title, subText }) {
-  const [popupVisible, setPopupVisible] = useState(false);
+export default function PersonalDiceCard({
+  item,
+  imageUri,
+  title,
+  subText,
+  isPopupVisible,
+  onTogglePopup,
+}) {
+  // const [popupVisible, setPopupVisible] = useState(false);
 
   handleEllipsesPress = () => {
     console.log("hi");
-    setPopupVisible(!popupVisible);
+    onTogglePopup()
   };
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.leftContainer}>
-        <Link
-          href={{
-            pathname: `/roll/MyDiceDetails`,
-            params: {
-              diceName: item.name,
-              description: item.description,
-              choices: item.choices,
-              numRolled: item.rollHistory,
-              numSaved: item.saves,
-              img: item.imageUri,
-              // id: item.id,
-              diceId: item.diceId,
-              creator: item.creator,
-              headerTitle: "My Dice Details",
-            },
-          }}
-        >
-          <View style={styles.content}>
-            <Image source={{ uri: imageUri }} style={styles.image} />
-            <View style={styles.textCol}>
-              <View style={styles.titleAndSubtitle}>
-                <Text style={styles.titleText} numberOfLines={2}>
-                  {title}
-                </Text>
-                <Text style={styles.descText} numberOfLines={1}>
-                  {subText ? subText : " "}
-                </Text>
-              </View>
+  // const handleClosePopup = () => {
+  //   setPopupVisible(false);
+  // };
 
-              <Link
-                href={{
-                  pathname: `/roll/roll`,
-                  params: item
-                    ? {
-                        diceName: item.name,
-                        choices: item.choices,
-                        numRolled: item.rollHistory,
-                        numSaved: item.saves,
-                        img: item.imageUri,
-                        // id: item.id,
-                        diceId: item.diceId,
-                        creator: item.creator,
-                      }
-                    : {},
-                }}
-              >
-                <TouchableOpacity style={styles.button}>
-                  <FontAwesome5 name="dice-d6" size={16} color="white" />
-                  <Text style={[styles.descText, { color: "white" }]}>
-                    Roll
-                  </Text>
-                </TouchableOpacity>
-              </Link>
-            </View>
-          </View>
-        </Link>
-      </View>
-      <View style={styles.rightContainer}>
-        <TouchableOpacity style={styles.menuDots} onPress={handleEllipsesPress}>
-          <FontAwesome5 name="ellipsis-h" size={12} color="black" />
-        </TouchableOpacity>
-      </View>
-      {popupVisible && (
-        <View style={styles.popupMenu}>
-          <View style={styles.popupMenuRow1}>
-            <TouchableOpacity
-              onPress={() => console.log("Edit")}
-              style={styles.popupMenuRow2}
-            >
-              <FontAwesome5 name="pencil-alt" size={16} color="black" />
-              <Text style={styles.popupText}>Edit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setPopupVisible(false)}
-              style={styles.popupMenuRow2}
-            >
-              <Text style={styles.popupText}>X</Text>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity
-            onPress={() => console.log("Delete")}
-            style={styles.popupMenuRow2}
+  // useEffect
+
+  return (
+    // <>
+    //   {isPopupVisible && (
+    //     <TouchableWithoutFeedback onPress={handleClosePopup}>
+    //       <View style={styles.overlay} />
+    //     </TouchableWithoutFeedback>
+    //   )}
+      <View style={styles.container}>
+        <View style={styles.leftContainer}>
+          <Link
+            href={{
+              pathname: `/roll/MyDiceDetails`,
+              params: {
+                diceName: item.name,
+                description: item.description,
+                choices: item.choices,
+                numRolled: item.rollHistory,
+                numSaved: item.saves,
+                img: item.imageUri,
+                // id: item.id,
+                diceId: item.diceId,
+                creator: item.creator,
+                headerTitle: "My Dice Details",
+              },
+            }}
           >
-            <FontAwesome5 name="trash-alt" size={16} color="black" />
-            <Text style={styles.popupText}>Delete</Text>
+            <View style={styles.content}>
+              <Image source={{ uri: imageUri }} style={styles.image} />
+              <View style={styles.textCol}>
+                <View style={styles.titleAndSubtitle}>
+                  <Text style={styles.titleText} numberOfLines={2}>
+                    {title}
+                  </Text>
+                  <Text style={styles.descText} numberOfLines={1}>
+                    {subText ? subText : " "}
+                  </Text>
+                </View>
+
+                <Link
+                  href={{
+                    pathname: `/roll/roll`,
+                    params: item
+                      ? {
+                          diceName: item.name,
+                          choices: item.choices,
+                          numRolled: item.rollHistory,
+                          numSaved: item.saves,
+                          img: item.imageUri,
+                          // id: item.id,
+                          diceId: item.diceId,
+                          creator: item.creator,
+                        }
+                      : {},
+                  }}
+                >
+                  <TouchableOpacity style={styles.button}>
+                    <FontAwesome5 name="dice-d6" size={16} color="white" />
+                    <Text style={[styles.descText, { color: "white" }]}>
+                      Roll
+                    </Text>
+                  </TouchableOpacity>
+                </Link>
+              </View>
+            </View>
+          </Link>
+        </View>
+        <View style={styles.rightContainer}>
+          <TouchableOpacity
+            style={styles.menuDots}
+            onPress={handleEllipsesPress}
+          >
+            <FontAwesome5 name="ellipsis-h" size={12} color="black" />
           </TouchableOpacity>
         </View>
-      )}
-    </View>
+        {isPopupVisible && (
+          <View style={styles.popupMenu}>
+            <View style={styles.popupMenuRow1}>
+              <TouchableOpacity
+                onPress={() => console.log("Edit")}
+                style={styles.popupMenuRow2}
+              >
+                <FontAwesome5 name="pencil-alt" size={16} color="black" />
+                <Text style={styles.popupText}>Edit</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={onTogglePopup}
+                style={styles.popupMenuRow2}
+              >
+                <Text style={styles.popupText}>X</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              onPress={() => console.log("Delete")}
+              style={styles.popupMenuRow2}
+            >
+              <FontAwesome5 name="trash-alt" size={16} color="black" />
+              <Text style={styles.popupText}>Delete</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    // </>
   );
 }
 
@@ -227,7 +251,7 @@ const styles = StyleSheet.create({
   popupMenuRow1: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
   popupMenuRow2: {
     flexDirection: "row",

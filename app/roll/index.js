@@ -27,6 +27,15 @@ export default function Page() {
   const [diceIds, setDiceIds] = useState([]);
   const [diceData, setDiceData] = useState([]);
 
+  const [activePopupId, setActivePopupId] = useState(null);
+
+  const handleTogglePopup = (id) => {
+    if (activePopupId === id) {
+      setActivePopupId(null);
+    } else {
+      setActivePopupId(id);
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -101,6 +110,8 @@ export default function Page() {
                 imageUri={item ? item.imageUri : ""}
                 title={item ? item.name : ""}
                 subText={item ? item.description : ""}
+                isPopupVisible={activePopupId === index}
+                onTogglePopup={() => handleTogglePopup(index)}
               />
             </View>
         )}
@@ -128,8 +139,6 @@ export default function Page() {
           </View>
         </Link>
       </View>
-      
-      
     </View>
   );
 }
