@@ -357,33 +357,43 @@ export default function Onboarding() {
                 )
               })}
             </View>
-            <TouchableOpacity style={{
-              backgroundColor: Themes.colors.salmon,
-              padding: 12,
-              borderRadius: 999,
-              width: windowWidth * 0.8,
-              alignItems: 'center',
-              marginTop: 24,
-              marginBottom: 36
-
-            }}
-            onPress={() => {
-              if (onboardingScreenNumber === 4) {
-                setOnboardingScreenNumber(5)
-              } else {
-                const nextIndex = onboardingScreenNumber; // Already incremented in onScroll
-                if (nextIndex < ONBOARDING_SCREENS.length) {
-                  flatListRef.current.scrollToIndex({index: nextIndex, animated: true});
+            {onboardingScreenNumber === 4 ?
+              <TouchableOpacity style={{
+                backgroundColor: Themes.colors.salmon,
+                padding: 12,
+                borderRadius: 999,
+                width: windowWidth * 0.8,
+                alignItems: 'center',
+                marginTop: 24,
+                marginBottom: 36
+              }}
+              onPress={() => {
+                if (onboardingScreenNumber === 4) {
+                  setOnboardingScreenNumber(5)
+                } else {
+                  const nextIndex = onboardingScreenNumber; // Already incremented in onScroll
+                  if (nextIndex < ONBOARDING_SCREENS.length) {
+                    flatListRef.current.scrollToIndex({index: nextIndex, animated: true});
+                  }
                 }
-              }
-            }}
-            >
-              <Text style={{
-                color: 'white',
-                fontWeight: 'bold',
-                fontSize: 16,
-              }}>Continue</Text>
-            </TouchableOpacity>
+              }}
+              >
+                <Text style={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  fontSize: 16,
+                }}>Continue</Text>
+              </TouchableOpacity>
+            :
+              <View style={{
+                padding: 12,
+                borderRadius: 999,
+                width: windowWidth * 0.8,
+                alignItems: 'center',
+                marginTop: 24,
+                marginBottom: 36
+                }} />
+            }
             </>
             :
             <View style={{
