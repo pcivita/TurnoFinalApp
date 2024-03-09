@@ -2,7 +2,7 @@ import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Themes } from "../assets/Themes";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import Images from "../assets/Themes/Images";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -11,13 +11,29 @@ const windowHeight = Dimensions.get("window").height;
 
 export default function PersonalDiceCard({
   item,
+  diceName,
+  description,
   imageUri,
-  title,
-  subText,
+  community,
   isPopupVisible,
   togglePopup,
   toggleDeleteModal
 }) {
+
+  // const navigateToEdit = () => {
+  //   console.log("item: ", item);
+
+  //   router.setParams({
+  //     diceName: diceName,
+  //     description: description,
+  //     choices: JSON.stringify(item.choices),
+  //     categoryID: item.categoryID,
+  //     switchEnabled: community, 
+  //     imageUri: imageUri,
+  //   });
+  //   router.replace("/roll/editDice");
+  // };
+
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
@@ -43,10 +59,10 @@ export default function PersonalDiceCard({
             <View style={styles.textCol}>
               <View style={styles.titleAndSubtitle}>
                 <Text style={styles.titleText} numberOfLines={2}>
-                  {title}
+                  {diceName}
                 </Text>
                 <Text style={styles.descText} numberOfLines={1}>
-                  {subText ? subText : " "}
+                  {description ? description : " "}
                 </Text>
               </View>
 
@@ -89,13 +105,28 @@ export default function PersonalDiceCard({
       {isPopupVisible && (
         <View style={styles.popupMenu}>
           <View style={styles.popupMenuRow}>
+            <Link
+              href={{
+                pathname: `/roll/editDice`,
+                params: {
+                  diceName: diceName,
+                  description: description,
+                  choices: JSON.stringify(item.choices),
+                  categoryID: item.categoryID,
+                  switchEnabled: community, 
+                  imageUri: imageUri,
+                },
+              }}
+            >
+            
             <TouchableOpacity
-              onPress={() => console.log("Edit")}
+              // onPress={navigateToEdit}
               style={styles.popupMenuItem}
             >
               <FontAwesome5 name="pencil-alt" size={16} color="black" />
               <Text style={styles.popupText}>Edit</Text>
             </TouchableOpacity>
+            </Link>
             <TouchableOpacity
               onPress={togglePopup}
               style={styles.popupExitButton}

@@ -101,8 +101,9 @@ export default function Page() {
             <PersonalDiceCard
               item={item}
               imageUri={item ? item.imageUri : ""}
-              title={item ? item.name : ""}
-              subText={item ? item.description : ""}
+              diceName={item ? item.name : ""}
+              description={item ? item.description : ""}
+              community={item ? item.community : false}
               isPopupVisible={activePopupId === index}
               togglePopup={() => handleTogglePopup(index)}
               toggleDeleteModal={() => handleToggleDeleteModal(index)}

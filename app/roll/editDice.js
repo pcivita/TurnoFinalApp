@@ -11,8 +11,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { Link, Stack } from "expo-router";
-import { ActivitiesContext } from "../../contexts/ActivitiesContext";
+import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { Themes } from "../../assets/Themes";
 import Category from "../../components/Category";
 import Header from "../../components/Header";
@@ -20,7 +19,6 @@ import Activity from "../../components/Activity";
 import { UserContext } from "../../contexts/UserContext";
 import { FontAwesome5 } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { DiceContext } from "../../contexts/DiceContext";
 import "react-native-get-random-values";
@@ -29,6 +27,8 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../firebase";
 
 export default function Page() {
+  const params = useLocalSearchParams();
+
   const [diceName, setDiceName] = useState("");
   const [description, setDescription] = useState("");
   const [choices, setChoices] = useState([null]);
@@ -37,11 +37,31 @@ export default function Page() {
   const [imageUri, setImageUri] = useState(null);
 
   const [isFormFilled, setIsFormFilled] = useState(false);
-  const { addActivity } = useContext(ActivitiesContext);
   const { user, addDiceToUser } = useContext(UserContext);
 
-  const { initializeDiceDatabaseEntry, fetchDiceFromDiceId } =
-    useContext(DiceContext);
+  const { initializeDiceDatabaseEntry } = useContext(DiceContext);
+
+  useEffect(() => {
+    if (params) {
+      setDiceName(params.diceName);
+      setDescription(params.description);
+      try {
+        const choices = JSON.parse(params.choices);
+        if (Array.isArray(choices)) {
+          if (choices.length < 6) {
+            choices.push(null);
+          }
+          setChoices(choices);
+        }
+      } catch (e) {
+        console.error("Error: ", e);
+      }
+      console.log("category id: ", params.categoryID)
+      setCategoryID(params.categoryID);
+      setSwitchEnabled(params.switchEnabled);
+      setImageUri(params.imageUri);
+    }
+  }, [params]);
 
   const categories = [
     ["Exercise", "running"],
@@ -88,33 +108,29 @@ export default function Page() {
     }
   };
 
-  const handleCreateDice = async () => {
-    // uuidv4 for creating random diceId
-    const diceId = uuidv4();
+  const handleSaveDice = async () => {
+    // TODO: handle save in front & backend
 
-    let downloadUrl;
-    if (imageUri) {
-      downloadUrl = await uploadImage(imageUri, diceId);
-    }
+    // let downloadUrl;
+    // if (imageUri) {
+    //   downloadUrl = await uploadImage(imageUri, diceId);
+    // }
+    // const filteredChoices = choices.filter((choice) => choice !== null);
 
-    // if chocies array contains a null value, remove it
-    const filteredChoices = choices.filter((choice) => choice !== null);
+    // const newDice = {
+    //   diceId: diceId,
+    //   name: diceName,
+    //   description,
+    //   choices: filteredChoices,
+    //   categoryID,
+    //   creator: user.uid,
+    //   community: switchEnabled,
+    //   imageUri: downloadUrl,
+    // };
 
-    const newDice = {
-      diceId: diceId,
-      name: diceName,
-      description,
-      choices: filteredChoices,
-      categoryID,
-      creator: user.uid,
-      community: switchEnabled,
-      imageUri: downloadUrl,
-    };
-
-    initializeDiceDatabaseEntry(newDice);
-    addDiceToUser(user.uid, newDice.diceId);
-
-    resetState();
+    // initializeDiceDatabaseEntry(newDice);
+    // addDiceToUser(user.uid, newDice.diceId);
+    // resetState();
   };
 
   const resetState = () => {
@@ -200,7 +216,6 @@ export default function Page() {
             <Text style={styles.sectionSubtitle}>
               Add up to 6 choices, each representing a face of the dice!
             </Text>
-            {/* <Activity style={styles.addActivity} /> */}
             {choicesPairs.map((pair, index) => (
               <View key={index} style={styles.choicesRow}>
                 {pair.map((choice, index) => (
@@ -286,7 +301,7 @@ export default function Page() {
                 name: "Alan",
               },
             }}
-            onPress={handleCreateDice}
+            onPress={handleSaveDice}
           >
             <View
               style={[
@@ -294,7 +309,7 @@ export default function Page() {
                 isFormFilled ? styles.buttonEnabled : styles.buttonDisabled,
               ]}
             >
-              <Text style={styles.buttonText}>Create Dice</Text>
+              <Text style={styles.buttonText}>Save Dice</Text>
             </View>
           </Link>
         </View>
