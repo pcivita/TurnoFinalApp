@@ -15,14 +15,9 @@ export default function PersonalDiceCard({
   title,
   subText,
   isPopupVisible,
-  onTogglePopup,
+  togglePopup,
+  toggleDeleteModal
 }) {
-
-  handleEllipsesPress = () => {
-    console.log("hi");
-    onTogglePopup()
-  };
-
 
   return (
     <View style={styles.container}>
@@ -87,31 +82,31 @@ export default function PersonalDiceCard({
       <View style={styles.rightContainer}>
         <TouchableOpacity
           style={styles.menuDots}
-          onPress={handleEllipsesPress}
+          onPress={togglePopup}
         >
           <FontAwesome5 name="ellipsis-h" size={12} color="black" />
         </TouchableOpacity>
       </View>
       {isPopupVisible && (
         <View style={styles.popupMenu}>
-          <View style={styles.popupMenuRow1}>
+          <View style={styles.popupMenuRow}>
             <TouchableOpacity
               onPress={() => console.log("Edit")}
-              style={styles.popupMenuRow2}
+              style={styles.popupMenuItem}
             >
               <FontAwesome5 name="pencil-alt" size={16} color="black" />
               <Text style={styles.popupText}>Edit</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={onTogglePopup}
-              style={styles.popupMenuRow2}
+              onPress={togglePopup}
+              style={styles.popupExitButton}
             >
               <Text style={styles.popupText}>X</Text>
             </TouchableOpacity>
           </View>
           <TouchableOpacity
-            onPress={() => console.log("Delete")}
-            style={styles.popupMenuRow2}
+            onPress={toggleDeleteModal}
+            style={styles.popupMenuItem}
           >
             <FontAwesome5 name="trash-alt" size={16} color="black" />
             <Text style={styles.popupText}>Delete</Text>
@@ -217,15 +212,22 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  popupMenuRow1: {
+  popupMenuRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-  popupMenuRow2: {
+  popupMenuItem: {
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
+    paddingRight: 15,
+  },
+  popupExitButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingLeft: 15,
   },
   popupText: {
     fontFamily: "Poppins-Regular",

@@ -17,6 +17,7 @@ import { DICE_DATA } from "../../assets/Themes/Dice";
 import { UserContext } from "../../contexts/UserContext";
 import { DiceContext } from "../../contexts/DiceContext";
 import { LinearGradient } from 'expo-linear-gradient';
+import DeleteModal from "../../components/DeleteModal";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -28,13 +29,23 @@ export default function Page() {
   const [diceData, setDiceData] = useState([]);
 
   const [activePopupId, setActivePopupId] = useState(null);
-
   const handleTogglePopup = (id) => {
     if (activePopupId === id) {
       setActivePopupId(null);
     } else {
       setActivePopupId(id);
     }
+  }; 
+
+  const [isModalVisible, setModalVisible] = useState(null)
+  const handleToggleDeleteModal = (id) => {
+    console.log("dice id: ", diceData[id])
+    setModalVisible(true);
+    // if (activePopupId === id) {
+    //   setActivePopupId(null);
+    // } else {
+    //   setActivePopupId(id);
+    // }
   };
 
   useEffect(() => {
@@ -84,18 +95,22 @@ export default function Page() {
         // keyExtractor={(item) => item.id}
         keyExtractor={(item, index) => String(index)}
         renderItem={({ item, index }) => (
-            <View style={{ margin: 5 }}>
-              <PersonalDiceCard
-                item={item}
-                imageUri={item ? item.imageUri : ""}
-                title={item ? item.name : ""}
-                subText={item ? item.description : ""}
-                isPopupVisible={activePopupId === index}
-                onTogglePopup={() => handleTogglePopup(index)}
-              />
-            </View>
+          <View style={{ margin: 5 }}>
+            <PersonalDiceCard
+              item={item}
+              imageUri={item ? item.imageUri : ""}
+              title={item ? item.name : ""}
+              subText={item ? item.description : ""}
+              isPopupVisible={activePopupId === index}
+              togglePopup={() => handleTogglePopup(index)}
+              toggleDeleteModal={() => handleToggleDeleteModal(index)}
+            />
+          </View>
         )}
       /> 
+      { isModalVisible &&
+        <DeleteModal isModalVisible={isModalVisible} setModalVisible={setModalVisible} />
+      }
       <View style={styles.shadowContainer}>
         <Link
           href={{
