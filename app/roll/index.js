@@ -41,11 +41,13 @@ export default function Page() {
   const [diceIdToDelete, setDiceIdToDelete] = useState(null)
   const handleToggleDeleteModal = (id) => {
     setModalVisible(true);
-    setDiceIdToDelete(diceData[id].diceId)
+    setDiceIdToDelete(diceData[id].diceId);
+    setActivePopupId(null);
   };
 
   const handleDeleteDice = () => {
-    console.log("deleting dice of id: ", diceIdToDelete)
+    console.log("deleting dice of id: ", diceIdToDelete);
+    setModalVisible(false);
     // TODO: backend func to delete dice
   }
 
@@ -54,7 +56,6 @@ export default function Page() {
       const fetchDiceIds = async () => {
         try {
           let result = await fetchSavedDiceFromUid(user.uid);
-          console.log("result: ", result);
           if (result) {
             setDiceIds(result);
           }
