@@ -38,15 +38,16 @@ export default function Page() {
   }; 
 
   const [isModalVisible, setModalVisible] = useState(null)
+  const [diceIdToDelete, setDiceIdToDelete] = useState(null)
   const handleToggleDeleteModal = (id) => {
-    console.log("dice id: ", diceData[id])
     setModalVisible(true);
-    // if (activePopupId === id) {
-    //   setActivePopupId(null);
-    // } else {
-    //   setActivePopupId(id);
-    // }
+    setDiceIdToDelete(diceData[id].diceId)
   };
+
+  const handleDeleteDice = () => {
+    console.log("deleting dice of id: ", diceIdToDelete)
+    // TODO: backend func to delete dice
+  }
 
   useEffect(() => {
     if (user) {
@@ -109,7 +110,11 @@ export default function Page() {
         )}
       /> 
       { isModalVisible &&
-        <DeleteModal isModalVisible={isModalVisible} setModalVisible={setModalVisible} />
+        <DeleteModal 
+          isModalVisible={isModalVisible} 
+          setModalVisible={setModalVisible} 
+          onDeleteDice={handleDeleteDice}
+        />
       }
       <View style={styles.shadowContainer}>
         <Link

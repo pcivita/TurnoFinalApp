@@ -5,7 +5,7 @@ import Themes from "../assets/Themes/themes.js";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-export default function DeleteModal({ isModalVisible, setModalVisible }) {
+export default function DeleteModal({ isModalVisible, setModalVisible, onDeleteDice }) {
   const onExitModal = async () => {
     setModalVisible(false);
   };
@@ -32,7 +32,7 @@ export default function DeleteModal({ isModalVisible, setModalVisible }) {
           <Text style={styles.subtitle}>Do you really want to delete this dice? This action cannot be undone.</Text>
         </View>
         <View style={styles.buttonsContainer}>
-          <Pressable onPress={() => console.log("deleting")} style={[styles.button, {backgroundColor: Themes.colors.red}]}>
+          <Pressable onPress={onDeleteDice} style={[styles.button, {backgroundColor: Themes.colors.red}]}>
             <Text style={[styles.buttonText, { color: "white" }]}>Delete Dice</Text>
           </Pressable>
           <Pressable onPress={onExitModal} style={[styles.button, {borderWidth: 1}]}>
