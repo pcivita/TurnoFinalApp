@@ -76,21 +76,9 @@ export default function Header({ title, dice }) {
         />
       )}
 
-      {title === "My Dice Details" && (
-        // TODO: edit dice page
-
-        // <Link
-        //   href={{
-        //     pathname: "/activities",
-        //     params: {
-        //       diceItem: dice,
-        //     },
-        //   }}
-        //   style={styles.rightIcon}
-        // >
-          <MaterialCommunityIcons name={"pencil"} size={25} color={"black"} style={styles.rightIcon}/>
-        // </Link>
-      )}
+      {/* {title === "My Dice Details" && (
+       <MaterialCommunityIcons name={"pencil"} size={25} color={"black"} style={styles.rightIcon}/>
+      )} */}
     </View>
   );
 }
