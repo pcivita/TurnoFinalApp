@@ -25,6 +25,7 @@ export default function Header({ title, dice }) {
     "Roll": "/roll",
     "Activities": "/roll",
     "Create New Dice": "/roll",
+    "Edit Dice": "/roll",
     "My Dice Details": "/roll",
     "Community Dice Details": "/browse"
   };

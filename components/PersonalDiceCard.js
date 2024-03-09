@@ -18,7 +18,6 @@ export default function PersonalDiceCard({
   togglePopup,
   toggleDeleteModal
 }) {
-
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
