@@ -129,7 +129,7 @@ export default function Post({
 
 const styles = StyleSheet.create({
   container: {
-    height: 140, // Keep this Standard
+    height: 130, // Keep this Standard
     width: "100%",
     display: "flex",
     flexDirection: "column",
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
     padding: 24,
     borderWidth: 0.3,
     borderColor: Themes.colors.darkGray,
+    borderTopColor: Themes.colors.background
   },
   ImageText: {
     gap: 16,

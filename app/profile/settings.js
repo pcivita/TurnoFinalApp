@@ -1,11 +1,44 @@
 import { StyleSheet, Text, View, TextInput,
-  Keyboard, } from "react-native";
-import { Link, Stack } from "expo-router";
+  Keyboard,
+  TouchableOpacity,
+  Dimensions, } from "react-native";
+import { Link, Stack, router } from "expo-router";
 import { Themes } from "../../assets/Themes";
 import Category from "../../components/Category";
 import Header from "../../components/Header";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 export default function Page() {
+  const {logoutUser, user, fetchUserFromUid} = useContext(UserContext);
+
+  const [uid, setUid] = useState(null);
+  useEffect(() => {
+    if (user) {
+      setUid(user.uid);
+    }
+  }, [user])
+
+  const [userData, setUserData] = useState({});
+  useEffect(() => {
+    const fetchUserData = async () => {
+      let result = await fetchUserFromUid(user.uid);
+      setUserData(result);
+    }
+    if (user) {
+      fetchUserData();
+      // console.log(userData.password);
+    }
+  }, [user])
+
+  const handleLogout = () => {
+    router.replace("/");
+    logoutUser();
+  }
+  
   return (
     <View style={styles.container}>
       <Stack.Screen
@@ -13,11 +46,11 @@ export default function Page() {
       />
       <Header title="Settings" />
       <View style={styles.activityNameContainer}>
-        <Text style={styles.subtitle}>Your Name</Text>
+        <Text style={styles.subtitle}>User ID</Text>
         <TextInput
           editable={false}
           style={styles.input}
-          value="Pedro Civita"
+          value={uid ? uid : ""}
           // onChangeText={setActivityName}
         />
       </View>
@@ -26,7 +59,7 @@ export default function Page() {
         <TextInput
           editable={false}
           style={styles.input}
-          value="pcivita"
+          value={userData.username}
           // onChangeText={setActivityName}
         />
       </View>
@@ -39,6 +72,9 @@ export default function Page() {
           // onChangeText={setActivityName}
         />
       </View>
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.logoutText}>Log Out</Text>
+      </TouchableOpacity>
 
       <View style={styles.addToDiceContainer}>
         <Link
@@ -68,6 +104,21 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 5,
     backgroundColor: Themes.colors.background
+  },
+  logoutButton: {
+    backgroundColor: Themes.colors.salmon,
+    padding: 20,
+    width: windowWidth * 0.6,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5,
+    marginTop: 32,
+    alignSelf: "center",
+  },
+  logoutText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "white",
   },
   titleContainer: {
     height: "10%",

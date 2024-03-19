@@ -7,19 +7,21 @@ import {
 } from "react-native";
 import { Stack } from "expo-router";
 import { Themes } from "../../assets/Themes";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Activity from "../../components/Activity";
 import { ActivitiesContext } from "../../contexts/ActivitiesContext";
 import { useFonts } from "expo-font";
 import Header from "../../components/Header";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ActivityHelpModal from "../../components/ActivityHelpModal";
+import { useLocalSearchParams } from "expo-router";
 
 export default function Page() {
   const [isHelpModalVisible, setIsHelpModalVisible] = useState(false);
+
+  // TODO: replace with non hard-coded activities
   const { activities } = useContext(ActivitiesContext);
-  const currentActivities = activities;
-  console.log(activities);
+  const currentActivities = [...activities, null];
 
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../../assets/Poppins/Poppins-Regular.ttf"),
@@ -33,47 +35,51 @@ export default function Page() {
     setIsHelpModalVisible(false);
   };
 
+  // Function to chunk the activities into pairs
+  const chunkActivities = (activities, size) => {
+    return activities.reduce((acc, curr, i) => {
+      if (!(i % size)) {
+        acc.push([curr]); // Start a new chunk
+      } else {
+        acc[acc.length - 1].push(curr); // Add to the last chunk
+      }
+      return acc;
+    }, []);
+  };
+
+  const activitiesPairs = chunkActivities(currentActivities, 2);
+
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
       <Header title="Activities" />
       <View style={styles.helpButton}>
-        <Text style={styles.headerText}>My Current Activities</Text>
-        <TouchableOpacity onPress={() => setIsHelpModalVisible(true)}>
+        <Text style={styles.headerText}>Stanford Study Spots</Text>
+        {/* <TouchableOpacity onPress={() => setIsHelpModalVisible(true)}>
           <MaterialCommunityIcons
-            name="help-circle"
-            size={30}
-            color={Themes.colors.darkGray}
+            name="help-circle-outline"
+            size={28}
+            color="black"
           />
           <ActivityHelpModal
             isModalVisible={isHelpModalVisible}
             closeHelpModal={closeHelpModal}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
-      {currentActivities == [] && (
-        <View style={styles.noActivitiesContainer}>
-          <Text style={styles.noActivitesMessage}>
-            {section.noActivitiesMessage}
-          </Text>
-        </View>
-      )}
-      {currentActivities && (
-        <ScrollView style={styles.activitiesContainer}>
-          <View style={styles.activitiesRow}>
-            <Activity activityObject={currentActivities[0]} index={1} />
-            <Activity activityObject={currentActivities[1]} index={2} />
+      <ScrollView style={styles.activitiesContainer}>
+        {activitiesPairs.map((pair, index) => (
+          <View key={index} style={styles.activitiesRow}>
+            {pair.map((activity, idx) => (
+              <Activity
+                key={idx}
+                activityObject={activity}
+                index={idx + 1 + index * 2}
+              />
+            ))}
           </View>
-          <View style={styles.activitiesRow}>
-            <Activity activityObject={currentActivities[2]} index={3} />
-            <Activity activityObject={currentActivities[3]} index={4} />
-          </View>
-          <View style={styles.activitiesRow}>
-            <Activity activityObject={currentActivities[4]} index={5} />
-            <Activity activityObject={currentActivities[5]} index={6} />
-          </View>
-        </ScrollView>
-      )}
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -163,7 +169,7 @@ const styles = StyleSheet.create({
   },
   activitiesRow: {
     width: "100%",
-    marginBottom: 20,
+    marginBottom: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -171,13 +177,13 @@ const styles = StyleSheet.create({
   helpButton: {
     width: "100%",
     paddingHorizontal: 20,
-    paddingTop: 64,
+    paddingTop: 20,
     marginBottom: 12,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   headerText: {
-    fontFamily: "Poppins-Bold",
+    fontFamily: "Poppins-Regular",
     fontSize: 20,
   },
 });

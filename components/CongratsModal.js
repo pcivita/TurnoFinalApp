@@ -8,61 +8,43 @@ import Themes from "../assets/Themes/themes.js";
 import Fire from "./Icons/Fire";
 import { router } from "expo-router";
 import { FontAwesome5 } from "@expo/vector-icons";
-import Supabase from "../Supabase.js";
 import { PostsContext } from "../contexts/PostsContext.js";
 import { ActivitiesContext } from "../contexts/ActivitiesContext.js";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 // import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function CongratsModal({
+  exitModal,
   activityName,
   activityIndex,
   isModalVisible,
   setModalVisible,
   switchEnabled,
   setSwitchEnabled,
-  setActiveScreen,
-  setAppearHeader,
+  setDiceRolled,
+  setSwipeComplete,
+  setShowOverlay,
+  diceName,
 }) {
   const { deleteActivity } = useContext(ActivitiesContext);
 
   const onExitModal = () => {
     if (!switchEnabled) {
-      console.log("deletingActivity of index: " + activityIndex);
+      // console.log("deleting activity of index: " + activityIndex);
       deleteActivity(activityIndex);
     }
     setModalVisible(false);
-    setActiveScreen("RollDice");
-    setAppearHeader(false);
+    setDiceRolled(false);
+    setSwipeComplete(false);
+    setSwitchEnabled(false);
+    setShowOverlay(true);
   };
 
   const { addPost } = useContext(PostsContext);
   const { posts } = useContext(PostsContext);
 
   const postActivity = async () => {
-    const { data, error } = await Supabase.from("posts")
-      .insert([
-        {
-          is_profile_post: true,
-          user_handle: "@pcivita",
-          user_name: "Pedro Civita",
-          user_profile_pic: "Pedro",
-          post_text: activityName,
-          comments: [],
-        },
-      ])
-      .select();
-
-    addPost(
-      "@pcivita",
-      "Pedro Civita",
-      Images.profileImages.pedro,
-      "New Post",
-      true
-    );
-
-    onExitModal();
-    router.replace("/profile");
+    //(activityName)
   };
 
   return (
@@ -84,32 +66,17 @@ export default function CongratsModal({
         <View style={styles.barIcon} />
         <Image source={Images.confetti} style={styles.confetti} />
         <Text style={styles.title}>Congrats!</Text>
-        <PostPreview activityName={activityName} />
-        <View style={styles.statsContainer}>
-          <View style={styles.stat}>
-            <View style={styles.circle}>
-              <FontAwesome5
-                name="dice-two"
-                size={50}
-                color={Themes.colors.salmon}
-              />
-              <Text style={styles.circleText}>x34</Text>
-            </View>
-            <Text style={styles.circleDescription}>
-              You have rolled the dice 34 times
-            </Text>
+        <PostPreview activityName={activityName} diceName={diceName}/>
+        <View style={styles.stat}>
+          <View style={styles.circle}>
+            <Fire width={44} height={57} />
+            <Text style={styles.circleText}>x3</Text>
           </View>
-          <View style={styles.stat}>
-            <View style={styles.circle}>
-              <Fire width={44} height={57} />
-              <Text style={styles.circleText}>x10</Text>
-            </View>
-            <Text style={styles.circleDescription}>
-              Congrats on your 10 day streak
-            </Text>
-          </View>
+          <Text style={styles.circleDescription}>
+            You've completed 3 activities on your dice!
+          </Text>
         </View>
-        <View style={styles.toggleContainer}>
+        {/* <View style={styles.toggleContainer}>
           <Text> Add "{activityName}" back to Activities List?</Text>
           <Switch
             trackColor={{ true: Themes.colors.salmon }}
@@ -118,7 +85,7 @@ export default function CongratsModal({
             onValueChange={() => setSwitchEnabled(!switchEnabled)}
             value={switchEnabled}
           />
-        </View>
+        </View> */}
         <View style={styles.buttonsContainer}>
           <Pressable onPress={postActivity}>
             <View style={styles.buttonContainer}>
@@ -159,7 +126,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     // minHeight: 600,
-    height: 600,
+    height: 550,
     paddingBottom: 20,
     display: "flex",
     alignItems: "center",
@@ -179,13 +146,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginVertical: 20,
     fontFamily: "Poppins-Bold",
-  },
-  statsContainer: {
-    width: "90%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flex: 1,
   },
   stat: {
     flexDirection: "column",
@@ -217,7 +177,8 @@ const styles = StyleSheet.create({
   toggleContainer: {
     width: "102%",
     marginTop: 20,
-    padding: 25,
+    paddingHorizontal: 25,
+    paddingVertical: 15,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -245,6 +206,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 50,
     padding: 10,
+    marginTop: 30,
   },
   buttonContainer: {
     backgroundColor: Themes.colors.salmon,

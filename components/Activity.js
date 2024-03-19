@@ -1,27 +1,20 @@
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import { Themes } from "../assets/Themes";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import Images from "../assets/Themes/Images";
-import ActivityModal from "./ActivityModal";
-import { useFonts } from "expo-font";
-import { Link } from "expo-router";
+import EditChoiceModal from "./EditChoiceModal";
+import AddChoiceModal from "./AddChoiceModal";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-export default function Activity({ activityObject, index, section }) {
-  const sectionColor =
-    section === "Current Activities"
-      ? styles.currentActivity
-      : styles.pendingActivity;
-  const textColor =
-    section === "Current Activities" ? styles.currentText : styles.pendingText;
-  const iconColor = section === "Current Activities" ? "white" : "black";
-
+export default function Activity({ activityObject, index, addToChoices, notMyDice }) {
   const [isModalVisible, setModalVisible] = useState(false);
+  const [name, setName] = useState("");
+
   const openModal = () => {
     setModalVisible(true);
   };
   const closeModal = () => {
+    setName("");
     setModalVisible(false);
   };
 
@@ -34,12 +27,23 @@ export default function Activity({ activityObject, index, section }) {
     6: Images.diceIcons.six,
   };
 
-  let activityName = activityObject ? activityObject[0] : null;
+  let activityName = activityObject ? activityObject : null;
+
+  // TODO: Connect this to backend
+  const handleSave = () => {
+    // Save name
+    setName(name);
+    // console.log("New choice added: " + name);
+
+    // Add name to list of choices 
+    addToChoices(name)
+    closeModal();
+  };
 
   return (
     <View>
-      {activityObject ? (
-        <TouchableOpacity onPress={activityObject ? openModal : null}>
+      <TouchableOpacity onPress={notMyDice ? null : openModal}>
+        {activityObject ? (
           <View style={styles.container}>
             <View style={styles.diceContainer}>
               <Image source={diceImages[index]} style={styles.diceNumberIcon} />
@@ -49,53 +53,55 @@ export default function Activity({ activityObject, index, section }) {
                 {activityName}
               </Text>
             </View>
-            <ActivityModal
+            <EditChoiceModal
               isVisible={isModalVisible}
               closeModal={closeModal}
               activity={activityObject}
               indexInSection={index - 1}
-              section="Current Activities"
             />
           </View>
-        </TouchableOpacity>
-      ) : (
-        <Link
-          href={{
-            pathname: "/activities/createActivity",
-          }}
-        >
+        ) : (
           <View style={[styles.container, styles.gray]}>
             <View style={styles.createActivityContainer}>
               <FontAwesome5
                 name="plus"
-                size={40}
-                color="white"
+                size={45}
+                color={Themes.colors.salmon}
                 style={styles.createActivity}
               />
             </View>
+            <AddChoiceModal
+              isVisible={isModalVisible}
+              closeModal={closeModal}
+              name={name}
+              setName={setName}
+              handleSave={handleSave}
+            />
           </View>
-        </Link>
-      )}
+        )}
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Themes.colors.salmonLight,
+    backgroundColor: Themes.colors.salmonMedium,
     height: 150,
     width: 170,
     borderRadius: 10,
-    justifyContent: "space-around",
+    justifyContent: "center",
+    gap: 10,
     alignItems: "center",
-    shadowColor: "rgba(0, 0, 0, 0.5)",
-    shadowOffset: { height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    padding: 12,
+    // shadowColor: "rgba(0, 0, 0, 0.5)",
+    // shadowOffset: { height: 2 },
+    // shadowOpacity: 0.3,
+    // shadowRadius: 2,
   },
   gray: {
-    backgroundColor: Themes.colors.darkGray,
+    borderWidth: 0.5,
+    borderColor: Themes.colors.darkGray,
+    backgroundColor: Themes.colors.background,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -114,15 +120,15 @@ const styles = StyleSheet.create({
     backgroundColor: Themes.colors.salmonLight,
   },
   text: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: "Poppins-Bold",
     color: "white",
     textAlign: "center",
   },
   textContainer: {
-    flex: 1,
     alignContent: "center",
     justifyContent: "center",
+
   },
   currentText: {
     color: "white",
@@ -131,13 +137,11 @@ const styles = StyleSheet.create({
     color: "black",
   },
   diceContainer: {
-    backgroundColor: "white",
     width: 40,
     height: 40,
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
   },
   diceNumberIcon: {
     flex: 1,

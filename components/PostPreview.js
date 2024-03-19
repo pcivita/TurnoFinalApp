@@ -16,7 +16,7 @@ import CommentModal from "./CommentModal";
 import { useState } from "react";
 import { Themes } from "../assets/Themes";
 
-export default function PostPreview({ postId, activityName }) {
+export default function PostPreview({ postId, activityName, diceName }) {
   const [fontsLoaded] = useFonts({
     "Poppins-Regular": require("../assets/Poppins/Poppins-Regular.ttf"),
     "Poppins-Bold": require("../assets/Poppins/Poppins-Bold.ttf"),
@@ -26,28 +26,25 @@ export default function PostPreview({ postId, activityName }) {
     return undefined;
   }
 
-  // PROVISORY
-
   return (
-    // <CommentsProvider postId={postId}>
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image source={Images.profileImages.pedro} style={styles.profileImg} />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.postText}>
-          You Completed: <Text>{activityName} </Text>
+        <Text style={styles.postText1}>
+          You chose <Text>{activityName}!</Text>
         </Text>
+        <Text style={styles.postText2}>{diceName}</Text>
       </View>
     </View>
-    // </CommentsProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: 110, // Keep this Standard
-    width: "100%",
+    height: 110,
+    width: "90%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -61,7 +58,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   imageContainer: {
-    width: "15%",
+    width: "22%",
     height: undefined,
     aspectRatio: 1,
     borderRadius: 100,
@@ -73,12 +70,17 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 100,
   },
-  postText: {
+  postText1: {
     fontFamily: "Poppins-Regular",
-    fontSize: 15,
+    fontSize: 16,
+  },
+  postText2: {
+    fontFamily: "Poppins-Regular",
+    fontSize: 14,
+    fontStyle: "italic", // TODO: make italic
   },
   textContainer: {
-    gap: 16,
+    gap: 5,
     width: "80%",
   },
 });

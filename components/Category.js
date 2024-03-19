@@ -18,8 +18,8 @@ export default function Category({
       <FontAwesome5
         style={styles.icon}
         name={iconName}
-        size={40}
-        color={isSelected ? Themes.colors.background : Themes.colors.salmon}
+        size={20}
+        color={isSelected ? Themes.colors.background : "black"}
       />
       <Text
         style={[styles.categoryText, isSelected ? styles.selectedText : null]}
@@ -32,24 +32,25 @@ export default function Category({
 
 const styles = StyleSheet.create({
   container: {
-    width: "30%",
-    height: 90,
+    height: 40,
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Themes.colors.lightGray,
-    borderColor: Themes.colors.mediumGray,
+
+    borderWidth: 1,
+    borderColor: Themes.colors.darkGray,
     borderRadius: 20,
-
-    paddingVertical: 14,
-  },
-
-  selectedContainer: {
-    backgroundColor: Themes.colors.salmon,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    gap: 5,
   },
   categoryText: {
-    fontSize: 14,
-    color: Themes.colors.salmon,
+    fontSize: 16,
+    color: "black",
     fontFamily: "Poppins-Regular",
+  },
+  selectedContainer: {
+    backgroundColor: Themes.colors.salmon,
   },
   selectedText: {
     color: "white",

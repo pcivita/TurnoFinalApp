@@ -7,7 +7,6 @@ import PostPreview from "./PostPreview.js";
 import Themes from "../assets/Themes/themes.js";
 import Fire from "./Icons/Fire.js";
 import { FontAwesome5 } from "@expo/vector-icons";
-import Supabase from "../Supabase.js";
 import { PostsContext } from "../contexts/PostsContext.js";
 import { ActivitiesContext } from "../contexts/ActivitiesContext.js";
 // import { TouchableOpacity } from "react-native-gesture-handler";
@@ -105,11 +104,11 @@ const styles = StyleSheet.create({
   h1: {
     fontSize: 17,
     color: Themes.colors.background,
-    fontFamily: "Poppins-Bold",
+    fontFamily: "Poppins-Regular",
   },
   h1Container: {
-    width: "80%",
-    backgroundColor: Themes.colors.salmonLight,
+    width: "100%",
+    backgroundColor: Themes.colors.salmonMedium,
     padding: 12,
     borderRadius: 16,
     gap: 12,
